@@ -79,6 +79,22 @@
         link.className = "toc-link";
         link.href = "#" + node.heading.id;
         link.textContent = node.heading.textContent.trim();
+        link.addEventListener("click", function (event) {
+          if (
+            event.defaultPrevented ||
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+          node.heading.scrollIntoView({ behavior: "smooth", block: "start" });
+          window.history.replaceState(null, "", link.href);
+        });
 
         row.appendChild(toggle);
         row.appendChild(link);
