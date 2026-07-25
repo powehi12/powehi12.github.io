@@ -9,13 +9,15 @@
     <link rel="icon" href="https://github.com/powehi12.png">
 <meta name="description" content="# 前言
 
-**标题：**[[Generalist biological artificial intelligence in modeling the language of life](https://www.nature.com/articles/s41587-026-03064-w)](https://www.nature.com/articles/s41587-026-03064-w)
-截至本次检索，没有找到与正式论文同名的 arXiv 预印本，因此标题链接到 *Nature Biotechnology* 正式发表页面。">
+**标题**：[[Generalist biological artificial intelligence in modeling the language of life](https://www.nature.com/articles/s41587-026-03064-w)](https://www.nature.com/articles/s41587-026-03064-w)
+
+*（说明：这是发表于《Nature Biotechnology》的受邀综述/展望文章，并没有对应的arXiv预印本，所以标题直接链接到期刊原文页面，而非arXiv。">
 <meta property="og:title" content="从DNA到细胞：打造能够理解生命全链条的通用生物AI">
 <meta property="og:description" content="# 前言
 
-**标题：**[[Generalist biological artificial intelligence in modeling the language of life](https://www.nature.com/articles/s41587-026-03064-w)](https://www.nature.com/articles/s41587-026-03064-w)
-截至本次检索，没有找到与正式论文同名的 arXiv 预印本，因此标题链接到 *Nature Biotechnology* 正式发表页面。">
+**标题**：[[Generalist biological artificial intelligence in modeling the language of life](https://www.nature.com/articles/s41587-026-03064-w)](https://www.nature.com/articles/s41587-026-03064-w)
+
+*（说明：这是发表于《Nature Biotechnology》的受邀综述/展望文章，并没有对应的arXiv预印本，所以标题直接链接到期刊原文页面，而非arXiv。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/cong-DNA-dao-xi-bao-%EF%BC%9A-da-zao-neng-gou-li-jie-sheng-ming-quan-lian-tiao-de-tong-yong-sheng-wu-AI.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
@@ -77,740 +79,147 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><h1>前言</h1>
-<p><strong>标题：</strong>[<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Generalist biological artificial intelligence in modeling the language of life</a>](<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">https://www.nature.com/articles/s41587-026-03064-w</a>)<br>
-截至本次检索，没有找到与正式论文同名的 arXiv 预印本，因此标题链接到 <em>Nature Biotechnology</em> 正式发表页面。该文于2026年3月20日在线发表，属于<strong>综述论文</strong>，不是一个新模型或新实验的发布论文。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<p>**标签：**生物基础模型；多模态生物AI；AI智能体；虚拟细胞</p>
-<p>**摘要：**这篇论文最核心的思想是：**不要再让AI分别只懂DNA、蛋白质或细胞，而要让它能够沿着“DNA→RNA→蛋白质→细胞功能”这条生命信息链，把不同层面的生物知识串起来。**作者把这种系统称为通用生物人工智能，即GBAI。论文系统梳理了DNA、RNA、蛋白质、单细胞、组织影像和结构生物学中的AI进展，提出将生物语言模型、三维结构模型、专业工具和AI智能体组合起来，用于解释疾病机制、设计治疗分子、自动规划实验，并最终成为“虚拟细胞”的智能核心。与此同时，作者也承认，数据质量、生物系统复杂性、计算规模和真实实验验证，仍然是这一愿景面临的关键障碍。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
+<p><strong>标题</strong>：[<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Generalist biological artificial intelligence in modeling the language of life</a>](<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">https://www.nature.com/articles/s41587-026-03064-w</a>)</p>
+<p><em>（说明：这是发表于《Nature Biotechnology》的受邀综述/展望文章，并没有对应的arXiv预印本，所以标题直接链接到期刊原文页面，而非arXiv。）</em></p>
+<p><strong>标签</strong>：生物基础模型；多模态AI；智能体（Agent）；综述展望</p>
+<p><strong>摘要</strong>：一句话说本质——这篇文章说的是，今天的生物AI基本上都是"偏科生"：会测蛋白质结构的看不懂单细胞数据，会看病理切片的读不懂DNA序列，于是九位来自哈佛、斯坦福、Arc Institute等机构的大佬联名提出，应该把这些"偏科生"整合成一个能贯通DNA→RNA→蛋白质→细胞全链条的"全能选手"，并给它起名叫"通才生物人工智能"（Generalist Biological AI，简称GBAI）；文章系统盘点了当前五大类生物AI模型的能力边界（序列语言模型、结构预测与设计、单细胞与空间组学、显微成像与代谢组学、数字病理），给出了实现GBAI最现实的三条技术路径（让语言模型和结构模型"联姻"、把专才模型编排进智能体工作流、发展能自主设计实验的科研智能体），也毫不客气地列出了数据、算力、生物复杂度和实验验证这几座横在路上的大山，最后展望了一旦GBAI真的建成，会给疾病机理研究、药物研发和"虚拟细胞"模拟带来怎样的变革。</p>
+<hr>
 <h1>Step 1：论文解读</h1>
-<h2>1：先说清楚——这篇论文并没有造出一个“生物学GPT”</h2>
-<p>这篇论文不是在宣布：</p>
+<h2>1：先搞懂两个概念——生命的"剧本"和什么是GBAI</h2>
+<h3>1.1：中心法则：DNA、RNA、蛋白质是怎么"过日子"的</h3>
+<p>要看懂这篇文章，得先知道生物学里最基本的一条"主线剧情"——中心法则（Central Dogma，Crick, 1970提出）：DNA是"剧本"，转录成RNA这份"台词稿"，再翻译成蛋白质这个"演员"，最后由蛋白质的集体行动演出一整台"戏"——也就是细胞的功能和生命体的性状。这篇综述的野心，就是想造一个AI，能同时看懂剧本、台词稿和演员表演，而不是只会读其中一样。</p>
+<h3>1.2：GBAI的定义：必须同时做到三件事</h3>
+<p>作者给"通才生物人工智能"（GBAI）画了条硬杠杠，一个系统要配得上这个名字，必须同时具备：能吃进不同门类的生物数据（DNA、RNA、蛋白质序列/结构、单细胞数据、显微图像、病理切片……）；能跨门类"产出"（比如给一段DNA设计一个能结合它的蛋白质，或者根据一个DNA突变直接预测细胞会变成什么样）；能不用每换一个任务就重新训练一遍，同时把多件事做好。</p>
 <blockquote>
-<p>“我们训练了一个超级模型，它已经能够理解整个生命系统。”</p>
+<p><strong>锐评</strong>：这三条要求听起来很像"我全都要"，翻译成大白话就是"输入不挑食、输出会跨界、还不用反复调教"。目前市面上还没有一个模型真正同时满足这三条——这也正是这篇文章敢把它包装成一个新范式、而不是简单叫"多任务模型"的底气所在。</p>
 </blockquote>
-<p>它实际上是一篇<strong>领域综述加未来路线图</strong>。作者做的事情主要有三项：</p>
-<ol>
-<li>给“通用生物AI”下一个相对清晰的定义；</li>
-<li>梳理现有DNA、RNA、蛋白质、细胞和生物影像模型已经走到了哪里；</li>
-<li>讨论如何把这些分散的能力组合成一个真正跨领域工作的系统。</li>
-</ol>
-<p>所以，GBAI目前更接近一种<strong>研究方向和系统设计理念</strong>，而不是一个已经落地、可以直接下载运行的具体模型。Nature将其明确标注为Review Article；摘要中的措辞也是“chart a course”，即规划发展路线。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<p>**锐评：**这篇论文的价值不是“模型性能又提高了多少”，而是试图给迅速膨胀的生物基础模型领域画一张总地图。但地图画得宏大，不代表道路已经修好。</p>
-<h2>2：为什么现有生物AI还不够“通用”</h2>
-<p>现代生物学存在一条最基本的信息传递链：</p>
+<h3>1.3：为什么是现在提GBAI——生物AI的四级跳</h3>
+<p>文章隐含地把生物AI的发展史分成了四个阶段：2010年代是"监督学习时代"，靠人工标注的小数据集训练CNN做细胞分割之类的窄任务；2017–2022年是"Transformer革命"，ESM、AlphaFold相继登场，生物序列开始被当"文本"处理；2022–2025年是"基础模型扩张期"，scGPT、Geneformer、Virchow、DreaMS等把基础模型铺满了单细胞、病理、代谢组等各个子领域，同时AlphaFold 3、Evo、"Virtual Lab"智能体等最早的跨域尝试开始出现；到了2026年，也就是这篇文章所处的节点，作者们试图把这些散装的进展收拢成一个统一范式——GBAI。</p>
 <blockquote>
-<p>DNA储存信息 → RNA传递和调控信息 → 蛋白质执行功能 → 细胞表现出状态和行为。</p>
+<p><strong>锐评</strong>：把"进展汇总+起个新名字"称为范式的"正式化"，是综述/立场文章的常规操作，本身不是坏事，但读者要清楚：这不是一次技术突破，而是一次"命名与议程设定"，价值主要在于帮领域对齐方向，而不是提供了新的算法。</p>
 </blockquote>
-<p>例如，一个DNA突变可能导致：</p>
-<ul>
-<li>RNA表达量改变；</li>
-<li>蛋白质氨基酸发生变化；</li>
-<li>蛋白质结构或结合能力改变；</li>
-<li>某条细胞信号通路异常；</li>
-<li>最终导致疾病或药物抵抗。</li>
-</ul>
-<p>问题在于，当前大多数AI模型只研究其中一小段：</p>
-<ul>
-<li>DNA模型擅长看碱基序列；</li>
-<li>RNA模型擅长预测RNA结构和调控；</li>
-<li>蛋白质模型擅长结构、功能或序列设计；</li>
-<li>单细胞模型擅长分析基因表达；</li>
-<li>病理模型擅长看组织切片。</li>
-</ul>
-<p>它们像医院里分属不同科室的专家：每个人都很强，但病人的完整病情需要跨科室会诊。GBAI想做的，就是成为能够调动不同专家、整合全部检查结果的“总诊疗系统”。论文覆盖的代表性技术也确实横跨基因组模型、RNA模型、蛋白质语言模型、结构模型、单细胞模型和空间组学模型。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<h3>2.1：真正缺少的不是更多模型，而是跨层级联系</h3>
-<p>假设一个模型能够准确预测某个蛋白质的三维结构，这当然很重要。</p>
-<p>但研究人员真正可能关心的是：</p>
+<h2>2：五大门派：现在的生物AI都练的什么功夫</h2>
+<p>这篇综述把当前的生物AI模型归为五大类，与其说是按"解决什么生物学问题"分类，不如说是按"吃哪种数据"分类——这本身也说明了领域现状：大家还是在按数据模态划分地盘，而不是按生物学问题组队。</p>
+<h3>2.1：序列语言模型——把DNA、RNA、蛋白质当"文本"读</h3>
+<p>这类模型把ATCG或者氨基酸序列当成句子里的"词"，用掩码语言建模（盖住一段、让模型猜）来自监督学习。代表选手包括能处理12kb+长序列的Nucleotide Transformer、能生成CRISPR系统甚至整段细菌基因组的Evo/Evo 2，以及不需要多序列比对就能做结构预测的蛋白质语言模型ESM系列。</p>
+<h3>2.2：结构预测与设计模型——从"文字"到"造型"</h3>
+<p>如果说2.1解决的是"认字"，这一类解决的是"知道字长什么形状"。AlphaFold 3把结构预测从单一蛋白质扩展到蛋白质-核酸-配体复合物；RoseTTAFold All-Atom、Boltz-2在结构和亲和力预测上各有取舍；RFdiffusion系列和ATOMICA则反过来，从"预测形状"走向"设计形状"——给定一个目标，直接生成一个新蛋白质或结合位点。</p>
+<h3>2.3：单细胞与空间组学模型——给每个细胞建"户口档案"</h3>
+<p>scGPT、Geneformer、UCE（Universal Cell Embeddings）这些模型在几千万个细胞的数据上做预训练，学会给每个细胞一个"向量身份证"，用于细胞类型标注、批次校正；STATE进一步预测"如果给细胞加一个扰动（比如敲掉某个基因），它会变成什么样"；scGPT-spatial则把"细胞在组织里的位置"也编码了进去。</p>
+<h3>2.4：显微成像与代谢组学模型——看图识细胞，闻味识分子</h3>
+<p>CellPose 2用"模型动物园"的方式做细胞分割，SubCell专攻荧光显微图像里的蛋白质定位和细胞表型，DreaMS则是在两亿多条质谱数据上训练、专门"看懂"质谱图这种化学指纹的模型。</p>
+<h3>2.5：数字病理模型——给病理科医生配"电子助手"</h3>
+<p>Virchow2、UNI这类基于视觉Transformer的全切片图像（WSI）基础模型，能做泛癌种识别、罕见病分类；PLIP则是把病理图像和文字描述做联合训练的图文模型，能支持"用文字检索图像"这种新玩法。</p>
+<h2>3：怎么把"单科状元"拧成"全能选手"——通往GBAI的三条路</h2>
+<h3>3.1：让语言模型和结构模型"联姻"</h3>
+<p>第一条路是把序列语言模型的embedding和结构模型的输出做融合，让同一个表示里既有"这是什么"（序列信息）又有"长什么样"（结构信息），弥补两条技术线长期各自为战的问题。</p>
+<h3>3.2：不重复造轮子：把专才模型编排进"智能体工作流"</h3>
+<p>第二条路更务实：与其从头训练一个包打天下的巨型模型，不如把已经训练好的各路专才模型当"工具"，用一个智能体（agent）去调度它们——就像一个LLM智能体调用搜索引擎、计算器一样，让"总指挥"去决定什么时候该调用哪个专才模型。</p>
+<h3>3.3：给生物AI装上"手脚"：自主科研智能体</h3>
+<p>第三条路是给AI加上规划、记忆和工具使用能力，让它能自己设计实验、分析结果、提出新假设。文章举了"Virtual Lab"用AI智能体设计出新冠纳米抗体的例子，作为这条路已经有早期成功案例的证据。</p>
 <blockquote>
-<p>某个患者的DNA突变会不会改变这个蛋白？<br>
-结构变化会不会影响它和其他蛋白结合？<br>
-哪条细胞通路会因此失控？<br>
-哪种药物可能修复这一问题？</p>
+<p><strong>锐评</strong>：把这三条路放在一起看，会发现一个挺诚实（甚至有点"泄气"）的态度：第2条基本上是在说"暂时别指望搞出生物学的通用人工智能，先把现成的好用零件拼起来"。对于一篇喊着"通才AI"口号的综述来说，落地建议如此保守务实，值得加分——但也说明"GBAI"目前更像一个愿景牌匾，而不是一条已经验证过的工程路线。</p>
 </blockquote>
-<p>回答这些问题，仅靠蛋白质结构模型是不够的，因为它们同时涉及基因组、转录调控、蛋白质结构、分子相互作用和细胞表型。</p>
-<p><strong>论文真正想推动的，是从“预测一个对象”升级为“解释一条生物学因果链”。</strong></p>
-<h2>3：什么才算真正的GBAI</h2>
-<p>根据论文的构想，一个系统不能因为“做了很多生物任务”就自动被称为GBAI。它至少应具备几种能力。</p>
-<p>第一是<strong>跨生物领域输入</strong>。它不仅能读DNA，也能处理RNA、蛋白质序列、三维结构、基因表达、细胞空间位置和显微图像。</p>
-<p>第二是<strong>跨任务工作</strong>。它既可以预测，也可以生成和设计。例如既能预测某种突变是否有害，也能反过来设计一个可能修复问题的新蛋白质。</p>
-<p>第三是<strong>跨层级推理</strong>。它不能只知道DNA和蛋白质分别长什么样，还应理解两者之间的关系，以及这些分子变化如何影响细胞。</p>
-<p>第四是<strong>使用外部工具</strong>。GBAI不一定是一个包办所有任务的巨型神经网络。论文特别强调，通用系统可以调用不同专业模型，再由AI智能体负责规划、协调和整合。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<p>因此，更合理的结构可能是：</p>
+<h2>4：拦路虎在哪——迈向GBAI的五座大山</h2>
+<h3>4.1：基础模型自己的"硬伤"</h3>
+<p>文章相当坦诚地指出：基础模型并不总是赢家。在突变效应预测这类任务上，简单的"保守性打分"这种统计学老方法就能打平大型蛋白质语言模型；在很多扰动预测任务上，线性回归这种最朴素的基线甚至打得过专门的单细胞基础模型。除此之外，基础模型普遍算力贵、难解释，还容易在生物学上"一本正经地胡说八道"（hallucination）。</p>
 <blockquote>
-<p>一个通用“大脑”负责理解问题和制定计划；<br>
-多个专业模型负责完成结构预测、序列分析、数据库检索和实验模拟；<br>
-最后由通用系统整合证据并给出结论。</p>
+<p><strong>锐评</strong>：这一点是全文我最欣赏的地方——在一片基础模型军备竞赛的喧嚣里，愿意明确写出"简单基线不比你差，甚至更好"，这种坦诚在同类文章里并不常见，值得单独拎出来表扬。</p>
 </blockquote>
-<p>**锐评：**这一点非常现实。生物学的模态差异太大，强行用一个统一架构吞掉所有信息，未必比专业模型协作更有效。所谓“通用”，不一定意味着“单体”。</p>
-<h2>4：作者设想的技术路线是什么</h2>
-<h3>4.1：生物语言模型负责“读序列”</h3>
-<p>DNA、RNA和蛋白质都可以表示为符号序列：</p>
-<ul>
-<li>DNA主要由A、T、C、G组成；</li>
-<li>RNA主要由A、U、C、G组成；</li>
-<li>蛋白质由20种常见氨基酸组成。</li>
-</ul>
-<p>这与自然语言存在一定相似性：单个字母未必有完整意义，但一段序列中的组合、顺序和上下文会决定功能。</p>
-<p>因此，研究人员可以像训练语言模型预测“下一句话”一样，让生物模型学习：</p>
-<ul>
-<li>哪些DNA片段可能是启动子；</li>
-<li>哪些突变可能有害；</li>
-<li>RNA可能折叠成什么结构；</li>
-<li>某段蛋白质序列可能具有什么功能；</li>
-<li>如何生成新的基因或蛋白质序列。</li>
-</ul>
-<p>论文列举了Evo、Evo 2、Nucleotide Transformer、RNA基础模型、ESM、ProGen和多种单细胞语言模型，说明“用语言建模方法学习生物序列”已经形成了较完整的技术生态。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<h3>4.2：结构AI负责理解“形状决定功能”</h3>
-<p>生物分子不能只看序列。</p>
-<p>同一条蛋白质链会折叠成特定的三维形状，形状决定它能否与其他蛋白质、DNA、RNA或药物分子结合。AlphaFold、RoseTTAFold和扩散式蛋白设计模型的进展，说明AI已经能在相当程度上预测甚至生成生物分子结构。论文也把“语言AI与结构AI的结合”列为GBAI的重要机会。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<p>可以把两者的区别理解为：</p>
-<ul>
-<li>序列模型像是在读零件说明书；</li>
-<li>结构模型像是在观察零件装配后的实际形状；</li>
-<li>GBAI则需要同时理解说明书、成品形状和零件在机器里的作用。</li>
-</ul>
-<h3>4.3：多模态模型负责把不同信息对齐</h3>
-<p>一个DNA区域、对应的RNA、翻译得到的蛋白质以及最终产生的细胞表型，本质上是同一个生物过程在不同层面的表现。</p>
-<p>理想情况下，模型应把它们关联起来。例如：</p>
-<blockquote>
-<p>某段DNA发生突变<br>
-↓<br>
-RNA产生异常剪接<br>
-↓<br>
-蛋白质缺少一部分结构<br>
-↓<br>
-DNA修复功能下降<br>
-↓<br>
-细胞积累更多突变。</p>
-</blockquote>
-<p>这类跨模态联系，才是“生命语言”中真正困难的语法。</p>
-<p>但必须注意：自然语言中的两个词同时出现，往往只是统计联系；生物系统则需要考虑因果、时间、空间和物理约束。仅仅把不同数据编码到同一个向量空间，并不等于模型真的理解了生物机制。</p>
-<h3>4.4：AI智能体负责组织专家模型</h3>
-<p>论文认为，AI智能体可以成为GBAI的重要组成部分。</p>
-<p>面对一个复杂任务，智能体可以：</p>
-<ol>
-<li>把问题拆成若干子问题；</li>
-<li>选择合适的数据库和专业模型；</li>
-<li>运行分析；</li>
-<li>比较相互矛盾的结果；</li>
-<li>提出假设和实验方案；</li>
-<li>根据实验反馈继续修改设计。</li>
-</ol>
-<p>这比“用户手动打开十几个网站和软件，然后自己复制结果”更接近自动化科学研究。论文引用的Virtual Lab、BioMni和SpatialAgent等工作，正是在探索这种工具调度式科学智能体。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<p>**锐评：**智能体可以自动化科研流程，但“能调用很多工具”不等于“懂生物学”。如果上游工具输出错误，智能体可能只是更高效地把错误包装成一个完整故事。</p>
-<h2>5：用一个癌症突变的例子理解整套系统</h2>
-<p>假设研究人员发现，某个癌症患者的细胞中出现了一个未知DNA突变。</p>
-<p>传统流程可能是：</p>
-<ul>
-<li>基因组专家判断突变位置；</li>
-<li>RNA团队检查是否影响转录或剪接；</li>
-<li>结构生物学团队预测蛋白质变化；</li>
-<li>细胞生物学团队检测信号通路；</li>
-<li>药物团队筛选可能的治疗分子。</li>
-</ul>
-<p>而理想的GBAI会接收一个统一问题：</p>
-<blockquote>
-<p>“这个突变为什么可能致癌，应该如何干预？”</p>
-</blockquote>
-<p>系统随后可能完成如下工作：</p>
-<ol>
-<li>判断突变位于编码区、调控区还是剪接位点；</li>
-<li>预测它对RNA数量或结构的影响；</li>
-<li>预测蛋白质序列和三维结构是否发生变化；</li>
-<li>分析受影响的蛋白质相互作用；</li>
-<li>预测细胞增殖、凋亡或DNA修复是否异常；</li>
-<li>搜索已有药物或生成新的候选分子；</li>
-<li>设计细胞实验验证预测；</li>
-<li>根据实验结果更新结论。</li>
-</ol>
-<p>这才是论文所说的“跨多个生物领域同时处理和预测”：不是分别回答八个孤立问题，而是构建一条相互连接的解释链。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<h2>6：GBAI最重要的三个应用</h2>
-<h3>6.1：解释疾病机制和寻找生物标志物</h3>
-<p>很多疾病不是由单个基因简单决定的，而是多个基因、细胞类型、环境因素和信号通路共同作用。</p>
-<p>GBAI可以尝试把患者的：</p>
-<ul>
-<li>基因变异；</li>
-<li>表观遗传状态；</li>
-<li>RNA表达；</li>
-<li>蛋白质和代谢信息；</li>
-<li>组织影像；</li>
-</ul>
-<p>放到同一个分析框架中，从而寻找疾病形成过程中的关键节点。这可能帮助识别新的药物靶点或诊断标志物。该方向是论文明确提出的潜在价值之一。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<h3>6.2：自动设计和评估治疗方案</h3>
-<p>未来系统不仅可以回答“这个蛋白质有什么功能”，还可能接受一个目标：</p>
-<blockquote>
-<p>“设计一个只能结合肿瘤蛋白、不影响正常蛋白的分子。”</p>
-</blockquote>
-<p>然后同时优化：</p>
-<ul>
-<li>结合能力；</li>
-<li>稳定性；</li>
-<li>毒性；</li>
-<li>免疫反应；</li>
-<li>生产难度；</li>
-<li>在人体内的分布。</li>
-</ul>
-<p>这意味着从单纯的预测工具，升级为一个具有“设计—筛选—验证—再设计”闭环的工程系统。论文将自动化治疗设计与评估列为GBAI的重要应用。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<h3>6.3：构建虚拟细胞</h3>
-<p>所谓虚拟细胞，可以粗略理解为：</p>
-<blockquote>
-<p>在计算机里建立一个细胞的数字替身，输入药物、基因敲除或突变，模型就能预测细胞接下来会发生什么。</p>
-</blockquote>
-<p>真正成熟的虚拟细胞不应只预测一张静态的基因表达表，而需要模拟：</p>
-<ul>
-<li>分子相互作用；</li>
-<li>基因调控；</li>
-<li>代谢变化；</li>
-<li>细胞空间结构；</li>
-<li>时间演化；</li>
-<li>不同细胞之间的通信。</li>
-</ul>
-<p>论文认为，GBAI可能成为连接多种细胞模型和数据模态的核心，并最终嵌入虚拟细胞系统。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<p><strong>锐评：</strong>“虚拟细胞”是最诱人的终点，也是最容易被夸大的概念。当前模型通常只能在有限细胞类型、有限扰动和有限测量指标上预测，距离真正模拟完整细胞还有很长距离。</p>
-<h2>7：这条路线真正难在哪里</h2>
-<h3>7.1：生物数据并不像互联网文本那么充足</h3>
-<p>文本、图片和视频可以低成本地大规模收集，但高质量生物数据往往需要昂贵实验。</p>
-<p>尤其是模型最需要的因果数据——例如“敲掉某个基因后，细胞在不同时间点发生了什么”——比普通的静态测序数据少得多。</p>
-<p>此外，不同实验室的数据还存在：</p>
-<ul>
-<li>仪器差异；</li>
-<li>批次效应；</li>
-<li>样本选择偏差；</li>
-<li>标注标准不统一；</li>
-<li>失败实验不公开。</li>
-</ul>
-<p>模型可能学到“哪个实验室做的数据”，而不是“真正的生物规律”。论文将数据问题列为GBAI的核心挑战。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<h3>7.2：生命不是一条简单的单向流水线</h3>
-<p>“DNA→RNA→蛋白质”有助于入门理解，但真实细胞远比这复杂：</p>
-<ul>
-<li>RNA会反过来调控DNA表达；</li>
-<li>蛋白质会控制转录；</li>
-<li>环境会改变表观遗传状态；</li>
-<li>分子作用依赖时间和空间位置；</li>
-<li>同一个突变在不同细胞中可能产生不同结果；</li>
-<li>细胞群体之间还会互相通信。</li>
-</ul>
-<p>因此，单纯把生命看成一种可以像文本一样学习的“语言”，可能过度简化问题。</p>
-<p><strong>我的看法：</strong>“生命语言”是一个好比喻，但不是完整理论。语言模型主要学习统计关系，而生物系统最终受物理、化学、因果机制和进化约束支配。</p>
-<h3>7.3：预测正确不等于能够安全设计</h3>
-<p>生成一段“看起来像蛋白质”的序列相对容易；证明它：</p>
-<ul>
-<li>能正确折叠；</li>
-<li>具有目标功能；</li>
-<li>不会产生毒性；</li>
-<li>在真实细胞中稳定；</li>
-<li>在动物或人体内有效；</li>
-</ul>
-<p>则困难得多。</p>
-<p>所以，生物AI最终不能只依赖计算指标。任何治疗分子、基因回路或细胞工程设计，都需要真实湿实验验证。论文将可扩展性和实验验证与数据、复杂性并列为GBAI必须解决的主要挑战。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
+<h3>4.2：AI能力缺口：长上下文和多模态"一锅炖"</h3>
+<p>现有模型的上下文长度撑不住动辄几十万碱基对的基因组片段，也还没有一套真正能把DNA、RNA、蛋白质、细胞、影像"一锅炖"进同一个联合编码空间的方法。</p>
+<h3>4.3：生物系统本身就很难</h3>
+<p>这不是AI的锅，是生物学自己不讲武德：罕见配体的结合模式、多因素叠加导致的疾病、高阶的扰动效应，这些现象本身就复杂到现有模型难以捕捉。</p>
+<h3>4.4：数据不够多、不够全，还带偏见</h3>
+<p>很多领域（RNA结构、空间组学、大规模扰动响应）压根缺高质量标注数据，现有数据还普遍偏向被研究得最多的物种和人群，模型学到的"世界观"天然是不均衡的。</p>
+<h3>4.5：算得再准，也得下"湿实验室"验证</h3>
+<p>这一条常常被纯计算类综述忽略，但这篇文章专门强调：绝大多数生物AI模型缺乏扎实的湿实验室（wet-lab）验证，尤其是体内（in vivo）验证，作者呼吁发展类器官等可规模化的实验验证平台，让计算预测能真正接上现实世界的检验。</p>
+<h2>5：GBAI建成之后能干嘛——画的"大饼"长什么样</h2>
+<h3>5.1：更快看懂疾病是怎么发生的</h3>
+<p>一个能贯通DNA到细胞全链条的模型，理论上能更快地把"某个突变"和"某种疾病表型"之间的因果链条串起来，加速疾病通路和生物标志物的发现。</p>
+<h3>5.2：让药物和疗法的设计评估自动化</h3>
+<p>从蛋白质结合位点设计到抗体优化，GBAI设想的是把"设计-预测-筛选"这条链条尽可能自动化，减少人工试错的轮次。</p>
+<h3>5.3："虚拟细胞"：给生物学配一个数字孪生</h3>
+<p>最终愿景是让GBAI成为"虚拟细胞"的引擎——一个足够真实的计算模型，能模拟细胞在各种扰动下的行为，让研究者在电脑里先跑一遍实验，再决定值不值得去湿实验室验证。文中提到的"Virtual Cell Challenge"，就是领域内正在推动的一个相关评测活动。</p>
+<hr>
 <h1>Step 2：实验部分</h1>
-<h2>1：这篇论文没有开展新的原始实验</h2>
-<p>因为它是综述论文，所以不存在传统意义上的：</p>
-<ul>
-<li>新训练数据集；</li>
-<li>新模型架构；</li>
-<li>消融实验；</li>
-<li>与基线模型的统一性能表；</li>
-<li>作者自己开展的湿实验。</li>
-</ul>
-<p>它的“证据”来自对大量已有工作的整理，包括基因组语言模型、RNA与蛋白质模型、结构预测与生成、单细胞基础模型、生物影像模型和科研智能体。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<p>因此，阅读时不能把它理解成：</p>
-<blockquote>
-<p>“作者已经证明GBAI有效。”</p>
-</blockquote>
-<p>更准确的理解是：</p>
-<blockquote>
-<p>“作者依据多个子领域的进展，论证构建GBAI开始具有技术可能性。”</p>
-</blockquote>
-<h2>2：现有研究已经证明了哪些“零件”可用</h2>
-<p>在序列层面，生物语言模型已经能够进行突变效应预测、序列分类和生物序列生成。论文列举的Evo 2被训练于跨生命域的大规模DNA数据，并具有长上下文基因组建模能力。([<a href="https://www.nature.com/articles/s41586-026-10176-5?utm_source=chatgpt.com" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41586-026-10176-5?utm_source=chatgpt.com" title="Genome modelling and design across all domains of life ..." rel="nofollow">2</a>)</p>
-<p>在结构层面，AlphaFold系列、RoseTTAFold和扩散模型说明AI可以预测多种生物分子的三维结构，并开始执行蛋白质和结合界面设计。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<p>在细胞层面，scGPT、Geneformer、scPRINT以及空间组学模型尝试学习通用细胞表示，用于细胞分类、基因网络分析和扰动响应预测。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<p>在智能体层面，Virtual Lab展示了多个AI角色和专业计算工具协作的可能性：系统组合蛋白质语言模型、结构模型和Rosetta，设计了92个候选纳米抗体，并进行了真实实验验证。([<a href="https://www.nature.com/articles/s41586-025-09442-9_reference.pdf?utm_source=chatgpt.com" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41586-025-09442-9_reference.pdf?utm_source=chatgpt.com" title="The Virtual Lab of AI agents designs new SARS-CoV-2 ..." rel="nofollow">3</a>)</p>
-<p>这些结果说明，构建GBAI所需的一些“零件”已经存在。</p>
-<p>但零件存在，并不意味着整台机器已经建成。</p>
-<h2>3：当前证据还不能证明什么</h2>
-<p>现有结果尚未证明一个系统可以：</p>
-<ul>
-<li>在同一任务中可靠地跨越DNA、RNA、蛋白质和细胞；</li>
-<li>对从未见过的物种、细胞类型和疾病保持稳定性能；</li>
-<li>区分统计相关与真正的因果机制；</li>
-<li>自动发现自己的错误；</li>
-<li>在没有大量人工介入时持续完成“假设—实验—修正”循环；</li>
-<li>设计出能够重复通过湿实验和临床验证的治疗方案。</li>
-</ul>
-<p>尤其值得警惕的是，很多所谓“通用模型”仍然依赖任务微调、特定数据集或专门的输出头。它们更像“一个预训练底座支持许多任务”，而不是“真正理解不同层级生物机制的系统”。</p>
-<h2>4：怎样的实验才能真正证明GBAI成立</h2>
-<p>在我看来，未来需要设计一种“GBAI综合考试”。</p>
-<p>例如，给系统一个训练中未出现的疾病相关突变，并只提供部分数据，要求它完成：</p>
-<ol>
-<li>预测RNA和蛋白质层面的变化；</li>
-<li>解释受影响的细胞通路；</li>
-<li>预测不同细胞类型中的差异；</li>
-<li>设计一个干预分子；</li>
-<li>给出可执行的验证实验；</li>
-<li>报告不确定性和可能失败的原因；</li>
-<li>最后用独立湿实验验证全部关键预测。</li>
-</ol>
-<p>评价指标也不能只看某一个AUC或相关系数，而应同时考察：</p>
-<ul>
-<li>跨模态泛化；</li>
-<li>因果扰动预测；</li>
-<li>证据可追溯性；</li>
-<li>不确定性校准；</li>
-<li>湿实验成功率；</li>
-<li>计算和实验成本；</li>
-<li>安全性。</li>
-</ul>
-<p>只有在这种端到端任务中稳定胜过多个专业模型的简单拼接，GBAI才真正具有独立的科学意义。</p>
+<h2>1：这是一篇"综述"，"实验"应该怎么理解</h2>
+<p>先得说清楚一件事：这不是一篇提出新方法、跑了新实验的研究论文，而是一篇综述/展望（Review Article），它自己不产生新的湿实验室数据，也没有训练新模型。所以这里的"实验部分"，实际对应的是文章如何系统性地收集、归类、比较了现有约17个代表性生物AI模型在各自论文里报告的结果——更像一次"元分析"式的横向盘点，而不是传统意义上"我们做了什么实验"。</p>
+<h2>2：拿什么"考"这些模型——训练和评测用的数据</h2>
+<h3>2.1：序列类数据</h3>
+<p>DNA/RNA方面主要来自Ensembl、NCBI等公共基因组数据库，Evo 2这类模型的训练数据规模达到了万亿级别的核苷酸token；蛋白质方面则依赖UniProt（超过两亿条注释蛋白质序列）和PDB（数十万个实验解析的三维结构），分别撑起了序列语言模型和结构模型两条技术线。</p>
+<h3>2.2：单细胞类数据</h3>
+<p>scGPT、Geneformer等模型的预训练数据量级都在几千万个细胞上下，STATE这类扰动预测模型则同时用了大规模"观测型"细胞数据和"实验扰动后"细胞数据两部分来训练，这是能预测"扰动会带来什么变化"的关键。</p>
+<h3>2.3：成像与代谢组学数据</h3>
+<p>病理方向的Virchow2用了数百万张全切片图像训练；显微成像方向的SubCell用了海量荧光显微图像；代谢组学方向的DreaMS则是在两亿多条串联质谱数据上做的自监督预训练。</p>
+<h2>3：怎么打分——评价指标扫盲</h2>
+<p>不同门类的模型用的"考试标准"也不一样：分类类任务（比如细胞类型标注、突变是否致病）常用准确率（Accuracy）和AUC-ROC（衡量模型区分"是"与"否"两类样本能力的指标，越接近1越好）；语言模型类任务常用困惑度（Perplexity），数值越低说明模型对序列的"意外程度"越小、预测得越准；结构预测类任务常用TM-score，衡量预测结构和真实结构的相似程度，0到1之间，一般认为TM-score超过0.5就算是"预测对了大致折叠方式"。</p>
+<h2>4：一张表速览：几个代表模型的强项和短板</h2>
+<p>综述用一张大表逐一点评了各类别的代表模型，这里挑几个有代表性的做个浓缩版（并非原表全部内容）：</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>类别</th>
+<th>代表模型</th>
+<th>一句话强项</th>
+<th>一句话短板</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>序列语言模型</td>
+<td>Evo 2</td>
+<td>能横跨DNA/RNA/蛋白质生成复杂系统，甚至预测CRISPR-Cas系统</td>
+<td>上下文长度和易用性仍受限，尚不能很好建模人群层面的基因组变异</td>
+</tr>
+<tr>
+<td>结构预测</td>
+<td>AlphaFold 3</td>
+<td>把结构预测扩展到蛋白质-核酸-配体复合物，几乎覆盖PDB里的所有分子类型</td>
+<td>在手性等细节上仍有一定错误率，无序区域容易"幻觉"</td>
+</tr>
+<tr>
+<td>结构设计</td>
+<td>ATOMICA</td>
+<td>从两百多万个分子复合物里学习原子间相互作用，能挖掘未知的配体结合位点</td>
+<td>依赖高分辨率结构数据，抗体结合区域仍难建模</td>
+</tr>
+<tr>
+<td>单细胞</td>
+<td>scGPT</td>
+<td>训练于三千多万个细胞，批次校正和细胞标注上表现出色</td>
+<td>零样本可靠性有限，很依赖后续微调</td>
+</tr>
+<tr>
+<td>单细胞-扰动</td>
+<td>STATE</td>
+<td>能预测扰动后细胞的整体反应，双模块设计结合观测和扰动数据</td>
+<td>对更细粒度的差异表达基因预测仍不够稳定</td>
+</tr>
+<tr>
+<td>病理</td>
+<td>Virchow2</td>
+<td>三百多万张全切片图像训练，多个基准上表现优异</td>
+<td>各基准上已出现性能饱和，罕见病种的分布外表现仍待验证</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h2>5：通才不一定打得过专才——基础模型 vs. 传统基线</h2>
+<p>这是全篇最值得记住的一条经验结论：基础模型在"数据量大、任务多样"的场景下确实能赢——比如ESMFold不需要多序列比对就能做出接近AlphaFold2水平的结构预测，scGPT微调后在多个单细胞任务上超越了专门训练的模型；但在数据有限的窄任务上，基础模型经常打不过精心调过的专才模型，甚至打不过统计学基线。换句话说，"越大越好"在生物AI这里，目前还只是"有条件成立"。</p>
+<h2>6：几条"经验法则"</h2>
+<p>作为综述，这部分不是原创消融实验，而是从已发表工作里总结出的几条规律：模型规模和数据量的扩大对宽泛任务有明显收益，但对窄任务很快遇到边际效应递减；把序列和结构这类多模态信息融合起来，普遍比单一模态表现更好；给智能体加上调用专业模型和数据库的"工具使用"能力，比单纯依赖一个大语言模型自己"空想"更能提升复杂生物学推理任务的表现。</p>
+<hr>
 <h1>Step 3：other</h1>
-<h2>1：相关工作</h2>
-<p><strong>1. Evo 2：Genome modelling and design across all domains of life with Evo 2，2026。</strong><br>
-Evo 2是一个大规模基因组基础模型，训练数据覆盖多个生命域，达到单碱基分辨率和百万级上下文长度，可进行遗传变异效应预测与DNA生成。它代表了GBAI路线中“统一生物序列模型”的重要进展，但主要仍工作在基因组序列层面，尚未完整覆盖蛋白质结构、细胞表型和实验智能体。([<a href="https://www.nature.com/articles/s41586-026-10176-5?utm_source=chatgpt.com" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41586-026-10176-5?utm_source=chatgpt.com" title="Genome modelling and design across all domains of life ..." rel="nofollow">2</a>)</p>
-<p><strong>2. LucaOne：Generalized biological foundation model with unified nucleic acid and protein language，2025。</strong><br>
-LucaOne把DNA、RNA和蛋白质放入统一训练框架，数据来自169,861个物种，并展示了对DNA—蛋白质翻译关系的涌现式学习。它比单独的DNA模型或蛋白质模型更接近跨中心法则建模，但目前主要统一的是生物序列语言，还没有延伸到完整的细胞状态、组织空间结构和动态生理过程。([<a href="https://www.nature.com/articles/s42256-025-01044-4?utm_source=chatgpt.com" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s42256-025-01044-4?utm_source=chatgpt.com" title="Generalized biological foundation model with unified ..." rel="nofollow">4</a>)</p>
-<p><strong>3. The Virtual Lab of AI agents designs new SARS-CoV-2 nanobodies，2025。</strong><br>
-该工作建立了由“AI首席研究员”和多个“AI科学家”组成的虚拟实验室，调用ESM、AlphaFold-Multimer和Rosetta设计纳米抗体。系统生成了92个候选设计，并通过实验发现了具有结合能力的分子。它证明了“智能体组织专业模型并连接湿实验”的路线具有现实可行性，但任务范围仍然较窄，而且需要人类提供高层反馈，距离自主、跨领域的GBAI仍有明显距离。([<a href="https://www.nature.com/articles/s41586-025-09442-9_reference.pdf?utm_source=chatgpt.com" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41586-025-09442-9_reference.pdf?utm_source=chatgpt.com" title="The Virtual Lab of AI agents designs new SARS-CoV-2 ..." rel="nofollow">3</a>)</p>
-<p><a href="https://www.nature.com/articles/s41587-026-03064-w?utm_source=chatgpt.com" rel="nofollow"><img src="https://camo.githubusercontent.com/8e7b17379c61168c20ec8a9a55e0557045506dc81d0f199a202f75bc74709b8e/68747470733a2f2f696d616765732e6f70656e61692e636f6d2f7374617469632d7273632d342f416539635f4c48787a464a326243494d634f463846495139425474774b2d727533676c67674349574c6b30344832522d5f68306d3842546a45474d4f4741485a6e737170414838633534434233755f3155674f457557344e5f4667514e43706467766633424f6b757458616c56586a4c573668415245434662436c417049467450777857375330435473597245456931656958385047565f4743654e584f6f77636f44506f6e506c4a34343f707572706f73653d696e6c696e65" alt="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" data-canonical-src="https://images.openai.com/static-rsc-4/Ae9c_LHxzFJ2bCIMcOF8FIQ9BTtwK-ru3glggCIWLk04H2R-_h0m8BTjEGMOGAHZnsqpAH8c54CB3u_1UgOEuW4N_FgQNCpdgvf3BOkutXalVXjLW6hARECFbClApIFtPwxW7S0CTsYrEEi1eiX8PGV_GCeNXOowcoDPonPlJ44?purpose=inline" style="max-width: 100%;"></a></p>
-<p>这部分确实是论文最核心、也最容易被一句“多模态融合”含糊带过的地方。</p>
-<p>作者设想的并不是简单地把DNA模型、蛋白质模型和单细胞模型放进同一个软件界面，而是要建立一个系统，使这些模型能够<strong>围绕同一个生物学问题交换信息、互相约束、连续推理，并最终通过实验验证答案</strong>。论文把关键方向概括为：融合生物语言模型与结构模型、利用专业模型、发展AI智能体，并进一步连接虚拟细胞和实验验证。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<h2>一、最直观的理解：不是造一个“超级专家”，而是建立一所AI医院</h2>
-<p>假设现在有五位专家：</p>
-<ul>
-<li>DNA专家：判断某个突变是否异常；</li>
-<li>RNA专家：判断它会不会改变转录或剪接；</li>
-<li>蛋白质专家：判断蛋白质结构和功能是否变化；</li>
-<li>单细胞专家：判断细胞状态会怎样改变；</li>
-<li>病理专家：判断这种变化在组织中出现在哪里。</li>
-</ul>
-<p>现在的问题不是没有专家，而是这些专家通常各做各的。</p>
-<p>DNA模型可能输出一个“致病概率0.83”；蛋白质模型可能输出一组三维坐标；单细胞模型输出几万个基因表达值。<strong>它们输出的格式、语义和置信度都不一样，无法自然地接成一条推理链。</strong></p>
-<p>GBAI更像是一所完整的AI医院：</p>
-<blockquote>
-<p>专业模型是各科医生；<br>
-统一的数据系统是电子病历；<br>
-共享表示空间是所有医生都能理解的医学术语；<br>
-AI智能体是负责会诊和安排检查的主治医生；<br>
-虚拟细胞是计算机里的模拟病人；<br>
-湿实验则是真正的化验和临床检查。</p>
-</blockquote>
-<p>所以，“把分散能力组合起来”至少要解决四个层面的问题：</p>
+<h2>1：重点</h2>
+<p>我认为这篇文章真正有价值、值得记住的精华有三点：第一，它罕见地承认了"基础模型不一定赢简单基线"这个不太性感但很重要的事实，这种自我批判在生物AI这个正处于融资和炒作高峰的领域里格外可贵；第二，它提出的落地路径是"编排现有专才模型的智能体系统"，而不是"再造一个更大的模型统治一切"，这是一个务实、可执行、短期内就能验证的技术路线，而不是又一次"大力出奇迹"式的许愿；第三，它把湿实验室验证的缺口明确写进了核心挑战和路线图里，而不是当作计算模型的"附加题"，这一点在纯计算背景的综述里其实很容易被忽视，也是这篇文章比大多数同类文章更接地气的地方。</p>
+<h2>2：意见</h2>
+<p>如果我是这篇文章投稿时的严格审稿人，我最核心也最不留情面的一条意见是：这篇文章标榜的是"系统性、全景式"的中立盘点，但它对"代表模型"的选取并不中立——通讯作者所在几个实验室自己的旗舰模型，恰好都以"最佳范例"的姿态出现在了正文和对比表里：合著者Patrick Hsu本人是Evo 2和STATE两个模型所属的Arc Institute的联合创始人，合著者James Zou实验室的PLIP是病理方向的代表模型，合著者Marinka Zitnik实验室的ATOMICA则是结构设计方向的代表模型。这并不意味着这些模型选得不够格，它们本身实力过硬；但一篇声称要给全领域"打分排位"的综述，由多个实验室的PI联名署名、又不约而同地把自己实验室的模型放进"最佳实践"的位置，这种利益关联至少应该被明确披露和讨论，否则"系统性benchmark"就容易变成"业内大佬互相抬轿子"的自我实现——这恰恰削弱了文章最想立住的那个"中立评审者"人设。</p>
+<h2>3：相关工作</h2>
 <ol>
-<li>不同类型的数据怎样统一管理；</li>
-<li>不同模型怎样互相理解；</li>
-<li>谁来决定什么时候调用哪个模型；</li>
-<li>最终怎样验证整条推理链是对的。</li>
-</ol>
-<hr>
-<h2>二、系统的总体架构：最可能是“通用大脑＋专业工具箱”</h2>
-<p>实现GBAI大致有三条路线。</p>
-<h3>路线一：训练一个包办一切的巨型模型</h3>
-<p>把DNA、RNA、蛋白质、单细胞数据、病理图像和生物学文本全部喂给同一个模型，希望它统一学会所有任务。</p>
-<p>这种方案看起来最“通用”，但实际上很困难。因为这些数据的性质差别太大：</p>
-<ul>
-<li>DNA是超长离散序列；</li>
-<li>蛋白质既有序列又有三维结构；</li>
-<li>单细胞数据是稀疏的高维数值矩阵；</li>
-<li>病理数据是超高分辨率图像；</li>
-<li>分子相互作用可以表示为图；</li>
-<li>实验记录又是自然语言和表格。</li>
-</ul>
-<p>用一种网络结构同时高效处理这些数据，成本很高，而且很可能在每个领域都不如专业模型。</p>
-<h3>路线二：完全由多个专业模型拼装</h3>
-<p>系统保留现有的专业模型：</p>
-<ul>
-<li>基因组模型分析DNA；</li>
-<li>RNA模型预测剪接和结构；</li>
-<li>AlphaFold类模型预测分子结构；</li>
-<li>单细胞模型预测细胞状态；</li>
-<li>病理视觉模型分析组织切片；</li>
-<li>分子生成模型设计药物或蛋白质。</li>
-</ul>
-<p>然后设置一个控制程序，根据任务调用这些模型。</p>
-<p>这种方法容易实现，但如果各模型之间只是简单地传递文本总结，例如“蛋白质可能受损”，很多细节和不确定性就会在传递过程中丢失。</p>
-<h3>路线三：混合式系统</h3>
-<p>这是论文暗示的、也是我认为最现实的方案：</p>
-<blockquote>
-<p>底层保留高精度专业模型；<br>
-中间建立跨模态表示和生物学知识接口；<br>
-上层由通用AI智能体负责理解问题、规划任务和整合结果。</p>
-</blockquote>
-<p>论文明确把“语言AI和结构AI协同”“利用专业模型”“改进AI智能体”列为建设GBAI的主要机会，因此其方向明显不是单纯依赖一个巨型模型。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<hr>
-<h2>三、第一层：让不同数据进入同一个系统</h2>
-<p>论文图1中列出的输入覆盖了多个尺度：</p>
-<blockquote>
-<p>DNA → RNA → 蛋白质 → 细胞与组织 → 显微和病理图像。</p>
-</blockquote>
-<p>但把它们放进同一个数据库，还不等于实现了融合。首先必须建立<strong>实体之间的对应关系</strong>。</p>
-<p>例如，一个患者的某个DNA突变，需要明确连接到：</p>
-<ul>
-<li>它属于哪个基因；</li>
-<li>影响哪个转录本；</li>
-<li>是否改变RNA剪接；</li>
-<li>对应蛋白质的哪个氨基酸；</li>
-<li>位于蛋白质的哪个结构区域；</li>
-<li>影响哪种分子相互作用；</li>
-<li>出现在哪种细胞中；</li>
-<li>与组织切片上的哪个区域对应。</li>
-</ul>
-<p>这实际上是在建立一张巨大的“生物信息关系网”：</p>
-<p>[<br>
-\text{变异}<br>
-\rightarrow<br>
-\text{转录本}<br>
-\rightarrow<br>
-\text{蛋白质}<br>
-\rightarrow<br>
-\text{相互作用}<br>
-\rightarrow<br>
-\text{通路}<br>
-\rightarrow<br>
-\text{细胞状态}<br>
-\rightarrow<br>
-\text{组织表型}<br>
-]</p>
-<h3>为什么这一步很难</h3>
-<p>现实中的数据往往并不完整。</p>
-<p>某位患者可能有DNA测序和病理图像，却没有蛋白质组数据；另一个实验可能测了RNA，却没有空间位置信息。不同数据库对同一个基因、蛋白质或疾病还可能使用不同编号。</p>
-<p>因此，系统不仅要处理多模态数据，还必须处理：</p>
-<ul>
-<li>缺失模态；</li>
-<li>不同实验批次；</li>
-<li>不同物种和细胞类型；</li>
-<li>不一致的标注；</li>
-<li>不同测量分辨率；</li>
-<li>不同时间点的数据。</li>
-</ul>
-<p>真正的GBAI不能要求每个样本都拥有一套完美的“DNA＋RNA＋蛋白质＋影像”数据，因为现实世界几乎不会提供这种理想条件。</p>
-<hr>
-<h2>四、第二层：让各模型拥有一种“共同语言”</h2>
-<p>这是整套系统中最关键的技术问题。</p>
-<h3>1. 每种模型先把自己的数据压缩成表示</h3>
-<p>模型通常不会直接把原始数据传给其他模型，而是先把数据编码成一组数字，即<strong>嵌入表示</strong>。</p>
-<p>例如：</p>
-<ul>
-<li>DNA模型把一段基因序列变成一个向量；</li>
-<li>蛋白质模型把蛋白质序列变成一个向量；</li>
-<li>结构模型把三维形状变成一个向量；</li>
-<li>单细胞模型把数万个基因表达值压缩成一个细胞状态向量；</li>
-<li>病理模型把图像区域变成组织特征向量。</li>
-</ul>
-<p>可以把这些向量理解为模型自己使用的“概念摘要”。</p>
-<h3>2. 再把不同模态的表示对齐</h3>
-<p>假如某段DNA编码某个蛋白质，那么它们在统一表示空间中应当彼此关联；如果某张病理图像对应炎症组织，它应当靠近具有炎症基因表达特征的细胞表示。</p>
-<p>训练时可以给模型大量成对数据，例如：</p>
-<ul>
-<li>DNA序列及其对应蛋白质；</li>
-<li>蛋白质序列及其三维结构；</li>
-<li>单细胞转录组及其细胞类型描述；</li>
-<li>空间转录组及其组织图像；</li>
-<li>药物分子及其靶蛋白；</li>
-<li>基因扰动及其细胞响应。</li>
-</ul>
-<p>模型由此学习：</p>
-<blockquote>
-<p>“这些看起来完全不同的数据，其实描述的是同一个生物对象或同一个过程。”</p>
-</blockquote>
-<p>LucaOne就是一个初步例子：它把核酸和蛋白质序列放在统一框架中训练，并表现出对DNA—蛋白质翻译关系的学习能力。CellWhisperer则把转录组数据和自然语言描述映射到共同表示空间，使用户能够用文字查询细胞状态。([<a href="https://www.nature.com/articles/s42256-025-01044-4?utm_source=chatgpt.com" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41586-026-10176-5?utm_source=chatgpt.com" title="Genome modelling and design across all domains of life ..." rel="nofollow">2</a>)</p>
-<h3>3. 为什么共同表示还不够</h3>
-<p>假设系统发现：</p>
-<blockquote>
-<p>某种突变与某种癌细胞状态在表示空间中很接近。</p>
-</blockquote>
-<p>这只说明它们在训练数据中存在统计关联，并不证明：</p>
-<blockquote>
-<p>这个突变导致了这种癌细胞状态。</p>
-</blockquote>
-<p>因此，真正有用的跨模态表示还必须加入三类约束：</p>
-<p><strong>生物学约束。</strong> DNA突变必须通过合理的转录、翻译、调控或信号通路影响细胞，而不能凭空产生结论。</p>
-<p><strong>物理结构约束。</strong> 蛋白质和药物能否结合，最终受三维几何、化学性质和能量约束，而不只是序列相似度。AlphaFold 3已经能够联合预测蛋白质、核酸、小分子、离子等多类生物分子的复合物结构，这代表了跨分子结构建模的一种方向。([<a href="https://www.nature.com/articles/s41586-024-07487-w?utm_source=chatgpt.com" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41586-025-09442-9_reference.pdf?utm_source=chatgpt.com" title="The Virtual Lab of AI agents designs new SARS-CoV-2 ..." rel="nofollow">3</a>)</p>
-<p><strong>干预数据约束。</strong> 最有价值的数据不是“某两个现象同时出现”，而是“敲除这个基因或加入这种药物后，细胞究竟发生了什么”。</p>
-<p>我的判断是：<strong>共享表示空间可以解决“让模型互相听懂”，但不能单独解决“谁导致了谁”。</strong></p>
-<hr>
-<h2>五、第三层：专业模型不能只是并排放着，而要能接力工作</h2>
-<p>真正的跨领域系统必须把前一个模型的输出转化为后一个模型可以使用的输入。</p>
-<p>以一个DNA突变为例，完整接力可能是：</p>
-<h3>第一步：基因组模型判断突变属于什么类型</h3>
-<p>系统先判断突变位于：</p>
-<ul>
-<li>蛋白质编码区；</li>
-<li>启动子或增强子；</li>
-<li>RNA剪接位点；</li>
-<li>非编码调控区域；</li>
-<li>表观遗传调控区域。</li>
-</ul>
-<p>不同位置决定后面应该走不同路线。</p>
-<h3>第二步：RNA模型预测转录后果</h3>
-<p>如果突变影响剪接，RNA模型需要预测：</p>
-<ul>
-<li>某个外显子是否被跳过；</li>
-<li>是否保留了内含子；</li>
-<li>RNA稳定性是否下降；</li>
-<li>是否出现新的剪接形式；</li>
-<li>RNA二级或三级结构是否改变。</li>
-</ul>
-<p>注意，这里传给后续模型的不能只是一句“剪接异常”，而应该包括：</p>
-<ul>
-<li>预测出的转录本序列；</li>
-<li>各种转录本出现的概率；</li>
-<li>受影响的细胞类型；</li>
-<li>模型的不确定性。</li>
-</ul>
-<h3>第三步：蛋白质模型预测功能变化</h3>
-<p>系统将改变后的RNA翻译成蛋白质序列，然后分析：</p>
-<ul>
-<li>氨基酸是否改变；</li>
-<li>蛋白质是否截短；</li>
-<li>稳定性是否下降；</li>
-<li>结合口袋是否变化；</li>
-<li>与其他蛋白质的相互作用是否受损；</li>
-<li>是否产生新的药物结合机会。</li>
-</ul>
-<p>这一步需要把序列语言模型和三维结构模型结合起来。序列模型擅长学习进化和功能规律；结构模型擅长判断真实空间中的折叠和相互作用。</p>
-<h3>第四步：细胞模型预测整体响应</h3>
-<p>蛋白质改变后，系统还需要进一步推断：</p>
-<ul>
-<li>哪条信号通路被激活或抑制；</li>
-<li>哪些基因表达会改变；</li>
-<li>细胞是否增殖、凋亡或进入耐药状态；</li>
-<li>不同细胞类型的反应是否不同；</li>
-<li>周围免疫细胞是否受到影响。</li>
-</ul>
-<h3>第五步：组织和影像模型定位结果</h3>
-<p>最后，系统可以利用空间转录组和病理图像判断：</p>
-<ul>
-<li>这种细胞状态位于肿瘤中心还是边缘；</li>
-<li>是否与缺氧区域重合；</li>
-<li>是否靠近免疫细胞；</li>
-<li>是否对应病理切片上的特定形态。</li>
-</ul>
-<p>这才叫“跨领域工作”：<strong>一个问题沿着生命信息链连续传播，而不是五个模型各自给出五份互不相干的报告。</strong></p>
-<hr>
-<h2>六、第四层：AI智能体负责决定“下一步做什么”</h2>
-<p>即使各模型已经能够交换数据，还需要一个高层控制器。</p>
-<p>这个控制器就是论文强调的AI智能体。</p>
-<p>它承担的不是具体的蛋白质折叠计算，而是科学研究中的组织工作：</p>
-<h3>1. 理解研究目标</h3>
-<p>研究人员可能提出：</p>
-<blockquote>
-<p>“这个突变为什么会导致靶向药耐药？能否设计一种新的治疗策略？”</p>
-</blockquote>
-<p>智能体首先要把这个模糊问题拆成可计算的子问题：</p>
-<ul>
-<li>突变是否改变RNA？</li>
-<li>是否改变蛋白质结构？</li>
-<li>是否影响药物结合？</li>
-<li>是否激活了替代信号通路？</li>
-<li>应该修改原药物还是寻找新靶点？</li>
-</ul>
-<h3>2. 选择专业模型</h3>
-<p>智能体不能遇到所有任务都调用所有模型。</p>
-<p>如果突变位于启动子，就应优先调用基因调控模型；如果是蛋白质表面的氨基酸替换，就应优先调用结构和相互作用模型；如果问题是免疫逃逸，则需要进一步分析单细胞和空间数据。</p>
-<p>这被称为<strong>模型路由</strong>：</p>
-<blockquote>
-<p>根据问题类型，将任务发送给最合适的专家模型。</p>
-</blockquote>
-<h3>3. 检查结果是否相互矛盾</h3>
-<p>例如：</p>
-<ul>
-<li>序列模型认为突变有害；</li>
-<li>结构模型认为蛋白质结构几乎不变；</li>
-<li>单细胞数据又显示相关通路明显激活。</li>
-</ul>
-<p>此时，智能体不能简单地取平均值，而要提出可能解释：</p>
-<ul>
-<li>突变可能不破坏结构，却改变了蛋白质修饰；</li>
-<li>可能影响表达量而不是蛋白质本身；</li>
-<li>可能存在细胞类型特异性；</li>
-<li>某个模型可能超出了适用范围。</li>
-</ul>
-<h3>4. 决定需要补充什么证据</h3>
-<p>智能体还应当知道：</p>
-<blockquote>
-<p>“现有数据不足以回答这个问题。”</p>
-</blockquote>
-<p>它可能建议补做：</p>
-<ul>
-<li>RNA测序；</li>
-<li>蛋白质结合实验；</li>
-<li>CRISPR基因敲除；</li>
-<li>单细胞测序；</li>
-<li>药物剂量反应实验。</li>
-</ul>
-<h3>5. 形成可追溯结论</h3>
-<p>最终报告不能只说：</p>
-<blockquote>
-<p>“AI认为该突变导致耐药。”</p>
-</blockquote>
-<p>它应当明确给出：</p>
-<ul>
-<li>哪些结论来自真实数据；</li>
-<li>哪些来自数据库；</li>
-<li>哪些由模型预测；</li>
-<li>各模型的置信度；</li>
-<li>哪些步骤尚未经过实验验证；</li>
-<li>哪些替代解释仍不能排除。</li>
-</ul>
-<p>Virtual Lab已经初步展示了这种组织方式：一个AI“首席研究员”协调多个AI科学家，并调用ESM、AlphaFold-Multimer和Rosetta等专业工具设计纳米抗体，最后用真实实验验证候选分子。但它仍需要人类提供高层反馈，任务也限定在较窄的纳米抗体设计场景。([<a href="https://www.nature.com/articles/s41586-025-09442-9?utm_source=chatgpt.com" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s42256-025-01044-4?utm_source=chatgpt.com" title="Generalized biological foundation model with unified ..." rel="nofollow">4</a>)</p>
-<hr>
-<h2>七、第五层：把“预测系统”升级成“设计系统”</h2>
-<p>跨领域GBAI不能只解释已经发生的事情，还要能够反向设计。</p>
-<p>正向预测是：</p>
-<p>[<br>
-\text{DNA变化}<br>
-\rightarrow<br>
-\text{RNA变化}<br>
-\rightarrow<br>
-\text{蛋白质变化}<br>
-\rightarrow<br>
-\text{细胞表型}<br>
-]</p>
-<p>反向设计则是：</p>
-<p>[<br>
-\text{目标细胞表型}<br>
-\rightarrow<br>
-\text{需要调节的通路}<br>
-\rightarrow<br>
-\text{需要改变的蛋白质}<br>
-\rightarrow<br>
-\text{候选药物、抗体、RNA或DNA设计}<br>
-]</p>
-<p>例如，研究人员提出目标：</p>
-<blockquote>
-<p>“让肿瘤细胞恢复对药物的敏感性，同时不要伤害正常细胞。”</p>
-</blockquote>
-<p>系统需要反向寻找：</p>
-<ol>
-<li>哪个信号通路导致耐药；</li>
-<li>哪个分子节点最适合干预；</li>
-<li>应设计小分子、抗体还是RNA；</li>
-<li>候选分子是否能正确结合；</li>
-<li>是否可能产生脱靶效应；</li>
-<li>在不同细胞类型中会产生什么响应；</li>
-<li>哪些候选值得进入真实实验。</li>
-</ol>
-<p>这里最大的变化是：优化目标不再只有一个。</p>
-<p>一个药物不能只追求“结合得紧”，还要同时考虑：</p>
-<ul>
-<li>选择性；</li>
-<li>毒性；</li>
-<li>稳定性；</li>
-<li>可制造性；</li>
-<li>免疫原性；</li>
-<li>组织可达性；</li>
-<li>患者差异。</li>
-</ul>
-<p>因此，所谓跨领域设计，本质上是一个<strong>多目标、跨尺度的约束优化问题</strong>。</p>
-<hr>
-<h2>八、第六层：虚拟细胞负责进行“计算机预实验”</h2>
-<p>论文把GBAI与虚拟细胞联系起来，原因是单纯调用一次模型并不能模拟生物系统的动态变化。([<a href="https://www.nature.com/articles/s41587-026-03064-w" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-026-03064-w" title="Generalist biological artificial intelligence in modeling the language of life | Nature Biotechnology" rel="nofollow">1</a>)</p>
-<p>理想中的虚拟细胞可以接受一个干预：</p>
-<ul>
-<li>敲除某个基因；</li>
-<li>加入某种药物；</li>
-<li>改变培养条件；</li>
-<li>修改蛋白质；</li>
-<li>调节某条通路。</li>
-</ul>
-<p>然后预测细胞随时间发生的变化：</p>
-<p>[<br>
-t_0 \rightarrow t_1 \rightarrow t_2 \rightarrow \cdots<br>
-]</p>
-<p>例如，药物加入后：</p>
-<ul>
-<li>5分钟：某个蛋白质被抑制；</li>
-<li>1小时：下游信号减弱；</li>
-<li>6小时：部分基因表达发生变化；</li>
-<li>24小时：细胞停止增殖；</li>
-<li>48小时：部分细胞死亡，另一部分产生耐药。</li>
-</ul>
-<p>AI智能体可以先在虚拟细胞中测试大量候选方案，再挑选少量最值得验证的实验。</p>
-<p>但这里必须强调：当前虚拟细胞远没有达到“完整复制真实细胞”的程度。它们通常只能预测某些测量指标、某些细胞类型和某些扰动条件。</p>
-<p>所以它更像：</p>
-<blockquote>
-<p>一个用于筛选和提出假设的近似模拟器，</p>
-</blockquote>
-<p>而不是：</p>
-<blockquote>
-<p>一个可以完全替代真实实验的数字生命。</p>
-</blockquote>
-<hr>
-<h2>九、最后一层：必须建立“预测—实验—再学习”的闭环</h2>
-<p>GBAI系统最终需要形成下面这个循环：</p>
-<p>[<br>
-\text{提出假设}<br>
-\rightarrow<br>
-\text{模型预测}<br>
-\rightarrow<br>
-\text{虚拟筛选}<br>
-\rightarrow<br>
-\text{设计实验}<br>
-\rightarrow<br>
-\text{湿实验验证}<br>
-\rightarrow<br>
-\text{更新模型}<br>
-]</p>
-<p>例如系统设计了100种候选蛋白质：</p>
-<ol>
-<li>结构模型筛到20种；</li>
-<li>细胞模型筛到8种；</li>
-<li>智能体挑选5种进行实验；</li>
-<li>实验发现其中2种有效；</li>
-<li>系统分析另外3种为什么失败；</li>
-<li>把成功和失败结果都加入下一轮训练；</li>
-<li>再生成更好的候选。</li>
-</ol>
-<p>这里失败数据非常重要。</p>
-<p>如果只把成功实验提供给模型，它无法学会哪些设计会：</p>
-<ul>
-<li>无法表达；</li>
-<li>错误折叠；</li>
-<li>产生毒性；</li>
-<li>在真实细胞中失效；</li>
-<li>因实验条件变化而不稳定。</li>
-</ul>
-<p>真正强大的GBAI不应该只是“读过很多论文”，而应当能够从实际实验成败中持续修正自己的生物模型。</p>
-<hr>
-<h2>十、用一个完整案例串起来</h2>
-<p>问题是：</p>
-<blockquote>
-<p>“患者肿瘤中的某个未知突变是否造成药物耐受？应该怎样治疗？”</p>
-</blockquote>
-<p>整个系统可以这样运行。</p>
-<p><strong>第一轮：建立假设。</strong><br>
-智能体检索已有知识，判断突变可能涉及药物靶蛋白或相关信号通路。</p>
-<p><strong>第二轮：分析DNA。</strong><br>
-基因组模型判断突变是编码突变、剪接突变还是调控突变。</p>
-<p><strong>第三轮：分析RNA。</strong><br>
-RNA模型预测表达量、剪接形式和RNA稳定性。</p>
-<p><strong>第四轮：分析蛋白质。</strong><br>
-蛋白质模型生成改变后的序列；结构模型预测折叠、药物结合口袋和蛋白质相互作用。</p>
-<p><strong>第五轮：分析细胞。</strong><br>
-单细胞扰动模型预测突变对肿瘤细胞、免疫细胞和正常细胞的不同影响。</p>
-<p><strong>第六轮：结合组织环境。</strong><br>
-空间组学和病理模型判断耐药细胞位于什么组织区域，以及是否受到缺氧、免疫抑制等环境因素影响。</p>
-<p><strong>第七轮：提出治疗方案。</strong><br>
-系统可能提出三条路线：修改原药物、联合抑制替代通路，或设计新的抗体或RNA疗法。</p>
-<p><strong>第八轮：虚拟筛选。</strong><br>
-在近似虚拟细胞中测试不同剂量、组合和治疗顺序。</p>
-<p><strong>第九轮：设计真实实验。</strong><br>
-智能体选择最能区分几种机制的实验，而不只是选择最容易做的实验。</p>
-<p><strong>第十轮：根据结果修正。</strong><br>
-如果实验与预测不符，系统回溯整条链，检查是RNA预测、结构预测还是细胞模型出了问题。</p>
-<p>这个过程才真正体现了GBAI的“通用性”：</p>
-<blockquote>
-<p>它不是会做很多独立题目，而是能围绕同一个问题跨越多个生物尺度完成一整套科学推理。</p>
-</blockquote>
-<h2>我的核心判断</h2>
-<p>这篇论文所描述的系统，短期内最可能不是“生物学版GPT”，而是：</p>
-<blockquote>
-<p><strong>一个能够理解研究目标的AI智能体，加上一套能够共享数据和中间表示的专业生物模型，再连接虚拟实验和真实实验平台。</strong></p>
-</blockquote>
-<p>真正的瓶颈也不是再训练一个更大的模型，而是三个更基础的问题：</p>
-<p><strong>第一，各模型怎样交换不会丢失信息的中间结果。</strong></p>
-<p><strong>第二，系统怎样区分统计相关、生物机制和真实因果。</strong></p>
-<p><strong>第三，系统怎样知道自己不知道，并主动设计实验消除不确定性。</strong></p>
-<p>我的锐评是：论文很好地描述了“应该把哪些零件装在一起”，但还没有给出一张足够具体的工程施工图。现在大家已经拥有不少优秀零件，真正缺少的是<strong>可靠接口、因果推理、统一评测以及真实实验闭环</strong>。没有这些，所谓GBAI可能只是“很多模型加一个聊天界面”；有了这些，它才可能成为真正跨领域工作的AI科学系统。</p></div>
+<li><strong>Biomni</strong>（Huang, K. 等，bioRxiv，2025）——这是Jure Leskovec团队自己的通用生物医学AI智能体项目，正好是这篇综述所提"自主科研智能体"这条路径的一个具体实例，可以对照着看智能体路线目前落地到了什么程度。</li>
+<li><strong>Universal Cell Embeddings / UCE</strong>（Rosen, Roohani 等，含Jure Leskovec）——这正是这篇综述里被点名评测的单细胞基础模型之一，恰好也是Leskovec团队的工作，算是这次"跑题"意外串起来的一条线索。</li>
+<li><strong>Evo 2</strong>（Brixi 等，<em>Nature</em>，2026）——被这篇综述当作"跨域生物AI"最接近雏形的例子之一，一个模型同时横跨DNA、RNA、蛋白质三个中心法则层级，也是本文"意见"部分提到的自引案例，值得对照阅读原始论文，看看它实际验证到了什么程度。</li>
+</ol></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
