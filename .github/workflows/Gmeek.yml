@@ -1,6 +1,13 @@
 name: build Gmeek
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - config.json
+      - "static/**"
+      - .gmeek-static-files
   workflow_dispatch:
     inputs:
       issue_numbers:
@@ -9,8 +16,8 @@ on:
         default: ""
         type: string
 
-# Manual publishing only. Queue runs so generated files cannot overwrite one
-# another when the publish button is clicked more than once.
+# This push trigger is used for the one-time UI release. Queue runs so
+# generated files cannot overwrite one another.
 concurrency:
   group: gmeek-${{ github.repository }}
   queue: max

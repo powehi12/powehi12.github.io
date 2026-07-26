@@ -8,12 +8,12 @@
   "i18n": "CN",
   "UTC": 8,
   "themeMode": "fix",
-  "dayTheme": "dark",
-  "nightTheme": "dark-blue",
+  "dayTheme": "light",
+  "nightTheme": "github-light",
   "urlMode": "pinyin",
   "onePageListNum": 10,
   "showPostSource": 1,
   "needComment": 1,
-  "allHead": "<link rel='stylesheet' href='https://powehi12.github.io/minimal-dark.css?v=20260715-color1'>",
+  "allHead": "<link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>",
   "script": "<script src='https://powehi12.github.io/collapsible-toc.js'></script>"
 }
