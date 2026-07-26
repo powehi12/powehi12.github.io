@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-1'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>info</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="结合你做 LLM agent / EHR 这个方向，我按&#x27;从源头到消化&#x27;的顺序整理一份，顺带标注哪些对你的子方向特别值得盯。">
+<meta property="og:title" content="info">
+<meta property="og:description" content="结合你做 LLM agent / EHR 这个方向，我按&#x27;从源头到消化&#x27;的顺序整理一份，顺带标注哪些对你的子方向特别值得盯。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/info.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="info">
+<meta name="twitter:description" content="结合你做 LLM agent / EHR 这个方向，我按&#x27;从源头到消化&#x27;的顺序整理一份，顺带标注哪些对你的子方向特别值得盯。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/info.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">info</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/29" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><p>结合你做 LLM agent / EHR 这个方向，我按"从源头到消化"的顺序整理一份，顺带标注哪些对你的子方向特别值得盯。</p>
+<p><strong>一、论文源头</strong></p>
+<ul>
+<li>arXiv：cs.CL、cs.AI、cs.LG、cs.MA 这几个分类每天扫一遍标题和摘要就够了，别试图全读。可以用 RSS 订阅分类，也可以直接看每日 listing。</li>
+<li>Hugging Face Daily Papers：社区投票筛出来的每日热门论文，一天十几篇，是性价比最高的"每日必刷"，agent、推理方向的论文出现频率很高。</li>
+<li>Google Scholar / Semantic Scholar 提醒：给关键词（"EHR agent""clinical LLM""multi-agent LLM"）和几位重点作者设 alert，新论文自动送上门，是最省力的被动渠道。</li>
+<li>OpenReview：ICLR、NeurIPS 的审稿全程公开，看 reviewer 怎么拆一篇论文，比只读论文本身学得多；自己投稿前更要去看同类论文挨过什么刀。</li>
+<li>Connected Papers / ResearchRabbit：丢一篇种子论文进去生成引用图谱，写 related work、快速摸清一个子领域的神器。</li>
+<li>Papers with Code：查 benchmark 和 SOTA，比如 text-to-SQL 各榜单的最新进展。</li>
+</ul>
+<p><strong>二、会议与期刊</strong></p>
+<ul>
+<li>ML 三大会：NeurIPS、ICML、ICLR；NLP 看 ACL、EMNLP、NAACL；另外 COLM 是专门做语言模型的新会，agent 和推理方向论文密度非常高，值得整届接收列表都翻一遍。</li>
+<li>医疗 AI 这条线：ML4H、CHIL、AMIA 三个会，加上 JAMIA、npj Digital Medicine、NEJM AI 几本刊，做 EHR 属于必须盯的名单，EHRSQL、MedAgentBench 这类 benchmark 工作常出自这里。</li>
+<li>Workshop 往往比主会更前沿也更水，但信号来得早——各大会的 agent workshop、GenAI for Health 之类扫一眼接收列表就能感知风向。</li>
+</ul>
+<p><strong>三、社交媒体与社区</strong></p>
+<ul>
+<li>X/Twitter：信息最快的地方，没有之一。follow @_akhaliq（每日论文搬运）、各大 lab 官号、做 agent 和 RL 的活跃研究者，记得建 list 隔离信息流，不然时间线很快变成垃圾场。</li>
+<li>Reddit：r/MachineLearning 偏学术，r/LocalLLaMA 偏开源模型和工程实践，后者对了解模型真实能力、部署坑点非常有用。</li>
+<li>中文渠道：机器之心、量子位、PaperWeekly、专知这些公众号做快讯和解读；知乎在顶会放榜季有大量一手讨论和吐槽；MLNLP 社区、智源社区常有讲座和综述分享。</li>
+<li>Discord：Hugging Face、EleutherAI，以及你在用的 agent 框架各自的 server，看别人踩坑和直接提问都很高效。</li>
+</ul>
+<p><strong>四、博客与 Newsletter</strong></p>
+<ul>
+<li>Lilian Weng 的 Lil'Log：她那篇 LLM Powered Autonomous Agents 基本是 agent 方向的公共入门读物，其他综述质量也极高。</li>
+<li>Interconnects（Nathan Lambert）：RLHF / RL for LLM 的一手分析，你要碰 RL 训练的话建议直接订阅。</li>
+<li>Simon Willison：LLM 应用与 agent 工程实践，更新勤、视角务实。</li>
+<li>Sebastian Raschka 的 Ahead of AI：技术综述向，适合定期补全大图景。</li>
+<li>AI News（smol.ai）：每天自动汇总 Twitter/Reddit/Discord 的讨论，信息密度大到需要跳读，但漏网之鱼极少。</li>
+<li>公司博客：Anthropic 的工程博客（比如 Building Effective Agents 那篇）、OpenAI、DeepMind 的 research blog，一手信息且常带工程细节。</li>
+</ul>
+<p><strong>五、开源与代码</strong></p>
+<ul>
+<li>GitHub Trending 加各类 awesome 仓库（awesome-llm-agents、医疗 LLM 相关的 awesome 列表），快速摸清一个方向已有哪些轮子。</li>
+<li>盯几个 agent 框架的 repo：LangGraph、AutoGen/AG2、CAMEL、MetaGPT、OpenHands，看 issue 和 discussion 比看文档更能了解真实痛点，做多智能体的话前面几个尤其相关。</li>
+<li>Hugging Face 的模型与数据集页；做 EHR 还要加上 PhysioNet——MIMIC 系列数据的老家，相关社区讨论也在那边。</li>
+</ul>
+<p><strong>六、视频与播客</strong></p>
+<ul>
+<li>B站：李沐的论文精读系列是中文区标杆，顶会 tutorial 的搬运也不少。</li>
+<li>YouTube：Karpathy 的从零手写系列（理解 LLM 底层最好的材料之一）、Stanford CS224N/CS234 公开课、Yannic Kilcher 的论文解读。</li>
+<li>播客：Latent Space 聊 AI 工程和 agent 落地，Dwarkesh Podcast 的研究者深度访谈质量很高，都适合通勤时听。</li>
+</ul>
+<p><strong>七、别被信息淹没</strong></p>
+<ul>
+<li>建议搭一个漏斗：每天 5-10 分钟刷 HF Daily Papers 和推特 list → 值得细看的丢进 Zotero → 每周固定半天精读 1-2 篇。读得少而深，比囤一千篇 PDF 有用得多。</li>
+<li>用 RSS 阅读器（Feedly、Folo 之类）把 arXiv 分类、博客、公众号统一收进一个入口，减少平台间反复横跳。</li>
+<li>follow 人比 follow 论文高效：你方向里活跃的二三十位作者，他们的新作加上互相引用，基本就覆盖了你需要知道的一切。</li>
+<li>信息焦虑是研究生标配，但筛选能力比获取能力稀缺——渠道不必全订，挑三五个坚持刷，就已经赢过大多数人了。</li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.disabled=true;
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","powehi12/powehi12.github.io");
+    script.setAttribute("issue-term","title");
+    
+    script.setAttribute("theme","github-dark");
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-1'></script>
+
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-dark");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
+</html>
