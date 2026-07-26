@@ -5,24 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 论文解读：Sherlock
 
-**论文**：Reliable and Efficient Agentic Workflow Execution
-**版本**：我检索到的是 2025 年 11 月发布的 arXiv v1，标注为 MLSys 在审的 preliminary work。">
+
+
+
+
+
+<title>Sherlock：Reliable and Efficient Agentic Workflow Execution</title>
+<meta name="description" content="论文解读：Sherlock 论文：Reliable and Efficient Agentic Workflow Execution 版本：我检索到的是 2025 年 11 月发布的 arXiv v1，标注为 MLSys 在审的 preliminary work。">
 <meta property="og:title" content="Sherlock：Reliable and Efficient Agentic Workflow Execution">
-<meta property="og:description" content="# 论文解读：Sherlock
-
-**论文**：Reliable and Efficient Agentic Workflow Execution
-**版本**：我检索到的是 2025 年 11 月发布的 arXiv v1，标注为 MLSys 在审的 preliminary work。">
+<meta property="og:description" content="论文解读：Sherlock 论文：Reliable and Efficient Agentic Workflow Execution 版本：我检索到的是 2025 年 11 月发布的 arXiv v1，标注为 MLSys 在审的 preliminary work。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/Sherlock%EF%BC%9AReliable%20and%20Efficient%20Agentic%20Workflow%20Execution.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>Sherlock：Reliable and Efficient Agentic Workflow Execution</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sherlock：Reliable and Efficient Agentic Workflow Execution">
+<meta name="twitter:description" content="论文解读：Sherlock 论文：Reliable and Efficient Agentic Workflow Execution 版本：我检索到的是 2025 年 11 月发布的 arXiv v1，标注为 MLSys 在审的 preliminary work。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Sherlock%EF%BC%9AReliable%20and%20Efficient%20Agentic%20Workflow%20Execution.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -50,35 +53,36 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">Sherlock：Reliable and Efficient Agentic Workflow Execution</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/4" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/4" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>论文解读：Sherlock</h1>
 <p><strong>论文</strong>：Reliable and Efficient Agentic Workflow Execution<br>
-<strong>版本</strong>：我检索到的是 2025 年 11 月发布的 arXiv v1，标注为 MLSys 在审的 preliminary work。Sherlock 关注的是：<strong>工作流已经生成之后，怎样以尽可能低的成本和延迟，阻止局部错误传播到最终答案。</strong> (<a href="https://arxiv.org/abs/2511.00330?utm_source=chatgpt.com" title="Sherlock: Reliable and Efficient Agentic Workflow Execution" rel="nofollow">arXiv</a>)</p>
+<strong>版本</strong>：我检索到的是 2025 年 11 月发布的 arXiv v1，标注为 MLSys 在审的 preliminary work。Sherlock 关注的是：<strong>工作流已经生成之后，怎样以尽可能低的成本和延迟，阻止局部错误传播到最终答案。</strong> (<a href="https://arxiv.org/abs/2511.00330?utm_source=chatgpt.com" title="Sherlock: Reliable and Efficient Agentic Workflow Execution" rel="nofollow" aria-label="Sherlock: Reliable and Efficient Agentic Workflow Execution">arXiv</a>)</p>
 <hr>
 <h1>Step 1：讲解论文</h1>
 <h2>1. 论文要解决什么问题？</h2>
@@ -97,7 +101,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
   ↘       ↙
  汇总成最终课件
 </code></pre>
-<p>这里的问题是：如果“大纲生成”节点理解错了，那么后面的所有节点都可能在错误目标上继续工作。单个节点的小错误，会沿着工作流传播甚至放大。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>这里的问题是：如果“大纲生成”节点理解错了，那么后面的所有节点都可能在错误目标上继续工作。单个节点的小错误，会沿着工作流传播甚至放大。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <p>一个直接办法是给每个节点都加验证器，例如：</p>
 <ul>
 <li>Self-Refine：让原模型自己检查并修改；</li>
@@ -106,14 +110,14 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>LLM-as-a-Judge：用单独的 Judge 判断；</li>
 <li>Debate：让多个模型辩论后再裁决。</li>
 </ul>
-<p>但论文发现，验证器本身可能让推理延迟增加最高 <strong>28.9 倍</strong>、成本增加最高 <strong>53.2 倍</strong>。如果工作流有十个节点，每个都验证，系统可能比原来贵几十倍。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>但论文发现，验证器本身可能让推理延迟增加最高 <strong>28.9 倍</strong>、成本增加最高 <strong>53.2 倍</strong>。如果工作流有十个节点，每个都验证，系统可能比原来贵几十倍。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <p>因此，Sherlock 实际回答三个问题：</p>
 <ol>
 <li><strong>哪些节点最值得监督？</strong></li>
 <li><strong>这些节点应该分配哪一种监督者？</strong></li>
 <li><strong>监督过程中，怎样避免整个工作流停下来等待？</strong></li>
 </ol>
-<p>(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <hr>
 <h2>2. 第一部分：找出最值得验证的节点</h2>
 <h3>2.1 反事实故障注入</h3>
@@ -140,12 +144,12 @@ $$</p>
 <p><strong>这个节点一旦出错，会对最终结果造成多大影响。</strong></p>
 </blockquote>
 <p>论文注入三类故障：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>故障类型</th>
-<th>模拟方式</th>
-<th>含义</th>
+<th scope="col">故障类型</th>
+<th scope="col">模拟方式</th>
+<th scope="col">含义</th>
 </tr>
 </thead>
 <tbody>
@@ -165,8 +169,8 @@ $$</p>
 <td>推理、工具调用或格式发生错误</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
-<p>三类错误频率参考了真实多智能体执行日志中的错误分布，其中执行错误约占 52.69%，行为偏离约占 28.63%，上下文丢失约占 18.68%。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+</table></div>
+<p>三类错误频率参考了真实多智能体执行日志中的错误分布，其中执行错误约占 52.69%，行为偏离约占 28.63%，上下文丢失约占 18.68%。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <h3>2.2 得到的结构性规律</h3>
 <p>作者在 100 多张工作流图、超过 1.5 万条执行轨迹上进行故障注入，得到三个主要规律：</p>
 <p><strong>第一，最终节点最脆弱。</strong></p>
@@ -174,7 +178,7 @@ $$</p>
 <p><strong>第二，初始节点也比较重要。</strong></p>
 <p>最开始对任务理解错误，会使整个工作流沿着错误目标执行。</p>
 <p><strong>第三，入度越高的节点越危险。</strong></p>
-<p>入度高意味着这个节点要汇总多个上游结果，它既可能继承多个上游错误，也可能在汇总过程中放大冲突。相反，论文没有观察到出度，即下游分支数量，与节点脆弱性存在明显相关性。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>入度高意味着这个节点要汇总多个上游结果，它既可能继承多个上游错误，也可能在汇总过程中放大冲突。相反，论文没有观察到出度，即下游分支数量，与节点脆弱性存在明显相关性。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <p>于是论文给出一个很简单的验证优先级：</p>
 <pre lang="text" class="notranslate"><code class="notranslate">最终节点
   &gt;
@@ -182,7 +186,7 @@ $$</p>
   &gt;
 中间节点，按入度从高到低排序
 </code></pre>
-<p>如果用户只允许验证两个节点，就选前两个；如果预算更多，再逐步加入高入度的中间节点。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>如果用户只允许验证两个节点，就选前两个；如果预算更多，再逐步加入高入度的中间节点。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <h3>我的看法</h3>
 <p>这里最有价值是论文提出了一个明确的研究范式：</p>
 <blockquote>
@@ -215,8 +219,8 @@ $(C(v_i,\tau))$：额外计算成本；</li>
 <li>
 $(\lambda)$：用户有多在意成本。</li>
 </ul>
-<p>当 $(\lambda)$ 小，系统更愿意使用昂贵但强大的验证器；当 $(\lambda)$ 大，系统更倾向于选择便宜的验证方法。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
-<p>在实现上，论文使用 DistilBERT 编码任务提示词，再通过线性层预测每个候选验证器的偏好分数。训练时，用同一任务下不同验证器之间的相对效用作为 advantage，采用作者所称的 GRPO 式组内相对偏好优化。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>当 $(\lambda)$ 小，系统更愿意使用昂贵但强大的验证器；当 $(\lambda)$ 大，系统更倾向于选择便宜的验证方法。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
+<p>在实现上，论文使用 DistilBERT 编码任务提示词，再通过线性层预测每个候选验证器的偏好分数。训练时，用同一任务下不同验证器之间的相对效用作为 advantage，采用作者所称的 GRPO 式组内相对偏好优化。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <p>通俗地说，它学习的是：</p>
 <pre lang="text" class="notranslate"><code class="notranslate">输入：这个节点当前负责什么任务？
 输出：
@@ -249,7 +253,7 @@ Self-Consistency  0.20
 ├── 后台验证 W1
 └── 同时继续执行 W2、W3
 </code></pre>
-<p>如果 W1 验证通过，W2、W3 的结果直接保留；如果 W1 被验证器修改，依赖 W1 的下游结果可能失效，于是系统回滚并重新执行。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>如果 W1 验证通过，W2、W3 的结果直接保留；如果 W1 被验证器修改，依赖 W1 的下游结果可能失效，于是系统回滚并重新执行。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <p>这类似 CPU 的 speculative execution：</p>
 <blockquote>
 <p>先假设前面的结果没问题，继续向前执行；如果后来发现猜错，再撤销。</p>
@@ -259,7 +263,7 @@ Self-Consistency  0.20
 <li>下游节点的累计执行时间不能超过当前验证器的执行时间；</li>
 <li>推测执行产生的预期浪费成本不能超过用户预算。</li>
 </ol>
-<p>推测越深，延迟越低；但一旦回滚，浪费的计算越多。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>推测越深，延迟越低；但一旦回滚，浪费的计算越多。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <h3>选择性回滚</h3>
 <p>验证器修改原输出，并不意味着下游结果一定失效。</p>
 <p>Sherlock 使用轻量相似度指标判断是否回滚。实验发现：</p>
@@ -267,7 +271,7 @@ Self-Consistency  0.20
 <li>在指令和工具任务上，ROUGE-L 与语义等价标签相关性较好，AUC 分别约为 0.828 和 0.877；</li>
 <li>在代码和数学任务上，所有轻量指标基本接近随机判断，甚至出现负相关。</li>
 </ul>
-<p>因此，对指令和工具任务，Sherlock 使用 ROUGE-L 阈值决定是否回滚；对代码和数学任务，则保守地全部回滚。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>因此，对指令和工具任务，Sherlock 使用 ROUGE-L 阈值决定是否回滚；对代码和数学任务，则保守地全部回滚。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <h3>我的看法</h3>
 <p>这一部分是论文中最具有“系统论文味道”的设计。它没有单纯降低验证次数，而是通过并行执行隐藏验证延迟。</p>
 <p>不过，它依赖一个重要前提：工作流节点必须具有可回滚性。对于发送邮件、支付、删除文件、修改数据库等带有外部副作用的工具调用，简单“撤销下游结果”并不成立。</p>
@@ -283,16 +287,16 @@ Self-Consistency  0.20
 \text{成本}\downarrow,\qquad
 \text{延迟}\downarrow
 $$</p>
-<p>其真正的新意不在某个单独模块，而在于把<strong>错误传播、验证器路由和运行时调度</strong>整合成一个完整系统。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>其真正的新意不在某个单独模块，而在于把<strong>错误传播、验证器路由和运行时调度</strong>整合成一个完整系统。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <hr>
 <h1>Step 2：实验部分</h1>
 <h2>1. 实验设置</h2>
 <p>论文使用一台配有 <strong>8 张 A100 80GB</strong> 的服务器：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>功能</th>
-<th>模型</th>
+<th scope="col">功能</th>
+<th scope="col">模型</th>
 </tr>
 </thead>
 <tbody>
@@ -313,14 +317,14 @@ $$</p>
 <td>Selene-1-Mini-Llama-3.1-8B</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>工作流由 Flow Planner 动态生成。主要测试三个基准：</p>
 <ul>
 <li><strong>CoTCollection</strong>：多步指令理解和推理；</li>
 <li><strong>OMEGA compositional subset</strong>：组合数学推理；</li>
 <li><strong>LiveCodeBench</strong>：代码生成、执行和输出预测。</li>
 </ul>
-<p>成本、准确率和延迟分别单独测量。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>成本、准确率和延迟分别单独测量。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <h2>2. 实验一：验证器真的需要动态选择吗？</h2>
 <p>答案是需要。</p>
 <p>不同验证器在不同任务上的表现差异很大，而且成本和准确率并非单调关系。某些验证器不仅没有提升结果，反而因为错误反馈或冲突判断降低准确率。</p>
@@ -348,18 +352,18 @@ $$</p>
 <li>Sherlock 的动态选择器；</li>
 <li>知道正确答案的 Oracle。</li>
 </ul>
-<p>结果显示，Sherlock 的准确率—成本点基本落在 Pareto frontier 上，即在相同成本下获得更高准确率，或者在相同准确率下花费更少成本，并接近 Oracle 的效果。与不验证基线相比，论文报告平均准确率提高 <strong>18.3%</strong>；与基于 Monte Carlo 搜索的方法相比，验证成本降低约 <strong>26.0%</strong>。(<a href="https://arxiv.org/abs/2511.00330?utm_source=chatgpt.com" title="Sherlock: Reliable and Efficient Agentic Workflow Execution" rel="nofollow">arXiv</a>)</p>
+<p>结果显示，Sherlock 的准确率—成本点基本落在 Pareto frontier 上，即在相同成本下获得更高准确率，或者在相同准确率下花费更少成本，并接近 Oracle 的效果。与不验证基线相比，论文报告平均准确率提高 <strong>18.3%</strong>；与基于 Monte Carlo 搜索的方法相比，验证成本降低约 <strong>26.0%</strong>。(<a href="https://arxiv.org/abs/2511.00330?utm_source=chatgpt.com" title="Sherlock: Reliable and Efficient Agentic Workflow Execution" rel="nofollow" aria-label="Sherlock: Reliable and Efficient Agentic Workflow Execution">arXiv</a>)</p>
 <p><strong>我的判断</strong>：结果支持动态选择器有效，但这里的 Oracle 是“事后知道哪个验证器能给出正确答案”的理想上界，现实系统无法获得。另外，Sherlock 的离线训练数据需要在训练任务上运行全部候选验证器，域接入成本并不低，只是被移到了离线阶段。</p>
 <hr>
 <h2>5. 实验四：推测执行能降低多少延迟？</h2>
 <p>平均延迟下降如下：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>数据集</th>
-<th align="right">执行完成时间 $(T_{\text{exec}})$
+<th scope="col">数据集</th>
+<th scope="col" align="right">执行完成时间 $(T_{\text{exec}})$
 </th>
-<th align="right">最终验证完成时间 $(T_{\text{vrf}})$
+<th scope="col" align="right">最终验证完成时间 $(T_{\text{vrf}})$
 </th>
 </tr>
 </thead>
@@ -380,9 +384,9 @@ $$</p>
 <td align="right">48.7%</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
-<p>LiveCodeBench 提升最大，因为代码工作流中的节点执行和验证时间都较长，能够与更多下游计算重叠。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
-<p>但有一个值得注意的细节：OMEGA 的 P99 延迟下降只有约 4.8% 和 5.5%。这意味着平均延迟改善明显，但在部分极端工作流上，回滚、图结构或验证器时延可能使尾延迟收益接近消失。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+</table></div>
+<p>LiveCodeBench 提升最大，因为代码工作流中的节点执行和验证时间都较长，能够与更多下游计算重叠。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
+<p>但有一个值得注意的细节：OMEGA 的 P99 延迟下降只有约 4.8% 和 5.5%。这意味着平均延迟改善明显，但在部分极端工作流上，回滚、图结构或验证器时延可能使尾延迟收益接近消失。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <h3>实验部分总体评价</h3>
 <p>实验的优点是组件拆分比较清楚：</p>
 <ul>
@@ -403,34 +407,34 @@ $$</p>
 <li>同一拓扑位置在不同语义工作流中的重要性可能完全不同；</li>
 <li>固定温度为 0 的故障实验不能覆盖真实生产环境中的采样波动。</li>
 </ul>
-<p>论文至少需要补充跨 Planner、跨模型、跨领域的 OOD 实验，并使用真实失败轨迹验证：合成故障得到的节点排序，是否真的与线上错误传播风险一致。现有结果更像是对有限实验分布有效的经验规则，而不是可靠的通用脆弱性估计器。相关结论目前建立在 100 多张图和约 1.5 万条注入轨迹上。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow">arXiv</a>)</p>
+<p>论文至少需要补充跨 Planner、跨模型、跨领域的 OOD 实验，并使用真实失败轨迹验证：合成故障得到的节点排序，是否真的与线上错误传播风险一致。现有结果更像是对有限实验分布有效的经验规则，而不是可靠的通用脆弱性估计器。相关结论目前建立在 100 多张图和约 1.5 万条注入轨迹上。(<a href="https://arxiv.org/html/2511.00330v1" title="1 Introduction" rel="nofollow" aria-label="1 Introduction">arXiv</a>)</p>
 <h2>最终判断</h2>
 <p><strong>Weak Accept，6/10。</strong></p>
 <p>理由是：问题重要，系统设计完整，错误传播分析、验证器路由和推测执行的组合具有明确价值，实验也展示了不错的准确率—成本—延迟权衡。但其最核心的节点脆弱性策略仍较启发式，跨域和真实生产环境的外部有效性不足。作为 MLSys 类系统论文可以弱接收；若按强调方法普适性的顶级机器学习会议标准，则更接近 Borderline。</p>
 <hr>
 <h1>Step 4：简要汇报</h1>
-<p>Sherlock面向多节点Agent工作流中的错误传播和验证开销问题。它先通过反事实故障注入分析节点对最终结果的影响，优先验证终点、起点和高入度节点；随后根据任务动态选择Self-Refine、Debate、LLM-as-a-Judge等成本最优验证器；运行时让验证与下游节点并行，并在发现错误后选择性回滚。实验平均提升18.3%准确率，并显著降低验证成本与执行延迟。其不足是节点风险仍主要依赖合成故障和静态拓扑规律，跨域泛化尚未充分验证。(<a href="https://arxiv.org/abs/2511.00330?utm_source=chatgpt.com" title="Sherlock: Reliable and Efficient Agentic Workflow Execution" rel="nofollow">arXiv</a>)</p>
+<p>Sherlock面向多节点Agent工作流中的错误传播和验证开销问题。它先通过反事实故障注入分析节点对最终结果的影响，优先验证终点、起点和高入度节点；随后根据任务动态选择Self-Refine、Debate、LLM-as-a-Judge等成本最优验证器；运行时让验证与下游节点并行，并在发现错误后选择性回滚。实验平均提升18.3%准确率，并显著降低验证成本与执行延迟。其不足是节点风险仍主要依赖合成故障和静态拓扑规律，跨域泛化尚未充分验证。(<a href="https://arxiv.org/abs/2511.00330?utm_source=chatgpt.com" title="Sherlock: Reliable and Efficient Agentic Workflow Execution" rel="nofollow" aria-label="Sherlock: Reliable and Efficient Agentic Workflow Execution">arXiv</a>)</p>
 <hr>
 <h1>Step 5：相关工作</h1>
 <h2>1. 输出验证与推理增强</h2>
-<p><strong>Self-Refine</strong> 让同一个模型依次生成答案、提供反馈并修改答案；<strong>Self-Consistency</strong> 通过采样多条推理路径并多数投票选答案；<strong>Multi-Agent Debate</strong> 让多个模型多轮讨论；<strong>LLM-as-a-Judge</strong> 使用强模型评估候选答案。Sherlock 没有重新发明这些验证器，而是把它们作为候选监督操作，研究何时、何地以及选择哪一种。(<a href="https://arxiv.org/abs/2303.17651?utm_source=chatgpt.com" title="Self-Refine: Iterative Refinement with Self-Feedback" rel="nofollow">arXiv</a>)</p>
+<p><strong>Self-Refine</strong> 让同一个模型依次生成答案、提供反馈并修改答案；<strong>Self-Consistency</strong> 通过采样多条推理路径并多数投票选答案；<strong>Multi-Agent Debate</strong> 让多个模型多轮讨论；<strong>LLM-as-a-Judge</strong> 使用强模型评估候选答案。Sherlock 没有重新发明这些验证器，而是把它们作为候选监督操作，研究何时、何地以及选择哪一种。(<a href="https://arxiv.org/abs/2303.17651?utm_source=chatgpt.com" title="Self-Refine: Iterative Refinement with Self-Feedback" rel="nofollow" aria-label="Self-Refine: Iterative Refinement with Self-Feedback">arXiv</a>)</p>
 <h2>2. 自动工作流生成与优化</h2>
-<p><strong>ADAS</strong> 使用 Meta Agent 自动编写和搜索 Agent 系统；<strong>AFlow</strong> 把工作流表示成代码图，并通过 Monte Carlo Tree Search 优化；<strong>Flow</strong> 使用活动节点图动态调整子任务和工作流结构。这些工作主要回答“工作流应该长什么样”，Sherlock 回答“工作流生成以后，怎样可靠、低成本地执行”。(<a href="https://arxiv.org/abs/2410.10762?utm_source=chatgpt.com" title="AFlow: Automating Agentic Workflow Generation" rel="nofollow">arXiv</a>)</p>
+<p><strong>ADAS</strong> 使用 Meta Agent 自动编写和搜索 Agent 系统；<strong>AFlow</strong> 把工作流表示成代码图，并通过 Monte Carlo Tree Search 优化；<strong>Flow</strong> 使用活动节点图动态调整子任务和工作流结构。这些工作主要回答“工作流应该长什么样”，Sherlock 回答“工作流生成以后，怎样可靠、低成本地执行”。(<a href="https://arxiv.org/abs/2410.10762?utm_source=chatgpt.com" title="AFlow: Automating Agentic Workflow Generation" rel="nofollow" aria-label="AFlow: Automating Agentic Workflow Generation">arXiv</a>)</p>
 <h2>3. 节点模型与组件路由</h2>
-<p><strong>LLMSelector</strong> 研究复合 AI 系统中每个模块应该使用哪个模型，并通过模块级性能估计减少组合搜索。它和 Sherlock 的验证器选择非常接近，但 LLMSelector 路由的是执行模型，Sherlock 路由的是 Self-Refine、Debate、Judge 等验证机制。(<a href="https://arxiv.org/abs/2502.14815?utm_source=chatgpt.com" title="Optimizing Model Selection for Compound AI Systems" rel="nofollow">arXiv</a>)</p>
+<p><strong>LLMSelector</strong> 研究复合 AI 系统中每个模块应该使用哪个模型，并通过模块级性能估计减少组合搜索。它和 Sherlock 的验证器选择非常接近，但 LLMSelector 路由的是执行模型，Sherlock 路由的是 Self-Refine、Debate、Judge 等验证机制。(<a href="https://arxiv.org/abs/2502.14815?utm_source=chatgpt.com" title="Optimizing Model Selection for Compound AI Systems" rel="nofollow" aria-label="Optimizing Model Selection for Compound AI Systems">arXiv</a>)</p>
 <h2>4. Agent 工作流服务系统</h2>
-<p><strong>Murakkab</strong> 从工作流、模型和硬件三个层面联合优化资源配置；<strong>Circinus</strong> 根据延迟、成本和准确率 SLO 规划复合 AI Pipeline；<strong>Autellix</strong> 把整个 Agent 程序而非单次 LLM 请求作为调度单位。它们更侧重资源调度和系统吞吐，而 Sherlock 的重点是验证器放置、错误恢复和可靠性。(<a href="https://arxiv.org/abs/2508.18298?utm_source=chatgpt.com" title="Murakkab: Resource-Efficient Agentic Workflow ..." rel="nofollow">arXiv</a>)</p>
+<p><strong>Murakkab</strong> 从工作流、模型和硬件三个层面联合优化资源配置；<strong>Circinus</strong> 根据延迟、成本和准确率 SLO 规划复合 AI Pipeline；<strong>Autellix</strong> 把整个 Agent 程序而非单次 LLM 请求作为调度单位。它们更侧重资源调度和系统吞吐，而 Sherlock 的重点是验证器放置、错误恢复和可靠性。(<a href="https://arxiv.org/abs/2508.18298?utm_source=chatgpt.com" title="Murakkab: Resource-Efficient Agentic Workflow ..." rel="nofollow" aria-label="Murakkab: Resource-Efficient Agentic Workflow ...">arXiv</a>)</p>
 <h2>5. Agent 推测执行</h2>
-<p><strong>Speculative Actions</strong> 使用快速模型预测 Agent 接下来可能执行的动作，并提前并行执行。Sherlock 的推测对象不同：它不预测下一步，而是在当前节点验证尚未完成时，假设原输出正确并继续运行已知的下游工作流；验证失败后再回滚。(<a href="https://arxiv.org/abs/2510.04371?utm_source=chatgpt.com" title="Speculative Actions: A Lossless Framework for Faster Agentic Systems" rel="nofollow">arXiv</a>)</p></div>
+<p><strong>Speculative Actions</strong> 使用快速模型预测 Agent 接下来可能执行的动作，并提前并行执行。Sherlock 的推测对象不同：它不预测下一步，而是在当前节点验证尚未完成时，假设原输出正确并继续运行已知的下游工作流；验证失败后再回滚。(<a href="https://arxiv.org/abs/2510.04371?utm_source=chatgpt.com" title="Speculative Actions: A Lossless Framework for Faster Agentic Systems" rel="nofollow" aria-label="Speculative Actions: A Lossless Framework for Faster Agentic Systems">arXiv</a>)</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -496,6 +500,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

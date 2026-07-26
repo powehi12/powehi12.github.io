@@ -5,24 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 前言
 
-标题：[A Whole-Cell Computational Model Predicts Phenotype from Genotype](https://pmc.ncbi.nlm.nih.gov/articles/PMC3413483/)  
-（该论文未发现对应的 arXiv 版本，因此链接至 PMC 开放全文。">
+
+
+
+
+
+<title>把细胞写成程序：首个从基因功能推演生命表型的整细胞模型</title>
+<meta name="description" content="前言 标题：A Whole-Cell Computational Model Predicts Phenotype from Genotype （该论文未发现对应的 arXiv 版本，因此链接至 PMC 开放全文。">
 <meta property="og:title" content="把细胞写成程序：首个从基因功能推演生命表型的整细胞模型">
-<meta property="og:description" content="# 前言
-
-标题：[A Whole-Cell Computational Model Predicts Phenotype from Genotype](https://pmc.ncbi.nlm.nih.gov/articles/PMC3413483/)  
-（该论文未发现对应的 arXiv 版本，因此链接至 PMC 开放全文。">
+<meta property="og:description" content="前言 标题：A Whole-Cell Computational Model Predicts Phenotype from Genotype （该论文未发现对应的 arXiv 版本，因此链接至 PMC 开放全文。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/ba-xi-bao-xie-cheng-cheng-xu-%EF%BC%9A-shou-ge-cong-ji-yin-gong-neng-tui-yan-sheng-ming-biao-xing-de-zheng-xi-bao-mo-xing.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>把细胞写成程序：首个从基因功能推演生命表型的整细胞模型</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="把细胞写成程序：首个从基因功能推演生命表型的整细胞模型">
+<meta name="twitter:description" content="前言 标题：A Whole-Cell Computational Model Predicts Phenotype from Genotype （该论文未发现对应的 arXiv 版本，因此链接至 PMC 开放全文。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/ba-xi-bao-xie-cheng-cheng-xu-%EF%BC%9A-shou-ge-cong-ji-yin-gong-neng-tui-yan-sheng-ming-biao-xing-de-zheng-xi-bao-mo-xing.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -50,32 +53,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">把细胞写成程序：首个从基因功能推演生命表型的整细胞模型</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/16" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/16" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>前言</h1>
 <p>标题：<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3413483/" rel="nofollow">A Whole-Cell Computational Model Predicts Phenotype from Genotype</a><br>
 （该论文未发现对应的 arXiv 版本，因此链接至 PMC 开放全文。）</p>
@@ -111,12 +115,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h2>3：28个模块如何组成一个细胞</h2>
 <h3>3.1：每个过程使用不同的数学语言</h3>
 <p>作者将细胞划分为28个过程子模型，覆盖六个主要领域：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>领域</th>
-<th>代表过程</th>
-<th>建模方式</th>
+<th scope="col">领域</th>
+<th scope="col">代表过程</th>
+<th scope="col">建模方式</th>
 </tr>
 </thead>
 <tbody>
@@ -151,7 +155,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td>经验和逻辑规则</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>这里最聪明的地方，是作者没有强迫整个细胞服从同一种方程。代谢适合用通量优化，分子降解适合用泊松过程，复制和翻译则适合使用随机动力学。</p>
 <h3>3.2：用共享状态解决模块耦合</h3>
 <p>28个模块通过16类共享细胞状态连接，包括代谢物、RNA、蛋白质、蛋白复合物、核糖体、RNA聚合酶、染色体、FtsZ环、细胞质量和体积等。</p>
@@ -218,12 +222,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h1>Step 2：实验部分</h1>
 <h2>1：必须先分清三种不同证据</h2>
 <p>论文中的结果不能全部称为“预测”。它们应当分成三个层级：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>层级</th>
-<th align="right">数据是否参与建模</th>
-<th>能说明什么</th>
+<th scope="col">层级</th>
+<th scope="col" align="right">数据是否参与建模</th>
+<th scope="col">能说明什么</th>
 </tr>
 </thead>
 <tbody>
@@ -243,7 +247,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td>模型是否具有真实预测和发现能力</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>这个区分非常重要。能够重现用于设定参数的数据，只说明模型没有明显写错；真正有说服力的是未用于建模的数据，尤其是模型产生预测之后才进行的实验。</p>
 <h2>2：野生型模拟首先证明模型能够正常“活着”</h2>
 <p>作者分析了128个野生型模拟细胞。模型得到的平均细胞周期约为9小时，与实验观察的约8.3—9.2小时接近。</p>
@@ -297,12 +301,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </ul>
 <p>所以这些结果是有力的新假说和参数约束，而不是已经彻底完成的机制证明。</p>
 <h2>6：实验最终支持了什么</h2>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>论文主张</th>
-<th>实验证据强度</th>
-<th>结论</th>
+<th scope="col">论文主张</th>
+<th scope="col">实验证据强度</th>
+<th scope="col">结论</th>
 </tr>
 </thead>
 <tbody>
@@ -337,7 +341,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td>仍需生化实验</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <h1>Step 3：other</h1>
 <h2>1：重点</h2>
 <p>这篇论文最有价值的思想不是“把525个基因装进电脑”，而是把生物学知识变成一个能够接受扰动并产生后果的可执行系统。其真正精华可以概括为两句话：不同细胞过程通过共享资源耦合后，会出现单个模块中不存在的涌现规律；模型与实验的不一致不是单纯的失败，而是定位错误参数、未知旁路和知识缺口的入口。</p>
@@ -361,9 +365,9 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -429,6 +433,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

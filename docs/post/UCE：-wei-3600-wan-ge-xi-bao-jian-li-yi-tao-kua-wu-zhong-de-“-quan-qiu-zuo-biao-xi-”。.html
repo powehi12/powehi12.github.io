@@ -5,30 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 前言
 
-**标题：** [Universal cell embedding provides a foundation model for cell biology](https://www.biorxiv.org/content/10.1101/2023.11.28.568918v3)
 
-**标签：** 单细胞基础模型；跨物种表征；零样本学习；细胞图谱
 
-**摘要：** 最本质地说，这篇论文想给所有物种、组织和实验中的细胞建立一套统一的“全球坐标系”：无论一个细胞来自人、鼠、鸡，还是来自一个模型从没见过的新实验，都能直接被放进同一张细胞地图，而不需要针对新数据重新训练模型。">
+
+
+
+<title>UCE：为3600万个细胞建立一套跨物种的“全球坐标系”。</title>
+<meta name="description" content="前言 标题： Universal cell embedding provides a foundation model for cell biology 标签： 单细胞基础模型；跨物种表征；零样本学习；细胞图谱 摘要： 最本质地说，这篇论文想给所有物种、组织和实验中的细胞建立一套统一的“全球坐标系”：无论一个细胞…">
 <meta property="og:title" content="UCE：为3600万个细胞建立一套跨物种的“全球坐标系”。">
-<meta property="og:description" content="# 前言
-
-**标题：** [Universal cell embedding provides a foundation model for cell biology](https://www.biorxiv.org/content/10.1101/2023.11.28.568918v3)
-
-**标签：** 单细胞基础模型；跨物种表征；零样本学习；细胞图谱
-
-**摘要：** 最本质地说，这篇论文想给所有物种、组织和实验中的细胞建立一套统一的“全球坐标系”：无论一个细胞来自人、鼠、鸡，还是来自一个模型从没见过的新实验，都能直接被放进同一张细胞地图，而不需要针对新数据重新训练模型。">
+<meta property="og:description" content="前言 标题： Universal cell embedding provides a foundation model for cell biology 标签： 单细胞基础模型；跨物种表征；零样本学习；细胞图谱 摘要： 最本质地说，这篇论文想给所有物种、组织和实验中的细胞建立一套统一的“全球坐标系”：无论一个细胞…">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/UCE%EF%BC%9A-wei-3600-wan-ge-xi-bao-jian-li-yi-tao-kua-wu-zhong-de-%E2%80%9C-quan-qiu-zuo-biao-xi-%E2%80%9D%E3%80%82.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>UCE：为3600万个细胞建立一套跨物种的“全球坐标系”。</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UCE：为3600万个细胞建立一套跨物种的“全球坐标系”。">
+<meta name="twitter:description" content="前言 标题： Universal cell embedding provides a foundation model for cell biology 标签： 单细胞基础模型；跨物种表征；零样本学习；细胞图谱 摘要： 最本质地说，这篇论文想给所有物种、组织和实验中的细胞建立一套统一的“全球坐标系”：无论一个细胞…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/UCE%EF%BC%9A-wei-3600-wan-ge-xi-bao-jian-li-yi-tao-kua-wu-zhong-de-%E2%80%9C-quan-qiu-zuo-biao-xi-%E2%80%9D%E3%80%82.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -56,32 +53,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">UCE：为3600万个细胞建立一套跨物种的“全球坐标系”。</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/20" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/20" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>前言</h1>
 <p><strong>标题：</strong> <a href="https://www.biorxiv.org/content/10.1101/2023.11.28.568918v3" rel="nofollow">Universal cell embedding provides a foundation model for cell biology</a></p>
 <p><strong>标签：</strong> 单细胞基础模型；跨物种表征；零样本学习；细胞图谱</p>
@@ -346,14 +344,14 @@ $$</p>
 <p>总分按约60%生物学保持和40%批次校正加权。这里存在天然张力：把批次混得越彻底，有时也会错误地把真实生物差异抹掉。</p>
 <h2>2：Tabula Sapiens v2 主实验</h2>
 <p>Tabula Sapiens v2 是训练时未见的新数据，包含581,430个细胞、27种组织、167个批次和162种细胞类型。(<a href="https://www.nature.com/articles/s41586-026-10689-z" rel="nofollow">Nature</a>)</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>方法</th>
-<th>是否针对目标数据训练</th>
-<th>生物学保持</th>
-<th>批次校正</th>
-<th>总分</th>
+<th scope="col">方法</th>
+<th scope="col">是否针对目标数据训练</th>
+<th scope="col">生物学保持</th>
+<th scope="col">批次校正</th>
+<th scope="col">总分</th>
 </tr>
 </thead>
 <tbody>
@@ -407,7 +405,7 @@ $$</p>
 <td>0.411</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>(<a href="https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-10689-z/MediaObjects/41586_2026_10689_MOESM1_ESM.pdf" rel="nofollow">Springer Static Content</a>)</p>
 <p>结果可以分两层理解。</p>
 <p>第一，与同为零样本基础模型的 Geneformer 和 scGPT 相比，UCE 优势比较明显，说明其蛋白质表示、抽样策略和大规模训练总体有效。</p>
@@ -419,13 +417,13 @@ $$</p>
 <p>因此，这个实验的卖点是 <strong>零样本效率和坐标稳定性</strong> ，不是单纯的 benchmark 分数。</p>
 <h2>3：混合测序平台与百万级脑图谱</h2>
 <p>在同时包含10x 3′ v3.1和 Smart-seq2.5 的卵巢数据中：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>方法</th>
-<th>生物学保持</th>
-<th>批次校正</th>
-<th>总分</th>
+<th scope="col">方法</th>
+<th scope="col">生物学保持</th>
+<th scope="col">批次校正</th>
+<th scope="col">总分</th>
 </tr>
 </thead>
 <tbody>
@@ -454,7 +452,7 @@ $$</p>
 <td>0.532</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>(<a href="https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-10689-z/MediaObjects/41586_2026_10689_MOESM1_ESM.pdf" rel="nofollow">Springer Static Content</a>)</p>
 <p>UCE 的总分和生物学保持最好，但批次校正并非第一，scVI 的批次分数更高。</p>
 <p>这个结果反而比较可信：它说明 UCE 没有通过“把所有东西强行混在一起”换取高分，而是更倾向于保留细胞类型结构。</p>
@@ -473,13 +471,13 @@ $$</p>
 </blockquote>
 <h2>4：跨物种标签迁移实验</h2>
 <p>下面是将新物种与人类参考数据对齐后的标签迁移准确率：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>数据集</th>
-<th>UCE</th>
-<th>SATURN</th>
-<th>SAMap</th>
+<th scope="col">数据集</th>
+<th scope="col">UCE</th>
+<th scope="col">SATURN</th>
+<th scope="col">SAMap</th>
 </tr>
 </thead>
 <tbody>
@@ -508,7 +506,7 @@ $$</p>
 <td><strong>0.464</strong></td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>(<a href="https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-10689-z/MediaObjects/41586_2026_10689_MOESM1_ESM.pdf" rel="nofollow">Springer Static Content</a>)</p>
 <p>作者说 UCE 分别在四个数据集中的三个上超过 SATURN，也在三个上超过 SAMap，这句话是正确的，但容易给人“UCE 四个任务都最好”的错觉。</p>
 <p>事实上：</p>
@@ -539,11 +537,11 @@ $$</p>
 <p>因此，UCE 对 <strong>细胞大类和层级关系</strong> 的恢复比较可靠，对特别细的亚型名称则不能盲信。</p>
 <h2>6：消融实验、计算成本与复现问题</h2>
 <p>完整模型配置如下：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>项目</th>
-<th>数值</th>
+<th scope="col">项目</th>
+<th scope="col">数值</th>
 </tr>
 </thead>
 <tbody>
@@ -580,7 +578,7 @@ $$</p>
 <td>43.5天</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>(<a href="https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-10689-z/MediaObjects/41586_2026_10689_MOESM1_ESM.pdf" rel="nofollow">Springer Static Content</a>)</p>
 <p>消融实验得到的部分结果是：</p>
 <ul>
@@ -620,7 +618,7 @@ $$</p>
 <blockquote>
 <p><strong>把来自不同物种、器官和实验室的细胞，都放进同一张“细胞世界地图”里。</strong></p>
 </blockquote>
-<p>在这张地图上，功能相似的细胞彼此靠近，不相似的细胞相距较远。新细胞即使来自模型从未见过的数据集，甚至来自新的物种，也可以直接被放入地图。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow">1</a>)</p>
+<p>在这张地图上，功能相似的细胞彼此靠近，不相似的细胞相距较远。新细胞即使来自模型从未见过的数据集，甚至来自新的物种，也可以直接被放入地图。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow" aria-label="Universal Cell Embeddings: A Foundation Model for Cell Biology">1</a>)</p>
 <hr>
 <h2>1. 它想解决什么问题？</h2>
 <p>单细胞 RNA 测序可以测出一个细胞中哪些基因正在活跃。</p>
@@ -659,7 +657,7 @@ UCE压缩
 <blockquote>
 <p>Google Maps 用经纬度表示城市，UCE 用数字坐标表示细胞。</p>
 </blockquote>
-<p>论文中的 UCE 将每个细胞表示为一个 <strong>1,280 维向量</strong>。([<a href="https://www.researchgate.net/publication/376068791_Universal_Cell_Embeddings_A_Foundation_Model_for_Cell_Biology?utm_source=chatgpt.com" rel="nofollow">ResearchGate</a>]<a href="https://www.researchgate.net/publication/376068791_Universal_Cell_Embeddings_A_Foundation_Model_for_Cell_Biology?utm_source=chatgpt.com" title="(PDF) Universal Cell Embeddings: A Foundation Model for ..." rel="nofollow">2</a>)</p>
+<p>论文中的 UCE 将每个细胞表示为一个 <strong>1,280 维向量</strong>。([<a href="https://www.researchgate.net/publication/376068791_Universal_Cell_Embeddings_A_Foundation_Model_for_Cell_Biology?utm_source=chatgpt.com" rel="nofollow">ResearchGate</a>]<a href="https://www.researchgate.net/publication/376068791_Universal_Cell_Embeddings_A_Foundation_Model_for_Cell_Biology?utm_source=chatgpt.com" title="(PDF) Universal Cell Embeddings: A Foundation Model for ..." rel="nofollow" aria-label="(PDF) Universal Cell Embeddings: A Foundation Model for ...">2</a>)</p>
 <hr>
 <h2>3. 它最特别的设计是什么？</h2>
 <h3>不只看基因名字，还看基因制造的蛋白质</h3>
@@ -675,7 +673,7 @@ UCE压缩
 <blockquote>
 <p>不只看员工的姓名，还看员工真正具备什么技能。</p>
 </blockquote>
-<p>正是这个设计，使 UCE 更容易把人、小鼠、鱼等不同物种的细胞放入同一个空间。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow">1</a>)</p>
+<p>正是这个设计，使 UCE 更容易把人、小鼠、鱼等不同物种的细胞放入同一个空间。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow" aria-label="Universal Cell Embeddings: A Foundation Model for Cell Biology">1</a>)</p>
 <hr>
 <h2>4. 它是怎么训练的？</h2>
 <p>UCE 的训练方式有点像“基因完形填空”。</p>
@@ -690,7 +688,7 @@ UCE压缩
 <li>不同组织之间有哪些共同规律；</li>
 <li>不同物种的相似细胞如何对应。</li>
 </ul>
-<p>论文中的模型有 <strong>33 层、约6.5亿个参数</strong>。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow">1</a>)</p>
+<p>论文中的模型有 <strong>33 层、约6.5亿个参数</strong>。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow" aria-label="Universal Cell Embeddings: A Foundation Model for Cell Biology">1</a>)</p>
 <hr>
 <h2>5. 作者做出了多大的“细胞地图”？</h2>
 <p>作者用 UCE 建立了一个大型综合细胞图谱，包含大约：</p>
@@ -701,7 +699,7 @@ UCE压缩
 <li><strong>50多种组织</strong>；</li>
 <li><strong>8个物种</strong>。</li>
 </ul>
-<p>这就像把原本散落在不同实验室、不同物种和不同器官中的细胞资料，统一放进一张巨大的地图。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow">1</a>)</p>
+<p>这就像把原本散落在不同实验室、不同物种和不同器官中的细胞资料，统一放进一张巨大的地图。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow" aria-label="Universal Cell Embeddings: A Foundation Model for Cell Biology">1</a>)</p>
 <hr>
 <h2>6. 最重要的能力：零样本使用</h2>
 <p>UCE 强调一种叫 <strong>zero-shot，零样本</strong> 的能力。</p>
@@ -712,7 +710,7 @@ UCE压缩
 <li>直接把新细胞放进已有地图。</li>
 </ul>
 <p>例如，模型训练时没有见过某种动物，研究人员仍可以把这种动物的细胞输入 UCE，然后观察它们更接近人类或小鼠中的哪类细胞。</p>
-<p>论文还在一个未参与训练的 Tabula Sapiens v2 数据集上测试了这种能力，并报告 UCE 在其评测设置中优于若干对比模型。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow">1</a>)</p>
+<p>论文还在一个未参与训练的 Tabula Sapiens v2 数据集上测试了这种能力，并报告 UCE 在其评测设置中优于若干对比模型。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow" aria-label="Universal Cell Embeddings: A Foundation Model for Cell Biology">1</a>)</p>
 <hr>
 <h2>7. 它有什么实际用途？</h2>
 <h3>自动识别细胞</h3>
@@ -723,7 +721,7 @@ UCE压缩
 <p>例如比较人类和小鼠的免疫细胞，寻找哪些细胞功能相似。</p>
 <h3>研究新发现的细胞</h3>
 <p>如果研究人员发现一种陌生细胞，可以观察它在大地图中最接近哪些已知细胞，从而推测它可能承担什么功能。</p>
-<p>论文还展示了细胞发育来源等生物学结构在模型空间中自然出现，作者将其视为模型学到部分已知生物规律的迹象。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow">1</a>)</p>
+<p>论文还展示了细胞发育来源等生物学结构在模型空间中自然出现，作者将其视为模型学到部分已知生物规律的迹象。([<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" rel="nofollow">Computer Science</a>]<a href="https://cs.stanford.edu/people/jure/pubs/uce-bioarxiv23.pdf" title="Universal Cell Embeddings: A Foundation Model for Cell Biology" rel="nofollow" aria-label="Universal Cell Embeddings: A Foundation Model for Cell Biology">1</a>)</p>
 <hr>
 <h2>8. 最简单的类比</h2>
 <p>假设世界各地医院都在记录病人的信息，但：</p>
@@ -772,7 +770,7 @@ UCE压缩
 <li>某位患者应该使用哪种治疗。</li>
 </ul>
 <p>换句话说，它主要学习的是<strong>细胞表示和组织结构</strong>，而不是完整的因果规律或时间演化。</p>
-<p>此外，这项工作目前仍以 bioRxiv 预印本形式存在，论文中的性能结论还需要结合独立复现和后续更严格的基础模型评测来看。([<a href="https://www.biorxiv.org/content/10.1101/2023.11.28.568918v3?utm_source=chatgpt.com" rel="nofollow">生物预印本</a>]<a href="https://www.biorxiv.org/content/10.1101/2023.11.28.568918v3?utm_source=chatgpt.com" title="Universal Cell Embeddings: A Foundation Model for Cell ..." rel="nofollow">3</a>)</p>
+<p>此外，这项工作目前仍以 bioRxiv 预印本形式存在，论文中的性能结论还需要结合独立复现和后续更严格的基础模型评测来看。([<a href="https://www.biorxiv.org/content/10.1101/2023.11.28.568918v3?utm_source=chatgpt.com" rel="nofollow">生物预印本</a>]<a href="https://www.biorxiv.org/content/10.1101/2023.11.28.568918v3?utm_source=chatgpt.com" title="Universal Cell Embeddings: A Foundation Model for Cell ..." rel="nofollow" aria-label="Universal Cell Embeddings: A Foundation Model for Cell ...">3</a>)</p>
 <h2>最核心的结论</h2>
 <blockquote>
 <p><strong>UCE 试图建立一套跨实验、跨组织、跨物种都能使用的“细胞通用坐标系”，让任何新细胞都可以直接放进同一张地图中进行比较。</strong></p>
@@ -784,9 +782,9 @@ UCE压缩
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -852,6 +850,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

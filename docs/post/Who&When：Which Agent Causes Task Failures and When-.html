@@ -5,22 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 论文解读：Which Agent Causes Task Failures and When?
 
-> **论文发表信息**：ICML 2025，论文集 PMLR 267。">
-<meta property="og:title" content="Who&When：Which Agent Causes Task Failures and When?">
-<meta property="og:description" content="# 论文解读：Which Agent Causes Task Failures and When?
 
-> **论文发表信息**：ICML 2025，论文集 PMLR 267。">
+
+
+
+
+<title>Who&amp;When：Which Agent Causes Task Failures and When?</title>
+<meta name="description" content="论文解读：Which Agent Causes Task Failures and When? 论文发表信息：ICML 2025，论文集 PMLR 267。">
+<meta property="og:title" content="Who&amp;When：Which Agent Causes Task Failures and When?">
+<meta property="og:description" content="论文解读：Which Agent Causes Task Failures and When? 论文发表信息：ICML 2025，论文集 PMLR 267。">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://powehi12.github.io/post/Who%26When%EF%BC%9AWhich%20Agent%20Causes%20Task%20Failures%20and%20When-.html">
+<meta property="og:url" content="https://powehi12.github.io/post/Who&amp;When%EF%BC%9AWhich%20Agent%20Causes%20Task%20Failures%20and%20When-.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>Who&When：Which Agent Causes Task Failures and When?</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Who&amp;When：Which Agent Causes Task Failures and When?">
+<meta name="twitter:description" content="论文解读：Which Agent Causes Task Failures and When? 论文发表信息：ICML 2025，论文集 PMLR 267。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Who&amp;When%EF%BC%9AWhich%20Agent%20Causes%20Task%20Failures%20and%20When-.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -48,35 +53,36 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">Who&When：Which Agent Causes Task Failures and When?</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/6" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/6" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>论文解读：Which Agent Causes Task Failures and When?</h1>
 <blockquote>
-<p><strong>论文发表信息</strong>：ICML 2025，论文集 PMLR 267。官方代码仓库将其标注为 ICML 2025 Spotlight。(<a href="https://proceedings.mlr.press/v267/zhang25cq.html?utm_source=chatgpt.com" title="Which Agent Causes Task Failures and When? On Automated ..." rel="nofollow">Proceedings of Machine Learning Research</a>)</p>
+<p><strong>论文发表信息</strong>：ICML 2025，论文集 PMLR 267。官方代码仓库将其标注为 ICML 2025 Spotlight。(<a href="https://proceedings.mlr.press/v267/zhang25cq.html?utm_source=chatgpt.com" title="Which Agent Causes Task Failures and When? On Automated ..." rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated ...">Proceedings of Machine Learning Research</a>)</p>
 </blockquote>
 <h1>Step 1：论文讲解</h1>
 <h2>1. 论文想解决什么问题？</h2>
@@ -97,7 +103,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <blockquote>
 <p><strong>Automated Failure Attribution：自动失败归因。</strong></p>
 </blockquote>
-<p>论文不是简单判断“某一步是否有错误”，而是试图找到“哪个错误真正改变了最终结果”。(<a href="https://arxiv.org/abs/2505.00212" title="[2505.00212] Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>论文不是简单判断“某一步是否有错误”，而是试图找到“哪个错误真正改变了最终结果”。(<a href="https://arxiv.org/abs/2505.00212" title="[2505.00212] Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="[2505.00212] Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <h2>2. 什么是“决定性错误”？</h2>
 <p>论文首先区分了两个概念。</p>
 <h3>普通错误</h3>
@@ -122,7 +128,7 @@ $\tau^{(i,t)}$：修正 Agent $i$ 在第 $t$ 步动作后的轨迹；</li>
 <li>
 $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 </ul>
-<p>如果轨迹中存在多个决定性错误，论文选择<strong>时间最早的一个</strong>作为主要失败原因。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>如果轨迹中存在多个决定性错误，论文选择<strong>时间最早的一个</strong>作为主要失败原因。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <h3>一个简单例子</h3>
 <p>假设：</p>
 <ol>
@@ -150,17 +156,17 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <li>每条轨迹标注责任 Agent；</li>
 <li>标注决定性错误步骤；</li>
 <li>提供自然语言失败原因；</li>
-<li>任务来自 GAIA 和 AssistantBench。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</li>
+<li>任务来自 GAIA 和 AssistantBench。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</li>
 </ul>
 <h3>数据构成</h3>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>系统来源</th>
-<th align="right">任务来源</th>
-<th align="right">失败任务数</th>
-<th align="right">最大 Agent 数</th>
-<th align="right">日志长度</th>
+<th scope="col">系统来源</th>
+<th scope="col" align="right">任务来源</th>
+<th scope="col" align="right">失败任务数</th>
+<th scope="col" align="right">最大 Agent 数</th>
+<th scope="col" align="right">日志长度</th>
 </tr>
 </thead>
 <tbody>
@@ -193,8 +199,8 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <td align="right">8–129 步</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
-<p>总计为 184 条失败轨迹。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+</table></div>
+<p>总计为 184 条失败轨迹。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <p>这里需要注意一个容易被标题数字掩盖的细节：</p>
 <blockquote>
 <p>“127 个系统”并不等于127种独立的多智能体框架。</p>
@@ -204,7 +210,7 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <li>126 个是 CaptainAgent 针对126个任务分别自动生成的任务专用团队；</li>
 <li>另外1个是人工设计的通用系统 Magentic-One；</li>
 </ul>
-<p>CaptainAgent 会根据任务自动生成 Agent 名称、Prompt、工具和团队结构；这些自动生成系统及其 Agent 使用 GPT-4o。Magentic-One 则是一个相对成熟的人工设计系统，包含 Orchestrator、WebSurfer、FileSurfer 等角色。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>CaptainAgent 会根据任务自动生成 Agent 名称、Prompt、工具和团队结构；这些自动生成系统及其 Agent 使用 GPT-4o。Magentic-One 则是一个相对成熟的人工设计系统，包含 Orchestrator、WebSurfer、FileSurfer 等角色。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <h3>标注过程</h3>
 <p>作者邀请了3位熟悉 AI Agent 的专家，采用三轮流程：</p>
 <ol>
@@ -252,12 +258,12 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 缺点：二分搜索默认给定半段日志，模型能够判断决定性错误是否位于其中，但多智能体错误往往需要结合“早期动作”和“后期后果”才能判断，早期是否错误，可能要到很后面才知道。</p>
 <h2>5. 三种方法为什么呈现完全不同的能力？</h2>
 <p>论文最重要的发现可以概括为：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>任务</th>
-<th>更需要什么信息</th>
-<th>更合适的方法</th>
+<th scope="col">任务</th>
+<th scope="col">更需要什么信息</th>
+<th scope="col">更合适的方法</th>
 </tr>
 </thead>
 <tbody>
@@ -277,14 +283,14 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <td>Binary Search</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>我的看法是，这是本文比具体准确率更值得重视的结论。后续方法不应继续要求一个 Prompt 同时输出责任 Agent 和错误步骤，而应该把问题显式分解为：</p>
 <ol>
 <li>全局责任候选识别；</li>
 <li>候选 Agent 内部的局部步骤搜索；</li>
 <li>反事实验证。</li>
 </ol>
-<p>论文也尝试了类似的混合方案：先用 All-at-Once 找 Agent，再仅在该 Agent 的动作中使用 Step-by-Step 找步骤。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>论文也尝试了类似的混合方案：先用 All-at-Once 找 Agent，再仅在该 Agent 的动作中使用 Step-by-Step 找步骤。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <h1>Step 2：实验部分</h1>
 <h2>1. 实验设置</h2>
 <p>作者设置了两种情况。</p>
@@ -301,22 +307,22 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <li>Llama-3.1-8B/70B；</li>
 <li>Qwen2.5-7B/72B；</li>
 <li>OpenAI o1；</li>
-<li>DeepSeek R1。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</li>
+<li>DeepSeek R1。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</li>
 </ul>
 <p>评价指标包括：</p>
 <ul>
 <li><strong>Agent-Level Accuracy</strong>：责任 Agent 是否预测正确；</li>
 <li><strong>Step-Level Accuracy</strong>：精确步骤是否预测正确；</li>
-<li><strong>Step-Level Accuracy with Tolerance</strong>：是否落在真实步骤附近。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</li>
+<li><strong>Step-Level Accuracy with Tolerance</strong>：是否落在真实步骤附近。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</li>
 </ul>
 <h2>2. 主实验结果</h2>
 <p>根据表1四种设置取平均，可以得到：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>方法</th>
-<th align="right">Agent 准确率</th>
-<th align="right">精确步骤准确率</th>
+<th scope="col">方法</th>
+<th scope="col" align="right">Agent 准确率</th>
+<th scope="col" align="right">精确步骤准确率</th>
 </tr>
 </thead>
 <tbody>
@@ -341,13 +347,13 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <td align="right">13.59%</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>这也解释了摘要中的两个数字：</p>
 <ul>
 <li>最好的责任 Agent 准确率约为 <strong>53.5%</strong>，来自 All-at-Once；</li>
 <li>最好的精确步骤准确率约为 <strong>14.2%</strong>，来自 Step-by-Step。</li>
 </ul>
-<p>这两个最优数字实际上来自<strong>不同方法</strong>，说明当前没有一种方案可以同时解决 Who 和 When。(<a href="https://arxiv.org/abs/2505.00212" title="[2505.00212] Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>这两个最优数字实际上来自<strong>不同方法</strong>，说明当前没有一种方案可以同时解决 Who 和 When。(<a href="https://arxiv.org/abs/2505.00212" title="[2505.00212] Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="[2505.00212] Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <h3>结果一：看完整日志更容易找到责任 Agent</h3>
 <p>All-at-Once 在四种条件下的 Agent 准确率为：</p>
 <ul>
@@ -356,7 +362,7 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <li>51.12%；</li>
 <li>53.44%。</li>
 </ul>
-<p>原因很直观：责任归属需要比较不同 Agent 的行为。如果只逐步看日志，模型可能发现某个局部错误就停止，而无法判断另一个 Agent 是否才是更根本的责任方。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>原因很直观：责任归属需要比较不同 Agent 的行为。如果只逐步看日志，模型可能发现某个局部错误就停止，而无法判断另一个 Agent 是否才是更根本的责任方。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <h3>结果二：看完整日志反而不容易找到精确步骤</h3>
 <p>All-at-Once 的平均步骤准确率只有8.70%，甚至低于随机基线的11.61%。</p>
 <p>这说明把所有信息塞给模型，并不代表它能精确利用这些信息。完整日志中包含大量：</p>
@@ -366,7 +372,7 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <li>多个 Agent 的重复总结；</li>
 <li>后续由早期错误引发的连锁错误。</li>
 </ul>
-<p>模型容易找到“明显错误”，但不容易定位“最早的决定性错误”。作者将其与长上下文中的信息检索困难联系起来。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>模型容易找到“明显错误”，但不容易定位“最早的决定性错误”。作者将其与长上下文中的信息检索困难联系起来。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <h3>结果三：Step-by-Step 更适合精确定位，但仍然很差</h3>
 <p>Step-by-Step 在自动生成系统中的最好步骤准确率达到25.51%，但在长日志的 Magentic-One 系统中只有约7%至8.77%。</p>
 <p>这意味着逐步检查在短日志上有一定效果，但面对几十至上百步的真实轨迹，依然远远达不到实用水平。</p>
@@ -379,7 +385,7 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <li>51–91步；</li>
 <li>93–130步。</li>
 </ol>
-<p>随着日志变长，三种方法的 Agent 准确率和步骤准确率都持续下降，其中步骤准确率下降得尤其快。当日志达到93至130步时，三种方法的精确步骤准确率都接近0。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>随着日志变长，三种方法的 Agent 准确率和步骤准确率都持续下降，其中步骤准确率下降得尤其快。当日志达到93至130步时，三种方法的精确步骤准确率都接近0。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <h3>我的看法</h3>
 <p>这个结果非常重要。</p>
 <p>它说明失败归因的瓶颈可能不是模型“不会推理”，而是模型无法在长轨迹中同时完成：</p>
@@ -394,13 +400,13 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <h2>4. 放宽步骤误差后会怎样？</h2>
 <p>作者允许预测步骤与人工标签相差若干步。</p>
 <p>在 Magentic-One 上：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>容忍范围</th>
-<th align="right">All-at-Once</th>
-<th align="right">Step-by-Step</th>
-<th align="right">Binary Search</th>
+<th scope="col">容忍范围</th>
+<th scope="col" align="right">All-at-Once</th>
+<th scope="col" align="right">Step-by-Step</th>
+<th scope="col" align="right">Binary Search</th>
 </tr>
 </thead>
 <tbody>
@@ -429,7 +435,7 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <td align="right">36.21%</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>当要求非常精确时，Step-by-Step 略好；但容忍范围扩大后，All-at-Once 最好。</p>
 <p>这说明 All-at-Once 往往能够找到：</p>
 <blockquote>
@@ -439,13 +445,13 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <h2>5. 混合方法</h2>
 <p>作者先用 All-at-Once 找到责任 Agent，再只检查这个 Agent 执行的步骤。</p>
 <p>在 Magentic-One 上：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>方法</th>
-<th align="right">Token 数</th>
-<th align="right">Agent 准确率</th>
-<th align="right">步骤准确率</th>
+<th scope="col">方法</th>
+<th scope="col" align="right">Token 数</th>
+<th scope="col" align="right">Agent 准确率</th>
+<th scope="col" align="right">步骤准确率</th>
 </tr>
 </thead>
 <tbody>
@@ -474,17 +480,17 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <td align="right"><strong>12.28%</strong></td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
-<p>混合方法确实同时保留了较好的 Agent 准确率，并提高了步骤准确率，但 Token 成本最高，步骤准确率仍只有12.28%。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+</table></div>
+<p>混合方法确实同时保留了较好的 Agent 准确率，并提高了步骤准确率，但 Token 成本最高，步骤准确率仍只有12.28%。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <h2>6. 更强的推理模型是否有效？</h2>
 <p>在 Magentic-One 数据上，作者比较了 GPT-4o、OpenAI o1 和 DeepSeek R1。</p>
 <p>例如 All-at-Once：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>模型</th>
-<th align="right">Agent 准确率</th>
-<th align="right">步骤准确率</th>
+<th scope="col">模型</th>
+<th scope="col" align="right">Agent 准确率</th>
+<th scope="col" align="right">步骤准确率</th>
 </tr>
 </thead>
 <tbody>
@@ -504,14 +510,14 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <td align="right">3.45%</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>Step-by-Step：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>模型</th>
-<th align="right">Agent 准确率</th>
-<th align="right">步骤准确率</th>
+<th scope="col">模型</th>
+<th scope="col" align="right">Agent 准确率</th>
+<th scope="col" align="right">步骤准确率</th>
 </tr>
 </thead>
 <tbody>
@@ -531,9 +537,9 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <td align="right">6.90%</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>o1 在部分步骤定位任务上提升明显，但整体并没有稳定超越 GPT-4o；DeepSeek R1 也只在个别指标领先。</p>
-<p>作者还发现，删除 Prompt 中要求模型显式分析和解释的推理指令后，性能会下降。例如自动生成系统中，All-at-Once 的 Agent 准确率下降7.4个百分点，Step-by-Step 的步骤准确率下降4.4个百分点。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>作者还发现，删除 Prompt 中要求模型显式分析和解释的推理指令后，性能会下降。例如自动生成系统中，All-at-Once 的 Agent 准确率下降7.4个百分点，Step-by-Step 的步骤准确率下降4.4个百分点。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <h3>我的看法</h3>
 <p>这个结果说明：</p>
 <blockquote>
@@ -556,7 +562,7 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <p>修正该步骤并重新执行后，任务从失败变为成功。</p>
 </blockquote>
 <p>这是一个严格的反事实定义。</p>
-<p>但数据标注过程中，专家主要通过阅读已有失败日志来判断责任 Agent 和错误步骤，并没有对每个候选步骤真正执行干预、重跑后续轨迹。与此同时，标注者有15%至30%的样本不确定，也说明许多标签不是显然可验证的。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>但数据标注过程中，专家主要通过阅读已有失败日志来判断责任 Agent 和错误步骤，并没有对每个候选步骤真正执行干预、重跑后续轨迹。与此同时，标注者有15%至30%的样本不确定，也说明许多标签不是显然可验证的。(<a href="https://arxiv.org/pdf/2505.00212" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <h1>Step 4：简要汇报</h1>
 <p>论文提出LLM多智能体自动失败归因任务，目标是定位“哪个Agent在第几步导致失败”。作者构建Who&amp;When数据集，包含127个系统和184条标注轨迹。实验发现，全局判断更擅长找责任Agent，逐步判断更擅长找错误步骤，但最佳步骤准确率仅14.2%，强推理模型也未稳定提升。论文价值在于提出重要调试问题，但单一责任假设和数据多样性仍有限。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
@@ -565,9 +571,9 @@ $Z(\tau^{(i,t)})=0$：修正后任务成功。</li>
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -633,6 +639,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

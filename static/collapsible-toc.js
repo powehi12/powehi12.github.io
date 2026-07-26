@@ -1,7 +1,70 @@
 (function () {
+  function prefersReducedMotion() {
+    return Boolean(
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  }
+
+  function initSkipLink() {
+    var content = document.getElementById("content") || document.getElementById("postBody");
+    if (!content) return;
+
+    if (!content.id) {
+      content.id = "main-content";
+    }
+    if (!content.hasAttribute("tabindex")) {
+      content.setAttribute("tabindex", "-1");
+    }
+
+    if (document.querySelector(".skip-link")) return;
+
+    var link = document.createElement("a");
+    link.className = "skip-link";
+    link.href = "#" + content.id;
+    link.textContent = "跳到主要内容";
+    document.body.insertBefore(link, document.body.firstChild);
+  }
+
+  function scrollToInitialHash() {
+    if (!window.location.hash) return;
+
+    var id = window.location.hash.slice(1);
+    try {
+      id = decodeURIComponent(id);
+    } catch (error) {
+      /* Keep the raw fragment when it is not valid percent-encoding. */
+    }
+
+    var target = document.getElementById(id);
+    if (!target) return;
+
+    window.requestAnimationFrame(function () {
+      var root = document.documentElement;
+      var previousValue = root.style.getPropertyValue("scroll-behavior");
+      var previousPriority = root.style.getPropertyPriority("scroll-behavior");
+      root.style.setProperty("scroll-behavior", "auto", "important");
+      target.scrollIntoView({ behavior: "auto", block: "start" });
+      window.requestAnimationFrame(function () {
+        if (previousValue) {
+          root.style.setProperty(
+            "scroll-behavior",
+            previousValue,
+            previousPriority
+          );
+        } else {
+          root.style.removeProperty("scroll-behavior");
+        }
+      });
+    });
+  }
+
   function initCollapsibleTOC() {
     var content = document.getElementById("content") || document.getElementById("postBody");
     if (!content) return;
+
+    document.body.classList.remove("has-collapsible-toc");
+    content.classList.remove("has-collapsible-toc");
 
     document.querySelectorAll(".toc").forEach(function (element) {
       element.remove();
@@ -12,18 +75,31 @@
     });
     if (!headings.length) return;
 
-    var usedIds = new Map();
+    var usedIds = new Set();
+    document.querySelectorAll("[id]").forEach(function (element) {
+      if (element.id) {
+        usedIds.add(element.id);
+      }
+    });
+
     function makeId(text) {
       var base = text.trim().toLowerCase()
         .replace(/\s+/g, "-")
         .replace(/[^\w\u4e00-\u9fff\-+.：？！()（）]/g, "") || "section";
-      var count = usedIds.get(base) || 0;
-      usedIds.set(base, count + 1);
-      return count ? base + "-" + (count + 1) : base;
+      var candidate = base;
+      var count = 2;
+      while (usedIds.has(candidate)) {
+        candidate = base + "-" + count;
+        count += 1;
+      }
+      usedIds.add(candidate);
+      return candidate;
     }
 
     headings.forEach(function (heading) {
-      heading.id = makeId(heading.textContent);
+      if (!heading.id) {
+        heading.id = makeId(heading.textContent);
+      }
     });
 
     var roots = [];
@@ -92,7 +168,10 @@
           }
 
           event.preventDefault();
-          node.heading.scrollIntoView({ behavior: "smooth", block: "start" });
+          node.heading.scrollIntoView({
+            behavior: prefersReducedMotion() ? "auto" : "smooth",
+            block: "start"
+          });
           window.history.replaceState(null, "", link.href);
         });
 
@@ -130,6 +209,8 @@
 
     toc.appendChild(renderList(roots));
     content.prepend(toc);
+    document.body.classList.add("has-collapsible-toc");
+    content.classList.add("has-collapsible-toc");
 
     var style = document.createElement("style");
     style.textContent = [
@@ -139,13 +220,14 @@
       ".collapsible-toc .toc-children { padding-left: 16px; }",
       ".collapsible-toc .toc-children[hidden] { display: none !important; }",
       ".collapsible-toc .toc-row { display: flex; align-items: flex-start; gap: 4px; padding: 4px 0; }",
-      ".collapsible-toc .toc-toggle { width: 22px; min-width: 22px; padding: 1px 0; border: 0; background: transparent; color: var(--fgColor-muted, #73726c); cursor: pointer; font-size: 14px; line-height: 1.5; }",
+      ".collapsible-toc .toc-toggle { width: 24px; min-width: 24px; height: 24px; min-height: 24px; padding: 0; border: 0; background: transparent; color: var(--fgColor-muted, #706f69); cursor: pointer; font-size: 14px; line-height: 1.5; }",
       ".collapsible-toc .toc-toggle:disabled { cursor: default; }",
-      ".collapsible-toc .toc-link { color: var(--fgColor-muted, #73726c); text-decoration: none; font-size: 13px; line-height: 1.55; flex: 1; overflow-wrap: anywhere; }",
+      ".collapsible-toc .toc-link { color: var(--fgColor-muted, #706f69); text-decoration: none; font-size: 13px; line-height: 1.55; flex: 1; overflow-wrap: anywhere; }",
       ".collapsible-toc .toc-link:hover { color: var(--fgColor-default, #141413); text-decoration: underline; }",
       "@media (max-width: 1249px) { .collapsible-toc { position: static; width: auto; max-height: none; margin-bottom: 20px; } }"
     ].join("\n");
     document.head.appendChild(style);
+    scrollToInitialHash();
   }
 
   function initCommentSection() {
@@ -205,9 +287,9 @@
       ".comment-shell-icon { width: 40px; height: 40px; display: grid; place-items: center; flex: 0 0 auto; border: 1px solid rgba(159,79,54,.2); border-radius: 10px; color: #9f4f36; background: #f4e2da; }",
       ".comment-shell-copy { min-width: 0; flex: 1; }",
       ".comment-shell-copy h2 { margin: 0; padding: 0; border: 0; font-size: 20px; line-height: 1.3; color: var(--fgColor-default, #141413); }",
-      ".comment-shell-copy p { margin: 4px 0 0; color: var(--fgColor-muted, #73726c); font-size: 14px; }",
-      ".comment-shell-badge { flex: 0 0 auto; padding: 4px 9px; border: 1px solid var(--borderColor-default, rgba(31,30,29,.15)); border-radius: 999px; color: var(--fgColor-muted, #73726c); background: #fff; font-size: 12px; }",
-      ".comment-shell-note { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--borderColor-muted, rgba(31,30,29,.1)); color: var(--fgColor-muted, #73726c); font-size: 13px; }",
+      ".comment-shell-copy p { margin: 4px 0 0; color: var(--fgColor-muted, #706f69); font-size: 14px; }",
+      ".comment-shell-badge { flex: 0 0 auto; padding: 4px 9px; border: 1px solid var(--borderColor-default, rgba(31,30,29,.15)); border-radius: 999px; color: var(--fgColor-muted, #706f69); background: #fff; font-size: 12px; }",
+      ".comment-shell-note { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--borderColor-muted, rgba(31,30,29,.1)); color: var(--fgColor-muted, #706f69); font-size: 13px; }",
       ".comment-shell #cmButton { min-height: 44px; height: auto; margin: 14px 0 0 !important; border: 1px solid #141413; border-radius: 8px; color: #fff; background: #141413; box-shadow: none; font-weight: 600; letter-spacing: 0; transition: background-color .16s ease, border-color .16s ease; }",
       ".comment-shell #cmButton::after { content: '  ↗'; opacity: .8; }",
       ".comment-shell #cmButton:hover:not(:disabled) { transform: none; border-color: #3d3d3a; background: #3d3d3a; filter: none; }",
@@ -225,6 +307,7 @@
   }
 
   function initPageEnhancements() {
+    initSkipLink();
     initCollapsibleTOC();
     initCommentSection();
   }

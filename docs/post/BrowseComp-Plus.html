@@ -5,22 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 论文解读：BrowseComp-Plus: A Fair and Disentangled Evaluation Benchmark for Deep Search Agents
 
-论文最初以技术报告形式发布于 2025 年 8 月，目前已经以 **ACL 2026 Main Conference 长论文**正式发表，最终标题改为 *BrowseComp-Plus: A Fair and Disentangled Evaluation Benchmark for Deep Search Agents*。">
+
+
+
+
+
+<title>BrowseComp-Plus</title>
+<meta name="description" content="论文解读：BrowseComp-Plus: A Fair and Disentangled Evaluation Benchmark for Deep Search Agents 论文最初以技术报告形式发布于 2025 年 8 月，目前已经以 ACL 2026 Main Conference 长论文正式发表，最终…">
 <meta property="og:title" content="BrowseComp-Plus">
-<meta property="og:description" content="# 论文解读：BrowseComp-Plus: A Fair and Disentangled Evaluation Benchmark for Deep Search Agents
-
-论文最初以技术报告形式发布于 2025 年 8 月，目前已经以 **ACL 2026 Main Conference 长论文**正式发表，最终标题改为 *BrowseComp-Plus: A Fair and Disentangled Evaluation Benchmark for Deep Search Agents*。">
+<meta property="og:description" content="论文解读：BrowseComp-Plus: A Fair and Disentangled Evaluation Benchmark for Deep Search Agents 论文最初以技术报告形式发布于 2025 年 8 月，目前已经以 ACL 2026 Main Conference 长论文正式发表，最终…">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/BrowseComp-Plus.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>BrowseComp-Plus</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BrowseComp-Plus">
+<meta name="twitter:description" content="论文解读：BrowseComp-Plus: A Fair and Disentangled Evaluation Benchmark for Deep Search Agents 论文最初以技术报告形式发布于 2025 年 8 月，目前已经以 ACL 2026 Main Conference 长论文正式发表，最终…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/BrowseComp-Plus.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -48,32 +53,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">BrowseComp-Plus</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/11" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/11" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>论文解读：BrowseComp-Plus: A Fair and Disentangled Evaluation Benchmark for Deep Search Agents</h1>
 <p>论文最初以技术报告形式发布于 2025 年 8 月，目前已经以 <strong>ACL 2026 Main Conference 长论文</strong>正式发表，最终标题改为 <em>BrowseComp-Plus: A Fair and Disentangled Evaluation Benchmark for Deep Search Agents</em>。下面以你给出的 arXiv 版本为主，同时参考正式版本中补充的实验与局限性讨论。(<a href="https://arxiv.org/abs/2508.06600" rel="nofollow">arXiv</a>)</p>
 <h1>Step 1：论文讲解</h1>
@@ -140,11 +146,11 @@ $$</p>
 </ul>
 <p>于是作者把“问题 + 标准答案”交给带网页搜索能力的 OpenAI o3，让它反向查找证据。</p>
 <p>o3 的输出被组织成：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>字段</th>
-<th>含义</th>
+<th scope="col">字段</th>
+<th scope="col">含义</th>
 </tr>
 </thead>
 <tbody>
@@ -161,7 +167,7 @@ $$</p>
 <td>网页中具体支持该线索的文字</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>在原始 1266 个问题中：</p>
 <ul>
 <li>o3 对 124 个问题没有成功提供证据；</li>
@@ -247,12 +253,12 @@ $$</p>
 <p>很多人会认为，大模型足够强之后，检索器差一点也没关系。</p>
 <p>这篇论文给出的结论恰好相反。</p>
 <p>例如：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>Agent</th>
-<th>BM25</th>
-<th>Qwen3-Embedding-8B</th>
+<th scope="col">Agent</th>
+<th scope="col">BM25</th>
+<th scope="col">Qwen3-Embedding-8B</th>
 </tr>
 </thead>
 <tbody>
@@ -287,7 +293,7 @@ $$</p>
 <td>42.89%</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>换一个 Retriever，GPT-4.1、Sonnet 4、Opus 4 的正确率甚至翻倍。</p>
 <p>更强的 Retriever 通常还会减少搜索次数。例如 GPT-5 从平均 23.23 次下降到 21.74 次。这说明好的检索器不仅让答案更准确，还能让 Agent 更早找到有效证据，不必不断试错搜索。</p>
 <p><strong>我的看法：</strong> 这是全文最有价值的实证结论。当前 Agent 研究经常把精力放在更复杂的规划、反思和 RL 上，但很多失败可能只是第一轮检索结果太差。一个更好的 Retriever，可能比增加多轮反思更便宜、更稳定。</p>
@@ -322,13 +328,13 @@ $$</p>
 <h3>结论三：当前 Retriever 本身离“解决复杂检索”还很远</h3>
 <p>作者直接用完整问题作为查询，测试 Retriever 能否找到证据。</p>
 <p>以 evidence documents 为标准：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>Retriever</th>
-<th>Recall@5</th>
-<th>Recall@100</th>
-<th>Recall@1000</th>
+<th scope="col">Retriever</th>
+<th scope="col">Recall@5</th>
+<th scope="col">Recall@100</th>
+<th scope="col">Recall@1000</th>
 </tr>
 </thead>
 <tbody>
@@ -363,7 +369,7 @@ $$</p>
 <td>73.9%</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>即使最好的 Qwen3-Embedding-8B，在前五篇结果中也只能召回约 14.5% 的证据。</p>
 <p>原因是复杂问题往往包含多个线索，将复杂问题一次性编码成一个 embedding，未必能很好匹配每一个局部证据。</p>
 <p>这说明复杂搜索不应只是：</p>
@@ -416,13 +422,13 @@ $$</p>
 <h2>实验二：增加 reasoning effort</h2>
 <p>作者用 gpt-oss 的 low、medium、high 三种推理强度研究测试时计算量。</p>
 <p>以 gpt-oss-20B + Qwen3-Embedding-8B 为例：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>推理强度</th>
-<th>Accuracy</th>
-<th>Recall</th>
-<th>搜索次数</th>
+<th scope="col">推理强度</th>
+<th scope="col">Accuracy</th>
+<th scope="col">Recall</th>
+<th scope="col">搜索次数</th>
 </tr>
 </thead>
 <tbody>
@@ -445,7 +451,7 @@ $$</p>
 <td>23.87</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>从低推理强度到高推理强度：</p>
 <ul>
 <li>正确率大幅提升；</li>
@@ -468,12 +474,12 @@ $$</p>
 <h2>实验三：完整文档读取工具</h2>
 <p>主要实验只向 Agent 展示每篇文档前 512 tokens。作者随后增加 <code class="notranslate">get-document</code> 工具，允许 Agent读取完整文档。</p>
 <p>结果：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>模型</th>
-<th>默认设置</th>
-<th>加入全文读取</th>
+<th scope="col">模型</th>
+<th scope="col">默认设置</th>
+<th scope="col">加入全文读取</th>
 </tr>
 </thead>
 <tbody>
@@ -488,7 +494,7 @@ $$</p>
 <td>11.69%</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>GPT-4.1 每题平均调用全文读取工具 1.85 次，而 Qwen3-32B 仅调用 0.27 次。(<a href="https://ar5iv.org/html/2508.06600v1" rel="nofollow">ar5iv</a>)</p>
 <p>这说明工具本身存在，并不等于模型会正确使用它。</p>
 <p>一个好的 Agent 需要判断：</p>
@@ -554,9 +560,9 @@ $$</p>
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -622,6 +628,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

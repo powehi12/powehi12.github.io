@@ -5,24 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 论文解读：R1-Searcher++
 
-**论文：** *R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning*
-**核心主题：** 让大模型学会在“自己想”和“上网搜”之间动态切换，并将搜索得到的知识进一步写入模型参数。">
-<meta property="og:title" content="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">
-<meta property="og:description" content="# 论文解读：R1-Searcher++
 
-**论文：** *R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning*
-**核心主题：** 让大模型学会在“自己想”和“上网搜”之间动态切换，并将搜索得到的知识进一步写入模型参数。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://powehi12.github.io/post/R1-Searcher%2B%2B-%20Incentivizing%20the%20Dynamic%20Knowledge%20Acquisition%20of%20LLMs%20via%20Reinforcement%20Learning.html">
-<meta property="og:image" content="https://github.com/powehi12.png">
+
+
+
+
 <title>R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning</title>
-
-
-
+<meta name="description" content="论文解读：R1-Searcher++ 论文： R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning 核心主题： 让大模型学会在“自己想”和“上网搜”之间动态切换，并将搜索得…">
+<meta property="og:title" content="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">
+<meta property="og:description" content="论文解读：R1-Searcher++ 论文： R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning 核心主题： 让大模型学会在“自己想”和“上网搜”之间动态切换，并将搜索得…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/R1-Searcher++-%20Incentivizing%20the%20Dynamic%20Knowledge%20Acquisition%20of%20LLMs%20via%20Reinforcement%20Learning.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">
+<meta name="twitter:description" content="论文解读：R1-Searcher++ 论文： R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning 核心主题： 让大模型学会在“自己想”和“上网搜”之间动态切换，并将搜索得…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/R1-Searcher++-%20Incentivizing%20the%20Dynamic%20Knowledge%20Acquisition%20of%20LLMs%20via%20Reinforcement%20Learning.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -50,35 +53,36 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/1" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/1" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>论文解读：R1-Searcher++</h1>
 <p><strong>论文：</strong> <em>R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning</em><br>
-<strong>核心主题：</strong> 让大模型学会在“自己想”和“上网搜”之间动态切换，并将搜索得到的知识进一步写入模型参数。论文于2025年5月提交，主要基于 Qwen2.5-7B-Instruct 展开实验。(<a href="https://arxiv.org/abs/2505.17005" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</p>
+<strong>核心主题：</strong> 让大模型学会在“自己想”和“上网搜”之间动态切换，并将搜索得到的知识进一步写入模型参数。论文于2025年5月提交，主要基于 Qwen2.5-7B-Instruct 展开实验。(<a href="https://arxiv.org/abs/2505.17005" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</p>
 <hr>
 <h1>Step 1：论文讲解</h1>
 <h2>1. 论文想解决什么问题？</h2>
@@ -89,7 +93,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <blockquote>
 <p><strong>知道的部分直接使用内部知识，不确定的部分才搜索；搜索到的重要知识还要尽量记住。</strong></p>
 </blockquote>
-<p>论文把这个过程称为 <strong>Dynamic Knowledge Acquisition，动态知识获取</strong>。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</p>
+<p>论文把这个过程称为 <strong>Dynamic Knowledge Acquisition，动态知识获取</strong>。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</p>
 <hr>
 <h2>2. 核心思想</h2>
 <p>R1-Searcher++让模型在每个推理步骤中选择两种动作之一：</p>
@@ -126,7 +130,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     ↓
 在正确率、搜索次数和知识记忆之间寻找平衡
 </code></pre>
-<p>(<a href="https://ar5iv.org/html/2505.17005v1" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">ar5iv</a>)</p>
+<p>(<a href="https://ar5iv.org/html/2505.17005v1" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">ar5iv</a>)</p>
 <hr>
 <h2>3. 第一阶段：SFT Cold-Start</h2>
 <h3>3.1 为什么需要冷启动？</h3>
@@ -148,12 +152,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </code></pre>
 <p>其中第二行并不是模型生成的，而是环境返回的观察结果。</p>
 <p>因此，训练时不能要求模型去预测搜索引擎返回的每个 token。否则模型会开始学习“伪造搜索结果”，而不是学习什么时候调用搜索器。</p>
-<p>作者将检索文档对应 token 的 mask 设置为0，只对模型自己产生的内容计算损失。这个设计同时用于 SFT 和 RL。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</p>
+<p>作者将检索文档对应 token 的 mask 设置为0，只对模型自己产生的内容计算损失。这个设计同时用于 SFT 和 RL。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</p>
 <hr>
 <h2>4. 第二阶段：RL for Dynamic Knowledge Acquisition</h2>
 <p>SFT 只能让模型模仿已有轨迹。</p>
 <p>因此，第二阶段使用基于结果监督的强化学习，让模型自行采样多条推理轨迹，并根据最终结果获得奖励。</p>
-<p>底层算法采用无 Critic 的 REINFORCE++，对搜索文档 token 继续进行掩码处理。(<a href="https://ar5iv.org/html/2505.17005v1" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">ar5iv</a>)</p>
+<p>底层算法采用无 Critic 的 REINFORCE++，对搜索文档 token 继续进行掩码处理。(<a href="https://ar5iv.org/html/2505.17005v1" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">ar5iv</a>)</p>
 <p>奖励由三部分组成：</p>
 <p>$$
 R=R_{\text{format}}+R_{\text{answer}}+R_{\text{group}}
@@ -175,7 +179,7 @@ $$</p>
 <li>最终答案没有放入规定格式；</li>
 <li>输出中存在不可解析内容。</li>
 </ul>
-<p>它本质上是一个“硬约束惩罚”，防止 RL 训练把工具协议学坏。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</p>
+<p>它本质上是一个“硬约束惩罚”，防止 RL 训练把工具协议学坏。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</p>
 <hr>
 <h2>6. 答案奖励：判断最终答案是否正确</h2>
 <p>作者没有使用严格的 Exact Match，而是采用 Cover Exact Match：</p>
@@ -200,7 +204,7 @@ R_{\text{answer}}=
 0,&amp;\text{其他情况}
 \end{cases}
 $$</p>
-<p>这是一个比较简单直接的防止 reward hacking 的办法。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</p>
+<p>这是一个比较简单直接的防止 reward hacking 的办法。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</p>
 <h3>我的看法</h3>
 <p>这个设计在短答案多跳问答中有效，但非常依赖任务形式。</p>
 <p>“十个词以内”像是针对当前 benchmark 的工程约束，而不是普适的答案奖励。</p>
@@ -208,12 +212,12 @@ $$</p>
 <h2>7. Group Reward：奖励“正确且搜索较少”的轨迹</h2>
 <p>这是论文最有意思的设计之一。</p>
 <p>对于同一个问题，模型会采样多条 rollout。例如：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>轨迹</th>
-<th align="right">是否正确</th>
-<th align="right">搜索次数</th>
+<th scope="col">轨迹</th>
+<th scope="col" align="right">是否正确</th>
+<th scope="col" align="right">搜索次数</th>
 </tr>
 </thead>
 <tbody>
@@ -238,13 +242,13 @@ $$</p>
 <td align="right">2</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>普通结果奖励会让 A、B、D 都获得相同奖励，因为它们最终都答对了。</p>
 <p>但 R1-Searcher++认为 B 更好：</p>
 <blockquote>
 <p>同样能够答对，B只搜索了一次，说明它更充分地利用了内部知识。</p>
 </blockquote>
-<p>因此，作者在同一问题的正确轨迹中找到搜索次数最少的轨迹，并为它附加 group reward。奖励强度与该组轨迹搜索次数的差异有关，并通过超参数进行裁剪。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</p>
+<p>因此，作者在同一问题的正确轨迹中找到搜索次数最少的轨迹，并为它附加 group reward。奖励强度与该组轨迹搜索次数的差异有关，并通过超参数进行裁剪。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</p>
 <h3>它为什么不是简单地惩罚搜索次数？</h3>
 <p>如果直接设置：</p>
 <p>$$
@@ -304,7 +308,7 @@ $(L_{\text{memory}})$：让模型记住搜索得到的知识；</li>
 <li>
 $(\mu)$：控制记忆训练的强度。</li>
 </ul>
-<p>论文中设定 (\mu=0.1)，避免 SFT 记忆损失过强，导致模型再次变成只依赖内部知识。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</p>
+<p>论文中设定 (\mu=0.1)，避免 SFT 记忆损失过强，导致模型再次变成只依赖内部知识。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</p>
 <hr>
 <h2>9. 我对核心思想的总体评价</h2>
 <p>这篇论文最值得肯定的地方，是明确指出了当前搜索智能体的一个真实问题：</p>
@@ -331,7 +335,7 @@ $$</p>
 <ul>
 <li>KILT 版本的2019年英文 Wikipedia；</li>
 <li>切分成约2900万个、每段100词的 passage；</li>
-<li>使用 BGE-large-en-v1.5 进行稠密检索。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</li>
+<li>使用 BGE-large-en-v1.5 进行稠密检索。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</li>
 </ul>
 <hr>
 <h2>2. 训练数据</h2>
@@ -357,7 +361,7 @@ $$</p>
 <li>最大搜索次数：8；</li>
 <li>KL系数：(10^{-4})；</li>
 <li>记忆损失权重 (\mu=0.1)；</li>
-<li>group reward 裁剪参数 (\eta=2)。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</li>
+<li>group reward 裁剪参数 (\eta=2)。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</li>
 </ul>
 <hr>
 <h2>3. 测试数据</h2>
@@ -373,7 +377,7 @@ $$</p>
 <li>HotpotQA、2Wiki属于域内测试；</li>
 <li>Bamboogle、Musique属于域外测试。</li>
 </ul>
-<p>HotpotQA、2Wiki和Musique均随机抽取500条验证样本，Bamboogle使用完整测试集。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</p>
+<p>HotpotQA、2Wiki和Musique均随机抽取500条验证样本，Bamboogle使用完整测试集。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</p>
 <p>评价指标包括：</p>
 <ul>
 <li><strong>F1</strong>：预测答案和标准答案的词级重合度；</li>
@@ -383,13 +387,13 @@ $$</p>
 <hr>
 <h2>4. 主实验结果</h2>
 <p>平均结果如下：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>方法</th>
-<th align="right">平均F1</th>
-<th align="right">平均LLM Judge</th>
-<th align="right">平均搜索次数</th>
+<th scope="col">方法</th>
+<th scope="col" align="right">平均F1</th>
+<th scope="col" align="right">平均LLM Judge</th>
+<th scope="col" align="right">平均搜索次数</th>
 </tr>
 </thead>
 <tbody>
@@ -412,15 +416,15 @@ $$</p>
 <td align="right"><strong>1.61</strong></td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
-<p>(<a href="https://ar5iv.org/html/2505.17005v1" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">ar5iv</a>)</p>
+</table></div>
+<p>(<a href="https://ar5iv.org/html/2505.17005v1" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">ar5iv</a>)</p>
 <h3>结果一：搜索次数明显下降</h3>
 <p>相较于：</p>
 <ul>
 <li>R1-Searcher：搜索次数从2.30下降到1.61，约减少30%；</li>
 <li>Search-R1：从3.42下降到1.61，约减少52.9%。</li>
 </ul>
-<p>这说明 group reward 确实让模型减少了不必要的搜索。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</p>
+<p>这说明 group reward 确实让模型减少了不必要的搜索。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</p>
 <h3>结果二：LLM Judge 指标提高</h3>
 <p>R1-Searcher++的平均 LLM-as-Judge 为55.2，高于 R1-Searcher 的52.9。</p>
 <h3>结果三：F1并没有全面超过R1-Searcher</h3>
@@ -468,7 +472,7 @@ $$</p>
 <p>在 Musique 上，移除记忆机制后下降更明显：</p>
 <ul>
 <li>F1从33.8降至31.0；</li>
-<li>Judge从32.8降至29.4。(<a href="https://ar5iv.org/html/2505.17005v1" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">ar5iv</a>)</li>
+<li>Judge从32.8降至29.4。(<a href="https://ar5iv.org/html/2505.17005v1" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">ar5iv</a>)</li>
 </ul>
 <h3>我的看法</h3>
 <p>消融说明两个组件都有贡献，但还不能证明其解释机制。</p>
@@ -490,13 +494,13 @@ $$</p>
 <li>再将摘要返回给模型。</li>
 </ul>
 <p>在 Bamboogle 上：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>方法</th>
-<th align="right">F1</th>
-<th align="right">LLM Judge</th>
-<th align="right">搜索次数</th>
+<th scope="col">方法</th>
+<th scope="col" align="right">F1</th>
+<th scope="col" align="right">LLM Judge</th>
+<th scope="col" align="right">搜索次数</th>
 </tr>
 </thead>
 <tbody>
@@ -525,11 +529,11 @@ $$</p>
 <td align="right">1.70</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>在 Frames 上，R1-Searcher++也取得最高指标，但相对 R1-Searcher 的提升比较小：</p>
 <ul>
 <li>F1：33.8 对33.3；</li>
-<li>Judge：39.0 对38.0。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">arXiv</a>)</li>
+<li>Judge：39.0 对38.0。(<a href="https://arxiv.org/pdf/2505.17005" title="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">arXiv</a>)</li>
 </ul>
 <h3>我的看法</h3>
 <p>这个实验说明搜索策略能够从本地 Wikipedia 检索迁移到在线搜索环境，这是一个明显优点。</p>
@@ -544,13 +548,13 @@ $$</p>
 <hr>
 <h2>7. 搜索效率分析</h2>
 <p>在总计1625个测试问题上：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>方法</th>
-<th align="right">正确数 / 正确题平均搜索</th>
-<th align="right">错误数 / 错误题平均搜索</th>
-<th align="right">总平均搜索</th>
+<th scope="col">方法</th>
+<th scope="col" align="right">正确数 / 正确题平均搜索</th>
+<th scope="col" align="right">错误数 / 错误题平均搜索</th>
+<th scope="col" align="right">总平均搜索</th>
 </tr>
 </thead>
 <tbody>
@@ -573,8 +577,8 @@ $$</p>
 <td align="right"><strong>1.58</strong></td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
-<p>(<a href="https://ar5iv.org/html/2505.17005v1" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow">ar5iv</a>)</p>
+</table></div>
+<p>(<a href="https://ar5iv.org/html/2505.17005v1" title="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning" rel="nofollow" aria-label="[2505.17005] R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning">ar5iv</a>)</p>
 <p>这个结果很有说服力：</p>
 <ul>
 <li>它并不是单纯少搜但答错更多；</li>
@@ -618,9 +622,9 @@ $$</p>
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -686,6 +690,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

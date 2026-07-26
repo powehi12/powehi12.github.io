@@ -5,26 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="## 一句话概括
 
-这篇论文提出了 **CausalBench**：
 
-> **用真实的大规模基因敲低实验，给各种“基因因果网络推断算法”组织一场统一考试，看看它们能否画出细胞内部谁影响谁的线路图。">
+
+
+
+
+<title>CausalBench：用大规模单细胞扰动实验检验算法能否还原基因“因果线路图”</title>
+<meta name="description" content="一句话概括 这篇论文提出了 CausalBench： 用真实的大规模基因敲低实验，给各种“基因因果网络推断算法”组织一场统一考试，看看它们能否画出细胞内部谁影响谁的线路图。">
 <meta property="og:title" content="CausalBench：用大规模单细胞扰动实验检验算法能否还原基因“因果线路图”">
-<meta property="og:description" content="## 一句话概括
-
-这篇论文提出了 **CausalBench**：
-
-> **用真实的大规模基因敲低实验，给各种“基因因果网络推断算法”组织一场统一考试，看看它们能否画出细胞内部谁影响谁的线路图。">
+<meta property="og:description" content="一句话概括 这篇论文提出了 CausalBench： 用真实的大规模基因敲低实验，给各种“基因因果网络推断算法”组织一场统一考试，看看它们能否画出细胞内部谁影响谁的线路图。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/CausalBench%EF%BC%9A-yong-da-gui-mo-dan-xi-bao-rao-dong-shi-yan-jian-yan-suan-fa-neng-fou-huan-yuan-ji-yin-%E2%80%9C-yin-guo-xian-lu-tu-%E2%80%9D.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>CausalBench：用大规模单细胞扰动实验检验算法能否还原基因“因果线路图”</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CausalBench：用大规模单细胞扰动实验检验算法能否还原基因“因果线路图”">
+<meta name="twitter:description" content="一句话概括 这篇论文提出了 CausalBench： 用真实的大规模基因敲低实验，给各种“基因因果网络推断算法”组织一场统一考试，看看它们能否画出细胞内部谁影响谁的线路图。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/CausalBench%EF%BC%9A-yong-da-gui-mo-dan-xi-bao-rao-dong-shi-yan-jian-yan-suan-fa-neng-fou-huan-yuan-ji-yin-%E2%80%9C-yin-guo-xian-lu-tu-%E2%80%9D.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -52,38 +53,39 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">CausalBench：用大规模单细胞扰动实验检验算法能否还原基因“因果线路图”</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/22" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/22" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h2>一句话概括</h2>
 <p>这篇论文提出了 <strong>CausalBench</strong>：</p>
 <blockquote>
 <p><strong>用真实的大规模基因敲低实验，给各种“基因因果网络推断算法”组织一场统一考试，看看它们能否画出细胞内部谁影响谁的线路图。</strong></p>
 </blockquote>
-<p>它不是一个新的虚拟细胞模型，而是一套<strong>数据、评分规则和算法评测平台</strong>，正式发表于 2025 年的《Communications Biology》。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow">Nature</a>)</p>
+<p>它不是一个新的虚拟细胞模型，而是一套<strong>数据、评分规则和算法评测平台</strong>，正式发表于 2025 年的《Communications Biology》。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow" aria-label="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology">Nature</a>)</p>
 <hr>
 <h2>1. 什么是“基因网络”？</h2>
 <p>细胞里的基因并不是各自独立工作的。</p>
@@ -99,7 +101,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>节点：基因；</li>
 <li>箭头：一个基因可能影响另一个基因。</li>
 </ul>
-<p>这张网络有助于研究疾病机制和寻找药物靶点。例如，找到一个处于网络上游的关键基因，可能比处理很多下游现象更有效。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow">Nature</a>)</p>
+<p>这张网络有助于研究疾病机制和寻找药物靶点。例如，找到一个处于网络上游的关键基因，可能比处理很多下游现象更有效。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow" aria-label="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology">Nature</a>)</p>
 <hr>
 <h2>2. 为什么不能只看“两个基因一起变化”？</h2>
 <p>假设观察到：</p>
@@ -116,7 +118,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
       ↓
 基因 B 明显变化
 </code></pre>
-<p>这比单纯观察相关性提供了更强的因果证据。CausalBench 使用的正是这种单细胞基因扰动数据。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow">Nature</a>)</p>
+<p>这比单纯观察相关性提供了更强的因果证据。CausalBench 使用的正是这种单细胞基因扰动数据。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow" aria-label="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology">Nature</a>)</p>
 <hr>
 <h2>3. CausalBench 做了什么？</h2>
 <p>作者使用两个真实细胞系的数据：</p>
@@ -124,7 +126,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li><strong>K562</strong>：常用于白血病相关研究；</li>
 <li><strong>RPE1</strong>：一种上皮来源细胞系。</li>
 </ul>
-<p>数据包含正常细胞和通过 CRISPRi 抑制特定基因后的细胞，总计超过 <strong>20 万个扰动数据点</strong>。研究人员让不同算法根据这些数据画出基因网络，再采用相同规则进行比较。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow">Nature</a>)</p>
+<p>数据包含正常细胞和通过 CRISPRi 抑制特定基因后的细胞，总计超过 <strong>20 万个扰动数据点</strong>。研究人员让不同算法根据这些数据画出基因网络，再采用相同规则进行比较。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow" aria-label="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology">Nature</a>)</p>
 <p>可以把它理解成：</p>
 <pre lang="text" class="notranslate"><code class="notranslate">真实基因扰动实验
         ↓
@@ -143,28 +145,28 @@ CausalBench统一评分
 <blockquote>
 <p>如果算法预测“基因 A 影响基因 B”，那么在真实实验中关闭 A 后，B 的表达分布是否真的发生明显变化？</p>
 </blockquote>
-<p>前者利用已有知识，后者利用真实干预结果。两者结合，是为了避免只靠一种不完整的标准判断算法。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow">Nature</a>)</p>
+<p>前者利用已有知识，后者利用真实干预结果。两者结合，是为了避免只靠一种不完整的标准判断算法。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow" aria-label="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology">Nature</a>)</p>
 <hr>
 <h2>5. 最令人意外的发现</h2>
 <p>论文早期评测发现：</p>
 <blockquote>
 <p><strong>使用了基因扰动信息的复杂因果算法，并没有稳定胜过只看普通观察数据的方法。</strong></p>
 </blockquote>
-<p>理论上，“真正动手关闭基因”的信息应该比只观察细胞更有价值，但许多算法并没有有效利用这些数据。部分复杂算法还无法直接处理数千个基因组成的大网络，只能把网络切成小块计算，从而丢失跨区域关系。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow">Nature</a>)</p>
+<p>理论上，“真正动手关闭基因”的信息应该比只观察细胞更有价值，但许多算法并没有有效利用这些数据。部分复杂算法还无法直接处理数千个基因组成的大网络，只能把网络切成小块计算，从而丢失跨区域关系。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow" aria-label="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology">Nature</a>)</p>
 <p>甚至 GRNBoost、Sortnregress 等较简单的方法，也能与复杂因果发现算法竞争。这说明问题不只是“模型够不够复杂”，而是：</p>
 <blockquote>
-<p><strong>算法是否真的把干预信息转化成了可靠的因果关系。</strong> (<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow">Nature</a>)</p>
+<p><strong>算法是否真的把干预信息转化成了可靠的因果关系。</strong> (<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow" aria-label="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology">Nature</a>)</p>
 </blockquote>
 <hr>
 <h2>6. 后来哪些方法表现较好？</h2>
-<p>CausalBench 后续举办了算法挑战赛。新方法中，<strong>Mean Difference</strong> 和 <strong>Guanlab</strong> 在两种细胞数据以及生物学、统计学两类指标上表现较稳定。论文发表时，作者建议实际分析中可以将两者都作为默认方法运行。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow">Nature</a>)</p>
+<p>CausalBench 后续举办了算法挑战赛。新方法中，<strong>Mean Difference</strong> 和 <strong>Guanlab</strong> 在两种细胞数据以及生物学、统计学两类指标上表现较稳定。论文发表时，作者建议实际分析中可以将两者都作为默认方法运行。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow" aria-label="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology">Nature</a>)</p>
 <p>其中 Mean Difference 的思想非常直观：</p>
 <pre lang="text" class="notranslate"><code class="notranslate">正常情况下基因 B 的平均表达
                  对比
 关闭基因 A 后基因 B 的平均表达
 </code></pre>
 <p>差异越大，就越怀疑 A 对 B 有影响。</p>
-<p>这说明在真实生物数据中，<strong>简单、可扩展并直接利用干预结果的方法，有时会比理论上更复杂的模型更有效。</strong>(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow">Nature</a>)</p>
+<p>这说明在真实生物数据中，<strong>简单、可扩展并直接利用干预结果的方法，有时会比理论上更复杂的模型更有效。</strong>(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow" aria-label="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology">Nature</a>)</p>
 <hr>
 <h2>7. 这篇论文真正重要在哪里？</h2>
 <p>它的重要性不是宣布“某个算法已经破解了细胞网络”，而是建立了一把更现实的尺子：</p>
@@ -173,7 +175,7 @@ CausalBench统一评分
 <li>同时检查生物学合理性和真实干预效应；</li>
 <li>检查算法能否处理数千个基因；</li>
 <li>检查数据和扰动实验增加后，算法是否真的进步；</li>
-<li>让不同方法可以在相同条件下公平比较。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow">Nature</a>)</li>
+<li>让不同方法可以在相同条件下公平比较。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow" aria-label="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology">Nature</a>)</li>
 </ul>
 <hr>
 <h2>8. 它还有什么局限？</h2>
@@ -184,7 +186,7 @@ CausalBench统一评分
 <li>关闭 A 后 B 变化，可能是 A 经过其他基因间接影响了 B；</li>
 <li>单细胞数据通常只在一个时间点测量，难以完整恢复变化顺序。</li>
 </ul>
-<p>因此，它更适合用来衡量“算法目前做到什么程度”，而不能证明某张预测网络就是真实、完整的细胞线路图。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow">Nature</a>)</p>
+<p>因此，它更适合用来衡量“算法目前做到什么程度”，而不能证明某张预测网络就是真实、完整的细胞线路图。(<a href="https://www.nature.com/articles/s42003-025-07764-y" title="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology" rel="nofollow" aria-label="A large-scale benchmark for network inference from single-cell perturbation data | Communications Biology">Nature</a>)</p>
 <h2>最核心的结论</h2>
 <blockquote>
 <p><strong>CausalBench 用真实基因敲低实验检验算法能否恢复细胞的因果网络，并发现许多复杂方法既难以扩展到大网络，也没有充分利用干预数据；真正有效的方法必须既能处理数千个基因，又能随着更多扰动实验而持续变准。</strong></p>
@@ -195,9 +197,9 @@ CausalBench统一评分
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -263,6 +265,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

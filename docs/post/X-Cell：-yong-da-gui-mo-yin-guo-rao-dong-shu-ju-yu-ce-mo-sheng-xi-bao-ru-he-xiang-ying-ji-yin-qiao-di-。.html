@@ -5,26 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 前言
 
-标题：[X-Cell: Scaling Causal Perturbation Prediction Across Diverse Cellular Contexts via Diffusion Language Models](https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1)
 
-> 说明：截至 2026 年 7 月 20 日，我没有检索到该论文的 arXiv 版本，因此没有虚构 arXiv 链接，而是链接到 bioRxiv v1；[作者发布的完整 PDF 在这里](https://www.cdn.xaira.com/papers/X_CELL_V1_0316_final.pdf)。">
+
+
+
+
+<title>X-Cell：用大规模因果扰动数据预测陌生细胞如何响应基因敲低。</title>
+<meta name="description" content="前言 标题：X-Cell: Scaling Causal Perturbation Prediction Across Diverse Cellular Contexts via Diffusion Language Models 说明：截至 2026 年 7 月 20 日，我没有检索到该论文的 arXiv 版本…">
 <meta property="og:title" content="X-Cell：用大规模因果扰动数据预测陌生细胞如何响应基因敲低。">
-<meta property="og:description" content="# 前言
-
-标题：[X-Cell: Scaling Causal Perturbation Prediction Across Diverse Cellular Contexts via Diffusion Language Models](https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1)
-
-> 说明：截至 2026 年 7 月 20 日，我没有检索到该论文的 arXiv 版本，因此没有虚构 arXiv 链接，而是链接到 bioRxiv v1；[作者发布的完整 PDF 在这里](https://www.cdn.xaira.com/papers/X_CELL_V1_0316_final.pdf)。">
+<meta property="og:description" content="前言 标题：X-Cell: Scaling Causal Perturbation Prediction Across Diverse Cellular Contexts via Diffusion Language Models 说明：截至 2026 年 7 月 20 日，我没有检索到该论文的 arXiv 版本…">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/X-Cell%EF%BC%9A-yong-da-gui-mo-yin-guo-rao-dong-shu-ju-yu-ce-mo-sheng-xi-bao-ru-he-xiang-ying-ji-yin-qiao-di-%E3%80%82.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>X-Cell：用大规模因果扰动数据预测陌生细胞如何响应基因敲低。</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="X-Cell：用大规模因果扰动数据预测陌生细胞如何响应基因敲低。">
+<meta name="twitter:description" content="前言 标题：X-Cell: Scaling Causal Perturbation Prediction Across Diverse Cellular Contexts via Diffusion Language Models 说明：截至 2026 年 7 月 20 日，我没有检索到该论文的 arXiv 版本…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/X-Cell%EF%BC%9A-yong-da-gui-mo-yin-guo-rao-dong-shu-ju-yu-ce-mo-sheng-xi-bao-ru-he-xiang-ying-ji-yin-qiao-di-%E3%80%82.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -62,32 +63,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">X-Cell：用大规模因果扰动数据预测陌生细胞如何响应基因敲低。</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/18" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/18" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>前言</h1>
 <p>标题：<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1" rel="nofollow">X-Cell: Scaling Causal Perturbation Prediction Across Diverse Cellular Contexts via Diffusion Language Models</a></p>
 <blockquote>
@@ -248,14 +250,14 @@ $$</p>
 <p>但值得注意的是，即使强扰动的跨背景可检测性很高，其下游特征的绝对 Jaccard 重叠依然较低——这恰好说明跨细胞预测非常困难，也说明简单迁移平均扰动向量通常不够。</p>
 <h2>3：标准基准结果</h2>
 <p>下表列出最直观的 Pearson Δ 和 MAE。Pearson Δ 衡量预测与真实扰动 fold-change 的相关性；MAE 越低越好。<a href="https://www.cdn.xaira.com/papers/X_CELL_V1_0316_final.pdf" rel="nofollow">完整结果见论文 Table B7</a>。</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>数据集</th>
-<th align="right">最强基线 Pearson Δ</th>
-<th align="right">X-Cell Pearson Δ</th>
-<th align="right">最强基线 MAE</th>
-<th align="right">X-Cell MAE</th>
+<th scope="col">数据集</th>
+<th scope="col" align="right">最强基线 Pearson Δ</th>
+<th scope="col" align="right">X-Cell Pearson Δ</th>
+<th scope="col" align="right">最强基线 MAE</th>
+<th scope="col" align="right">X-Cell MAE</th>
 </tr>
 </thead>
 <tbody>
@@ -288,7 +290,7 @@ $$</p>
 <td align="right"><strong>0.0850</strong></td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>“五倍提升”主要来自内部 iPSC/HepG2 留出集：0.51 对 0.10、0.48 对 0.10，确实很显著。</p>
 <p>但外部数据上的提升更温和：Replogle–Nadig 是 0.514 对 0.456，Parse-1M 是 0.586 对 0.536。这仍是进步，只是不应把内部集上的“五倍”推广成普遍结论。</p>
 <p>另外，X-Cell 并非每项指标都赢。例如 Parse-1M 的 Overlap@N 是 STATE 的 0.3044 对 X-Cell 的 0.2500；DE Direction Match 也是 STATE 略高。说明不同指标反映不同目标：X-Cell 更擅长恢复 fold-change 幅度、排序和整体表达，而不总是找回最多的 top-DE 基因。</p>
@@ -315,12 +317,12 @@ $$</p>
 <p>但其绝对 Pearson Δ 大多仍在约 0.1 的量级。也就是说，它比现有方法更好，却远没有达到“可以高精度替代真实实验”的程度。论文证明的是有用的排序和初筛能力，不是完整的数字细胞孪生。</p>
 <h2>6：缩放规律、可复现性与实验结论</h2>
 <p>缩放实验在相同 Replogle–Nadig 数据上训练了 83M、216M、543M、1.6B 和 3.1B 五个模型：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th align="right">参数量</th>
-<th align="right">验证损失</th>
-<th align="right">DE Pearson</th>
+<th scope="col" align="right">参数量</th>
+<th scope="col" align="right">验证损失</th>
+<th scope="col" align="right">DE Pearson</th>
 </tr>
 </thead>
 <tbody>
@@ -350,7 +352,7 @@ $$</p>
 <td align="right">0.312</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>训练损失的缩放指数为 0.322，确实落在语言模型文献的范围内；但测试损失指数只有 0.033，DE Pearson 在 16 亿参数后基本饱和，甚至从 0.315 略降到 0.312。</p>
 <p>所以最诚实的解读是：</p>
 <blockquote>
@@ -382,7 +384,7 @@ $$</p>
 <blockquote>
 <p><strong>给 AI 一个“虚拟实验室”，不用真的做实验，就能预测药物靶点和基因操作的结果。</strong></p>
 </blockquote>
-<p>(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow">生物预印本</a>)</p>
+<p>(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow" aria-label="X-Cell: Scaling Causal Perturbation Prediction Across ...">生物预印本</a>)</p>
 <hr>
 <h1>1. 先理解背景：科学家为什么需要这个？</h1>
 <p>假设你是一个药物研发科学家。</p>
@@ -426,7 +428,7 @@ $$</p>
 <p>AI 输出：</p>
 <pre class="notranslate"><code class="notranslate">这个细胞未来会变成什么样
 </code></pre>
-<p>X-Cell 就是在做这个事情。(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow">生物预印本</a>)</p>
+<p>X-Cell 就是在做这个事情。(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow" aria-label="X-Cell: Scaling Causal Perturbation Prediction Across ...">生物预印本</a>)</p>
 <hr>
 <h1>2. X-Cell 具体预测什么？</h1>
 <p>简单理解：</p>
@@ -467,7 +469,7 @@ $$</p>
 <blockquote>
 <p>“改变一个东西以后，它会怎么变”。</p>
 </blockquote>
-<p>这就是为什么叫 <strong>causal perturbation prediction（因果扰动预测）</strong>。(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow">生物预印本</a>)</p>
+<p>这就是为什么叫 <strong>causal perturbation prediction（因果扰动预测）</strong>。(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow" aria-label="X-Cell: Scaling Causal Perturbation Prediction Across ...">生物预印本</a>)</p>
 <hr>
 <h1>3. 它和 ChatGPT 最大的相似点在哪里？</h1>
 <p>这篇文章一个很重要的思想：</p>
@@ -513,7 +515,7 @@ $$</p>
 </blockquote>
 <p>也就是：</p>
 <p><strong>不是生成文字，而是生成细胞状态。</strong></p>
-<p>(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow">生物预印本</a>)</p>
+<p>(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow" aria-label="X-Cell: Scaling Causal Perturbation Prediction Across ...">生物预印本</a>)</p>
 <hr>
 <h1>4. 为什么用 Diffusion（扩散模型）？</h1>
 <p>普通语言模型：</p>
@@ -565,7 +567,7 @@ $$</p>
 <p>最后：</p>
 <pre class="notranslate"><code class="notranslate">接近真实实验结果
 </code></pre>
-<p>作者认为这种逐步优化更适合复杂生物系统。(<a href="https://www.cdn.xaira.com/papers/X_CELL_V1_0316_final.pdf?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow">cdn.xaira.com</a>)</p>
+<p>作者认为这种逐步优化更适合复杂生物系统。(<a href="https://www.cdn.xaira.com/papers/X_CELL_V1_0316_final.pdf?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow" aria-label="X-Cell: Scaling Causal Perturbation Prediction Across ...">cdn.xaira.com</a>)</p>
 <hr>
 <h1>5. 最大创新在哪里？</h1>
 <p>我认为有三个重点。</p>
@@ -582,7 +584,7 @@ $$</p>
 <li>多种细胞环境；</li>
 <li>大规模 CRISPRi 实验。</li>
 </ul>
-<p>(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow">生物预印本</a>)</p>
+<p>(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow" aria-label="X-Cell: Scaling Causal Perturbation Prediction Across ...">生物预印本</a>)</p>
 <p>这类似：</p>
 <p>GPT 为什么强？</p>
 <p>因为：</p>
@@ -634,7 +636,7 @@ GPT-4
 <p>虚拟细胞模型也存在类似 scaling law。</p>
 <p>他们训练到：</p>
 <p>最大约 <strong>49亿参数模型（X-Cell-Ultra）</strong>。</p>
-<p>(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow">生物预印本</a>)</p>
+<p>(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow" aria-label="X-Cell: Scaling Causal Perturbation Prediction Across ...">生物预印本</a>)</p>
 <p>这说明：</p>
 <p>未来可能出现：</p>
 <blockquote>
@@ -691,15 +693,15 @@ GPT-4
 <p>预测：</p>
 <pre class="notranslate"><code class="notranslate">这个患者可能对哪个治疗响应最好
 </code></pre>
-<p>(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow">生物预印本</a>)</p>
+<p>(<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow" aria-label="X-Cell: Scaling Causal Perturbation Prediction Across ...">生物预印本</a>)</p>
 <hr>
 <h1>8. 这篇论文的本质定位</h1>
 <p>如果类比 AI 历史：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>领域</th>
-<th>代表模型</th>
+<th scope="col">领域</th>
+<th scope="col">代表模型</th>
 </tr>
 </thead>
 <tbody>
@@ -720,7 +722,7 @@ GPT-4
 <td>X-Cell</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>它想成为：</p>
 <blockquote>
 <p><strong>细胞世界里的基础模型（Cell Foundation Model）。</strong></p>
@@ -746,16 +748,16 @@ GPT-4
 <blockquote>
 <p><strong>像语言模型一样扩大数据和模型规模，可能也能创造理解生命系统的基础模型。</strong></p>
 </blockquote>
-<p>这也是为什么它被认为是 <strong>AI for Biology（AI4Bio）向 GPT 类基础模型发展的代表工作之一。</strong> (<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow">生物预印本</a>)</p></div>
+<p>这也是为什么它被认为是 <strong>AI for Biology（AI4Bio）向 GPT 类基础模型发展的代表工作之一。</strong> (<a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1?utm_source=chatgpt.com" title="X-Cell: Scaling Causal Perturbation Prediction Across ..." rel="nofollow" aria-label="X-Cell: Scaling Causal Perturbation Prediction Across ...">生物预印本</a>)</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -823,8 +825,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
         <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
             <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
-                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
-                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-copy m-2" aria-hidden="true"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none" aria-hidden="true"><path d="${IconList["check"]}"></path></svg>
             </clipboard-copy>
             <div class="copy-feedback">Copied!</div>
         </div>
@@ -884,6 +886,66 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

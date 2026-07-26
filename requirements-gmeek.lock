@@ -1,0 +1,21 @@
+# Exact dependencies for the pinned Gmeek v2.25 build.
+Jinja2==3.1.6
+MarkupSafe==3.0.3
+PyGithub==2.9.1
+certifi==2026.7.22
+cffi==2.1.0
+charset-normalizer==3.4.9
+cryptography==49.0.0
+feedgen==1.0.0
+idna==3.18
+lxml==6.1.1
+pycparser==3.0
+PyJWT==2.13.0
+PyNaCl==1.6.2
+python-dateutil==2.9.0.post0
+requests==2.34.2
+six==1.17.0
+transliterate==1.10.2
+typing-extensions==4.16.0
+urllib3==2.7.0
+xpinyin==0.7.7

@@ -5,24 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 前言
 
-**标题：** [scGPT: toward building a foundation model for single-cell multi-omics using generative AI](https://www.biorxiv.org/content/10.1101/2023.04.30.538439v2)  
-**说明：** 截至 2026 年 7 月，我没有检索到这篇论文的独立 arXiv 页面，因此标题链接到 bioRxiv 预印本，而非虚构一个 arXiv 地址。">
+
+
+
+
+
+<title>scGPT：从3300万个细胞中学会“读懂”基因表达。</title>
+<meta name="description" content="前言 标题： scGPT: toward building a foundation model for single-cell multi-omics using generative AI 说明： 截至 2026 年 7 月，我没有检索到这篇论文的独立 arXiv 页面，因此标题链接到 bioRxiv 预印本…">
 <meta property="og:title" content="scGPT：从3300万个细胞中学会“读懂”基因表达。">
-<meta property="og:description" content="# 前言
-
-**标题：** [scGPT: toward building a foundation model for single-cell multi-omics using generative AI](https://www.biorxiv.org/content/10.1101/2023.04.30.538439v2)  
-**说明：** 截至 2026 年 7 月，我没有检索到这篇论文的独立 arXiv 页面，因此标题链接到 bioRxiv 预印本，而非虚构一个 arXiv 地址。">
+<meta property="og:description" content="前言 标题： scGPT: toward building a foundation model for single-cell multi-omics using generative AI 说明： 截至 2026 年 7 月，我没有检索到这篇论文的独立 arXiv 页面，因此标题链接到 bioRxiv 预印本…">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/scGPT%EF%BC%9A-cong-3300-wan-ge-xi-bao-zhong-xue-hui-%E2%80%9C-du-dong-%E2%80%9D-ji-yin-biao-da-%E3%80%82.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>scGPT：从3300万个细胞中学会“读懂”基因表达。</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="scGPT：从3300万个细胞中学会“读懂”基因表达。">
+<meta name="twitter:description" content="前言 标题： scGPT: toward building a foundation model for single-cell multi-omics using generative AI 说明： 截至 2026 年 7 月，我没有检索到这篇论文的独立 arXiv 页面，因此标题链接到 bioRxiv 预印本…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/scGPT%EF%BC%9A-cong-3300-wan-ge-xi-bao-zhong-xue-hui-%E2%80%9C-du-dong-%E2%80%9D-ji-yin-biao-da-%E3%80%82.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -50,32 +53,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">scGPT：从3300万个细胞中学会“读懂”基因表达。</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/19" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/19" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>前言</h1>
 <p><strong>标题：</strong> <a href="https://www.biorxiv.org/content/10.1101/2023.04.30.538439v2" rel="nofollow">scGPT: toward building a foundation model for single-cell multi-omics using generative AI</a><br>
 <strong>说明：</strong> 截至 2026 年 7 月，我没有检索到这篇论文的独立 arXiv 页面，因此标题链接到 bioRxiv 预印本，而非虚构一个 arXiv 地址。同行评审后的<a href="https://www.nature.com/articles/s41592-024-02201-0" rel="nofollow">正式版本发表于 Nature Methods</a>。</p>
@@ -143,12 +147,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>不过，注意力学习到的是统计依赖，不自动等于生物学调控关系。例如两个基因总是同时表达，可能因为一个调控另一个，也可能因为它们都受到第三个因子控制。</p>
 <h2>5：一个预训练模型怎样适配多项任务</h2>
 <p>scGPT并不是预训练一次后，不加改动地完成所有任务。它更接近“共用底座＋任务微调”：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>下游任务</th>
-<th>模型增加的训练目标</th>
-<th>实际含义</th>
+<th scope="col">下游任务</th>
+<th scope="col">模型增加的训练目标</th>
+<th scope="col">实际含义</th>
 </tr>
 </thead>
 <tbody>
@@ -178,7 +182,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td>寻找可能有关联的基因和调控靶点</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>批次整合还使用了“域对抗训练”：一个额外分类器尝试从细胞表示中识别批次，而主模型反过来学习让批次难以识别。其目标是“忘掉实验来源，保留细胞身份”。</p>
 <p>这是一种很实用的工程框架，但也意味着不同任务的成绩不能全部归功于同一个预训练目标；各项专用损失、数据处理和微调过程同样重要。</p>
 <h2>6：模型如何预测基因扰动</h2>
@@ -240,14 +244,14 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>扰动实验使用Pearson相关系数，但作者进一步报告了相对于对照表达的变化量，即PearsonΔ及差异表达基因上的PearsonΔ。这一点非常重要，因为原始表达中大量基因在扰动前后几乎不变，仅仅预测“什么也没有发生”也能得到接近0.99的相关系数。</p>
 <h2>2：细胞类型注释表现</h2>
 <p>三个注释数据集的核心结果如下，数值为“准确率／宏平均F1”：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>数据集</th>
-<th align="right">scGPT微调</th>
-<th align="right">从头训练</th>
-<th align="right">TOSICA</th>
-<th align="right">scBERT</th>
+<th scope="col">数据集</th>
+<th scope="col" align="right">scGPT微调</th>
+<th scope="col" align="right">从头训练</th>
+<th scope="col" align="right">TOSICA</th>
+<th scope="col" align="right">scBERT</th>
 </tr>
 </thead>
 <tbody>
@@ -273,7 +277,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td align="right">0.964／0.685</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>预训练在三个数据集上都带来提升，其中多发性硬化数据的宏平均F1从0.600提高到0.703，说明跨数据集迁移确实有效。</p>
 <p>但Myeloid数据上的准确率为0.642，宏平均F1只有0.346。这意味着模型仍然倾向于识别常见类别，稀有或相近的髓系细胞亚型依旧困难。</p>
 <p>还应注意，<a href="https://static-content.springer.com/esm/art%3A10.1038%2Fs41592-024-02201-0/MediaObjects/41592_2024_2201_MOESM1_ESM.pdf" rel="nofollow">官方补充材料</a>说明，从头训练的对照只是一个较小的四层Transformer，而预训练模型是十二层。这个对照能够证明“完整scGPT系统更好”，却不能严格区分提升到底来自预训练，还是来自更大的模型容量。</p>
@@ -286,13 +290,13 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </ul>
 <p>所以scGPT整体很强，但并不是每个数据集都第一。特别是脑组织数据，Harmony略胜一筹，说明专用整合方法仍有竞争力。</p>
 <p>多组学结果中：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>数据集</th>
-<th align="right">scGPT AvgBIO</th>
-<th align="right">从头训练</th>
-<th align="right">主要对照</th>
+<th scope="col">数据集</th>
+<th scope="col" align="right">scGPT AvgBIO</th>
+<th scope="col" align="right">从头训练</th>
+<th scope="col" align="right">主要对照</th>
 </tr>
 </thead>
 <tbody>
@@ -315,18 +319,18 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td align="right">scMoMat 0.546</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>10X和ASAP数据支持预训练基因嵌入具有迁移价值；但在BMMC上，0.697与0.696几乎相同，说明预训练并非总能带来实质收益。</p>
 <p>实验更稳妥的结论是：scGPT提供了一套有竞争力的统一整合框架，而不是已经全面淘汰Seurat、Harmony、scVI或scGLUE等专用方法。</p>
 <h2>4：扰动预测到底有多强</h2>
 <p>使用更有意义的变化量相关性后，结果如下：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>数据集</th>
-<th>模型</th>
-<th align="right">PearsonΔ</th>
-<th align="right">PearsonΔ（差异基因）</th>
+<th scope="col">数据集</th>
+<th scope="col">模型</th>
+<th scope="col" align="right">PearsonΔ</th>
+<th scope="col" align="right">PearsonΔ（差异基因）</th>
 </tr>
 </thead>
 <tbody>
@@ -379,7 +383,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td align="right">0.241</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>scGPT在所有列中领先，尤其在Adamson数据上提升明显。这说明预训练表示和Transformer确实有助于提取扰动后的平均表达方向。</p>
 <p>但Replogle数据上的PearsonΔ只有0.242，转录因子子集更只有0.154。换句话说，它比已有模型更好，却离准确预测复杂扰动仍然很远。“SOTA”与“已经解决问题”不是一回事。</p>
 <p>反向扰动设计实验中，模型在7个测试案例里有5次把正确扰动排进前5名，即71.4%。这个结果很有启发性，但测试量只有7，无法支撑广泛的药物或基因靶点设计结论。大量未做实验的双基因组合也只有模型预测，没有真实测量作为验证。</p>
@@ -430,7 +434,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <blockquote>
 <p><strong>不是专门解决一道生物题的模型，而是先读完大量“细胞档案”，再学习做多种单细胞分析任务。</strong></p>
 </blockquote>
-<p>这篇 bioRxiv 预印本后来经过同行评审，于 <strong>2024 年发表在《Nature Methods》</strong>。(<a href="https://www.nature.com/articles/s41592-024-02201-0" title="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods" rel="nofollow">Nature</a>)</p>
+<p>这篇 bioRxiv 预印本后来经过同行评审，于 <strong>2024 年发表在《Nature Methods》</strong>。(<a href="https://www.nature.com/articles/s41592-024-02201-0" title="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods" rel="nofollow" aria-label="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods">Nature</a>)</p>
 <hr>
 <h2>1. 什么是“单细胞数据”？</h2>
 <p>人体由许多不同细胞组成，比如：</p>
@@ -447,7 +451,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 基因 C：中等活跃
 ……
 </code></pre>
-<p>scGPT 学习的主要就是这种“每个细胞的基因活动表”。(<a href="https://virtualcellmodels.cziscience.com/model/scgpt?utm_source=chatgpt.com" title="scGPT | v1.0 - Virtual Cells Platform - Chan Zuckerberg Initiative" rel="nofollow">虚拟细胞模型</a>)</p>
+<p>scGPT 学习的主要就是这种“每个细胞的基因活动表”。(<a href="https://virtualcellmodels.cziscience.com/model/scgpt?utm_source=chatgpt.com" title="scGPT | v1.0 - Virtual Cells Platform - Chan Zuckerberg Initiative" rel="nofollow" aria-label="scGPT | v1.0 - Virtual Cells Platform - Chan Zuckerberg Initiative">虚拟细胞模型</a>)</p>
 <hr>
 <h2>2. scGPT 和 ChatGPT 有什么相似之处？</h2>
 <p>ChatGPT 从大量文本中学习：</p>
@@ -459,11 +463,11 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>哪些基因经常一起活跃，它们与什么细胞类型、功能和状态有关。</p>
 </blockquote>
 <p>可以做一个不完全准确、但很直观的类比：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>ChatGPT</th>
-<th>scGPT</th>
+<th scope="col">ChatGPT</th>
+<th scope="col">scGPT</th>
 </tr>
 </thead>
 <tbody>
@@ -484,8 +488,8 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td>学习基因之间的关系</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
-<p>不过，scGPT 并不是让细胞“说话”，也不是直接把基因当作自然语言；它只是借用了 GPT 背后的 <strong>Transformer 和预训练思想</strong>。论文使用超过 <strong>3,300 万个细胞</strong>进行预训练。(<a href="https://www.nature.com/articles/s41592-024-02201-0" title="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods" rel="nofollow">Nature</a>)</p>
+</table></div>
+<p>不过，scGPT 并不是让细胞“说话”，也不是直接把基因当作自然语言；它只是借用了 GPT 背后的 <strong>Transformer 和预训练思想</strong>。论文使用超过 <strong>3,300 万个细胞</strong>进行预训练。(<a href="https://www.nature.com/articles/s41592-024-02201-0" title="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods" rel="nofollow" aria-label="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods">Nature</a>)</p>
 <hr>
 <h2>3. 它是怎么训练的？</h2>
 <p>可以理解成一种“完形填空”。</p>
@@ -502,7 +506,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>哪些基因可能参与同一个生物过程；</li>
 <li>不同细胞状态之间有哪些共同规律。</li>
 </ul>
-<p>训练完成后，再用较小的特定数据集微调，让它完成具体任务。scGPT 的输入还可以包含实验批次、数据类型和基因扰动等条件信息。(<a href="https://virtualcellmodels.cziscience.com/model/scgpt?utm_source=chatgpt.com" title="scGPT | v1.0 - Virtual Cells Platform - Chan Zuckerberg Initiative" rel="nofollow">虚拟细胞模型</a>)</p>
+<p>训练完成后，再用较小的特定数据集微调，让它完成具体任务。scGPT 的输入还可以包含实验批次、数据类型和基因扰动等条件信息。(<a href="https://virtualcellmodels.cziscience.com/model/scgpt?utm_source=chatgpt.com" title="scGPT | v1.0 - Virtual Cells Platform - Chan Zuckerberg Initiative" rel="nofollow" aria-label="scGPT | v1.0 - Virtual Cells Platform - Chan Zuckerberg Initiative">虚拟细胞模型</a>)</p>
 <hr>
 <h2>4. scGPT 能做什么？</h2>
 <p>论文展示了五类主要用途。</p>
@@ -516,7 +520,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h3>预测基因扰动</h3>
 <p>例如关闭某个基因后，预测其他基因的活动可能怎样变化。</p>
 <h3>推测基因关系网络</h3>
-<p>根据大量细胞中的共同变化，寻找哪些基因可能彼此关联或共同参与某种功能。(<a href="https://www.nature.com/articles/s41592-024-02201-0" title="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods" rel="nofollow">Nature</a>)</p>
+<p>根据大量细胞中的共同变化，寻找哪些基因可能彼此关联或共同参与某种功能。(<a href="https://www.nature.com/articles/s41592-024-02201-0" title="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods" rel="nofollow" aria-label="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods">Nature</a>)</p>
 <hr>
 <h2>5. 这篇论文最大的意义是什么？</h2>
 <p>过去，单细胞研究往往是：</p>
@@ -532,7 +536,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>这类似于语言领域的基础模型：先在大规模数据上学通用规律，再适配翻译、分类、问答等具体任务。</p>
 <p>因此，scGPT 的重要性不只是某一项指标提高，而是较早系统展示了：</p>
 <blockquote>
-<p><strong>单细胞生物学也可以采用“大规模预训练＋下游微调”的基础模型路线。</strong>(<a href="https://www.nature.com/articles/s41592-024-02201-0" title="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods" rel="nofollow">Nature</a>)</p>
+<p><strong>单细胞生物学也可以采用“大规模预训练＋下游微调”的基础模型路线。</strong>(<a href="https://www.nature.com/articles/s41592-024-02201-0" title="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods" rel="nofollow" aria-label="scGPT: toward building a foundation model for single-cell multi-omics using generative AI | Nature Methods">Nature</a>)</p>
 </blockquote>
 <hr>
 <h2>6. 它不是什么？</h2>
@@ -543,7 +547,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>细胞未来几天会如何发展；</li>
 <li>某位患者一定适合哪种治疗。</li>
 </ul>
-<p>它更像一个已经阅读大量细胞数据的<strong>通用分析底座</strong>。具体应用通常仍需要微调、实验验证和严格评测，也不能直接用于个人诊断或医疗决策。(<a href="https://virtualcellmodels.cziscience.com/model/scgpt?utm_source=chatgpt.com" title="scGPT | v1.0 - Virtual Cells Platform - Chan Zuckerberg Initiative" rel="nofollow">虚拟细胞模型</a>)</p>
+<p>它更像一个已经阅读大量细胞数据的<strong>通用分析底座</strong>。具体应用通常仍需要微调、实验验证和严格评测，也不能直接用于个人诊断或医疗决策。(<a href="https://virtualcellmodels.cziscience.com/model/scgpt?utm_source=chatgpt.com" title="scGPT | v1.0 - Virtual Cells Platform - Chan Zuckerberg Initiative" rel="nofollow" aria-label="scGPT | v1.0 - Virtual Cells Platform - Chan Zuckerberg Initiative">虚拟细胞模型</a>)</p>
 <hr>
 <h2>最简单的类比</h2>
 <p>假设研究细胞就像分析不同城市。</p>
@@ -575,9 +579,9 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -643,6 +647,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

@@ -5,22 +5,28 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="## 结论：Biomni 是真正的 Agent
 
-**Biomni 不是一个单纯回答生物医学问题的聊天机器人，也不是一个新的生物医学大模型。">
+
+
+
+
+
+<title>Biomni Agent（详细版）</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+<meta name="description" content="结论：Biomni 是真正的 Agent Biomni 不是一个单纯回答生物医学问题的聊天机器人，也不是一个新的生物医学大模型。">
 <meta property="og:title" content="Biomni Agent（详细版）">
-<meta property="og:description" content="## 结论：Biomni 是真正的 Agent
-
-**Biomni 不是一个单纯回答生物医学问题的聊天机器人，也不是一个新的生物医学大模型。">
+<meta property="og:description" content="结论：Biomni 是真正的 Agent Biomni 不是一个单纯回答生物医学问题的聊天机器人，也不是一个新的生物医学大模型。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/Biomni%20Agent%EF%BC%88-xiang-xi-ban-%EF%BC%89.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>Biomni Agent（详细版）</title>
-<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Biomni Agent（详细版）">
+<meta name="twitter:description" content="结论：Biomni 是真正的 Agent Biomni 不是一个单纯回答生物医学问题的聊天机器人，也不是一个新的生物医学大模型。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Biomni%20Agent%EF%BC%88-xiang-xi-ban-%EF%BC%89.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -58,32 +64,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">Biomni Agent（详细版）</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/28" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/28" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h2>结论：Biomni 是真正的 Agent</h2>
 <p><strong>Biomni 不是一个单纯回答生物医学问题的聊天机器人，也不是一个新的生物医学大模型。它是一套“以大语言模型为大脑、以生物医学软件与数据库为工具箱”的通用科研 Agent 系统。</strong></p>
 <p>它之所以属于 Agent，是因为面对一个研究目标时，它能够：</p>
@@ -104,7 +111,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <blockquote>
 <p><strong>A1 是科研人员的大脑，E1 是实验室、计算机、数据库和工具箱。</strong></p>
 </blockquote>
-<p>Science 论文将 Biomni 描述为一种通用生物医学 AI Agent，其核心架构结合了大模型推理、检索增强规划和基于代码的执行。(<a href="https://www.science.org/doi/10.1126/science.adz4351?utm_source=chatgpt.com" title="Autonomous biomedical research with an artificial ..." rel="nofollow">科学杂志</a>)</p>
+<p>Science 论文将 Biomni 描述为一种通用生物医学 AI Agent，其核心架构结合了大模型推理、检索增强规划和基于代码的执行。(<a href="https://www.science.org/doi/10.1126/science.adz4351?utm_source=chatgpt.com" title="Autonomous biomedical research with an artificial ..." rel="nofollow" aria-label="Autonomous biomedical research with an artificial ...">科学杂志</a>)</p>
 <hr>
 <h1>一、Biomni 的总体架构</h1>
 <p>它的完整结构可以分成两个阶段：<strong>离线构建科研环境</strong>和<strong>在线执行科研任务</strong>。</p>
@@ -164,12 +171,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>E1 可以理解为一个经过统一整理的“虚拟生物医学实验室”。</p>
 <p>普通大模型即使知道 Scanpy、DESeq2、PLINK 或 AlphaFold 是什么，也不意味着它能够正确安装、调用、组合这些软件。E1 的作用就是把这些分散的软件、数据库、分析函数和专业方法整理成一个 Agent 可以实际使用的环境。</p>
 <p>论文中的 E1 包括：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>资源类型</th>
-<th align="right">数量</th>
-<th>作用</th>
+<th scope="col">资源类型</th>
+<th scope="col" align="right">数量</th>
+<th scope="col">作用</th>
 </tr>
 </thead>
 <tbody>
@@ -189,7 +196,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td>查询基因、疾病、药物、蛋白质等信息</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>这些资源覆盖论文所分析的25个生物医学研究方向。</p>
 <hr>
 <h2>2. 150种专用工具</h2>
@@ -593,12 +600,12 @@ Python / gseapy：做通路富集
 <p>因此，它不是典型的“多个专家 Agent 开会”式多 Agent 系统。</p>
 <p>论文中还提到一个 <strong>Action Discovery Agent</strong>，但这个 Agent 主要用于系统建设阶段：阅读大量论文，发现应该在 E1 中加入哪些科研任务、工具和数据库。它并不是每次用户提出问题时都参与运行。</p>
 <p>可以这样区分：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>模块</th>
-<th>何时运行</th>
-<th>作用</th>
+<th scope="col">模块</th>
+<th scope="col">何时运行</th>
+<th scope="col">作用</th>
 </tr>
 </thead>
 <tbody>
@@ -623,7 +630,7 @@ Python / gseapy：做通路富集
 <td>真正运行代码、软件和数据库查询</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>从论文架构来看，Biomni 并没有把一个独立的“批评 Agent”或“验证 Agent”设为必需核心组件。验证主要来自代码执行结果、统计检查、数据库或文献回查，以及 A1 对计划的迭代修正。这一点与某些 planner–executor–critic 多 Agent 系统不同。</p>
 <hr>
 <h2>一句话概括</h2>
@@ -636,9 +643,9 @@ Python / gseapy：做通路富集
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -706,8 +713,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
         <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
             <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
-                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
-                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-copy m-2" aria-hidden="true"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none" aria-hidden="true"><path d="${IconList["check"]}"></path></svg>
             </clipboard-copy>
             <div class="copy-feedback">Copied!</div>
         </div>
@@ -767,6 +774,66 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

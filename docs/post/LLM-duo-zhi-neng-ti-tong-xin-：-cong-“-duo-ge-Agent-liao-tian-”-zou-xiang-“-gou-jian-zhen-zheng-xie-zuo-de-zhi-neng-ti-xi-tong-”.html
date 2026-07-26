@@ -5,30 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 前言
 
-**标题：** [Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems](https://arxiv.org/abs/2502.14321)
 
-**标签：** 多智能体；智能体通信；通信协议；多智能体协作
 
-**摘要：** 这篇论文最本质的思想是：**理解一个多智能体系统，不能只看里面有多少个 Agent、每个 Agent 扮演什么角色，更应该看它们为什么通信、与谁通信、何时通信、以什么形式通信，以及通信内容如何影响整个系统。">
+
+
+
+<title>LLM多智能体通信：从“多个Agent聊天”走向“构建真正协作的智能体系统”</title>
+<meta name="description" content="前言 标题： Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems 标签： 多智能体；智能体通信；通信协议；多智能体协作 摘要： 这篇论文最本质的思想是：理解一个多智能体系统，不能只看里面有多少个 Age…">
 <meta property="og:title" content="LLM多智能体通信：从“多个Agent聊天”走向“构建真正协作的智能体系统”">
-<meta property="og:description" content="# 前言
-
-**标题：** [Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems](https://arxiv.org/abs/2502.14321)
-
-**标签：** 多智能体；智能体通信；通信协议；多智能体协作
-
-**摘要：** 这篇论文最本质的思想是：**理解一个多智能体系统，不能只看里面有多少个 Agent、每个 Agent 扮演什么角色，更应该看它们为什么通信、与谁通信、何时通信、以什么形式通信，以及通信内容如何影响整个系统。">
+<meta property="og:description" content="前言 标题： Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems 标签： 多智能体；智能体通信；通信协议；多智能体协作 摘要： 这篇论文最本质的思想是：理解一个多智能体系统，不能只看里面有多少个 Age…">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/LLM-duo-zhi-neng-ti-tong-xin-%EF%BC%9A-cong-%E2%80%9C-duo-ge-Agent-liao-tian-%E2%80%9D-zou-xiang-%E2%80%9C-gou-jian-zhen-zheng-xie-zuo-de-zhi-neng-ti-xi-tong-%E2%80%9D.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>LLM多智能体通信：从“多个Agent聊天”走向“构建真正协作的智能体系统”</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LLM多智能体通信：从“多个Agent聊天”走向“构建真正协作的智能体系统”">
+<meta name="twitter:description" content="前言 标题： Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems 标签： 多智能体；智能体通信；通信协议；多智能体协作 摘要： 这篇论文最本质的思想是：理解一个多智能体系统，不能只看里面有多少个 Age…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/LLM-duo-zhi-neng-ti-tong-xin-%EF%BC%9A-cong-%E2%80%9C-duo-ge-Agent-liao-tian-%E2%80%9D-zou-xiang-%E2%80%9C-gou-jian-zhen-zheng-xie-zuo-de-zhi-neng-ti-xi-tong-%E2%80%9D.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -56,32 +53,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">LLM多智能体通信：从“多个Agent聊天”走向“构建真正协作的智能体系统”</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/13" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/13" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>前言</h1>
 <p><strong>标题：</strong> <a href="https://arxiv.org/abs/2502.14321" rel="nofollow">Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems</a></p>
 <p><strong>标签：</strong> 多智能体；智能体通信；通信协议；多智能体协作</p>
@@ -99,12 +97,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p><strong>我的看法：</strong> 这个切入点是合理且有价值的。很多所谓的多智能体系统，本质上只是“多个 Prompt 串联”；如果不分析通信机制，就很难解释增加 Agent 后为什么有时提升、有时反而变差。</p>
 <h3>1.2：提出两层、七维框架</h3>
 <p>作者将 LLM 多智能体通信分成两个层次：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>层次</th>
-<th>维度</th>
-<th>要回答的问题</th>
+<th scope="col">层次</th>
+<th scope="col">维度</th>
+<th scope="col">要回答的问题</th>
 </tr>
 </thead>
 <tbody>
@@ -144,7 +142,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td>Agent 具体交换什么信息？</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>可以将它记成一句话：</p>
 <blockquote>
 <p><strong>系统级决定“组织方式、通信目的和基础规则”，系统内部决定“何时说、怎么说、对谁说、说什么”。</strong></p>
@@ -238,13 +236,13 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p><strong>锐评：</strong> 当前 LLM-MAS 研究明显偏向“大家一起完成任务”，对真正存在利益冲突的 Agent 研究不足。纯合作环境中的成功，不代表系统在开放环境中仍然可靠。</p>
 <h3>4.2：通信协议：MCP、A2A 与 ANP</h3>
 <p>论文介绍了三个新兴协议。(<a href="https://arxiv.org/pdf/2502.14321" rel="nofollow">arXiv</a>)</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>协议</th>
-<th>主要连接对象</th>
-<th>核心作用</th>
-<th>典型特点</th>
+<th scope="col">协议</th>
+<th scope="col">主要连接对象</th>
+<th scope="col">核心作用</th>
+<th scope="col">典型特点</th>
 </tr>
 </thead>
 <tbody>
@@ -267,7 +265,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td>DID、JSON-LD、端到端加密</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <h4>MCP</h4>
 <p>MCP 更接近“Agent 如何标准化地使用外部工具”。Agent 不需要针对每个数据库、文件系统或 API 编写完全不同的接入逻辑，而是通过统一接口请求资源。</p>
 <p>因此，MCP 解决的主要是：</p>
@@ -344,11 +342,11 @@ $$</p>
 <p><strong>我的看法：</strong> 这里的分类并不完全正交。“消息传递”和“黑板”属于信息传输机制，而“言语行为”属于消息语义。一个 Agent 完全可以通过黑板发布一条“请求”类型的言语行为，因此三者并不是严格互斥的同级类别。</p>
 <h3>6.2：通信对象</h3>
 <p>论文将通信对象分成四类：(<a href="https://arxiv.org/pdf/2502.14321" rel="nofollow">arXiv</a>)</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>对象</th>
-<th>含义</th>
+<th scope="col">对象</th>
+<th scope="col">含义</th>
 </tr>
 </thead>
 <tbody>
@@ -369,7 +367,7 @@ $$</p>
 <td>接收人类指令、反馈、审批和纠正</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>这个划分提醒我们，多智能体通信不只是 Agent 互相聊天。Agent 对环境的观察、人类对 Agent 的反馈，以及 Agent 自己的反思，都可能改变后续协作过程。</p>
 <h3>6.3：通信内容</h3>
 <p>论文将通信内容分成显式和隐式两类。(<a href="https://arxiv.org/pdf/2502.14321" rel="nofollow">arXiv</a>)</p>
@@ -435,12 +433,12 @@ $$</p>
 <h2>1：这篇论文没有传统意义上的实验</h2>
 <h2>2：如何组织已有研究</h2>
 <p>作者主要构建了三层证据：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>表格</th>
-<th>主要内容</th>
-<th>作用</th>
+<th scope="col">表格</th>
+<th scope="col">主要内容</th>
+<th scope="col">作用</th>
 </tr>
 </thead>
 <tbody>
@@ -460,7 +458,7 @@ $$</p>
 <td>对代表性 LLM-MAS 进行内部通信标注</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>Table 3 收录了约 68 项从 2023 年到 2025 年 5 月的代表性工作，并分别标注其通信策略、通信范式、通信对象和通信内容。(<a href="https://arxiv.org/pdf/2502.14321" rel="nofollow">arXiv</a>)</p>
 <h2>3：架构与目标表揭示了什么</h2>
 <p>Table 1 将论文放入五种架构和三种目标的组合中。</p>
@@ -515,9 +513,9 @@ $$</p>
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -583,6 +581,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

@@ -5,26 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="## 一句话概括
 
-这篇论文推出了 **Biomni**：
 
-> **一个不只会回答生物医学问题，还能自己查资料、选工具、写代码、分析数据并设计实验方案的“AI 科研助理”。">
+
+
+
+
+<title>Biomni：让AI从“回答问题”走向自主执行生物医学研究流程</title>
+<meta name="description" content="一句话概括 这篇论文推出了 Biomni： 一个不只会回答生物医学问题，还能自己查资料、选工具、写代码、分析数据并设计实验方案的“AI 科研助理”。">
 <meta property="og:title" content="Biomni：让AI从“回答问题”走向自主执行生物医学研究流程">
-<meta property="og:description" content="## 一句话概括
-
-这篇论文推出了 **Biomni**：
-
-> **一个不只会回答生物医学问题，还能自己查资料、选工具、写代码、分析数据并设计实验方案的“AI 科研助理”。">
+<meta property="og:description" content="一句话概括 这篇论文推出了 Biomni： 一个不只会回答生物医学问题，还能自己查资料、选工具、写代码、分析数据并设计实验方案的“AI 科研助理”。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/Biomni%EF%BC%9A-rang-AI-cong-%E2%80%9C-hui-da-wen-ti-%E2%80%9D-zou-xiang-zi-zhu-zhi-xing-sheng-wu-yi-xue-yan-jiu-liu-cheng.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>Biomni：让AI从“回答问题”走向自主执行生物医学研究流程</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Biomni：让AI从“回答问题”走向自主执行生物医学研究流程">
+<meta name="twitter:description" content="一句话概括 这篇论文推出了 Biomni： 一个不只会回答生物医学问题，还能自己查资料、选工具、写代码、分析数据并设计实验方案的“AI 科研助理”。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Biomni%EF%BC%9A-rang-AI-cong-%E2%80%9C-hui-da-wen-ti-%E2%80%9D-zou-xiang-zi-zhu-zhi-xing-sheng-wu-yi-xue-yan-jiu-liu-cheng.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -52,38 +53,39 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">Biomni：让AI从“回答问题”走向自主执行生物医学研究流程</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/24" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/24" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h2>一句话概括</h2>
 <p>这篇论文推出了 <strong>Biomni</strong>：</p>
 <blockquote>
 <p><strong>一个不只会回答生物医学问题，还能自己查资料、选工具、写代码、分析数据并设计实验方案的“AI 科研助理”。</strong></p>
 </blockquote>
-<p>它的目标不是替代科学家，而是把科研中大量重复、碎片化的工作串成一条可以自动执行的流程。论文于 <strong>2026年7月发表在《Science》</strong>。(<a href="https://www.science.org/doi/10.1126/science.adz4351?utm_source=chatgpt.com" title="Autonomous biomedical research with an artificial ..." rel="nofollow">科学协会</a>)</p>
+<p>它的目标不是替代科学家，而是把科研中大量重复、碎片化的工作串成一条可以自动执行的流程。论文于 <strong>2026年7月发表在《Science》</strong>。(<a href="https://www.science.org/doi/10.1126/science.adz4351?utm_source=chatgpt.com" title="Autonomous biomedical research with an artificial ..." rel="nofollow" aria-label="Autonomous biomedical research with an artificial ...">科学协会</a>)</p>
 <hr>
 <h2>1. 它想解决什么问题？</h2>
 <p>现在做一项生物医学研究，科学家往往需要：</p>
@@ -100,7 +102,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <blockquote>
 <p>“帮我找出这个罕见病最可能的致病基因。”</p>
 </blockquote>
-<p>然后由 AI 自己组织后续步骤。(<a href="https://news.stanford.edu/stories/2026/07/biomni-ai-powered-biomedical-co-scientist?utm_source=chatgpt.com" title="Meet Biomni – an AI-powered biomedical co-scientist" rel="nofollow">斯坦福新闻</a>)</p>
+<p>然后由 AI 自己组织后续步骤。(<a href="https://news.stanford.edu/stories/2026/07/biomni-ai-powered-biomedical-co-scientist?utm_source=chatgpt.com" title="Meet Biomni – an AI-powered biomedical co-scientist" rel="nofollow" aria-label="Meet Biomni – an AI-powered biomedical co-scientist">斯坦福新闻</a>)</p>
 <hr>
 <h2>2. 它和普通 ChatGPT 有什么区别？</h2>
 <p>普通聊天模型更像一个<strong>知识顾问</strong>：你问问题，它用文字回答。</p>
@@ -155,7 +157,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>它还分析了约 <strong>33.6万个细胞核</strong>的 RNA 和染色质开放数据，自动建立多步分析流程，寻找可能控制骨骼发育的转录因子和基因调控网络。</p>
 <h3>设计真实的分子克隆实验</h3>
 <p>Biomni根据目标质粒和基因编辑要求，设计引物、sgRNA、酶切位点和完整克隆流程。专家盲评中，其方案在部分任务上接近资深研究人员水平；其中一个针对 <strong>B2M基因</strong>的克隆方案还进行了实际实验验证。</p>
-<p>《Science》正式版本还报告了蛋白质稳定性优化、实验仪器编排和可验证实验方案生成等案例。(<a href="https://pubmed.ncbi.nlm.nih.gov/42424436/?utm_source=chatgpt.com" title="Autonomous biomedical research with an artificial ..." rel="nofollow">PubMed</a>)</p>
+<p>《Science》正式版本还报告了蛋白质稳定性优化、实验仪器编排和可验证实验方案生成等案例。(<a href="https://pubmed.ncbi.nlm.nih.gov/42424436/?utm_source=chatgpt.com" title="Autonomous biomedical research with an artificial ..." rel="nofollow" aria-label="Autonomous biomedical research with an artificial ...">PubMed</a>)</p>
 <hr>
 <h2>6. 为什么这项工作重要？</h2>
 <p>过去的生物医学 AI 通常只解决一个特定问题：</p>
@@ -204,9 +206,9 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -272,6 +274,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

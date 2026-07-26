@@ -5,30 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="## 一句话概括
 
-这篇论文直接追问：
 
-> **现在的“AI虚拟细胞”虽然能预测基因扰动后的表达变化，但它们真的能帮助科学家更快找到重要基因和药物靶点吗？**
 
-作者认为，过去的考试方式没有真正回答这个问题，于是提出了新的评测框架 **PerturbHD**，专门衡量模型能否帮助科学家完成“有效发现”。">
+
+
+
+<title>PerturbHD：用有限实验预算检验虚拟细胞能否真正找出关键基因</title>
+<meta name="description" content="一句话概括 这篇论文直接追问： 现在的“AI虚拟细胞”虽然能预测基因扰动后的表达变化，但它们真的能帮助科学家更快找到重要基因和药物靶点吗？ 作者认为，过去的考试方式没有真正回答这个问题，于是提出了新的评测框架 PerturbHD，专门衡量模型能否帮助科学家完成“有效发现”。">
 <meta property="og:title" content="PerturbHD：用有限实验预算检验虚拟细胞能否真正找出关键基因">
-<meta property="og:description" content="## 一句话概括
-
-这篇论文直接追问：
-
-> **现在的“AI虚拟细胞”虽然能预测基因扰动后的表达变化，但它们真的能帮助科学家更快找到重要基因和药物靶点吗？**
-
-作者认为，过去的考试方式没有真正回答这个问题，于是提出了新的评测框架 **PerturbHD**，专门衡量模型能否帮助科学家完成“有效发现”。">
+<meta property="og:description" content="一句话概括 这篇论文直接追问： 现在的“AI虚拟细胞”虽然能预测基因扰动后的表达变化，但它们真的能帮助科学家更快找到重要基因和药物靶点吗？ 作者认为，过去的考试方式没有真正回答这个问题，于是提出了新的评测框架 PerturbHD，专门衡量模型能否帮助科学家完成“有效发现”。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/PerturbHD%EF%BC%9A-yong-you-xian-shi-yan-yu-suan-jian-yan-xu-ni-xi-bao-neng-fou-zhen-zheng-zhao-chu-guan-jian-ji-yin.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>PerturbHD：用有限实验预算检验虚拟细胞能否真正找出关键基因</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PerturbHD：用有限实验预算检验虚拟细胞能否真正找出关键基因">
+<meta name="twitter:description" content="一句话概括 这篇论文直接追问： 现在的“AI虚拟细胞”虽然能预测基因扰动后的表达变化，但它们真的能帮助科学家更快找到重要基因和药物靶点吗？ 作者认为，过去的考试方式没有真正回答这个问题，于是提出了新的评测框架 PerturbHD，专门衡量模型能否帮助科学家完成“有效发现”。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/PerturbHD%EF%BC%9A-yong-you-xian-shi-yan-yu-suan-jian-yan-xu-ni-xi-bao-neng-fou-zhen-zheng-zhao-chu-guan-jian-ji-yin.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -56,38 +53,39 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">PerturbHD：用有限实验预算检验虚拟细胞能否真正找出关键基因</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/26" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/26" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h2>一句话概括</h2>
 <p>这篇论文直接追问：</p>
 <blockquote>
 <p><strong>现在的“AI虚拟细胞”虽然能预测基因扰动后的表达变化，但它们真的能帮助科学家更快找到重要基因和药物靶点吗？</strong></p>
 </blockquote>
-<p>作者认为，过去的考试方式没有真正回答这个问题，于是提出了新的评测框架 <strong>PerturbHD</strong>，专门衡量模型能否帮助科学家完成“有效发现”。这是一篇2026年4月发布的预印本，尚未经过正式同行评审。([<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1?utm_source=chatgpt.com" rel="nofollow">生物预印本</a>]<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1?utm_source=chatgpt.com" title="Are Current AI Virtual Cell Models Useful for Scientific ..." rel="nofollow">1</a>)</p>
+<p>作者认为，过去的考试方式没有真正回答这个问题，于是提出了新的评测框架 <strong>PerturbHD</strong>，专门衡量模型能否帮助科学家完成“有效发现”。这是一篇2026年4月发布的预印本，尚未经过正式同行评审。([<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1?utm_source=chatgpt.com" rel="nofollow">生物预印本</a>]<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1?utm_source=chatgpt.com" title="Are Current AI Virtual Cell Models Useful for Scientific ..." rel="nofollow" aria-label="Are Current AI Virtual Cell Models Useful for Scientific ...">1</a>)</p>
 <hr>
 <h2>1. AI虚拟细胞在做什么？</h2>
 <p>假设科学家想知道：</p>
@@ -105,7 +103,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 基因D不变
 ……
 </code></pre>
-<p>GEARS、PRESAGE等模型都在尝试完成这种“基因扰动预测”。论文评测中也包含简单线性模型、平均值基线和大语言模型Claude。([<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" rel="nofollow">生物预印本</a>]<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" title="Are Current AI Virtual Cell Models Useful for Scientific ..." rel="nofollow">2</a>)</p>
+<p>GEARS、PRESAGE等模型都在尝试完成这种“基因扰动预测”。论文评测中也包含简单线性模型、平均值基线和大语言模型Claude。([<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" rel="nofollow">生物预印本</a>]<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" title="Are Current AI Virtual Cell Models Useful for Scientific ..." rel="nofollow" aria-label="Are Current AI Virtual Cell Models Useful for Scientific ...">2</a>)</p>
 <hr>
 <h2>2. 过去的评分方式有什么问题？</h2>
 <p>传统评测通常比较：</p>
@@ -127,7 +125,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p><strong>“我的实验经费只够测试5%的候选基因，AI能否把真正重要的基因排在最前面？”</strong></p>
 </blockquote>
 <p>一个模型可能把大量变化很小的基因预测得很准，因此整体分数很好；但它如果漏掉了真正关键的几个候选基因，对科学发现仍然没有太大帮助。</p>
-<p>作者并不是说所有旧指标都没用。论文发现，部分指标，例如针对变化最大基因的误差和Systema相关性，与实际发现能力有较强联系；但它们仍然只是间接指标。([<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" rel="nofollow">生物预印本</a>]<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" title="Are Current AI Virtual Cell Models Useful for Scientific ..." rel="nofollow">2</a>)</p>
+<p>作者并不是说所有旧指标都没用。论文发现，部分指标，例如针对变化最大基因的误差和Systema相关性，与实际发现能力有较强联系；但它们仍然只是间接指标。([<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" rel="nofollow">生物预印本</a>]<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" title="Are Current AI Virtual Cell Models Useful for Scientific ..." rel="nofollow" aria-label="Are Current AI Virtual Cell Models Useful for Scientific ...">2</a>)</p>
 <hr>
 <h2>3. PerturbHD怎样重新考试？</h2>
 <p>PerturbHD把问题改成了：</p>
@@ -139,21 +137,21 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>改变某个基因后，某条生物通路或细胞功能发生了足够明显的变化。</p>
 </blockquote>
 <p>例如科学家想找到能增强免疫反应的基因，那么真正显著增强免疫通路的基因扰动就是“hit”。</p>
-<p>PerturbHD主要模拟两种现实情况。([<a href="https://oamonitor.ireland.openaire.eu/national/search/publication?pid=10.64898%2F2026.04.23.719015&amp;utm_source=chatgpt.com" rel="nofollow">OA Monitor Ireland</a>]<a href="https://oamonitor.ireland.openaire.eu/national/search/publication?pid=10.64898%2F2026.04.23.719015&amp;utm_source=chatgpt.com" title="Are Current AI Virtual Cell Models Useful for Scientific Discovery?" rel="nofollow">3</a>)</p>
+<p>PerturbHD主要模拟两种现实情况。([<a href="https://oamonitor.ireland.openaire.eu/national/search/publication?pid=10.64898%2F2026.04.23.719015&amp;utm_source=chatgpt.com" rel="nofollow">OA Monitor Ireland</a>]<a href="https://oamonitor.ireland.openaire.eu/national/search/publication?pid=10.64898%2F2026.04.23.719015&amp;utm_source=chatgpt.com" title="Are Current AI Virtual Cell Models Useful for Scientific Discovery?" rel="nofollow" aria-label="Are Current AI Virtual Cell Models Useful for Scientific Discovery?">3</a>)</p>
 <h3>情况一：实验预算有限</h3>
 <p>假设有1000个候选基因，但经费只够实验50个。</p>
 <p>模型需要把候选基因排序，PerturbHD检查：</p>
 <blockquote>
 <p>模型选出的前5%，包含了多少真正重要的基因？</p>
 </blockquote>
-<p>这叫作 <strong>固定预算下的命中召回率</strong>。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/packages/perturb-hd/src/perturb_hd/hit_discovery.py" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/packages/perturb-hd/src/perturb_hd/hit_discovery.py" title="raw.githubusercontent.com" rel="nofollow">4</a>)</p>
+<p>这叫作 <strong>固定预算下的命中召回率</strong>。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/packages/perturb-hd/src/perturb_hd/hit_discovery.py" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/packages/perturb-hd/src/perturb_hd/hit_discovery.py" title="raw.githubusercontent.com" rel="nofollow" aria-label="raw.githubusercontent.com">4</a>)</p>
 <h3>情况二：不能出现太多假阳性</h3>
 <p>有时研究人员会规定：</p>
 <blockquote>
 <p>选出的候选物里，错误候选的比例不能超过20%。</p>
 </blockquote>
 <p>PerturbHD检查模型在这个错误率限制下，还能找回多少真正的命中基因。</p>
-<p>这更接近药物筛选或实验设计中的真实决策，而不是单纯比较两张数字表。([<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" rel="nofollow">生物预印本</a>]<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" title="Are Current AI Virtual Cell Models Useful for Scientific ..." rel="nofollow">2</a>)</p>
+<p>这更接近药物筛选或实验设计中的真实决策，而不是单纯比较两张数字表。([<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" rel="nofollow">生物预印本</a>]<a href="https://www.biorxiv.org/content/10.64898/2026.04.23.719015v1.full-text?utm_source=chatgpt.com" title="Are Current AI Virtual Cell Models Useful for Scientific ..." rel="nofollow" aria-label="Are Current AI Virtual Cell Models Useful for Scientific ...">2</a>)</p>
 <hr>
 <h2>4. 作者测试了什么？</h2>
 <p>作者在四种细胞背景中测试模型：</p>
@@ -172,12 +170,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li><strong>Claude</strong>：根据已有生物知识直接对候选基因排序；</li>
 <li><strong>实验重复数据</strong>：用另一次真实实验结果排序，代表模型在实验噪声下可能达到的参考上限。</li>
 </ul>
-<p>作者也公开了PerturbHD的代码、指标实现和复现实验数据。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" title="raw.githubusercontent.com" rel="nofollow">5</a>)</p>
+<p>作者也公开了PerturbHD的代码、指标实现和复现实验数据。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" title="raw.githubusercontent.com" rel="nofollow" aria-label="raw.githubusercontent.com">5</a>)</p>
 <hr>
 <h2>5. 最重要的结果是什么？</h2>
 <h3>第一：虚拟细胞模型并非完全没用</h3>
 <p>当实验预算只能覆盖5%的候选基因时，随机或平均值方法通常只能找到约5%的真正命中。</p>
-<p>GEARS、线性模型和PRESAGE能找到更多，说明它们确实学到了一些有用规律。在不同细胞数据上，这些模型大致能找回约18%至43%的命中。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" title="raw.githubusercontent.com" rel="nofollow">5</a>)</p>
+<p>GEARS、线性模型和PRESAGE能找到更多，说明它们确实学到了一些有用规律。在不同细胞数据上，这些模型大致能找回约18%至43%的命中。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" title="raw.githubusercontent.com" rel="nofollow" aria-label="raw.githubusercontent.com">5</a>)</p>
 <p>所以答案不是：</p>
 <blockquote>
 <p>“现在的虚拟细胞完全没用。”</p>
@@ -189,7 +187,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <hr>
 <h3>第二：大语言模型也很有竞争力</h3>
 <p>Claude只根据已有的生物医学知识进行推理和排序，并没有直接模拟完整的单细胞基因表达。</p>
-<p>但在固定5%实验预算下，它在四个数据集中的命中召回率约为28%至45%，总体上与PRESAGE等专门模型相当，部分情况下还略高。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" title="raw.githubusercontent.com" rel="nofollow">5</a>)</p>
+<p>但在固定5%实验预算下，它在四个数据集中的命中召回率约为28%至45%，总体上与PRESAGE等专门模型相当，部分情况下还略高。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" title="raw.githubusercontent.com" rel="nofollow" aria-label="raw.githubusercontent.com">5</a>)</p>
 <p>这说明：</p>
 <blockquote>
 <p><strong>现有文献和生物学知识本身，就能提供很强的候选基因排序信号。</strong></p>
@@ -197,7 +195,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>一个复杂虚拟细胞模型如果不能稳定超过知识型大语言模型，就还不能证明自己真正学到了更深的细胞规律。</p>
 <hr>
 <h3>第三：距离真实实验上限还有明显差距</h3>
-<p>使用另一次真实实验结果进行排序时，在5%预算下通常能找回约49%至68%的命中，明显高于当前AI模型。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" title="raw.githubusercontent.com" rel="nofollow">5</a>)</p>
+<p>使用另一次真实实验结果进行排序时，在5%预算下通常能找回约49%至68%的命中，明显高于当前AI模型。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" title="raw.githubusercontent.com" rel="nofollow" aria-label="raw.githubusercontent.com">5</a>)</p>
 <p>这说明：</p>
 <ul>
 <li>实验本身存在噪声，不可能做到100%；</li>
@@ -207,7 +205,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <hr>
 <h3>第四：严格控制错误率后，模型表现明显下降</h3>
 <p>当要求错误发现率不超过20%时，GEARS、线性模型、PRESAGE和Claude找回的真正命中通常只有约1%至12%。</p>
-<p>作为参考，真实实验重复数据大约能找回15%至31%。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" title="raw.githubusercontent.com" rel="nofollow">5</a>)</p>
+<p>作为参考，真实实验重复数据大约能找回15%至31%。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/analysis/notebooks/fig1_hit_discovery.ipynb" title="raw.githubusercontent.com" rel="nofollow" aria-label="raw.githubusercontent.com">5</a>)</p>
 <p>换句话说：</p>
 <blockquote>
 <p><strong>当前模型可以帮助粗略缩小候选范围，但如果要求“选出来的大部分都是真的”，能力仍然不足。</strong></p>
@@ -241,7 +239,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <blockquote>
 <p><strong>评价虚拟细胞，不应该只看模型预测得像不像，而应该看它能不能改变科学家的实验决策。</strong></p>
 </blockquote>
-<p>PerturbHD的开源实现也明确提供了固定实验预算、固定错误发现率等发现导向指标。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/packages/perturb-hd/src/perturb_hd/hit_discovery.py" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/packages/perturb-hd/src/perturb_hd/hit_discovery.py" title="raw.githubusercontent.com" rel="nofollow">4</a>)</p>
+<p>PerturbHD的开源实现也明确提供了固定实验预算、固定错误发现率等发现导向指标。([<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/packages/perturb-hd/src/perturb_hd/hit_discovery.py" rel="nofollow">GitHub</a>]<a href="https://raw.githubusercontent.com/snap-stanford/perturb-hd/main/packages/perturb-hd/src/perturb_hd/hit_discovery.py" title="raw.githubusercontent.com" rel="nofollow" aria-label="raw.githubusercontent.com">4</a>)</p>
 <hr>
 <h2>最核心的结论</h2>
 <blockquote>
@@ -259,9 +257,9 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -327,6 +325,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

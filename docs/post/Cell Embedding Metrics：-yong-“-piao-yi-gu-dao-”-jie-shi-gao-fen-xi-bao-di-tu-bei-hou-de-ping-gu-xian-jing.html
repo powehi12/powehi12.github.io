@@ -5,26 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="## 一句话概括
 
-这篇论文发现：
 
-> **判断“细胞地图”好不好的现有评分标准存在漏洞——一个模型可以拿到几乎满分，却把真实的生物关系弄得一团糟。">
+
+
+
+
+<title>Cell Embedding Metrics：用“漂移孤岛”揭示高分细胞地图背后的评估陷阱</title>
+<meta name="description" content="一句话概括 这篇论文发现： 判断“细胞地图”好不好的现有评分标准存在漏洞——一个模型可以拿到几乎满分，却把真实的生物关系弄得一团糟。">
 <meta property="og:title" content="Cell Embedding Metrics：用“漂移孤岛”揭示高分细胞地图背后的评估陷阱">
-<meta property="og:description" content="## 一句话概括
-
-这篇论文发现：
-
-> **判断“细胞地图”好不好的现有评分标准存在漏洞——一个模型可以拿到几乎满分，却把真实的生物关系弄得一团糟。">
+<meta property="og:description" content="一句话概括 这篇论文发现： 判断“细胞地图”好不好的现有评分标准存在漏洞——一个模型可以拿到几乎满分，却把真实的生物关系弄得一团糟。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/Cell%20Embedding%20Metrics%EF%BC%9A-yong-%E2%80%9C-piao-yi-gu-dao-%E2%80%9D-jie-shi-gao-fen-xi-bao-di-tu-bei-hou-de-ping-gu-xian-jing.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>Cell Embedding Metrics：用“漂移孤岛”揭示高分细胞地图背后的评估陷阱</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cell Embedding Metrics：用“漂移孤岛”揭示高分细胞地图背后的评估陷阱">
+<meta name="twitter:description" content="一句话概括 这篇论文发现： 判断“细胞地图”好不好的现有评分标准存在漏洞——一个模型可以拿到几乎满分，却把真实的生物关系弄得一团糟。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Cell%20Embedding%20Metrics%EF%BC%9A-yong-%E2%80%9C-piao-yi-gu-dao-%E2%80%9D-jie-shi-gao-fen-xi-bao-di-tu-bei-hou-de-ping-gu-xian-jing.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -52,38 +53,39 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">Cell Embedding Metrics：用“漂移孤岛”揭示高分细胞地图背后的评估陷阱</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/21" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/21" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h2>一句话概括</h2>
 <p>这篇论文发现：</p>
 <blockquote>
 <p><strong>判断“细胞地图”好不好的现有评分标准存在漏洞——一个模型可以拿到几乎满分，却把真实的生物关系弄得一团糟。</strong></p>
 </blockquote>
-<p>作者故意设计了一个名为 <strong>Islander</strong> 的模型来“钻评分规则的空子”，然后提出新指标 <strong>scGraph</strong>，帮助识别这种虚假的高分。论文发表于《<a href="https://www.nature.com/articles/s41587-025-02702-z?utm_source=chatgpt.com" rel="nofollow">Nature</a> Biotechnology》。(<a href="https://www.nature.com/articles/s41587-025-02702-z?utm_source=chatgpt.com" title="Limitations of cell embedding metrics assessed using ..." rel="nofollow">Nature</a>)</p>
+<p>作者故意设计了一个名为 <strong>Islander</strong> 的模型来“钻评分规则的空子”，然后提出新指标 <strong>scGraph</strong>，帮助识别这种虚假的高分。论文发表于《<a href="https://www.nature.com/articles/s41587-025-02702-z?utm_source=chatgpt.com" rel="nofollow">Nature</a> Biotechnology》。(<a href="https://www.nature.com/articles/s41587-025-02702-z?utm_source=chatgpt.com" title="Limitations of cell embedding metrics assessed using ..." rel="nofollow" aria-label="Limitations of cell embedding metrics assessed using ...">Nature</a>)</p>
 <hr>
 <h2>1. 什么是“细胞嵌入”？</h2>
 <p>每个细胞可以用数万个基因的活跃程度描述，数据非常复杂。</p>
@@ -111,7 +113,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <blockquote>
 <p>地图不仅要把细胞分组，还要正确保留不同细胞之间的关系。</p>
 </blockquote>
-<p>例如，两个细胞亚型可能是连续变化的，中间没有明确边界；如果模型强行把它们切成两团，地图虽然“整齐”，却可能违背真实生物过程。([<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" rel="nofollow">Computer Science</a>]<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" title="Limitations of cell embedding metrics assessed using drifting islands" rel="nofollow">2</a>)</p>
+<p>例如，两个细胞亚型可能是连续变化的，中间没有明确边界；如果模型强行把它们切成两团，地图虽然“整齐”，却可能违背真实生物过程。([<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" rel="nofollow">Computer Science</a>]<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" title="Limitations of cell embedding metrics assessed using drifting islands" rel="nofollow" aria-label="Limitations of cell embedding metrics assessed using drifting islands">2</a>)</p>
 <hr>
 <h2>3. Islander 是怎样“骗过考试”的？</h2>
 <p>作者训练了一个很简单的三层神经网络 Islander，让它直接按照人工标注的细胞类型整理数据。</p>
@@ -119,7 +121,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <pre lang="text" class="notranslate"><code class="notranslate">○○○        △△△        □□□
 A类细胞     B类细胞     C类细胞
 </code></pre>
-<p>因为同类细胞聚得特别紧、不同批次也被很好地混合，所以 Islander 在传统指标上击败了多种主流方法，并在作者测试的多个人体细胞图谱上取得很高分。([<a href="https://www.researchgate.net/publication/392597576_Limitations_of_cell_embedding_metrics_assessed_using_drifting_islands?utm_source=chatgpt.com" rel="nofollow">ResearchGate</a>]<a href="https://www.researchgate.net/publication/392597576_Limitations_of_cell_embedding_metrics_assessed_using_drifting_islands?utm_source=chatgpt.com" title="Limitations of cell embedding metrics assessed using ..." rel="nofollow">3</a>)</p>
+<p>因为同类细胞聚得特别紧、不同批次也被很好地混合，所以 Islander 在传统指标上击败了多种主流方法，并在作者测试的多个人体细胞图谱上取得很高分。([<a href="https://www.researchgate.net/publication/392597576_Limitations_of_cell_embedding_metrics_assessed_using_drifting_islands?utm_source=chatgpt.com" rel="nofollow">ResearchGate</a>]<a href="https://www.researchgate.net/publication/392597576_Limitations_of_cell_embedding_metrics_assessed_using_drifting_islands?utm_source=chatgpt.com" title="Limitations of cell embedding metrics assessed using ..." rel="nofollow" aria-label="Limitations of cell embedding metrics assessed using ...">3</a>)</p>
 <p>但这张地图在生物学上存在严重问题。</p>
 <hr>
 <h2>4. 为什么这些“细胞小岛”是错的？</h2>
@@ -137,7 +139,7 @@ A类细胞     B类细胞     C类细胞
 <li>大类与小类的层级关系被扭曲；</li>
 <li>科学家可能由此得出错误结论。</li>
 </ul>
-<p>更麻烦的是，模型每次重新训练后，这些“小岛”的相对位置还会漂移。两个运行结果的总分几乎相同，但某类细胞附近究竟有哪些邻居可能完全不同。因此，除了“同类细胞聚成团”之外，地图上的其他空间关系可能具有很大任意性。([<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" rel="nofollow">Computer Science</a>]<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" title="Limitations of cell embedding metrics assessed using drifting islands" rel="nofollow">2</a>)</p>
+<p>更麻烦的是，模型每次重新训练后，这些“小岛”的相对位置还会漂移。两个运行结果的总分几乎相同，但某类细胞附近究竟有哪些邻居可能完全不同。因此，除了“同类细胞聚成团”之外，地图上的其他空间关系可能具有很大任意性。([<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" rel="nofollow">Computer Science</a>]<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" title="Limitations of cell embedding metrics assessed using drifting islands" rel="nofollow" aria-label="Limitations of cell embedding metrics assessed using drifting islands">2</a>)</p>
 <p>这就是标题里的 <strong>drifting islands——漂移的岛屿</strong>。</p>
 <hr>
 <h2>5. scGraph 怎么改进？</h2>
@@ -151,7 +153,7 @@ A类细胞     B类细胞     C类细胞
    其他相关细胞
 </code></pre>
 <p>然后比较模型生成的细胞地图，是否保留了多个批次共同支持的关系结构。</p>
-<p>因此，如果某个模型虽然把每类细胞分得很整齐，却破坏了细胞间的连续性和亲缘关系，scGraph 更可能把问题检查出来。([<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" rel="nofollow">Computer Science</a>]<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" title="Limitations of cell embedding metrics assessed using drifting islands" rel="nofollow">2</a>)</p>
+<p>因此，如果某个模型虽然把每类细胞分得很整齐，却破坏了细胞间的连续性和亲缘关系，scGraph 更可能把问题检查出来。([<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" rel="nofollow">Computer Science</a>]<a href="https://www-cs-faculty.stanford.edu/people/jure/pubs/cell-embedding-metrics-natbiotech25.pdf" title="Limitations of cell embedding metrics assessed using drifting islands" rel="nofollow" aria-label="Limitations of cell embedding metrics assessed using drifting islands">2</a>)</p>
 <hr>
 <h2>最简单的类比</h2>
 <p>假设要评价一张学校座位图。</p>
@@ -201,9 +203,9 @@ A类细胞     B类细胞     C类细胞
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -269,6 +271,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

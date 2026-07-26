@@ -5,26 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="## 一句话概括
 
-这篇论文提出了 **PULSAR**：
 
-> **它不再只理解“一个细胞是什么”，而是同时观察一个人身上的大量免疫细胞，尝试理解这个人的整体免疫状态、疾病风险和治疗反应。">
+
+
+
+
+<title>PULSAR：把3600万个单细胞汇聚成患者级“免疫坐标系”</title>
+<meta name="description" content="一句话概括 这篇论文提出了 PULSAR： 它不再只理解“一个细胞是什么”，而是同时观察一个人身上的大量免疫细胞，尝试理解这个人的整体免疫状态、疾病风险和治疗反应。">
 <meta property="og:title" content="PULSAR：把3600万个单细胞汇聚成患者级“免疫坐标系”">
-<meta property="og:description" content="## 一句话概括
-
-这篇论文提出了 **PULSAR**：
-
-> **它不再只理解“一个细胞是什么”，而是同时观察一个人身上的大量免疫细胞，尝试理解这个人的整体免疫状态、疾病风险和治疗反应。">
+<meta property="og:description" content="一句话概括 这篇论文提出了 PULSAR： 它不再只理解“一个细胞是什么”，而是同时观察一个人身上的大量免疫细胞，尝试理解这个人的整体免疫状态、疾病风险和治疗反应。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/PULSAR%EF%BC%9A-ba-3600-wan-ge-dan-xi-bao-hui-ju-cheng-huan-zhe-ji-%E2%80%9C-mian-yi-zuo-biao-xi-%E2%80%9D.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>PULSAR：把3600万个单细胞汇聚成患者级“免疫坐标系”</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PULSAR：把3600万个单细胞汇聚成患者级“免疫坐标系”">
+<meta name="twitter:description" content="一句话概括 这篇论文提出了 PULSAR： 它不再只理解“一个细胞是什么”，而是同时观察一个人身上的大量免疫细胞，尝试理解这个人的整体免疫状态、疾病风险和治疗反应。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/PULSAR%EF%BC%9A-ba-3600-wan-ge-dan-xi-bao-hui-ju-cheng-huan-zhe-ji-%E2%80%9C-mian-yi-zuo-biao-xi-%E2%80%9D.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -52,38 +53,39 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">PULSAR：把3600万个单细胞汇聚成患者级“免疫坐标系”</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/25" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/25" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h2>一句话概括</h2>
 <p>这篇论文提出了 <strong>PULSAR</strong>：</p>
 <blockquote>
 <p><strong>它不再只理解“一个细胞是什么”，而是同时观察一个人身上的大量免疫细胞，尝试理解这个人的整体免疫状态、疾病风险和治疗反应。</strong></p>
 </blockquote>
-<p>可以把它理解成：<strong>从“细胞级 AI”升级为“患者级 AI”</strong>。这项工作于 2025 年 11 月发布在 bioRxiv，目前仍是未经同行评审的预印本。(<a href="https://www.biorxiv.org/content/10.1101/2025.11.24.685470v1?utm_source=chatgpt.com" title="a Foundation Model for Multi-scale and Multicellular Biology" rel="nofollow">生物预印本</a>)</p>
+<p>可以把它理解成：<strong>从“细胞级 AI”升级为“患者级 AI”</strong>。这项工作于 2025 年 11 月发布在 bioRxiv，目前仍是未经同行评审的预印本。(<a href="https://www.biorxiv.org/content/10.1101/2025.11.24.685470v1?utm_source=chatgpt.com" title="a Foundation Model for Multi-scale and Multicellular Biology" rel="nofollow" aria-label="a Foundation Model for Multi-scale and Multicellular Biology">生物预印本</a>)</p>
 <hr>
 <h2>1. 它想解决什么问题？</h2>
 <p>过去的单细胞模型，如 UCE、scGPT，通常研究单个细胞：</p>
@@ -99,7 +101,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>接种疫苗后反应如何；</li>
 <li>加入某种免疫信号后，整体免疫系统会怎样变化。</li>
 </ul>
-<p>一个人的免疫状态，是由大量 T 细胞、B 细胞、单核细胞等共同形成的。因此，只分别理解每个细胞还不够，还需要理解<strong>一群细胞怎样共同描述一个人</strong>。PULSAR就是为此设计的。(<a href="https://bio.rodeo/models/pulsar?utm_source=chatgpt.com" title="PULSAR: Single-cell model" rel="nofollow">bio.rodeo</a>)</p>
+<p>一个人的免疫状态，是由大量 T 细胞、B 细胞、单核细胞等共同形成的。因此，只分别理解每个细胞还不够，还需要理解<strong>一群细胞怎样共同描述一个人</strong>。PULSAR就是为此设计的。(<a href="https://bio.rodeo/models/pulsar?utm_source=chatgpt.com" title="PULSAR: Single-cell model" rel="nofollow" aria-label="PULSAR: Single-cell model">bio.rodeo</a>)</p>
 <hr>
 <h2>2. 最简单的类比：从乐器到整支乐队</h2>
 <p>可以把人体免疫系统想成一支乐队：</p>
@@ -134,7 +136,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>用 <strong>UCE</strong> 把每个单细胞压缩成一个细胞表示；</li>
 <li>再用一个多细胞 Transformer，把一个人的大量细胞汇总成一个<strong>供体表示</strong>，也就是 donor embedding。</li>
 </ol>
-<p>这个供体表示是一串数字，可以看作一个人在“免疫世界地图”中的坐标。相似健康状态或疾病状态的人，理论上会处于相近区域。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow">ResearchGate</a>)</p>
+<p>这个供体表示是一串数字，可以看作一个人在“免疫世界地图”中的坐标。相似健康状态或疾病状态的人，理论上会处于相近区域。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow" aria-label="(PDF) PULSAR: a Foundation Model for Multi-scale and ...">ResearchGate</a>)</p>
 <hr>
 <h2>4. 它是怎么训练的？</h2>
 <p>训练时，研究人员会暂时遮住一个样本中的一部分细胞，让PULSAR根据剩余细胞推测被遮住的细胞。</p>
@@ -153,7 +155,7 @@ T细胞、B细胞、单核细胞、？、？
 <li>某类细胞状态改变时，其他细胞可能怎样变化；</li>
 <li>一个人的整体免疫组成有什么规律。</li>
 </ul>
-<p>PULSAR先在约 <strong>3,620万个细胞、6,807个样本</strong>上预训练，数据覆盖53种组织和69种疾病条件；随后又在约 <strong>874万个外周血免疫细胞、2,588个样本</strong>上继续训练，以加强对血液免疫系统的理解。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow">ResearchGate</a>)</p>
+<p>PULSAR先在约 <strong>3,620万个细胞、6,807个样本</strong>上预训练，数据覆盖53种组织和69种疾病条件；随后又在约 <strong>874万个外周血免疫细胞、2,588个样本</strong>上继续训练，以加强对血液免疫系统的理解。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow" aria-label="(PDF) PULSAR: a Foundation Model for Multi-scale and ...">ResearchGate</a>)</p>
 <hr>
 <h2>5. 它能做什么？</h2>
 <h3>判断一个人是否患有某类疾病</h3>
@@ -167,17 +169,17 @@ T细胞、B细胞、单核细胞、？、？
   ↓
 辅助判断可能的疾病状态
 </code></pre>
-<p>论文展示了包括狼疮等疾病分类和跨数据集匹配任务。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow">ResearchGate</a>)</p>
+<p>论文展示了包括狼疮等疾病分类和跨数据集匹配任务。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow" aria-label="(PDF) PULSAR: a Foundation Model for Multi-scale and ...">ResearchGate</a>)</p>
 <h3>从免疫细胞预测血液中的蛋白质</h3>
 <p>血浆中的蛋白质可以反映炎症、器官功能和疾病状态，但检测大量蛋白质通常需要额外实验。</p>
-<p>PULSAR尝试根据一个人的单细胞免疫数据，预测其血浆蛋白水平。也就是说，它希望从“细胞在做什么”推断“血液中可能出现哪些生物标志物”。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow">ResearchGate</a>)</p>
+<p>PULSAR尝试根据一个人的单细胞免疫数据，预测其血浆蛋白水平。也就是说，它希望从“细胞在做什么”推断“血液中可能出现哪些生物标志物”。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow" aria-label="(PDF) PULSAR: a Foundation Model for Multi-scale and ...">ResearchGate</a>)</p>
 <h3>预测未来的临床事件</h3>
 <p>论文还测试了更困难的问题，例如：</p>
 <ul>
 <li>某些目前尚未患类风湿关节炎的高风险人群，未来是否会转为发病；</li>
 <li>一个人接种流感疫苗后，免疫反应是否较强。</li>
 </ul>
-<p>这说明PULSAR的目标不只是描述“现在怎样”，还想预测“未来可能怎样”。不过，这些结果仍属于研究性预测，不能直接替代临床诊断。(<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12697734/?utm_source=chatgpt.com" title="PULSAR: a Foundation Model for Multi-scale and ... - PMC - NIH" rel="nofollow">PMC</a>)</p>
+<p>这说明PULSAR的目标不只是描述“现在怎样”，还想预测“未来可能怎样”。不过，这些结果仍属于研究性预测，不能直接替代临床诊断。(<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12697734/?utm_source=chatgpt.com" title="PULSAR: a Foundation Model for Multi-scale and ... - PMC - NIH" rel="nofollow" aria-label="PULSAR: a Foundation Model for Multi-scale and ... - PMC - NIH">PMC</a>)</p>
 <h3>在电脑里模拟细胞因子刺激</h3>
 <p>细胞因子可以理解为免疫细胞之间发送的“指令”。</p>
 <p>例如，给免疫系统加入某种细胞因子后，可能会：</p>
@@ -193,16 +195,16 @@ T细胞、B细胞、单核细胞、？、？
         ↓
 预测整体免疫系统怎样反应
 </code></pre>
-<p>更重要的是，它尝试预测<strong>不同人的个体化反应</strong>，而不是只给出一个所有人的平均答案。(<a href="https://huggingface.co/KuanP/PULSAR-pbmc?utm_source=chatgpt.com" title="KuanP/PULSAR-pbmc" rel="nofollow">Hugging Face</a>)</p>
+<p>更重要的是，它尝试预测<strong>不同人的个体化反应</strong>，而不是只给出一个所有人的平均答案。(<a href="https://huggingface.co/KuanP/PULSAR-pbmc?utm_source=chatgpt.com" title="KuanP/PULSAR-pbmc" rel="nofollow" aria-label="KuanP/PULSAR-pbmc">Hugging Face</a>)</p>
 <hr>
 <h2>6. 它与 UCE 有什么区别？</h2>
 <p>两者可以看作上下层关系：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>模型</th>
-<th>主要研究对象</th>
-<th>更像什么</th>
+<th scope="col">模型</th>
+<th scope="col">主要研究对象</th>
+<th scope="col">更像什么</th>
 </tr>
 </thead>
 <tbody>
@@ -217,7 +219,7 @@ T细胞、B细胞、单核细胞、？、？
 <td>给每位患者建立免疫坐标</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>UCE回答：</p>
 <blockquote>
 <p>“这个细胞和哪些细胞相似？”</p>
@@ -226,7 +228,7 @@ T细胞、B细胞、单核细胞、？、？
 <blockquote>
 <p>“这个人的整体免疫系统和哪些患者相似？”</p>
 </blockquote>
-<p>因此，PULSAR不是抛弃UCE，而是把UCE生成的单细胞表示进一步组合成患者级表示。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow">ResearchGate</a>)</p>
+<p>因此，PULSAR不是抛弃UCE，而是把UCE生成的单细胞表示进一步组合成患者级表示。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow" aria-label="(PDF) PULSAR: a Foundation Model for Multi-scale and ...">ResearchGate</a>)</p>
 <hr>
 <h2>7. 为什么这篇论文重要？</h2>
 <p>它提出了一个重要方向：</p>
@@ -236,13 +238,13 @@ T细胞、B细胞、单核细胞、？、？
 <p>疾病通常不是一个细胞单独造成的，而是多个细胞类型、信号和分子共同作用的结果。PULSAR尝试把：</p>
 <pre lang="text" class="notranslate"><code class="notranslate">分子 → 细胞 → 细胞群 → 患者表型
 </code></pre>
-<p>连接成一个统一的AI模型，因此比单纯的细胞分类模型更接近精准医学中的实际问题。(<a href="https://www.biorxiv.org/content/10.1101/2025.11.24.685470v1.full-text?utm_source=chatgpt.com" title="a Foundation Model for Multi-scale and Multicellular Biology" rel="nofollow">生物预印本</a>)</p>
+<p>连接成一个统一的AI模型，因此比单纯的细胞分类模型更接近精准医学中的实际问题。(<a href="https://www.biorxiv.org/content/10.1101/2025.11.24.685470v1.full-text?utm_source=chatgpt.com" title="a Foundation Model for Multi-scale and Multicellular Biology" rel="nofollow" aria-label="a Foundation Model for Multi-scale and Multicellular Biology">生物预印本</a>)</p>
 <hr>
 <h2>8. 它的局限</h2>
 <p>PULSAR目前还不能被称为完整的“数字病人”。</p>
-<p>首先，公开模型主要针对 <strong>PBMC，即外周血免疫细胞</strong>，不应默认它能够处理肿瘤组织、脑组织或经过特殊分选的细胞。(<a href="https://huggingface.co/KuanP/PULSAR-pbmc?utm_source=chatgpt.com" title="KuanP/PULSAR-pbmc" rel="nofollow">Hugging Face</a>)</p>
+<p>首先，公开模型主要针对 <strong>PBMC，即外周血免疫细胞</strong>，不应默认它能够处理肿瘤组织、脑组织或经过特殊分选的细胞。(<a href="https://huggingface.co/KuanP/PULSAR-pbmc?utm_source=chatgpt.com" title="KuanP/PULSAR-pbmc" rel="nofollow" aria-label="KuanP/PULSAR-pbmc">Hugging Face</a>)</p>
 <p>其次，它主要利用血液中的单细胞转录数据。真实人体还涉及器官结构、空间位置、蛋白质、代谢物、病史和环境因素，这些信息并没有被完整纳入。</p>
-<p>最后，预测出疾病风险或免疫反应，并不等于证明了因果机制。模型可能同时学习到实验批次、年龄、治疗方案等混杂因素，因此仍需要独立数据和真实实验验证。论文作者也指出，跨分子、细胞和患者层面的完全端到端训练，目前仍受到计算量和数据条件限制。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow">ResearchGate</a>)</p>
+<p>最后，预测出疾病风险或免疫反应，并不等于证明了因果机制。模型可能同时学习到实验批次、年龄、治疗方案等混杂因素，因此仍需要独立数据和真实实验验证。论文作者也指出，跨分子、细胞和患者层面的完全端到端训练，目前仍受到计算量和数据条件限制。(<a href="https://www.researchgate.net/publication/398014933_PULSAR_a_Foundation_Model_for_Multi-scale_and_Multicellular_Biology?utm_source=chatgpt.com" title="(PDF) PULSAR: a Foundation Model for Multi-scale and ..." rel="nofollow" aria-label="(PDF) PULSAR: a Foundation Model for Multi-scale and ...">ResearchGate</a>)</p>
 <h2>最核心的结论</h2>
 <blockquote>
 <p><strong>PULSAR把数千万个单细胞数据整合成患者级“免疫坐标”，让AI从理解一个细胞，进一步走向判断一个人的疾病状态、未来风险及个体化免疫反应。</strong></p>
@@ -257,9 +259,9 @@ T细胞、B细胞、单核细胞、？、？
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -325,6 +327,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

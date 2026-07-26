@@ -1,6 +1,12 @@
 name: build Gmeek
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - ".github/workflows/Gmeek.yml"
   workflow_dispatch:
     inputs:
       issue_numbers:
@@ -9,8 +15,8 @@ on:
         default: ""
         type: string
 
-# Manual publishing only. Queue runs so generated files cannot overwrite one
-# another when the publish button is clicked more than once.
+# Serialize generated commits and Pages deployments so overlapping runs cannot
+# publish an older site after a newer one.
 concurrency:
   group: gmeek-${{ github.repository }}
   queue: max
@@ -19,13 +25,12 @@ concurrency:
 jobs:
   build:
     name: Generate blog
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
       contents: write
       issues: read
-      pages: write
-      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -43,14 +48,15 @@ jobs:
           fi
           echo "BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
-      - name: Setup Pages
-        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
-
       - name: Validate configuration
         shell: bash
         run: |
           set -euo pipefail
-          jq -e 'type == "object" and (.GMEEK_VERSION | type == "string")' config.json > /dev/null
+          GMEEK_VERSION="$(jq -er '.GMEEK_VERSION | select(type == "string")' config.json)"
+          if [ "$GMEEK_VERSION" != "v2.25" ]; then
+            echo "config.json must set GMEEK_VERSION to v2.25; found: $GMEEK_VERSION"
+            exit 1
+          fi
 
       - name: Decide publish mode
         shell: bash
@@ -216,9 +222,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          GMEEK_VERSION="$(jq -er '.GMEEK_VERSION' config.json)"
-          git clone --depth 1 --branch "$GMEEK_VERSION" \
-            https://github.com/Meekdai/Gmeek.git /opt/Gmeek
+          GMEEK_COMMIT="50d14d40e7f12a5a20d07f339623dbf72be6b4c2"
+          git init /opt/Gmeek
+          git -C /opt/Gmeek remote add origin https://github.com/Meekdai/Gmeek.git
+          git -C /opt/Gmeek fetch --depth 1 origin "$GMEEK_COMMIT"
+          git -C /opt/Gmeek checkout --detach "$GMEEK_COMMIT"
+          if [ "$(git -C /opt/Gmeek rev-parse HEAD)" != "$GMEEK_COMMIT" ]; then
+            echo "Fetched Gmeek commit does not match the pinned revision."
+            exit 1
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
@@ -226,7 +238,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: python -m pip install --disable-pip-version-check --no-input -r /opt/Gmeek/requirements.txt
+        run: python -m pip install --disable-pip-version-check --no-input -r requirements-gmeek.lock
 
       - name: Generate website
         shell: bash
@@ -256,6 +268,9 @@ jobs:
           cp /opt/Gmeek/blogBase.json "$GITHUB_WORKSPACE/blogBase.json"
           find "$GITHUB_WORKSPACE/static" -type f -printf '%P\n' | LC_ALL=C sort > "$GITHUB_WORKSPACE/.gmeek-static-files"
 
+      - name: Post-process generated website
+        run: python scripts/postprocess_generated_site.py docs
+
       - name: Validate generated website
         shell: bash
         env:
@@ -266,6 +281,65 @@ jobs:
           test -s docs/index.html
           test -s docs/postList.json
           test -s docs/rss.xml
+          test -s docs/tag.html
+          test -s docs/404.html
+          test -s docs/sitemap.xml
+          test -s docs/robots.txt
+          test -e docs/.nojekyll
+          python scripts/postprocess_generated_site.py --check docs
+
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          html_files = sorted(Path("docs").rglob("*.html"))
+          if not html_files:
+              raise SystemExit("No generated HTML files were found.")
+
+          canonical = re.compile(
+              r"""<link\b(?=[^>]*\brel\s*=\s*["']canonical["'])[^>]*>""",
+              re.IGNORECASE,
+          )
+          missing_canonical = [
+              str(path)
+              for path in html_files
+              if not canonical.search(path.read_text(encoding="utf-8", errors="replace"))
+          ]
+          if missing_canonical:
+              raise SystemExit(
+                  "Missing canonical link in: " + ", ".join(missing_canonical)
+              )
+
+          tag_html = Path("docs/tag.html").read_text(
+              encoding="utf-8", errors="replace"
+          )
+          unsafe_sink = re.compile(
+              r"\b(?:tagTitle|notFind)\b[^\r\n;]{0,160}\.innerHTML\b",
+              re.IGNORECASE,
+          )
+          unsafe_lines = [
+              str(line_number)
+              for line_number, line in enumerate(tag_html.splitlines(), start=1)
+              if unsafe_sink.search(line)
+          ]
+          if unsafe_lines:
+              raise SystemExit(
+                  "Unsafe tag/search innerHTML sink remains in docs/tag.html "
+                  "on line(s): " + ", ".join(unsafe_lines)
+              )
+          PY
+
+          while IFS= read -r -d '' static_file; do
+            published_file="docs/${static_file#static/}"
+            if [ ! -f "$published_file" ]; then
+              echo "Generated asset is missing: $published_file"
+              exit 1
+            fi
+            if ! cmp -s "$static_file" "$published_file"; then
+              echo "Generated asset differs from its source: $published_file"
+              exit 1
+            fi
+          done < <(find static -type f \( -name '*.css' -o -name '*.js' \) -print0)
 
           while IFS= read -r html_file; do
             test -s "$html_file"
@@ -348,15 +422,48 @@ jobs:
             git push origin HEAD:main
           fi
 
-      - name: Verify deployment source
+      - name: Verify published source
         shell: bash
         run: |
           set -euo pipefail
           git fetch --depth 1 origin main
           if [ "$(git rev-parse origin/main)" != "$(git rev-parse HEAD)" ]; then
-            echo "main changed before deployment. Run the workflow again."
+            echo "main changed after publishing. Run the workflow again."
             exit 1
           fi
+
+  package:
+    name: Package site
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    needs: build
+    if: ${{ always() && !cancelled() && (github.event_name == 'push' || needs.build.result == 'success') }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout published source
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ github.event_name == 'push' && github.sha || 'main' }}
+          fetch-depth: 1
+
+      - name: Configure Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.11"
+
+      - name: Validate published site
+        run: |
+          test -s docs/index.html
+          test -s docs/tag.html
+          test -s docs/404.html
+          test -e docs/.nojekyll
+          python -B scripts/postprocess_generated_site.py --check docs
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
@@ -367,15 +474,10 @@ jobs:
     name: Deploy blog
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    needs: build
+    needs: package
     permissions:
-      contents: read
       pages: write
       id-token: write
-    concurrency:
-      group: pages
-      queue: max
-      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

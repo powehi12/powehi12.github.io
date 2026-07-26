@@ -5,30 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 论文解读：Beyond Individual Intelligence
 
-> **论文：** *Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems*
-> **类型：** 综述论文
-> **核心框架：** **LIFE——能力基础、协作整合、故障归因、自我演化**
 
-这篇论文于 2026 年 5 月发布。">
-<meta property="og:title" content="Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems">
-<meta property="og:description" content="# 论文解读：Beyond Individual Intelligence
 
-> **论文：** *Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems*
-> **类型：** 综述论文
-> **核心框架：** **LIFE——能力基础、协作整合、故障归因、自我演化**
 
-这篇论文于 2026 年 5 月发布。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://powehi12.github.io/post/Beyond%20Individual%20Intelligence-%20Surveying%20Collaboration%2C%20Failure%20Attribution%2C%20and%20Self-Evolution%20in%20LLM-based%20Multi-Agent%20Systems.html">
-<meta property="og:image" content="https://github.com/powehi12.png">
+
+
 <title>Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems</title>
-
-
-
+<meta name="description" content="论文解读：Beyond Individual Intelligence 论文： Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-A…">
+<meta property="og:title" content="Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems">
+<meta property="og:description" content="论文解读：Beyond Individual Intelligence 论文： Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-A…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/Beyond%20Individual%20Intelligence-%20Surveying%20Collaboration,%20Failure%20Attribution,%20and%20Self-Evolution%20in%20LLM-based%20Multi-Agent%20Systems.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems">
+<meta name="twitter:description" content="论文解读：Beyond Individual Intelligence 论文： Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-A…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Beyond%20Individual%20Intelligence-%20Surveying%20Collaboration,%20Failure%20Attribution,%20and%20Self-Evolution%20in%20LLM-based%20Multi-Agent%20Systems.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -56,32 +53,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/5" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/5" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>论文解读：Beyond Individual Intelligence</h1>
 <blockquote>
 <p><strong>论文：</strong> <em>Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems</em><br>
@@ -92,7 +90,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <blockquote>
 <p><strong>怎样把多个 LLM Agent 从“临时组队完成任务”，升级为能够发现自身问题、修改自身结构并持续进步的系统？</strong></p>
 </blockquote>
-<p>作者提出 <strong>LIFE</strong> 框架，将过去相对割裂的四条研究路线串成一个闭环：单智能体能力、多人协作、失败归因和自我演化。(<a href="https://arxiv.org/abs/2605.14892" title="[2605.14892] Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>作者提出 <strong>LIFE</strong> 框架，将过去相对割裂的四条研究路线串成一个闭环：单智能体能力、多人协作、失败归因和自我演化。(<a href="https://arxiv.org/abs/2605.14892" title="[2605.14892] Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems" rel="nofollow" aria-label="[2605.14892] Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems">arXiv</a>)</p>
 <hr>
 <h1>Step 1：论文讲解</h1>
 <h2>一、论文要解决什么问题？</h2>
@@ -129,12 +127,12 @@ Agent 相互讨论、传递结果
 <hr>
 <h2>二、LIFE 框架概览</h2>
 <p>LIFE 分为四个阶段：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>阶段</th>
-<th>全称</th>
-<th>核心问题</th>
+<th scope="col">阶段</th>
+<th scope="col">全称</th>
+<th scope="col">核心问题</th>
 </tr>
 </thead>
 <tbody>
@@ -159,8 +157,8 @@ Agent 相互讨论、传递结果
 <td>找到错误后，系统怎样自动修改自己？</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
-<p>论文将这四部分进一步组织为：单体推理、记忆、规划和工具使用；多智能体角色、通信、编排与交互；失败定义、分类、归因方法和评测；以及 Agent 级、系统级和元级自我演化。(<a href="https://raw.githubusercontent.com/mira-ai-lab/awesome-mas-life/main/README.md" title="raw.githubusercontent.com" rel="nofollow">GitHub</a>)</p>
+</table></div>
+<p>论文将这四部分进一步组织为：单体推理、记忆、规划和工具使用；多智能体角色、通信、编排与交互；失败定义、分类、归因方法和评测；以及 Agent 级、系统级和元级自我演化。(<a href="https://raw.githubusercontent.com/mira-ai-lab/awesome-mas-life/main/README.md" title="raw.githubusercontent.com" rel="nofollow" aria-label="raw.githubusercontent.com">GitHub</a>)</p>
 <hr>
 <h2>三、L：建立单智能体能力基础</h2>
 <h3>1. 为什么先讲单智能体？</h3>
@@ -329,11 +327,11 @@ Agent 相互讨论、传递结果
 <p>最后程序不满足用户需求。</p>
 <p>表面上看，最终错误出现在汇总 Agent。</p>
 <p>但真正的问题可能有三个层次：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>层次</th>
-<th>内容</th>
+<th scope="col">层次</th>
+<th scope="col">内容</th>
 </tr>
 </thead>
 <tbody>
@@ -350,7 +348,7 @@ Agent 相互讨论、传递结果
 <td>汇总 Agent 输出了错误程序</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>如果只惩罚最后一个 Agent，系统并不会真正变好。</p>
 <p>因此失败归因需要回答：</p>
 <pre lang="text" class="notranslate"><code class="notranslate">Who：哪个 Agent 负主要责任？
@@ -409,7 +407,7 @@ Why：该错误怎样传播并导致最终失败？
 <p>如果替换后成功，那么这一步很可能是关键原因。</p>
 <p>相较于相关性判断，因果方法更加可靠，但成本很高，因为需要多次重新执行系统。</p>
 <h3>4. 归因到底有多难？</h3>
-<p>Who&amp;When 工作收集了 127 个多智能体系统的失败日志，并标注责任 Agent 和决定性错误步骤。其最佳方法识别责任 Agent 的准确率为 <strong>53.5%</strong>，但定位具体错误步骤只有 <strong>14.2%</strong>。即使使用当时较强的推理模型，结果仍达不到实用水平。(<a href="https://arxiv.org/abs/2505.00212?utm_source=chatgpt.com" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</p>
+<p>Who&amp;When 工作收集了 127 个多智能体系统的失败日志，并标注责任 Agent 和决定性错误步骤。其最佳方法识别责任 Agent 的准确率为 <strong>53.5%</strong>，但定位具体错误步骤只有 <strong>14.2%</strong>。即使使用当时较强的推理模型，结果仍达不到实用水平。(<a href="https://arxiv.org/abs/2505.00212?utm_source=chatgpt.com" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</p>
 <p>这说明：</p>
 <blockquote>
 <p>判断“谁可能有问题”已经很难，而在长轨迹中找到“哪一步真正改变了最终结果”更难。</p>
@@ -472,7 +470,7 @@ Why：该错误怎样传播并导致最终失败？
 <li>通信拓扑；</li>
 <li>演化策略本身。</li>
 </ul>
-<p>官方配套材料也将演化目标概括为 Agent 级、系统级和元级，并覆盖提示词、记忆、参数、拓扑、团队组成和整体系统设计。(<a href="https://raw.githubusercontent.com/mira-ai-lab/awesome-mas-life/main/README.md" title="raw.githubusercontent.com" rel="nofollow">GitHub</a>)</p>
+<p>官方配套材料也将演化目标概括为 Agent 级、系统级和元级，并覆盖提示词、记忆、参数、拓扑、团队组成和整体系统设计。(<a href="https://raw.githubusercontent.com/mira-ai-lab/awesome-mas-life/main/README.md" title="raw.githubusercontent.com" rel="nofollow" aria-label="raw.githubusercontent.com">GitHub</a>)</p>
 <h3>我的看法</h3>
 <p>自我演化不能简单等价为“性能提高”。</p>
 <p>一个系统经过几轮修改后，可能在当前任务上提高，但同时出现：</p>
@@ -537,12 +535,12 @@ E：定向演化
 <p>所以这里更准确地说，是讲它总结的<strong>评测框架和经验结论</strong>。</p>
 <hr>
 <h2>二、四个阶段应该怎样评测？</h2>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>阶段</th>
-<th>常用指标</th>
-<th>仅看最终准确率的问题</th>
+<th scope="col">阶段</th>
+<th scope="col">常用指标</th>
+<th scope="col">仅看最终准确率的问题</th>
 </tr>
 </thead>
 <tbody>
@@ -567,7 +565,7 @@ E：定向演化
 <td>当前任务提高不等于真正进化</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>我认为最重要的一点是：</p>
 <blockquote>
 <p>多智能体方法必须在相同或接近的推理预算下，与强单智能体基线比较。</p>
@@ -583,7 +581,7 @@ E：定向演化
 <ul>
 <li>责任 Agent 定位：最佳约 <strong>53.5%</strong>；</li>
 <li>关键错误步骤定位：最佳约 <strong>14.2%</strong>；</li>
-<li>一些方法甚至低于随机基线。(<a href="https://arxiv.org/abs/2505.00212?utm_source=chatgpt.com" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow">arXiv</a>)</li>
+<li>一些方法甚至低于随机基线。(<a href="https://arxiv.org/abs/2505.00212?utm_source=chatgpt.com" title="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems" rel="nofollow" aria-label="Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems">arXiv</a>)</li>
 </ul>
 <h3>这说明什么？</h3>
 <p>例如一条轨迹有：</p>
@@ -680,9 +678,9 @@ E：定向演化
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -748,6 +746,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

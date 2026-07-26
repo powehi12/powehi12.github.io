@@ -5,30 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 前言
 
-**标题：** [When Search Agents Should Ask: DiscoBench for Clarification-Aware Deep Search](https://arxiv.org/abs/2606.27669)
 
-**标签：** 深度搜索；澄清式交互；查询歧义；智能体评测
 
-**摘要：** 这篇论文最核心的思想是：**搜索智能体真正缺少的往往不是“继续搜索的能力”，而是判断“现在已经搜不明白，应该停下来问用户”的能力。">
+
+
+
+<title>DiscoBench：让搜索智能体学会“该搜时搜、该问时问”</title>
+<meta name="description" content="前言 标题： When Search Agents Should Ask: DiscoBench for Clarification-Aware Deep Search 标签： 深度搜索；澄清式交互；查询歧义；智能体评测 摘要： 这篇论文最核心的思想是：搜索智能体真正缺少的往往不是“继续搜索的能力”，而是判断“现…">
 <meta property="og:title" content="DiscoBench：让搜索智能体学会“该搜时搜、该问时问”">
-<meta property="og:description" content="# 前言
-
-**标题：** [When Search Agents Should Ask: DiscoBench for Clarification-Aware Deep Search](https://arxiv.org/abs/2606.27669)
-
-**标签：** 深度搜索；澄清式交互；查询歧义；智能体评测
-
-**摘要：** 这篇论文最核心的思想是：**搜索智能体真正缺少的往往不是“继续搜索的能力”，而是判断“现在已经搜不明白，应该停下来问用户”的能力。">
+<meta property="og:description" content="前言 标题： When Search Agents Should Ask: DiscoBench for Clarification-Aware Deep Search 标签： 深度搜索；澄清式交互；查询歧义；智能体评测 摘要： 这篇论文最核心的思想是：搜索智能体真正缺少的往往不是“继续搜索的能力”，而是判断“现…">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/DiscoBench%EF%BC%9A-rang-sou-suo-zhi-neng-ti-xue-hui-%E2%80%9C-gai-sou-shi-sou-%E3%80%81-gai-wen-shi-wen-%E2%80%9D.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>DiscoBench：让搜索智能体学会“该搜时搜、该问时问”</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DiscoBench：让搜索智能体学会“该搜时搜、该问时问”">
+<meta name="twitter:description" content="前言 标题： When Search Agents Should Ask: DiscoBench for Clarification-Aware Deep Search 标签： 深度搜索；澄清式交互；查询歧义；智能体评测 摘要： 这篇论文最核心的思想是：搜索智能体真正缺少的往往不是“继续搜索的能力”，而是判断“现…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/DiscoBench%EF%BC%9A-rang-sou-suo-zhi-neng-ti-xue-hui-%E2%80%9C-gai-sou-shi-sou-%E3%80%81-gai-wen-shi-wen-%E2%80%9D.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -56,32 +53,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">DiscoBench：让搜索智能体学会“该搜时搜、该问时问”</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/14" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/14" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>前言</h1>
 <p><strong>标题：</strong> <a href="https://arxiv.org/abs/2606.27669" rel="nofollow">When Search Agents Should Ask: DiscoBench for Clarification-Aware Deep Search</a></p>
 <p><strong>标签：</strong> 深度搜索；澄清式交互；查询歧义；智能体评测</p>
@@ -172,13 +170,13 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>这里需要用户补充的是<strong>意图信息</strong>，不是网页事实。搜索引擎再强，也无法从互联网中找到用户脑子里指的是哪个奖项。</p>
 <h2>3：DiscoBench覆盖的四类歧义</h2>
 <p>论文设计了四种歧义类型。(<a href="https://arxiv.org/html/2606.27669v2" rel="nofollow">arXiv</a>)</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>歧义类型</th>
-<th>含义</th>
-<th>通俗例子</th>
-<th>智能体应该做什么</th>
+<th scope="col">歧义类型</th>
+<th scope="col">含义</th>
+<th scope="col">通俗例子</th>
+<th scope="col">智能体应该做什么</th>
 </tr>
 </thead>
 <tbody>
@@ -207,7 +205,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td>指出搜索不到对应事实，并询问用户是否记错</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>其中，事实错误比较容易发现，因为搜索结果会直接与用户描述发生冲突。实体歧义和标准歧义更难：搜索往往能找到一个“看起来合理”的候选项，模型很容易过早锁定该候选项，而不会意识到还存在其他合理解释。实验也验证了这一现象。(<a href="https://arxiv.org/html/2606.27669v2" rel="nofollow">arXiv</a>)</p>
 <h2>4：数据集是怎样构造出来的</h2>
 <h3>4.1：第一阶段——先构造正常的多跳搜索题</h3>
@@ -264,12 +262,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>例如，如果真正缺失的是“具体是哪一位诺贝尔奖得主”，智能体却问“你指的是哪一年获奖”，模拟器不会把正确人物特征告诉它。(<a href="https://arxiv.org/html/2606.27669v2" rel="nofollow">arXiv</a>)</p>
 <h2>6：论文究竟评测哪些能力</h2>
 <p>作者从四个维度评测搜索智能体。(<a href="https://arxiv.org/html/2606.27669v2" rel="nofollow">arXiv</a>)</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>维度</th>
-<th>指标</th>
-<th>测量内容</th>
+<th scope="col">维度</th>
+<th scope="col">指标</th>
+<th scope="col">测量内容</th>
 </tr>
 </thead>
 <tbody>
@@ -299,7 +297,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td>为完成任务付出了多少交互和推理成本</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>其中两个指标尤其重要：</p>
 <ul>
 <li><strong>CE-A：</strong> 智能体决定提问时，问的是不是正确的歧义点；</li>
@@ -328,13 +326,13 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>Neutral更接近真实部署，Guided则更像“已经告诉模型考试重点”之后的能力上界。(<a href="https://arxiv.org/html/2606.27669v2" rel="nofollow">arXiv</a>)</p>
 <h2>2：主实验结果——强模型仍然不会主动澄清</h2>
 <p>在Neutral设置下，表现最好的Doubao-Seed-2.0-Pro端到端准确率只有43.1%，Gemini-3.1-Pro为40.8%，Claude-Opus-4.7为39.8%。不少模型低于30%，Qwen3.6-Max只有12.3%。(<a href="https://arxiv.org/html/2606.27669v2" rel="nofollow">arXiv</a>)</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>模型</th>
-<th>Neutral准确率</th>
-<th>Guided准确率</th>
-<th>Neutral歧义检测F1</th>
+<th scope="col">模型</th>
+<th scope="col">Neutral准确率</th>
+<th scope="col">Guided准确率</th>
+<th scope="col">Neutral歧义检测F1</th>
 </tr>
 </thead>
 <tbody>
@@ -375,7 +373,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <td>16.0%</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>检查点通过率明显高于最终准确率。例如Claude-Opus-4.7通过了57.0%的检查点，但端到端准确率只有39.8%。这说明模型可能已经完成了前面数个步骤，却在某个歧义节点选择了错误候选项，使后续链条整体失败。(<a href="https://arxiv.org/html/2606.27669v2" rel="nofollow">arXiv</a>)</p>
 <p>这其实符合多跳任务的乘法效应。假设每个关键节点成功率都是80%，一条包含五个关键节点的链条完整成功率只有：</p>
 <p>$$
@@ -412,11 +410,11 @@ $$</p>
 <li><strong>SearchThenAsk：</strong> 先搜索，发现证据不足后再问用户。</li>
 </ul>
 <p>在所有模型共同到达的146个歧义检查点上：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>行为</th>
-<th>平均检查点通过率</th>
+<th scope="col">行为</th>
+<th scope="col">平均检查点通过率</th>
 </tr>
 </thead>
 <tbody>
@@ -433,7 +431,7 @@ $$</p>
 <td>93.4%</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>SearchThenAsk几乎在所有模型上都达到90%左右的通过率；更令人意外的是，SearchHeavyGuess不仅远低于SearchThenAsk，甚至低于DirectGuess。(<a href="https://arxiv.org/html/2606.27669v2" rel="nofollow">arXiv</a>)</p>
 <p>这并不意味着搜索有害，而是说明：</p>
 <blockquote>
@@ -504,9 +502,9 @@ $$</p>
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -572,6 +570,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

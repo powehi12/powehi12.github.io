@@ -5,26 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 前言
 
-标题：[How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities](https://arxiv.org/abs/2409.11654)
 
-正式发表：*Cell* 187(25), 7045–7063，2024 年 12 月；[DOI: 10.1016/j.cell.2024.11.015](https://doi.org/10.1016/j.cell.2024.11.015)。">
+
+
+
+
+<title>从数据到生命模拟：AI 如何用统一表征与虚拟实验构建虚拟细胞</title>
+<meta name="description" content="前言 标题：How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities 正式发表：Cell 187(25), 7045–7063，2024 年 12 月；DOI: 10.1016/j.cell.2…">
 <meta property="og:title" content="从数据到生命模拟：AI 如何用统一表征与虚拟实验构建虚拟细胞">
-<meta property="og:description" content="# 前言
-
-标题：[How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities](https://arxiv.org/abs/2409.11654)
-
-正式发表：*Cell* 187(25), 7045–7063，2024 年 12 月；[DOI: 10.1016/j.cell.2024.11.015](https://doi.org/10.1016/j.cell.2024.11.015)。">
+<meta property="og:description" content="前言 标题：How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities 正式发表：Cell 187(25), 7045–7063，2024 年 12 月；DOI: 10.1016/j.cell.2…">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/cong-shu-ju-dao-sheng-ming-mo-ni-%EF%BC%9AAI%20-ru-he-yong-tong-yi-biao-zheng-yu-xu-ni-shi-yan-gou-jian-xu-ni-xi-bao.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>从数据到生命模拟：AI 如何用统一表征与虚拟实验构建虚拟细胞</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从数据到生命模拟：AI 如何用统一表征与虚拟实验构建虚拟细胞">
+<meta name="twitter:description" content="前言 标题：How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities 正式发表：Cell 187(25), 7045–7063，2024 年 12 月；DOI: 10.1016/j.cell.2…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/cong-shu-ju-dao-sheng-ming-mo-ni-%EF%BC%9AAI%20-ru-he-yong-tong-yi-biao-zheng-yu-xu-ni-shi-yan-gou-jian-xu-ni-xi-bao.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -52,32 +53,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">从数据到生命模拟：AI 如何用统一表征与虚拟实验构建虚拟细胞</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/15" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/15" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>前言</h1>
 <p>标题：<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities</a></p>
 <p>正式发表：<em>Cell</em> 187(25), 7045–7063，2024 年 12 月；<a href="https://doi.org/10.1016/j.cell.2024.11.015" rel="nofollow">DOI: 10.1016/j.cell.2024.11.015</a>。</p>
@@ -259,7 +261,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <blockquote>
 <p><strong>未来能不能像做天气预报一样，用 AI 在电脑中模拟细胞，提前预测药物、基因突变或环境变化会让细胞发生什么？</strong></p>
 </blockquote>
-<p>作者把这种系统称为 <strong>AI Virtual Cell，AI 虚拟细胞</strong>。需要注意，这篇文章主要是<strong>观点与规划文章</strong>，不是发布了一个已经完成的虚拟细胞模型。其预印本发表于 2024 年，随后以 Perspective 形式发表于《Cell》。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow">1</a>)</p>
+<p>作者把这种系统称为 <strong>AI Virtual Cell，AI 虚拟细胞</strong>。需要注意，这篇文章主要是<strong>观点与规划文章</strong>，不是发布了一个已经完成的虚拟细胞模型。其预印本发表于 2024 年，随后以 Perspective 形式发表于《Cell》。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow" aria-label="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities">1</a>)</p>
 <hr>
 <h2>1. 什么是“虚拟细胞”？</h2>
 <p>可以把真实细胞想象成一座极其复杂的城市：</p>
@@ -277,7 +279,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>健康细胞为什么会变成癌细胞？</li>
 <li>同一种药为什么对不同患者效果不同？</li>
 </ul>
-<p>然后模型预测细胞未来的变化。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow">1</a>)</p>
+<p>然后模型预测细胞未来的变化。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow" aria-label="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities">1</a>)</p>
 <hr>
 <h2>2. 它与普通单细胞 AI 有什么区别？</h2>
 <p>现在很多模型只处理一种数据，例如只看：</p>
@@ -299,14 +301,14 @@ RNA
  ↓
 组织和器官
 </code></pre>
-<p>作者希望未来的虚拟细胞能够把这些不同数据统一起来，同时理解从分子、细胞到组织的多个尺度，而不是只预测一张“基因表达表”。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow">1</a>)</p>
+<p>作者希望未来的虚拟细胞能够把这些不同数据统一起来，同时理解从分子、细胞到组织的多个尺度，而不是只预测一张“基因表达表”。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow" aria-label="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities">1</a>)</p>
 <hr>
 <h2>3. 理想的虚拟细胞应该有什么能力？</h2>
 <p>可以概括成三层。</p>
 <h3>第一层：认识细胞</h3>
 <p>模型先学习一种通用的“细胞表示”。</p>
 <p>类似 ChatGPT 把一句话转化成内部语义表示，虚拟细胞也要把基因、蛋白质、图像和细胞状态转化成一个统一的数字表示。</p>
-<p>这样，来自不同实验和不同测量技术的数据才能互相联系。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow">1</a>)</p>
+<p>这样，来自不同实验和不同测量技术的数据才能互相联系。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow" aria-label="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities">1</a>)</p>
 <h3>第二层：预测细胞</h3>
 <p>给定一个初始细胞和某种干预，模型预测之后会发生什么：</p>
 <pre lang="text" class="notranslate"><code class="notranslate">当前细胞
@@ -315,7 +317,7 @@ RNA
 ↓
 未来细胞状态
 </code></pre>
-<p>例如预测关闭某个基因后，细胞是否停止生长、死亡或者转变成另一种状态。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow">1</a>)</p>
+<p>例如预测关闭某个基因后，细胞是否停止生长、死亡或者转变成另一种状态。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow" aria-label="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities">1</a>)</p>
 <h3>第三层：帮助科学家做虚拟实验</h3>
 <p>文章提出“虚拟仪器”的概念。</p>
 <p>科学家不只是向模型要一个答案，而是可以像使用显微镜和实验设备一样，利用模型：</p>
@@ -325,7 +327,7 @@ RNA
 <li>生成可验证的假设；</li>
 <li>决定下一步最值得做哪个真实实验。</li>
 </ul>
-<p>因此，理想目标不是一个只会预测的黑箱，而是一个帮助科学家探索和理解生物机制的工具。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow">1</a>)</p>
+<p>因此，理想目标不是一个只会预测的黑箱，而是一个帮助科学家探索和理解生物机制的工具。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow" aria-label="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities">1</a>)</p>
 <hr>
 <h2>4. 为什么现在可能做到？</h2>
 <p>过去主要靠科学家手工写公式，描述细胞中的各种反应。</p>
@@ -339,7 +341,7 @@ RNA
 <blockquote>
 <p>不再要求科学家提前写出所有生物规律，而是让 AI 从大量实验数据中学习细胞如何运行。</p>
 </blockquote>
-<p>这与大语言模型从大量文本中学习语言规律有一定相似性。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow">1</a>)</p>
+<p>这与大语言模型从大量文本中学习语言规律有一定相似性。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow" aria-label="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities">1</a>)</p>
 <hr>
 <h2>5. 它未来有什么用？</h2>
 <p>最直接的用途是药物研发。</p>
@@ -360,7 +362,7 @@ RNA
 <li>预测细胞对治疗的反应；</li>
 <li>扩大科学家一次能够探索的假设数量。</li>
 </ul>
-<p>文章把这些视为虚拟细胞的重要长期应用方向。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow">1</a>)</p>
+<p>文章把这些视为虚拟细胞的重要长期应用方向。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow" aria-label="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities">1</a>)</p>
 <hr>
 <h2>6. 目前最大的困难</h2>
 <p>虚拟细胞离真正成熟还有明显距离。</p>
@@ -375,7 +377,7 @@ RNA
 <h3>很难评价模型是否真的懂了</h3>
 <p>一个模型可能在常规测试集上得分很高，但到了新细胞、新疾病或新药物上就失效。因此需要更严格、与真实生物问题相关的评测。</p>
 <h3>需要能够解释和验证</h3>
-<p>如果模型说某种药有效，科学家还需要知道依据是什么，并通过真实实验验证，不能直接把 AI 输出当成生物学事实。文章因此特别强调数据、评测、开放标准和跨机构协作。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow">1</a>)</p>
+<p>如果模型说某种药有效，科学家还需要知道依据是什么，并通过真实实验验证，不能直接把 AI 输出当成生物学事实。文章因此特别强调数据、评测、开放标准和跨机构协作。([<a href="https://arxiv.org/abs/2409.11654" rel="nofollow">arXiv</a>]<a href="https://arxiv.org/abs/2409.11654" title="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities" rel="nofollow" aria-label="[2409.11654] How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities">1</a>)</p>
 <hr>
 <h2>7. 用一个最简单的类比理解</h2>
 <p>传统生物实验像是：</p>
@@ -411,9 +413,9 @@ RNA
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -479,6 +481,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>

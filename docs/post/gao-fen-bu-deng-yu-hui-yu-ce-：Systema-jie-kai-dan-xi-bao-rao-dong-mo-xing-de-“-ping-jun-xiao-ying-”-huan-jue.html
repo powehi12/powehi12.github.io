@@ -5,30 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-1'>
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-2'>
     <link rel="icon" href="https://github.com/powehi12.png">
-<meta name="description" content="# 前言
 
-**论文**：[Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation](https://www.nature.com/articles/s41587-025-02777-8)  
-**作者**：Ramon Viñas Torné, Maciej Wiatrak, Zoe Piran, Shuyang Fan, Liangze Jiang, Sarah A. Teichmann, Mor Nitzan, Maria Brbić  
-**期刊**：Nature Biotechnology，2025 年在线发表  
-**代码**：[Systema GitHub](https://github.com/mlbio-epfl/systema)  
-**说明**：未检索到 arXiv 版本，因此标题链接指向开放获取的期刊原文。">
+
+
+
+
+
+<title>高分不等于会预测：Systema揭开单细胞扰动模型的“平均效应”幻觉</title>
+<meta name="description" content="前言 论文：Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation 作者：Ramon Viñas Torné, Maciej Wiatrak, Zoe Pira…">
 <meta property="og:title" content="高分不等于会预测：Systema揭开单细胞扰动模型的“平均效应”幻觉">
-<meta property="og:description" content="# 前言
-
-**论文**：[Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation](https://www.nature.com/articles/s41587-025-02777-8)  
-**作者**：Ramon Viñas Torné, Maciej Wiatrak, Zoe Piran, Shuyang Fan, Liangze Jiang, Sarah A. Teichmann, Mor Nitzan, Maria Brbić  
-**期刊**：Nature Biotechnology，2025 年在线发表  
-**代码**：[Systema GitHub](https://github.com/mlbio-epfl/systema)  
-**说明**：未检索到 arXiv 版本，因此标题链接指向开放获取的期刊原文。">
+<meta property="og:description" content="前言 论文：Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation 作者：Ramon Viñas Torné, Maciej Wiatrak, Zoe Pira…">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/gao-fen-bu-deng-yu-hui-yu-ce-%EF%BC%9ASystema-jie-kai-dan-xi-bao-rao-dong-mo-xing-de-%E2%80%9C-ping-jun-xiao-ying-%E2%80%9D-huan-jue.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
-<title>高分不等于会预测：Systema揭开单细胞扰动模型的“平均效应”幻觉</title>
-
-
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="高分不等于会预测：Systema揭开单细胞扰动模型的“平均效应”幻觉">
+<meta name="twitter:description" content="前言 论文：Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation 作者：Ramon Viñas Torné, Maciej Wiatrak, Zoe Pira…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/gao-fen-bu-deng-yu-hui-yu-ce-%EF%BC%9ASystema-jie-kai-dan-xi-bao-rao-dong-mo-xing-de-%E2%80%9C-ping-jun-xiao-ying-%E2%80%9D-huan-jue.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
 </head>
 <style>
 body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
@@ -56,32 +53,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 
 
-<body>
-    <div id="header">
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
 <h1 class="postTitle">高分不等于会预测：Systema揭开单细胞扰动模型的“平均效应”幻觉</h1>
 <div class="title-right">
-    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
     </a>
     
-    <a href="https://github.com/powehi12/powehi12.github.io/issues/17" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/17" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
     </a>
     
 
-    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
-        <svg class="octicon" width="16" height="16" >
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
             <path id="themeSwitch" fill-rule="evenodd"></path>
         </svg>
     </a>
 
 </div>
 </div>
-    <div id="content">
+    <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>前言</h1>
 <p><strong>论文</strong>：<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation</a><br>
 <strong>作者</strong>：Ramon Viñas Torné, Maciej Wiatrak, Zoe Piran, Shuyang Fan, Liangze Jiang, Sarah A. Teichmann, Mor Nitzan, Maria Brbić<br>
@@ -247,13 +245,13 @@ $$</p>
 <h2>1：实验设置</h2>
 <h3>1.1：数据范围</h3>
 <p>作者重新评估了来自六项研究的十个单细胞扰动数据集，涵盖：</p>
-<markdown-accessiblity-table><table role="table">
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
 <thead>
 <tr>
-<th>数据集</th>
-<th>细胞背景</th>
-<th align="right">技术</th>
-<th align="right">处理后扰动数</th>
+<th scope="col">数据集</th>
+<th scope="col">细胞背景</th>
+<th scope="col" align="right">技术</th>
+<th scope="col" align="right">处理后扰动数</th>
 </tr>
 </thead>
 <tbody>
@@ -306,7 +304,7 @@ $$</p>
 <td align="right">每组167</td>
 </tr>
 </tbody>
-</table></markdown-accessiblity-table>
+</table></div>
 <p>这些数字是处理后的扰动种类数，而不是细胞数。</p>
 <h3>1.2：训练和测试划分</h3>
 <p>作者按“扰动身份”而不是按细胞随机划分数据：</p>
@@ -403,7 +401,7 @@ $$</p>
 <blockquote>
 <p><strong>很多 AI 看起来很会预测基因实验结果，可能只是考试评分方式有漏洞。</strong></p>
 </blockquote>
-<p>作者提出了一套名为 <strong>Systema</strong> 的新评测框架，用来判断模型是否真的学会了“不同基因各自造成的影响”。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow">1</a>)</p>
+<p>作者提出了一套名为 <strong>Systema</strong> 的新评测框架，用来判断模型是否真的学会了“不同基因各自造成的影响”。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow" aria-label="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology">1</a>)</p>
 <hr>
 <h2>1. AI 在预测什么？</h2>
 <p>细胞里有成千上万个基因。研究人员可以用 CRISPR：</p>
@@ -417,7 +415,7 @@ $$</p>
 <blockquote>
 <p>输入“改变了哪个基因”，预测改变之后整个细胞的基因活动状态。</p>
 </blockquote>
-<p>这有助于理解基因功能、寻找药物靶点，也能减少需要真正进行的实验数量。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow">1</a>)</p>
+<p>这有助于理解基因功能、寻找药物靶点，也能减少需要真正进行的实验数量。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow" aria-label="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology">1</a>)</p>
 <hr>
 <h2>2. 论文发现了什么问题？</h2>
 <p>作者测试了 CPA、GEARS、scGPT 等模型，结果发现一个非常尴尬的现象：</p>
@@ -428,7 +426,7 @@ $$</p>
 <blockquote>
 <p>不管你改变的是哪个基因，都预测成“所有受过扰动的细胞的平均状态”。</p>
 </blockquote>
-<p>相当于考试时，不管题目是什么，都填同一个“平均答案”，居然还能拿高分。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow">1</a>)</p>
+<p>相当于考试时，不管题目是什么，都填同一个“平均答案”，居然还能拿高分。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow" aria-label="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology">1</a>)</p>
 <hr>
 <h2>3. 为什么“平均答案”也能拿高分？</h2>
 <p>因为很多基因扰动都会造成一些共同变化，例如：</p>
@@ -447,7 +445,7 @@ $$</p>
 <pre lang="text" class="notranslate"><code class="notranslate">关闭基因 A 和关闭基因 B
 究竟有什么具体区别
 </code></pre>
-<p>作者把这种所有扰动都共有的变化称为 <strong>systematic variation，系统性变化</strong>。他们发现，数据中的系统性变化越强，模型在传统指标上的得分往往越高，说明部分高分可能是被数据偏差“抬起来”的。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow">1</a>)</p>
+<p>作者把这种所有扰动都共有的变化称为 <strong>systematic variation，系统性变化</strong>。他们发现，数据中的系统性变化越强，模型在传统指标上的得分往往越高，说明部分高分可能是被数据偏差“抬起来”的。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow" aria-label="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology">1</a>)</p>
 <hr>
 <h2>4. Systema 怎么解决？</h2>
 <p>Systema 的核心思想很简单：</p>
@@ -464,7 +462,7 @@ $$</p>
 <blockquote>
 <p>模型能不能分清苹果、香蕉和橙子？</p>
 </blockquote>
-<p>具体来说，Systema 会尽量减掉所有扰动共有的“平均变化”，把注意力放在每个基因独有的变化上；它还设计了 <strong>centroid accuracy</strong>，检查模型预测的结果究竟最接近正确的基因扰动，还是更像其他扰动。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow">1</a>)</p>
+<p>具体来说，Systema 会尽量减掉所有扰动共有的“平均变化”，把注意力放在每个基因独有的变化上；它还设计了 <strong>centroid accuracy</strong>，检查模型预测的结果究竟最接近正确的基因扰动，还是更像其他扰动。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow" aria-label="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology">1</a>)</p>
 <hr>
 <h2>5. 换了评测方法之后，结果怎样？</h2>
 <p>换成 Systema 后，大多数模型的成绩明显下降。</p>
@@ -472,7 +470,7 @@ $$</p>
 <blockquote>
 <p>预测一个从未见过的基因被改变后，细胞会如何反应，实际上比以前的排行榜显示得困难得多。</p>
 </blockquote>
-<p>微调后的 scGPT 在部分任务上稍好一些，尤其是预测核糖体、基因表达、DNA 复制等功能明确且彼此相关的基因，但总体能力仍然有限。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow">1</a>)</p>
+<p>微调后的 scGPT 在部分任务上稍好一些，尤其是预测核糖体、基因表达、DNA 复制等功能明确且彼此相关的基因，但总体能力仍然有限。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow" aria-label="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology">1</a>)</p>
 <hr>
 <h2>为什么这篇论文重要？</h2>
 <p>它揭示了虚拟细胞研究中的一个核心问题：</p>
@@ -486,7 +484,7 @@ $$</p>
 <li>是否能预测真正没见过的基因；</li>
 <li>预测结果能否帮助寻找通路、药物靶点或细胞表型。</li>
 </ul>
-<p>作者最终强调，模型应该根据其<strong>真实生物学用途</strong>来评估，而不仅仅是根据基因表达预测分数。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow">1</a>)</p>
+<p>作者最终强调，模型应该根据其<strong>真实生物学用途</strong>来评估，而不仅仅是根据基因表达预测分数。([<a href="https://www.nature.com/articles/s41587-025-02777-8" rel="nofollow">Nature</a>]<a href="https://www.nature.com/articles/s41587-025-02777-8" title="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology" rel="nofollow" aria-label="Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation | Nature Biotechnology">1</a>)</p>
 <h2>最核心的结论</h2>
 <blockquote>
 <p><strong>当前很多基因扰动预测模型，可能主要学会了“细胞被干预后通常会怎样”，却还没有真正学会“改变这个特定基因会怎样”。Systema 就是用来拆穿这种虚高成绩的。</strong></p>
@@ -497,9 +495,9 @@ $$</p>
 <div class="comments" id="comments"></div>
 
 </div>
-    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
 <div id="footer2">
-    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
 </div>
 
 <script>
@@ -565,6 +563,66 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-2'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
 </html>
