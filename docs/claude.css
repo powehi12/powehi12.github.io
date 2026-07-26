@@ -6,25 +6,25 @@
 :root {
   color-scheme: dark;
 
-  --claude-bg: #262624;
-  --claude-surface: #2e2d2a;
-  --claude-surface-muted: #33322f;
-  --claude-surface-hover: #3b3935;
+  --claude-bg: #1a1a19;
+  --claude-surface: #222220;
+  --claude-surface-muted: #242422;
+  --claude-surface-hover: #2d2c29;
   --claude-text: #f4f3ee;
-  --claude-text-secondary: #d5d2ca;
-  --claude-text-tertiary: #aaa69e;
-  --claude-border: rgba(244, 243, 238, 0.14);
-  --claude-border-strong: rgba(244, 243, 238, 0.26);
-  --claude-control-border: #858078;
+  --claude-text-secondary: #e7e6e2;
+  --claude-text-tertiary: #aaa9a5;
+  --claude-border: rgba(244, 243, 238, 0.12);
+  --claude-border-strong: rgba(244, 243, 238, 0.22);
+  --claude-control-border: #6f6d68;
   --claude-accent: #d97757;
   --claude-accent-deep: #ee9b7d;
   --claude-accent-soft: rgba(217, 119, 87, 0.16);
   --claude-link: #9ebcf3;
-  --claude-code: #1c1b1a;
+  --claude-code: #141413;
   --claude-code-text: #eeeae2;
   --claude-emphasis: #e9e6de;
   --claude-emphasis-hover: #d8d4cb;
-  --claude-on-emphasis: #262624;
+  --claude-on-emphasis: #1a1a19;
   --claude-figure-bg: #f7f5ef;
 
   --font-ui: "Anthropic Sans", Inter, "SF Pro Text", -apple-system,
@@ -132,8 +132,8 @@ body {
   font-family: var(--font-ui) !important;
   font-size: 16px !important;
   font-weight: 400;
-  line-height: 1.68 !important;
-  letter-spacing: 0.003em;
+  line-height: 1.62 !important;
+  letter-spacing: 0;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: auto;
   -moz-osx-font-smoothing: auto;
@@ -299,10 +299,10 @@ body.home-page #content > div:first-child {
   max-width: 660px;
   margin: -7px 0 30px !important;
   color: var(--claude-text-secondary) !important;
-  font-family: var(--font-ui);
+  font-family: var(--font-reading);
   font-size: 17px;
   font-weight: 400;
-  line-height: 1.66;
+  line-height: 1.62;
 }
 
 .SideNav {
@@ -530,22 +530,23 @@ body.home-page #content > div:first-child {
 .markdown-body {
   color: var(--claude-text-secondary) !important;
   background: transparent !important;
-  font-family: var(--font-ui) !important;
+  font-family: var(--font-reading) !important;
   font-size: 17px !important;
   font-weight: 400;
-  line-height: 1.76 !important;
-  letter-spacing: 0.004em;
+  line-height: 1.62 !important;
+  letter-spacing: 0;
+  font-kerning: normal;
   word-break: normal;
 }
 
 .markdown-body p,
 .markdown-body li {
-  line-height: 1.76;
+  line-height: 1.62;
 }
 
 .markdown-body p {
   margin-top: 0;
-  margin-bottom: 1.15em;
+  margin-bottom: 1em;
 }
 
 .markdown-body h1,
@@ -557,17 +558,17 @@ body.home-page #content > div:first-child {
   color: var(--claude-text) !important;
   font-family: var(--font-reading) !important;
   font-weight: 600 !important;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
   scroll-margin-top: 26px;
   text-wrap: balance;
 }
 
 .markdown-body h1 {
-  margin: 2.5em 0 0.85em !important;
+  margin: 2.15em 0 0.75em !important;
   padding: 0 0 0.45em !important;
   border: 0 !important;
   border-bottom: 1px solid var(--claude-border) !important;
-  font-size: 29px !important;
+  font-size: 25px !important;
   line-height: 1.25;
 }
 
@@ -576,23 +577,23 @@ body.home-page #content > div:first-child {
 }
 
 .markdown-body h2 {
-  margin: 2.25em 0 0.75em !important;
+  margin: 1.95em 0 0.7em !important;
   padding: 0 !important;
   border: 0 !important;
-  font-size: 24px !important;
+  font-size: 22px !important;
   line-height: 1.3;
 }
 
 .markdown-body h3 {
-  margin: 1.9em 0 0.65em !important;
+  margin: 1.7em 0 0.6em !important;
   color: var(--claude-text) !important;
-  font-size: 20px !important;
+  font-size: 19px !important;
   line-height: 1.38;
 }
 
 .markdown-body h4 {
-  margin: 1.65em 0 0.55em !important;
-  font-size: 18px !important;
+  margin: 1.5em 0 0.5em !important;
+  font-size: 17px !important;
   line-height: 1.42;
 }
 
@@ -623,7 +624,7 @@ body.home-page #content > div:first-child {
 
 .markdown-body strong {
   color: var(--claude-text) !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
 }
 
 .markdown-body em {
@@ -1217,24 +1218,24 @@ body.home-page #content > div:first-child {
 
   .markdown-body {
     font-size: 16px !important;
-    line-height: 1.74 !important;
+    line-height: 1.66 !important;
   }
 
   .markdown-body p,
   .markdown-body li {
-    line-height: 1.74;
+    line-height: 1.66;
   }
 
   .markdown-body h1 {
-    font-size: 26px !important;
+    font-size: 24px !important;
   }
 
   .markdown-body h2 {
-    font-size: 22px !important;
+    font-size: 21px !important;
   }
 
   .markdown-body h3 {
-    font-size: 19px !important;
+    font-size: 18px !important;
   }
 
   .markdown-body h4 {

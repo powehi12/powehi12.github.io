@@ -24,7 +24,7 @@ from urllib.parse import quote
 SITE_ORIGIN = "https://powehi12.github.io"
 SITE_NAME = "qbyang 的个人博客"
 SITE_DESCRIPTION = "记录 Agent、LLM、强化学习与论文阅读"
-ASSET_VERSION = "20260726-4"
+ASSET_VERSION = "20260726-5"
 
 RSS_LINK = (
     f'<link rel="alternate" type="application/rss+xml" '
@@ -726,7 +726,7 @@ def inject_seo(html: str, relative: Path) -> str:
         "twitter:image": image,
     }
     metadata = [
-        '<meta name="theme-color" content="#262624">',
+        '<meta name="theme-color" content="#1a1a19">',
         '<meta name="color-scheme" content="dark">',
         f'<meta name="description" content="{html_module.escape(values["description"], quote=True)}">',
         f'<meta property="og:title" content="{html_module.escape(values["og:title"], quote=True)}">',
@@ -780,7 +780,7 @@ def build_404() -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta name="theme-color" content="#262624">
+  <meta name="theme-color" content="#1a1a19">
   <meta name="color-scheme" content="dark">
   <meta name="robots" content="noindex,follow">
   <link href="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css" rel="stylesheet">
@@ -920,7 +920,7 @@ def validate_html(html: str, relative: Path) -> list[str]:
         re.IGNORECASE,
     ):
         errors.append("html root is not fixed to the dark theme")
-    if extract_meta(html, "name", "theme-color") != "#262624":
+    if extract_meta(html, "name", "theme-color") != "#1a1a19":
         errors.append("theme-color does not match the dark background")
     if extract_meta(html, "name", "color-scheme") != "dark":
         errors.append("color-scheme meta is not dark")
