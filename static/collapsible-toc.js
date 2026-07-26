@@ -125,10 +125,34 @@
     toc.className = "toc collapsible-toc";
     toc.setAttribute("aria-label", "文章目录");
 
-    var title = document.createElement("div");
-    title.className = "toc-title";
-    title.textContent = "文章目录";
-    toc.appendChild(title);
+    var disclosure = document.createElement("button");
+    disclosure.type = "button";
+    disclosure.className = "toc-disclosure";
+    disclosure.setAttribute("aria-expanded", "false");
+
+    var disclosureLabel = document.createElement("span");
+    disclosureLabel.className = "toc-disclosure-label";
+    disclosureLabel.textContent = "文章目录";
+
+    var disclosureIcon = document.createElement("span");
+    disclosureIcon.className = "toc-disclosure-icon";
+    disclosureIcon.setAttribute("aria-hidden", "true");
+    disclosureIcon.textContent = "▸";
+
+    disclosure.appendChild(disclosureLabel);
+    disclosure.appendChild(disclosureIcon);
+    toc.appendChild(disclosure);
+
+    var tocControlId = 1;
+    function makeTocControlId(prefix) {
+      var candidate = prefix + "-" + tocControlId;
+      tocControlId += 1;
+      while (document.getElementById(candidate)) {
+        candidate = prefix + "-" + tocControlId;
+        tocControlId += 1;
+      }
+      return candidate;
+    }
 
     function renderList(nodes) {
       var list = document.createElement("ul");
@@ -181,22 +205,26 @@
 
         if (node.children.length) {
           var children = renderList(node.children);
+          var childrenId = makeTocControlId("toc-children");
+          var headingLabel = node.heading.textContent.trim();
           children.classList.add("toc-children");
+          children.id = childrenId;
           children.hidden = true;
+          toggle.setAttribute("aria-controls", childrenId);
           item.appendChild(children);
 
           function setExpanded(expanded) {
             children.hidden = !expanded;
             toggle.setAttribute("aria-expanded", String(expanded));
-            toggle.setAttribute("aria-label", expanded ? "收起子目录" : "展开子目录");
+            toggle.setAttribute(
+              "aria-label",
+              (expanded ? "收起“" : "展开“") + headingLabel + "”的子目录"
+            );
             toggle.textContent = expanded ? "▾" : "▸";
           }
 
-          toggle.setAttribute("aria-label", "展开子目录");
+          setExpanded(false);
           toggle.addEventListener("click", function () {
-            setExpanded(toggle.getAttribute("aria-expanded") !== "true");
-          });
-          link.addEventListener("click", function () {
             setExpanded(toggle.getAttribute("aria-expanded") !== "true");
           });
         }
@@ -207,24 +235,54 @@
       return list;
     }
 
-    toc.appendChild(renderList(roots));
+    var rootList = renderList(roots);
+    rootList.classList.add("toc-root-list");
+    rootList.id = makeTocControlId("toc-root-list");
+    rootList.hidden = true;
+    disclosure.setAttribute("aria-controls", rootList.id);
+
+    function setTocExpanded(expanded) {
+      rootList.hidden = !expanded;
+      toc.classList.toggle("is-expanded", expanded);
+      disclosure.setAttribute("aria-expanded", String(expanded));
+      disclosure.setAttribute("aria-label", expanded ? "收起文章目录" : "展开文章目录");
+      disclosureIcon.textContent = expanded ? "▾" : "▸";
+    }
+
+    disclosure.addEventListener("click", function () {
+      setTocExpanded(disclosure.getAttribute("aria-expanded") !== "true");
+    });
+    toc.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && disclosure.getAttribute("aria-expanded") === "true") {
+        setTocExpanded(false);
+        disclosure.focus();
+      }
+    });
+
+    toc.appendChild(rootList);
+    setTocExpanded(false);
     content.prepend(toc);
     document.body.classList.add("has-collapsible-toc");
     content.classList.add("has-collapsible-toc");
 
     var style = document.createElement("style");
     style.textContent = [
-      ".collapsible-toc { position: fixed; top: 110px; left: calc(50% + 350px); width: 280px; max-height: 72vh; overflow-y: auto; border: 1px solid var(--borderColor-default, rgba(31,30,29,.15)); border-radius: 12px; padding: 15px; background: var(--bgColor-muted, #f5f4ed); box-shadow: 0 1px 2px rgba(0,0,0,.05); z-index: 20; }",
-      ".collapsible-toc .toc-title { font-size: 13px; font-weight: 600; text-align: left; padding-bottom: 10px; margin-bottom: 8px; border-bottom: 1px solid var(--borderColor-default, rgba(31,30,29,.15)); }",
+      ".collapsible-toc { position: fixed; top: clamp(104px, 16vh, 152px); left: 24px; width: 148px; max-height: 44px; overflow: hidden; border: 1px solid var(--borderColor-default, rgba(31,30,29,.15)); border-radius: 12px; padding: 0; background: var(--bgColor-muted, #f5f4ed); box-shadow: 0 1px 2px rgba(0,0,0,.05); z-index: 20; }",
+      ".collapsible-toc.is-expanded { width: 244px; max-height: 72vh; }",
+      ".collapsible-toc .toc-disclosure { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 44px; padding: 0 12px; border: 0; background: transparent; color: var(--fgColor-default, #141413); cursor: pointer; font: inherit; font-size: 13px; font-weight: 600; text-align: left; }",
+      ".collapsible-toc .toc-disclosure:hover { background: var(--bgColor-neutral-muted, rgba(31,30,29,.06)); }",
+      ".collapsible-toc .toc-disclosure-icon { color: var(--fgColor-muted, #706f69); font-size: 14px; line-height: 1; }",
       ".collapsible-toc .toc-list { list-style: none; margin: 0; padding: 0; }",
+      ".collapsible-toc .toc-root-list { max-height: calc(72vh - 45px); overflow-y: auto; padding: 8px 12px 12px; border-top: 1px solid var(--borderColor-default, rgba(31,30,29,.15)); }",
+      ".collapsible-toc .toc-list[hidden] { display: none !important; }",
       ".collapsible-toc .toc-children { padding-left: 16px; }",
-      ".collapsible-toc .toc-children[hidden] { display: none !important; }",
       ".collapsible-toc .toc-row { display: flex; align-items: flex-start; gap: 4px; padding: 4px 0; }",
       ".collapsible-toc .toc-toggle { width: 24px; min-width: 24px; height: 24px; min-height: 24px; padding: 0; border: 0; background: transparent; color: var(--fgColor-muted, #706f69); cursor: pointer; font-size: 14px; line-height: 1.5; }",
       ".collapsible-toc .toc-toggle:disabled { cursor: default; }",
       ".collapsible-toc .toc-link { color: var(--fgColor-muted, #706f69); text-decoration: none; font-size: 13px; line-height: 1.55; flex: 1; overflow-wrap: anywhere; }",
       ".collapsible-toc .toc-link:hover { color: var(--fgColor-default, #141413); text-decoration: underline; }",
-      "@media (max-width: 1249px) { .collapsible-toc { position: static; width: auto; max-height: none; margin-bottom: 20px; } }"
+      "@media (max-width: 1249px) { .collapsible-toc { position: static; width: auto; max-height: 44px; margin-bottom: 20px; } .collapsible-toc.is-expanded { width: auto; max-height: none; } .collapsible-toc .toc-root-list { max-height: none; } }",
+      "@media (min-width: 1250px) { body.post-page.has-collapsible-toc { max-width: 1352px; } body.post-page.has-collapsible-toc #content.has-collapsible-toc { display: grid; grid-template-columns: minmax(0, 1fr) 760px minmax(0, 1fr); column-gap: 24px; align-items: start; } #content > .collapsible-toc { position: sticky; top: 28px; right: auto; left: auto; grid-column: 1; grid-row: 1; justify-self: start; width: min(148px, 100%); max-height: 44px; margin: 0; } #content > .collapsible-toc.is-expanded { width: min(244px, 100%); max-height: calc(100vh - 56px); } #content > #postBody { grid-column: 2; grid-row: 1; width: 100%; min-width: 0; margin: 0; } }"
     ].join("\n");
     document.head.appendChild(style);
     scrollToInitialHash();
