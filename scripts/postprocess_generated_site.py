@@ -24,7 +24,7 @@ from urllib.parse import quote
 SITE_ORIGIN = "https://powehi12.github.io"
 SITE_NAME = "qbyang 的个人博客"
 SITE_DESCRIPTION = "记录 Agent、LLM、强化学习与论文阅读"
-ASSET_VERSION = "20260727-2"
+ASSET_VERSION = "20260727-3"
 
 RSS_LINK = (
     f'<link rel="alternate" type="application/rss+xml" '
@@ -289,11 +289,30 @@ def page_kind(relative: Path) -> str:
     return "home"
 
 
+def pagination_page_number(relative: Path) -> int | None:
+    if len(relative.parts) != 1:
+        return None
+    if relative.name == "index.html":
+        return 1
+    match = re.fullmatch(r"page(\d+)\.html", relative.name)
+    return int(match.group(1)) if match else None
+
+
+def pagination_total_pages(paths: list[Path], docs: Path) -> int:
+    return max(
+        (
+            page_number
+            for path in paths
+            if (page_number := pagination_page_number(path.relative_to(docs))) is not None
+        ),
+        default=1,
+    )
+
+
 def title_for_page(html: str, relative: Path) -> str:
-    if relative.name == "page2.html":
-        return f"{SITE_NAME} - 第 2 页"
-    if relative.name == "page3.html":
-        return f"{SITE_NAME} - 第 3 页"
+    page_number = pagination_page_number(relative)
+    if page_number and page_number > 1:
+        return f"{SITE_NAME} - 第 {page_number} 页"
     if relative.name == "tag.html":
         return f"标签与搜索 - {SITE_NAME}"
     if relative.name == "404.html":
@@ -478,6 +497,46 @@ def improve_home_cards(html: str) -> str:
         )
 
     return pattern.sub(replace, html)
+
+
+def improve_pagination(html: str, relative: Path, total_pages: int) -> str:
+    current_page = pagination_page_number(relative)
+    if current_page is None or total_pages <= 1:
+        return html
+
+    indicator = (
+        f'<span class="page-indicator" aria-current="page" '
+        f'aria-label="第 {current_page} 页，共 {total_pages} 页">'
+        f"{current_page} / {total_pages}</span>"
+    )
+    pagination_pattern = re.compile(
+        r"(?P<open><div\b"
+        r"(?=[^>]*\bclass\s*=\s*[\"'][^\"']*\bpagination\b[^\"']*[\"'])"
+        r"[^>]*>)(?P<body>.*?)(?P<close></div>)",
+        re.IGNORECASE | re.DOTALL,
+    )
+    indicator_pattern = re.compile(
+        r"<span\b"
+        r"(?=[^>]*\bclass\s*=\s*[\"'][^\"']*\bpage-indicator\b[^\"']*[\"'])"
+        r"[^>]*>.*?</span>",
+        re.IGNORECASE | re.DOTALL,
+    )
+    previous_pattern = re.compile(
+        r"(?P<previous><(?P<tag>a|span)\b"
+        r"(?=[^>]*\bclass\s*=\s*[\"'][^\"']*\bprevious_page\b[^\"']*[\"'])"
+        r"[^>]*>.*?</(?P=tag)>)",
+        re.IGNORECASE | re.DOTALL,
+    )
+
+    def replace(match: re.Match[str]) -> str:
+        body = indicator_pattern.sub("", match.group("body"))
+        previous = previous_pattern.search(body)
+        if not previous:
+            return match.group(0)
+        body = body[: previous.end()] + indicator + body[previous.end() :]
+        return match.group("open") + body + match.group("close")
+
+    return pagination_pattern.sub(replace, html, count=1)
 
 
 def improve_tables(html: str) -> str:
@@ -746,7 +805,7 @@ def inject_seo(html: str, relative: Path) -> str:
     return html
 
 
-def transform_html(source: str, relative: Path) -> str:
+def transform_html(source: str, relative: Path, total_pages: int = 1) -> str:
     kind = page_kind(relative)
     html = normalize_theme(source)
     html = normalize_assets(html)
@@ -760,6 +819,7 @@ def transform_html(source: str, relative: Path) -> str:
     html = improve_header(html, kind)
     if kind == "home":
         html = improve_home_cards(html)
+        html = improve_pagination(html, relative, total_pages)
     html = improve_tables(html)
     html = add_noopener(html)
     if kind == "tag":
@@ -905,7 +965,7 @@ def build_sitemap(html_paths: list[Path], docs: Path) -> str:
     )
 
 
-def validate_html(html: str, relative: Path) -> list[str]:
+def validate_html(html: str, relative: Path, total_pages: int = 1) -> list[str]:
     errors: list[str] = []
     kind = page_kind(relative)
     expected_class = f"{kind}-page"
@@ -987,6 +1047,14 @@ def validate_html(html: str, relative: Path) -> list[str]:
             errors.append("home page cards do not expose a dedicated article link")
         if re.search(r"<object>\s*<a\b", html, re.IGNORECASE):
             errors.append("home page cards retain object-wrapped label links")
+    page_number = pagination_page_number(relative)
+    if page_number and total_pages > 1:
+        expected_indicator = (
+            f'aria-label="第 {page_number} 页，共 {total_pages} 页">'
+            f"{page_number} / {total_pages}</span>"
+        )
+        if expected_indicator not in html:
+            errors.append("pagination is missing the current and total page count")
     if kind == "tag":
         required = (
             '<h1 class="tagTitle"',
@@ -1038,11 +1106,15 @@ def validate_html(html: str, relative: Path) -> list[str]:
 
 def expected_outputs(docs: Path) -> dict[Path, str]:
     outputs: dict[Path, str] = {}
-    for path in sorted(docs.rglob("*.html")):
+    html_paths = sorted(docs.rglob("*.html"))
+    total_pages = pagination_total_pages(html_paths, docs)
+    for path in html_paths:
         if path.name == "404.html":
             continue
         relative = path.relative_to(docs)
-        outputs[path] = transform_html(path.read_text(encoding="utf-8"), relative)
+        outputs[path] = transform_html(
+            path.read_text(encoding="utf-8"), relative, total_pages
+        )
     outputs[docs / "404.html"] = build_404()
 
     sitemap_paths = list(outputs)
@@ -1067,13 +1139,16 @@ def main() -> int:
         return 2
 
     outputs = expected_outputs(docs)
+    total_pages = pagination_total_pages(
+        [path for path in outputs if path.suffix == ".html"], docs
+    )
     drift: list[str] = []
     validation_errors: list[str] = []
 
     for path, expected in outputs.items():
         if path.suffix == ".html":
             relative = path.relative_to(docs)
-            for error in validate_html(expected, relative):
+            for error in validate_html(expected, relative, total_pages):
                 validation_errors.append(f"{relative.as_posix()}: {error}")
         actual = path.read_text(encoding="utf-8") if path.exists() else None
         if actual != expected:

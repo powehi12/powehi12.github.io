@@ -491,6 +491,7 @@ body.home-page #content > div:first-child {
 
 .pagination {
   display: flex;
+  align-items: center;
   justify-content: center;
   gap: 6px;
 }
@@ -515,6 +516,23 @@ body.home-page #content > div:first-child {
 .pagination [aria-disabled="true"] {
   color: #807b73 !important;
   background: transparent !important;
+}
+
+.pagination .page-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  min-height: 44px;
+  padding: 0 8px !important;
+  color: var(--claude-text-tertiary) !important;
+  border: 0 !important;
+  background: transparent !important;
+  font-family: var(--font-ui);
+  font-size: 14px !important;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .postTitle,
