@@ -24,7 +24,7 @@ from urllib.parse import quote
 SITE_ORIGIN = "https://powehi12.github.io"
 SITE_NAME = "qbyang 的个人博客"
 SITE_DESCRIPTION = "记录 Agent、LLM、强化学习与论文阅读"
-ASSET_VERSION = "20260726-6"
+ASSET_VERSION = "20260727-1"
 
 RSS_LINK = (
     f'<link rel="alternate" type="application/rss+xml" '
