@@ -24,7 +24,7 @@ from urllib.parse import quote
 SITE_ORIGIN = "https://powehi12.github.io"
 SITE_NAME = "qbyang 的个人博客"
 SITE_DESCRIPTION = "记录 Agent、LLM、强化学习与论文阅读"
-ASSET_VERSION = "20260726-7"
+ASSET_VERSION = "20260726-6"
 
 RSS_LINK = (
     f'<link rel="alternate" type="application/rss+xml" '
@@ -73,7 +73,7 @@ COMMENT_RECOVERY_SCRIPT = """<script id="comment-load-recovery">
     script.src = "https://utteranc.es/client.js";
     script.setAttribute("repo", "powehi12/powehi12.github.io");
     script.setAttribute("issue-term", "title");
-    script.setAttribute("theme", "github-light");
+    script.setAttribute("theme", "github-dark");
     script.setAttribute("crossorigin", "anonymous");
     script.async = true;
 
@@ -247,9 +247,9 @@ def normalize_theme(html: str) -> str:
     def replace_root(match: re.Match[str]) -> str:
         attrs = match.group("attrs")
         for name, value in (
-            ("data-color-mode", "light"),
-            ("data-dark-theme", "light"),
-            ("data-light-theme", "light"),
+            ("data-color-mode", "dark"),
+            ("data-dark-theme", "dark"),
+            ("data-light-theme", "dark"),
         ):
             attribute_pattern = re.compile(
                 rf"\b{re.escape(name)}\s*=\s*([\"'])(.*?)\1",
@@ -264,8 +264,8 @@ def normalize_theme(html: str) -> str:
 
     html = root_pattern.sub(replace_root, html, count=1)
     return re.sub(
-        r'(script\.setAttribute\("theme",\s*)"(?:github-dark|github-light|dark|light)"(\s*\);)',
-        r'\1"github-light"\2',
+        r'(script\.setAttribute\("theme",\s*)"(?:github-light|dark)"(\s*\);)',
+        r'\1"github-dark"\2',
         html,
         flags=re.IGNORECASE,
     )
@@ -726,8 +726,8 @@ def inject_seo(html: str, relative: Path) -> str:
         "twitter:image": image,
     }
     metadata = [
-        '<meta name="theme-color" content="#f9f8f4">',
-        '<meta name="color-scheme" content="light">',
+        '<meta name="theme-color" content="#262624">',
+        '<meta name="color-scheme" content="dark">',
         f'<meta name="description" content="{html_module.escape(values["description"], quote=True)}">',
         f'<meta property="og:title" content="{html_module.escape(values["og:title"], quote=True)}">',
         f'<meta property="og:description" content="{html_module.escape(values["og:description"], quote=True)}">',
@@ -776,12 +776,12 @@ def transform_html(source: str, relative: Path) -> str:
 
 def build_404() -> str:
     return f"""<!DOCTYPE html>
-<html data-color-mode="light" data-dark-theme="light" data-light-theme="light" lang="zh-CN">
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta name="theme-color" content="#f9f8f4">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#262624">
+  <meta name="color-scheme" content="dark">
   <meta name="robots" content="noindex,follow">
   <link href="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css" rel="stylesheet">
   <link rel="stylesheet" href="{SITE_ORIGIN}/claude.css?v={ASSET_VERSION}">
@@ -913,19 +913,19 @@ def validate_html(html: str, relative: Path) -> list[str]:
     if f"claude.css?v={ASSET_VERSION}" not in html:
         errors.append("missing current stylesheet version")
     if not re.search(
-        r'<html\b(?=[^>]*\bdata-color-mode="light")'
-        r'(?=[^>]*\bdata-dark-theme="light")'
-        r'(?=[^>]*\bdata-light-theme="light")',
+        r'<html\b(?=[^>]*\bdata-color-mode="dark")'
+        r'(?=[^>]*\bdata-dark-theme="dark")'
+        r'(?=[^>]*\bdata-light-theme="dark")',
         html,
         re.IGNORECASE,
     ):
-        errors.append("html root is not fixed to the light theme")
-    if extract_meta(html, "name", "theme-color") != "#f9f8f4":
-        errors.append("theme-color does not match the light background")
-    if extract_meta(html, "name", "color-scheme") != "light":
-        errors.append("color-scheme meta is not light")
-    if "github-dark" in html:
-        errors.append("contains a dark-mode comment theme")
+        errors.append("html root is not fixed to the dark theme")
+    if extract_meta(html, "name", "theme-color") != "#262624":
+        errors.append("theme-color does not match the dark background")
+    if extract_meta(html, "name", "color-scheme") != "dark":
+        errors.append("color-scheme meta is not dark")
+    if "github-light" in html:
+        errors.append("contains a light-mode comment theme")
     if not re.search(
         rf"<body[^>]*\bclass\s*=\s*[\"'][^\"']*\b{re.escape(expected_class)}\b",
         html,
@@ -1024,9 +1024,9 @@ def validate_html(html: str, relative: Path) -> list[str]:
                 if marker not in html:
                     errors.append(f"comment recovery missing marker: {marker}")
             if not re.search(
-                r'script\.setAttribute\("theme",\s*"github-light"\)', html
+                r'script\.setAttribute\("theme",\s*"github-dark"\)', html
             ):
-                errors.append("comment widget is not using github-light")
+                errors.append("comment widget is not using github-dark")
     if kind == "error" and not re.search(
         r'<meta\b(?=[^>]*\bname=["\']robots["\'])[^>]*\bnoindex\b',
         html,

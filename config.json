@@ -8,12 +8,12 @@
   "i18n": "CN",
   "UTC": 8,
   "themeMode": "fix",
-  "dayTheme": "light",
-  "nightTheme": "github-light",
+  "dayTheme": "dark",
+  "nightTheme": "dark",
   "urlMode": "pinyin",
   "onePageListNum": 10,
   "showPostSource": 1,
   "needComment": 1,
-  "allHead": "<link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-7'>",
-  "script": "<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-7'></script>"
+  "allHead": "<link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260726-6'>",
+  "script": "<script src='https://powehi12.github.io/collapsible-toc.js?v=20260726-6'></script>"
 }
