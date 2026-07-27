@@ -162,7 +162,216 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </ul>
 <h2>最后两条心法</h2>
 <p><strong>给信息获取设上限。</strong> 固定时段处理信息（比如早上半小时扫 feed），其余时间关掉。FOMO 是研究生大敌——真正重要的工作会反复出现在你视野里，根本错过不了；能被你错过的，大概率不重要。<br>
-<strong>维护一个"问题清单"而不只是文献库。</strong> Zotero/Obsidian 管文献大家都会，但更值钱的是记下你自己的困惑和不满："为什么多智能体在 X 场景没用？""现在的 long-horizon 评测到底在测什么？"研究品味就是从持续追问这些问题里长出来的，而好的研究选题，几乎都藏在你自己清单的某一行里。</p></div>
+<strong>维护一个"问题清单"而不只是文献库。</strong> Zotero/Obsidian 管文献大家都会，但更值钱的是记下你自己的困惑和不满："为什么多智能体在 X 场景没用？""现在的 long-horizon 评测到底在测什么？"研究品味就是从持续追问这些问题里长出来的，而好的研究选题，几乎都藏在你自己清单的某一行里。</p>
+<h1>agent 方向的论文，reviewer 最常挑的毛病有哪些？写作时怎么提前避坑？</h1>
+<p>先说个大背景：在 reviewer 眼里，agent 论文自带两条"原罪"式的默认怀疑——一是"这是工程堆料，不是研究"，二是"提升是靠算力和 token 堆出来的"。你整篇论文的写作任务，本质上就是系统性地拆掉这两个怀疑。下面按被挑的频率大致排序。</p>
+<p><strong>一、baseline 问题（被拒第一大重灾区）</strong></p>
+<ul>
+<li>最经典的批评："你的花哨框架赢了 naive prompting，但输给认真调过的单 agent + ReAct。"大量 agent 论文的提升在 baseline 被调强之后直接消失，reviewer 见太多了，所以默认先怀疑你的 baseline 是稻草人。</li>
+<li>算力不对齐：你的方法跑了 10 倍 token，baseline 只跑一遍，这不叫赢，叫花钱更多。现在 reviewer 越来越爱要 cost-matched 对比——同 token 预算下跟 self-consistency、best-of-n 这类简单采样方法比。</li>
+<li>避坑：主表放三类对照——调到位的强单 agent、同预算的采样类方法、已有代表框架，并且每个方法旁边加一列 token/成本/步数。你主动把这张表放出来，等于把 reviewer 最想开的那一枪先缴了械。</li>
+</ul>
+<p><strong>二、评测有效性</strong></p>
+<ul>
+<li>benchmark 单一或可疑：只测一个数据集；或者数据集年头久、疑似进了预训练语料（污染问题）。</li>
+<li>LLM-as-judge 自产自销：用 GPT-4 当裁判去评 GPT-4 驱动的 agent，偏差没人管，也没有人工校验。</li>
+<li>只跑一次：agent 轨迹方差极大，单次运行的结果基本等于抽签。没有均值方差、没有显著性检验，数字再好看也不可信。</li>
+<li>只报成功率：不报步数、token、延迟——长程任务尤其需要效率指标。</li>
+<li>避坑：至少 2-3 个 benchmark；≥3 个 seed 报 mean±std；judge 的结果抽一部分人工校验并报一致率；正文里主动讨论污染可能性。注意这些全都不贵，属于低算力也完全做得起的严谨。</li>
+</ul>
+<p><strong>三、ablation 缺失</strong></p>
+<ul>
+<li>五个模块的框架不拆开验证各自贡献，reviewer 默认全是装饰。多智能体论文最致命的一问是："把 agent 砍到只剩一个，性能掉多少？"很多论文不敢做这个实验，而 reviewer 恰恰知道你为什么不敢。</li>
+<li>避坑：方法节里每个你吹过的组件都要有对应 ablation；砍不动的组件，认真考虑要不要吹。</li>
+</ul>
+<p><strong>四、"这只是 prompt engineering / 工程活"</strong></p>
+<ul>
+<li>novelty 质疑：又一个 agent 框架，跟 AutoGen、LangGraph 的本质区别在哪？没有超越这个具体 pipeline 的可迁移 insight。</li>
+<li>避坑：论文要回答"我们学到了什么别人能带走的东西"，而不只是"我们的系统分高"。一个可复用的发现（比如"失败集中在第 N 步之后的状态漂移"）比十个 pipeline 细节值钱。分析章节——error analysis、失败模式分类——是把工程论文升格成研究论文最便宜的手段，而且分析基本不耗算力，这正好是你的优势区。</li>
+</ul>
+<p><strong>五、可复现性</strong></p>
+<ul>
+<li>只用闭源 API：模型一升级结果就没了，还不写清版本和日期。</li>
+<li>prompt 不放出来：agent 论文里 prompt 就是方法本身，藏 prompt 等于方法不公开，这一条现在被挑得越来越狠。</li>
+<li>避坑：附录放全部 prompt；写清模型版本号和实验日期；至少在一个开源模型上复验主要结论——顺便还解决你的算力问题，小开源模型上站得住的结论，reviewer 反而觉得更扎实。</li>
+</ul>
+<p><strong>六、overclaim 与写作雷</strong></p>
+<ul>
+<li>标题摘要喊"human-level""solves X"，实验是一百道题；满篇"agent 会思考、会反省、会学习"的拟人化叙述但没有对应证据。reviewer 对这套话术的耐心已经彻底耗尽。</li>
+<li>related work 漏近期工作：这个领域三个月一茬，漏了并行工作会被直接判定为不熟悉领域。</li>
+<li>避坑：claim 收窄成"在这些 benchmark 的这些设定下"；投稿前一周再扫一遍 arXiv 补 related work；limitations 写真话——敷衍的 limitations 一眼就被看穿，诚实具体的反而加印象分。</li>
+</ul>
+<p><strong>七、你几个子方向的专属雷区</strong></p>
+<ul>
+<li>多智能体："why multi-agent" 是必答题，要有同算力单 agent 对照，还得分析通信开销；角色扮演式的分工（一个当 CEO 一个当程序员那种）正在被越来越多 reviewer 视为表演。</li>
+<li>long-horizon：任务得真的长，而不是浅的多步；必须有"失败发生在轨迹哪个位置"的分析，错误累积曲线属于高性价比加分项。</li>
+<li>RL 训练：reward hacking 分析、和 SFT / 纯 prompting 的对照、训练环境之外的泛化，三样缺任何一样都会被点名。</li>
+<li>EHR：完全没有临床背景的人参与评估，有效性会被质疑；要讨论错误严重性分级——查错病人数量和查错用药剂量不是一个量级的错误；只用 MIMIC 单一数据源的外推性也要主动交代。</li>
+</ul>
+<p><strong>八、通用防御动作</strong></p>
+<ul>
+<li>建一个"reviewer 模拟器"：去 OpenReview 把 ICLR/NeurIPS/COLM 上跟你最像的 5-10 篇论文的 review 全部读一遍，把批评点整理成 checklist，投稿前逐条自查。这是所有建议里性价比最高的一条。</li>
+<li>预埋 rebuttal：预判到的质疑不要留到 rebuttal 再答，直接写进正文——"一个自然的疑问是 X，表 N 表明……"。写进正文的辩护比 rebuttal 里的辩护值钱十倍。</li>
+<li>找同学做一轮"reviewer 2 pass"：专门带着恶意读你的论文挑毛病，比你自己顺着读有用得多。</li>
+</ul>
+<p>总结一句：agent 论文的门槛其实不在 idea 有多花哨，而在实验让人挑不出毛病——这对算力有限的人反而是好消息，因为上面大多数坑，填掉它们靠的是严谨，不是 GPU。</p>
+<h1>long-horizon reasoning 和多智能体这两个方向，结合 EHR 场景各有哪些还没被做烂的切入点？逐个评估算力需求和风险</h1>
+<p>先交代一下方法论：「没被做烂」这个判断的半衰期大概只有三个月，所以我先去扫了一圈 2026 上半年的新论文再回答——结果证明很有必要，因为有几个我上周还会推荐的坑，这半年已经被填了。算力我按三档说：<strong>低</strong>（API 预算或单张消费卡跑开源模型推理）、<strong>中</strong>（几张 24G 卡或租少量 A100 时做推理密集实验/LoRA 微调）、<strong>高</strong>（多卡 RL 训练）。</p>
+<p><strong>〇、先看哪些已经烂了或正在速烂（避雷）</strong></p>
+<ul>
+<li>"做一个 long-horizon EHR agent benchmark"这个坑刚被填：PhysicianBench（2026.5）做了 100 个源自真实转诊咨询的长程医生任务，跑在 FHIR 环境里、带可验证的 checkpoint 评估、经医生双重审核；同期还有 AgentEHR（2026）做原始 EHR 数据库上的长程交互式诊疗推理，EHR-Complex 在完整 MIMIC-IV 上造了约 5.2 万个组合式、纵向多表推理任务，最强模型也只有 62.3% 准确率。也就是说我上次跟你说"做 benchmark 是低算力可行选题"——这个具体方向的窗口在过去几个月里基本关上了，现在再做一个通用长程 EHR 榜属于第 N 个轮子。</li>
+<li>"纵向/时间推理"也有人占了：TIMER 做了第一个针对纵向 EHR 时间推理的 benchmark 和时间感知指令微调，发在 npj Digital Medicine，EHRBench（KDD 2026）在 MIMIC-III/IV 加一个私有数据集上系统评了 30 多个模型的纵向临床决策。</li>
+<li>多智能体这边烂得更快：会诊/辩论式框架（MedAgents、MDAgents 一路下来）已是红海；你可能想做的"严谨对照研究"也被抢了——MedAgentBoard（2025）专门把多智能体和传统方法拉平比较，2026 年 2 月还有人专门研究了混合厂商 agent 团队是否优于单模型和同厂商团队，结论是混合团队靠互补的归纳偏置池化确实更强，还做了重叠机制分析。连"跨院、压缩通信"这种听起来很偏的角度都有了：MedLatentDx 做了跨医院罕见病诊断的隐空间多智能体通信。</li>
+<li>RL 训练基建也不空了：MedAgentGym 已经建了统一的可交互医疗编码训练环境，覆盖 EHRSQL（MIMIC-III/eICU）、MedAgentBench、EHRSHOT 等 8 个数据集近 8 千个任务，把 SFT、DPO、PPO、GRPO 全跑了一遍；通用侧还有 AgentGym-RL 专攻多轮长程决策的 RL 训练框架。所以"把 GRPO 搬到 EHR 任务上"本身已经不是贡献了。</li>
+</ul>
+<p><strong>一、long-horizon reasoning × EHR：还有空间的切入点</strong></p>
+<p><strong>1. 长程轨迹的失败诊断学（我给你的最高推荐）</strong></p>
+<ul>
+<li>切入点：新一批长程 benchmark 都刚发布、都只报了成功率，没有人系统回答"agent 到底在轨迹的哪里、以什么方式死掉"——首错位置分布、错误累积曲线、状态漂移（前面查到的信息在后面被遗忘或篡改）、错误恢复率、失败是否集中在特定动作类型（比如时间过滤、跨表 join、FHIR 分页）。PhysicianBench 自带 checkpoint 式评估，等于把过程级标注的地基都给你打好了，横跨它和 EHR-Complex、AgentEHR 做一个跨 benchmark 的失败分类学，就是一篇扎实的 analysis paper。</li>
+<li>为什么没烂：benchmark 论文的激励是刷新任务，不是解剖失败；这类工作吃力、不性感，但 reviewer 极其买账（上次说过，分析是把工程升格为研究最便宜的手段）。</li>
+<li>算力：低。全程推理，开源模型为主，几百条轨迹的量级。</li>
+<li>风险：纯分析文章需要至少一个反直觉的硬发现才立得住，否则会被评"describes but not explains"；对冲办法是加一个由发现直接导出的轻量干预（比如针对首错高发步骤的检查点机制）并验证有效。</li>
+</ul>
+<p><strong>2. 脏环境下的长程鲁棒性</strong></p>
+<ul>
+<li>切入点：现在所有 EHR agent 环境都默认工具返回是干净的，而已有工作明确指出现有环境假设动作的反馈是准确的，忽略了真实世界里普遍存在的噪声——缺失值、录入矛盾、延迟出的检验结果、重名病人。做一套临床合理的扰动协议（perturbation suite），测长程任务下的性能塌方曲线，再提一个便宜的防御（比如带来源与置信标注的中间状态核对）。</li>
+<li>为什么没烂：鲁棒性在通用 agent 领域刚起势，EHR 版本几乎空白，而且"EHR 数据很脏"是任何审过临床数据的 reviewer 都会点头的动机。</li>
+<li>算力：低到中。</li>
+<li>风险：扰动设计不够临床真实会被批"人造靶子"，最好找有临床背景的人过一遍扰动清单；这也是整个 EHR 方向的通用风险——完全没有临床参与的评估，有效性分会被扣。</li>
+</ul>
+<p><strong>3. 病人状态对象：长上下文 vs 结构化工作记忆</strong></p>
+<ul>
+<li>切入点：一次住院的记录轻松超过 10 万 token，长程任务里 agent 要么整个塞上下文要么反复检索。对照实验：显式维护一个临床 schema 化的"病人状态对象"（问题列表/用药列表/待回报检验，本质上是把医生的 problem-oriented 思维搬给 agent），对比裸长上下文和通用记忆模块，并测量状态漂移随步数的变化。</li>
+<li>为什么没烂：通用 LLM 记忆机制是红海，但"用临床本体做状态 schema 并量化漂移"没人认真做；它还和切入点 1 天然衔接（1 的发现直接告诉你状态该记什么）。</li>
+<li>算力：中。7B-70B 开源模型推理为主，可选做轻量 SFT。</li>
+<li>风险：容易被读成工程 pipeline 文，必须靠漂移测量和 ablation（schema 各字段砍掉的贡献）撑住研究性；另外通用 memory 方向卷得快，投稿要突出临床 schema 这个不可替代点。</li>
+</ul>
+<p><strong>4. 长程里的算力分配：什么时候该想、什么时候该查</strong></p>
+<ul>
+<li>切入点：test-time scaling 在数学题上研究得很透，但在检索密集的 EHR 长程任务上，"多想"可能纯属浪费甚至有害（overthinking 让 agent 在该查数据库的时候空想）。做一个 cost-matched 研究：固定 token 预算，比较预算花在推理、花在多次采样、花在更多环境交互上的边际收益，最好能给出按轨迹阶段自适应分配的简单策略。</li>
+<li>为什么没烂：overthinking 分析集中在数学/代码，工具密集型临床任务上的版本还新鲜。</li>
+<li>算力：低。纯推理，但要烧不少 API/推理 token，属于"费钱不费卡"。</li>
+<li>风险：这个题门槛低、容易被抢跑，适合快打快发（workshop → 扩展）；实验设计必须严格 cost-matched，否则正好撞上 reviewer 最烦的那把枪。</li>
+</ul>
+<p><strong>5. 长程 RL（谨慎项）</strong></p>
+<ul>
+<li>切入点：如果一定要碰 RL，剩下的窄门是奖励设计而不是算法搬运——比如利用 checkpoint 结构做过程奖励，或按临床错误严重度加权的奖励（查错病人和查错剂量惩罚不同）。已有工作开始用结果感知的 rubric 做住院临床决策的 RL，说明这个方向在动，但安全加权这个具体角度还没被占死。</li>
+<li>算力：高。7B + LoRA + GRPO 勉强够到"中"的上限，但 rollout 在交互环境里非常烧时间。</li>
+<li>风险：三重风险叠加——训练不稳定、reward hacking 分析躲不掉（上次说过缺了会被点名）、大组用百倍算力在同赛道狂奔。除非你能蹭到实验室的卡，否则我不建议把主线押这里；把它当作切入点 1-3 出成果之后的"第二篇"更稳。</li>
+</ul>
+<p><strong>二、多智能体 × EHR：还有空间的切入点</strong></p>
+<p><strong>1. 信息不对称的多智能体：让协作有存在的必要（这个方向我最看好）</strong></p>
+<ul>
+<li>切入点：现在医疗 MAS 的通病是所有 agent 共享同一份上下文、只靠 persona 区分，协作自然是表演。真实临床协作的本质是信息分区——护士看到生命体征、药师看到用药史、家庭医生掌握纵向病史，谁也没有全图。用 MIMIC/eICU 把病人数据按角色真实分区，构造"不通信必失败"的任务族，然后研究通信策略（问什么、何时问、信谁）对结果的影响。通用领域刚开始有人做部分可观测下的协同决策，临床版本基本还空着。</li>
+<li>为什么没烂：它直接回应了"why multi-agent"这个必答题——当信息物理上分开时，多智能体不是设计选择而是问题结构本身，reviewer 没法用"单 agent 加自洽采样"打你。</li>
+<li>算力：低到中，推理为主。</li>
+<li>风险：任务构造的效度是命门，分区方式必须有临床工作流依据，不然被批"人为制造的协作需求"；数据工程量不小。</li>
+<li>加分项：eICU 本身是多中心数据集，天然支持"跨机构信息不共享"的扩展设定，但注意隐空间通信那条路已经有人走了，你的差异点应该在任务结构而不是通信压缩。</li>
+</ul>
+<p><strong>2. 交接损耗研究：long-horizon 和多智能体的交点</strong></p>
+<ul>
+<li>切入点：临床交接（hand-off）是真实世界头号患者安全问题之一，医院为此发明了 SBAR 这类结构化协议。把它翻译成研究问题：长工作流切分给多个 agent 接力时，信息在每次交接中损耗多少、什么类型的信息先丢（时间信息？阴性发现？待办事项？）、结构化交接协议 vs 自由文本能挽回多少。这同时是你两个兴趣方向的合取，可以直接长在切入点一-1 的失败分析之上。</li>
+<li>为什么没烂：agent hand-off 在通用领域都还没被认真量化，临床版本又有现成的护理学文献做理论支撑，跨学科故事很好讲。</li>
+<li>算力：低。</li>
+<li>风险：要防"结论平凡"（结构化当然比自由文本好）——价值在于损耗的定量刻画和类型学，而不是方向性结论；venue 上 ML 主会可能嫌应用，ML4H/CHIL/AMIA 会很喜欢。</li>
+<li>顺手一提：2026 年 6 月刚出现研究机构压力下 agent 文档完整性的工作（写病历、报账单时最终文档是否与 agent 实际观察到的相矛盾），说明"通信/文档的保真度"这个母题正在升温但远未拥挤，交接损耗是其中还没人占的子题。</li>
+</ul>
+<p><strong>3. FHIR 作为 agent 间通信协议</strong></p>
+<ul>
+<li>切入点：通用 MAS 在卷隐空间通信（更快更省），临床场景恰恰需要反方向——最大可审计的通信。让 agent 之间不传自由文本、只传 FHIR 资源（结构化、可校验、带来源），测它对错误传播、可审计性、下游错误检出率的影响。这是一个 EHR 原生、别的领域抄不走的角度。</li>
+<li>为什么没烂：结构化 agent 通信有零星通用工作，但拿医疗互操作标准当协议、并以安全审计为目标函数的没有。</li>
+<li>算力：低到中。</li>
+<li>风险：最容易被读成纯工程；立住的关键是定义好可量化的 claim（比如"结构化通信把跨 agent 错误传播率降 X%、错误可追溯率升 Y%"）并配齐 ablation。工程量：FHIR 的 schema 折腾起来相当磨人，你做过 FHIR 工具调用的话算是有护城河。</li>
+</ul>
+<p><strong>4. 多智能体作为核对层而不是决策层</strong></p>
+<ul>
+<li>切入点：别让 agent 们一起"会诊"（烂了），让它们互相审计：SQL agent 核对 FHIR agent 的答案、结构化数据核对自由文本病历（用药重整、剂量一致性、过敏冲突）。已有工作做了病历-表格一致性（EHRCon 一脉），但"用工具异构的对抗性核对 agent 做安全层"还有缝隙，而且天然回答了 why multi-agent——异构工具带来去相关的错误模式，这正是混合厂商研究里发现的互补偏置机制在工具维度上的推广。</li>
+<li>算力：低到中。</li>
+<li>风险：ground truth 稀缺（真实不一致没标注），常用解法是注入合成错误，但合成错误的真实性会被挑；这个方向和 2、3 有整合空间，可以设计成一条线的两篇。</li>
+</ul>
+<p><strong>5. 多智能体 RL：直接劝退</strong></p>
+<ul>
+<li>多 agent 联合训练的算力和稳定性问题在通用领域都还是灾难现场，低算力条件下碰这个约等于自杀式选题，不展开。</li>
+</ul>
+<p><strong>三、横向结论</strong></p>
+<ul>
+<li>
+<p>给你的组合拳建议：主线走「一-1 失败诊断 → 二-2 交接损耗 →（一-3 或 二-1 作为方法篇）」。三步共用一套数据基建和轨迹分析工具，前两篇几乎纯推理、算力压力最小，第三篇带着前两篇的发现去做方法，novelty 有据可依——这就是一个自洽的毕业论文叙事，而不是三篇散文。</p>
+</li>
+<li>
+<p>共同的操作性风险，提前打预防针：MIMIC 这些 PhysioNet 数据有数据使用协议限制，不能随便喂给闭源 API——MedAgentGym 就因为受管制健康数据协议只能用 Azure OpenAI 的合规通道。这逼你以开源模型为主力——坏消息是天花板低一点，好消息是它和你的算力现实完全一致，而且开源模型上站得住的结论在 reviewer 眼里反而更可复现。</p>
+</li>
+<li>
+<p>最后一个提醒：这份地图的保质期就是三个月。动手前把每个候选切入点拿去 arXiv 再搜一轮，尤其是一-4 和二-2 这种低门槛题——它们便宜对你是优势，对别人也是。真要选定了，把 idea 的一句话版本发给我，我用 reviewer 视角专门给它找漏洞。</p>
+<h1>只有少量消费级显卡的话，哪些 agent 研究我根本别碰，哪些反而是小算力的优势区？</h1>
+<p>先立两个总原则，后面所有判断都从这里推出来。第一，<strong>算力对训练是硬墙，对推理只是时间问题</strong>——量化加耐心能让你在 24G 卡上推理 32B 模型，但没有任何技巧能让你在消费卡上全参训练它。第二，<strong>选题看计算密度和洞察密度的比值</strong>——你要找的是"想明白比跑出来更难"的题。下面按 1-4 张 24G 卡（3090/4090 级）为基准展开。</p>
+<p><strong>一、根本别碰（硬墙区）</strong></p>
+<ul>
+<li>7B 以上的多轮在线 RL：算三笔账你就死心了。显存账：PPO 要同时驻留 policy、reference、critic（有时还有 reward model），7B 全参训练光 AdamW 优化器状态加梯度就是 100GB 量级；GRPO 砍掉 critic 也躲不开第二笔——rollout 账：agent RL 每次更新要成百上千条完整轨迹，每条轨迹几十次生成调用，消费卡的吞吐会让单次实验以周计，而 RL 出了名的方差大，reviewer 还要你跑多个 seed，全部乘三。第三笔是竞争账：这条赛道上的对手以 8×A100 起步。LoRA-RL 能塞进显存，但训练脆得很，每次调参失败的代价都以天计。</li>
+<li>多智能体联合训练（MARL）：上面所有问题乘以 agent 数量，再叠加 credit assignment 和非平稳性两个理论级困难。上次说过劝退，这次说得更直白：这是低算力条件下的自杀式选题。</li>
+<li>贡献本身是 scaling 结论的题：要扫模型尺寸×预算的网格才能画出那条曲线，别人一张图的成本等于你一年的卡时。</li>
+<li>32B+ 的 SFT 和一切长上下文训练：前者显存直接判死刑，后者要序列并行，是集群游戏。顺带提醒一个隐形杀手：长上下文<strong>推理</strong>的 KV cache——8B 模型跑到十万 token 级上下文时，KV 占用能和权重本身相当（十几个 G），你做 EHR 长病历实验前要先算这笔账，不然会在意想不到的地方爆显存。</li>
+<li>通用大 benchmark 冲榜（SWE-bench、WebArena 这类刷 SOTA）：赢家由更强的底座加海量采样决定，这是资本竞赛不是科研竞赛，而且光完整跑几遍评测的 API 账单就够劝退。</li>
+</ul>
+<p><strong>二、踮脚区（够得着，但想清楚再伸手）</strong></p>
+<ul>
+<li>7-14B 的 QLoRA SFT 和离线 DPO：完全可行，单张 24G 卡能跑 7-8B 的 QLoRA，两张卡很舒服。SFT 比 RL 便宜一到两个数量级——没有在线 rollout，数据是离线的。穷人版训练的标准姿势：花 API 预算让强模型生成轨迹，筛选后蒸馏给本地小模型。你之前问过怎么省算力复现 baseline，这也是答案的一半。</li>
+<li>1.5-3B 小模型的单轮可验证奖励 RL：技术上可行，社区有人用几十美元级的租卡成本复现过 R1-Zero 式的小实验；但研究价值天花板低，适合当学习项目或论文里的辅助章节，别当主菜。多轮 agentic RL 哪怕降到 3B 也依然是坑。</li>
+<li>海量采样类推理研究（test-time scaling、大规模自洽）：不费卡但费钱，本质是把 GPU 约束换成 API 约束。能做，动手前先把预算算到具体数字。</li>
+</ul>
+<p><strong>三、你的优势区（不是"也能做"，是"你反而占便宜"）</strong> 先讲清逻辑：大组的机会成本逼他们扑向算力密集的旗舰工作，低算力选题他们看不上；所以这些区域里你的竞争者主要是同样的穷学生，拼的不是卡，是品味、领域知识和手速。</p>
+<ul>
+<li>评测与环境构造：出题永远比解题便宜。扰动协议、维度化评测、带过程验证的任务族——上次给你那份 EHR 清单里一大半属于这类，NeurIPS 还有专门的 Datasets &amp; Benchmarks track 收这种工作。</li>
+<li>失败分析与行为解剖：轨迹统计、错误分类学、状态漂移测量，纯推理加统计。想再深一层就在 7B 开源模型上做 probing、看内部表征——机械可解释性其实是对消费级显卡最友好的方向之一，很多经典工作单卡就能复现。</li>
+<li>Training-free 方法：结构化状态管理、工作流设计、验证机制、成本感知路由。评审风险是被读成 prompt engineering，防御手段是机制分析加严格的 cost-matched 对照——而严格对照实验本身恰好很便宜，这是个良性循环。</li>
+<li>小模型加好脚手架，打大模型裸奔：在结构化、可验证的任务上（SQL 和 FHIR 调用正是这类）证明精调过的 7B 加工具超过裸的 frontier 模型。这个叙事天然讨喜，更妙的是 PhysioNet 的数据协议限制闭源 API，整个 EHR 子领域都被逼着用开源模型——你的约束是全体的约束，等于没有约束。</li>
+<li>数据中心研究：轨迹筛选策略、合成任务的自动验证、数据质量对微调效果的影响。小规模上发现的数据规律迁移性好，是杠杆最高的一类工作。</li>
+<li>效率研究本身：模型级联、路由、早退、agent 系统的成本-性能 Pareto 分析。你是自己研究的第一个用户，动机真实到藏不住；有钱人不屑于做，从业者却疯狂引用，性价比极高。</li>
+<li>严谨性研究与阴性结果：matched budget 下"X 到底有没有用"的复核。便宜、缺人做、正中 reviewer 的怀疑心态；主会仍有发表偏见，但 TMLR、findings、workshop 越来越欢迎。</li>
+<li>最后是你独有的：领域护城河。你懂 FHIR、见过 EHR 数据有多脏，这是算力买不来的输入。选题时往"需要领域判断力"的方向压，而不是往"需要更多卡"的方向压——前者你有筹码，后者你在裸奔。</li>
+</ul>
+<p><strong>四、实操三条</strong></p>
+<ul>
+<li>研发在本地、终局租卡：设计研究时保证日常迭代只靠本地推理，最后的多 seed 主实验去租几十小时 A100，几百到一千出头人民币能解决。关键纪律是：别设计出需要持续训练两周的研究——偶发的爆发式租用你花得起，持续占用你花不起。</li>
+<li>推理基建拉满：vLLM 做批量吞吐，int4 量化让 24G 卡塞下 32B 的短上下文推理。跑几千条轨迹的瓶颈是墙钟时间，工程优化一倍速度就是一倍科研产出。</li>
+<li>便宜的另一面：你的优势区同时是快鱼吃慢鱼区，谁都做得起就看谁先做完。idea 验证通了就快写快挂 arXiv 占坑，别捂着打磨到"完美"。</li>
+</ul>
+<p>最后对个账：把上次那份 EHR 切入点清单拿来对照——我主推的失败诊断、交接损耗、信息不对称任务设计全落在优势区，RL 被我压到"第二篇再说"，正好贴着别碰区的边。这不是巧合，那份清单本来就是按你的卡配的。</p>
+<p>这三个平台的定位先说清楚，用法完全不同：X 是一手信息和研究者本人，知乎是中文深度解读和实践复盘，小红书是科研生活和求职情报。分开讲。</p>
+<p><strong>X / 推特（信息源头，优先级最高）</strong> 按功能给你配一套，直接抄作业：</p>
+<ul>
+<li>每日论文流：@_akhaliq（AK，日更论文搬运的行业基础设施）、@arankomatsuzaki（品味不错的论文速递）、@omarsar0（elvis，带简评的论文 thread）。这三个解决"今天出了什么"。</li>
+<li>深度与教学：<a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/karpathy/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/karpathy">@karpathy</a>（不解释）、<a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/rasbt/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/rasbt">@rasbt</a>（Sebastian Raschka，技术综述）、@cwolferesearch（Cameron Wolfe，超长深度 thread）、<a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/natolambert/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/natolambert">@natolambert</a>（RL/post-training 一手分析，你做 RL 方向必关）、@lateinteraction（Omar Khattab，DSPy 作者，对"结构化 LM 程序 vs 裸 prompt"有一套系统观点，和你的 agent 兴趣对口）。</li>
+<li>Agent 一线作者：@ShunyuYao12（ReAct 一脉的核心人物）、<a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/ofirpress/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/ofirpress">@ofirpress</a> 和 @jyangballin（SWE-bench/SWE-agent）、@gneubig 和 @xingyaow_（OpenHands）、<a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/DrJimFan/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/DrJimFan">@DrJimFan</a>（具身与 agent 大方向）。看这些人吵架比看论文来得快。</li>
+<li>大厂与国产模型：官号 <a class="user-mention notranslate" data-hovercard-type="organization" data-hovercard-url="/orgs/openai/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/openai">@openai</a>、<a class="user-mention notranslate" data-hovercard-type="organization" data-hovercard-url="/orgs/AnthropicAI/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/AnthropicAI">@AnthropicAI</a>、<a class="user-mention notranslate" data-hovercard-type="organization" data-hovercard-url="/orgs/GoogleDeepMind/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/GoogleDeepMind">@GoogleDeepMind</a>、@AIatMeta 只用来看发布；更有信息量的是关键个人——<a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/JustinLin610/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/JustinLin610">@JustinLin610</a>（Qwen 负责人，国产开源模型第一手）、@deepseek_ai、@Kimi_Moonshot、@Alibaba_Qwen。想看针对中国实验室的辛辣外部分析可以关 @teortaxesTex，观点极强，自带过滤器食用。</li>
+<li>医疗 AI（你的主场）：@EricTopol（医学 AI 评论第一人）、@pranavrajpurkar（哈佛，医疗 AI，前面聊到的混合厂商多智能体研究就出自他组）、@james_y_zou（斯坦福，MedAgentBench 一系的轨道上）、@thekaransinghal（HealthBench 一线）。</li>
+<li>批判视角解毒剂：@random_walker 和 <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/sayashk/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/sayashk">@sayashk</a>（AI Snake Oil 作者，专拆 AI 炒作），配合你要做的严谨性研究口味很搭。</li>
+<li>系统与效率：@tri_dao（FlashAttention）、@StasBekman（训练工程），对应你"推理基建拉满"的需求。</li>
+<li>用法三条：全部塞进一个 List 用时间线看，别用推荐流；X 的真正玩法是顺藤摸瓜——看你敬佩的研究者 follow 了谁；发布季（各大会 deadline 和放榜前后）信息密度翻倍，记得多刷。</li>
+</ul>
+<p><strong>知乎（中文深度层）</strong></p>
+<ul>
+<li>苏剑林：科学空间站长，数学推导硬核到没有平替，搞不懂某个 loss 或位置编码时搜他。</li>
+<li>田渊栋：一线研究员里少有的坚持写中文长文的，科研观和行业判断都值得看。</li>
+<li>张俊林：大模型技术趋势的长文综述，梳理脉络的能力很强，适合定期校准大图景。</li>
+<li>俞扬：南大 RL 教授，回答清醒偏泼冷水型，正好治疗 RL 方向的浪漫幻想。</li>
+<li>猛猿：图解大模型训练与推理系列，把并行策略、显存账这些讲得小白能懂——你上次问的显存账，她的图解是最好的补充教材。</li>
+<li>ybq：post-training 一线实践的碎碎念，SFT/RL 炼丹的真实手感，和你的方向直接相关。</li>
+<li>游凯超：vLLM 核心贡献者，写推理引擎内部机制，对应你的推理基建需求。</li>
+<li>刘聪NLP：偏落地和工程实践的总结。</li>
+<li>谢凌曦：科研方法论和审稿视角的长回答，写论文避坑那套的中文版补充。</li>
+<li>段小草：模型发布和 AI 产品动态的速评，覆盖面广更新勤。</li>
+<li>用法：知乎的推荐流已经不值得刷，正确打开方式是两个——关注上面这些人看动态，以及出了新模型新论文就搜"如何评价 XXX"，放榜季的匿名爆料和一线吐槽是知乎独有的信息品类。</li>
+</ul>
+<p><strong>小红书（科研生活层，用法特殊）</strong> 这个平台我不给你具体账号名单，两个原因：一是它的账号生态迭代极快，我报名字很容易过时或不准，宁可不说也不编；二是小红书本质是搜索加算法喂养的平台，关注列表没那么重要。给你用法：</p>
+<ul>
+<li>定位要摆对：它不是一手技术资讯平台（技术资讯在 X 和公众号早跑完一圈了），强项是科研生活层——顶会参会见闻、算法岗面经、投稿 rebuttal 经验、科研工具流、导师和组的口碑信息。这类信息在别的平台反而稀缺。</li>
+<li>搜索词决定收获：搜"agent 论文"收获寥寥，搜"NeurIPS 参会""算法岗 面经""rebuttal 经验""博士 科研工具"信息量就上来了；对几篇优质笔记点赞收藏后，算法会持续喂同类内容，前期主动调教很重要。</li>
+<li>筛人标准代替名单：持续发一手内容的留下——自己的论文、自己的面试、自己踩的坑；搬运二手快讯的账号不如直接看公众号。以及防坑提醒：小红书是"三天学会大模型"卖课号的重灾区，判别标准很简单，敢放具体细节的是真干货，全是情绪和结果展示的是引流。</li>
+</ul>
+<p>最后一个总建议：三个平台别平均用力。你现在的阶段，X 的权重应该占七成——研究者本人在哪，一手信息就在哪；知乎当每周翻一次的深度补充；小红书当特定需求（找面经、摸会议情报）时的搜索引擎用，不值得日刷。</p>
+</li>
+</ul></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 </div>
