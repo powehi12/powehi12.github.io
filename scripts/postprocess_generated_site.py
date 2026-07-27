@@ -16,6 +16,7 @@ import html as html_module
 import json
 import re
 import sys
+import unicodedata
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import quote
@@ -24,7 +25,7 @@ from urllib.parse import quote
 SITE_ORIGIN = "https://powehi12.github.io"
 SITE_NAME = "qbyang 的个人博客"
 SITE_DESCRIPTION = "记录 Agent、LLM、强化学习与论文阅读"
-ASSET_VERSION = "20260727-3"
+ASSET_VERSION = "20260727-4"
 
 RSS_LINK = (
     f'<link rel="alternate" type="application/rss+xml" '
@@ -155,6 +156,68 @@ def parse_args() -> argparse.Namespace:
 
 def normalize_space(value: str) -> str:
     return re.sub(r"\s+", " ", value).strip()
+
+
+def title_visual_units(value: str) -> float:
+    """Estimate rendered title width across mixed Latin and CJK text."""
+    text = normalize_space(
+        html_module.unescape(re.sub(r"<[^>]+>", " ", value))
+    )
+    units = 0.0
+    for character in text:
+        if character.isspace():
+            units += 0.25
+        elif unicodedata.combining(character):
+            continue
+        elif unicodedata.east_asian_width(character) in {"W", "F"}:
+            units += 1.0
+        else:
+            units += 0.5
+    return units
+
+
+def classify_post_title(html: str) -> str:
+    """Add a deterministic size class to long article titles."""
+    pattern = re.compile(
+        r"<h1\b(?P<attrs>[^>]*)>(?P<content>.*?)</h1>",
+        re.IGNORECASE | re.DOTALL,
+    )
+
+    def replace(match: re.Match[str]) -> str:
+        attrs = match.group("attrs")
+        class_match = re.search(
+            r'\bclass\s*=\s*(["\'])(.*?)\1',
+            attrs,
+            re.IGNORECASE | re.DOTALL,
+        )
+        if not class_match:
+            return match.group(0)
+
+        classes = class_match.group(2).split()
+        if "postTitle" not in classes:
+            return match.group(0)
+
+        classes = [
+            class_name
+            for class_name in classes
+            if class_name not in {"postTitle--long", "postTitle--xlong"}
+        ]
+        visual_units = title_visual_units(match.group("content"))
+        if visual_units >= 40:
+            classes.append("postTitle--xlong")
+        elif visual_units >= 28:
+            classes.append("postTitle--long")
+
+        quote_mark = class_match.group(1)
+        class_attribute = f'class={quote_mark}{" ".join(classes)}{quote_mark}'
+        attrs = (
+            attrs[: class_match.start()]
+            + class_attribute
+            + attrs[class_match.end() :]
+        )
+        return f'<h1{attrs}>{match.group("content")}</h1>'
+
+    return pattern.sub(replace, html, count=1)
 
 
 def clean_description(value: str) -> str:
@@ -817,6 +880,8 @@ def transform_html(source: str, relative: Path, total_pages: int = 1) -> str:
     )
     html = add_attributes_to_id(html, "footer", {"role": "contentinfo"})
     html = improve_header(html, kind)
+    if kind == "post":
+        html = classify_post_title(html)
     if kind == "home":
         html = improve_home_cards(html)
         html = improve_pagination(html, relative, total_pages)
@@ -1082,6 +1147,8 @@ def validate_html(html: str, relative: Path, total_pages: int = 1) -> list[str]:
     if kind == "post":
         if f"collapsible-toc.js?v={ASSET_VERSION}" not in html:
             errors.append("post missing current enhancement script")
+        if classify_post_title(html) != html:
+            errors.append("post title is missing its current length class")
         if 'id="cmButton"' in html:
             for marker in (
                 'id="comment-load-recovery"',

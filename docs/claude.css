@@ -559,6 +559,25 @@ body.home-page #content > div:first-child {
   font-size: clamp(27px, calc(3.2vw + 1px), 34px) !important;
 }
 
+@media screen {
+  .postTitle {
+    overflow-wrap: break-word;
+    word-break: normal;
+    line-break: strict;
+    text-wrap: pretty;
+  }
+
+  body.post-page .postTitle.postTitle--long {
+    font-size: clamp(29px, calc(3vw + 1px), 34px) !important;
+    line-height: 1.18 !important;
+  }
+
+  body.post-page .postTitle.postTitle--xlong {
+    font-size: clamp(26px, calc(2.5vw + 1px), 31px) !important;
+    line-height: 1.22 !important;
+  }
+}
+
 #postBody {
   max-width: 760px;
   padding-bottom: 46px !important;
@@ -1407,6 +1426,28 @@ body.home-page #content > div:first-child {
 
   .tagTitle {
     font-size: 24px !important;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  body.post-page .postTitle.postTitle--long {
+    font-size: 26px !important;
+    line-height: 1.22 !important;
+  }
+
+  body.post-page .postTitle.postTitle--xlong {
+    font-size: 24px !important;
+    line-height: 1.24 !important;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  body.post-page .postTitle.postTitle--long {
+    font-size: 24px !important;
+  }
+
+  body.post-page .postTitle.postTitle--xlong {
+    font-size: 22px !important;
   }
 }
 
