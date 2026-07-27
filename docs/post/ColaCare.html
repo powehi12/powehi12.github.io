@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-6'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>ColaCare</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="前言 标题：ColaCare: Enhancing Electronic Health Record Modeling through Large Language Model-Driven Multi-Agent Collaboration（WWW 2025, pp. 2250–2261） 论文链接：https…">
+<meta property="og:title" content="ColaCare">
+<meta property="og:description" content="前言 标题：ColaCare: Enhancing Electronic Health Record Modeling through Large Language Model-Driven Multi-Agent Collaboration（WWW 2025, pp. 2250–2261） 论文链接：https…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/ColaCare.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ColaCare">
+<meta name="twitter:description" content="前言 标题：ColaCare: Enhancing Electronic Health Record Modeling through Large Language Model-Driven Multi-Agent Collaboration（WWW 2025, pp. 2250–2261） 论文链接：https…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/ColaCare.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">ColaCare</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/34" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>前言</h1>
+<p>标题：ColaCare: Enhancing Electronic Health Record Modeling through Large Language Model-Driven Multi-Agent Collaboration（WWW 2025, pp. 2250–2261）<br>
+论文链接：<a href="https://arxiv.org/abs/2410.02551" rel="nofollow">https://arxiv.org/abs/2410.02551</a> ｜ <a href="https://doi.org/10.1145/3696410.3714877" rel="nofollow">https://doi.org/10.1145/3696410.3714877</a><br>
+代码链接：<a href="https://github.com/PKU-AICare/ColaCare">https://github.com/PKU-AICare/ColaCare</a> ｜ 项目主页：<a href="https://colacare.netlify.app" rel="nofollow">https://colacare.netlify.app</a></p>
+<p>标签：电子病历建模；LLM 多智能体协作；检索增强生成；可解释临床预测</p>
+<p>摘要：一句话概括，这篇论文干的事就是——先让几个"小而专"的深度学习模型把病人的化验数值算出风险分和"哪些指标最要命"的清单，再把这些结果翻译成人话丢给几个大模型扮演的"医生"，让它们查着《默沙东诊疗手册》开一场多学科会诊，吵到达成共识后出一份诊断报告，最后把报告的文本向量和专家模型的隐层向量拼起来过一个 MLP，得到最终的死亡/再入院风险。核心内容有三块：用 SHAP 加群体统计把结构化 EHR "文本化"成 LLM 读得懂的病历卡片；由 MetaAgent 主持的多轮"举证—反驳—修订"会诊机制，每个 DoctorAgent 绑定一个不同的专家模型，保证意见天然有分歧；以及一个多模态融合网络，把会诊报告当成额外一路特征而不是当成答案。实验在 MIMIC-IV、CDSL、ESRD 三个数据集的院内死亡和 30 天再入院任务上完成，ColaCare 在多数设置下 AUPRC 最优，同时能产出带文献出处、医生看得懂的分析报告。</p>
+<h1>Step 1：论文解读</h1>
+<h2>1：这篇论文到底想解决什么问题</h2>
+<p>先说清楚背景。所谓"结构化 EHR 建模"，输入就是一张大表：一个病人来了 T 次医院，每次量了 F 个指标（血钾、白蛋白、血压……），任务是预测他会不会死、会不会 30 天内再入院。这个领域十年来的主流做法是 AdaCare、ConCare、RETAIN 这类专门的深度模型，本质上是 RNN／注意力机制在时序表格上跑，效果很不错。<br>
+问题在哪？论文点了两个痛处。第一，这些模型眼里的"血钾 3.11"就是一个浮点数 3.11，它不知道这个数在医学上意味着低钾血症、会诱发心律失常——<strong>它没有语义</strong>。第二，可解释性太原始。现在能给的解释无非是注意力权重、SHAP 值、激活可视化，最后呈现给医生的是"血钾这一列重要性 0.749"。医生看了只会问一句："所以呢？"<br>
+那用 LLM 行不行？LLM 有的是医学常识。但已有研究反复证明，直接把一堆数字塞给 GPT-4 让它预测死亡风险，效果比传统小模型差一大截，还容易产生幻觉、输出格式乱飞。另一条路是知识图谱注入，但图谱要人工构建、更新极慢，跟不上最新指南。<br>
+所以作者的定位很清楚：<strong>不是要用 LLM 取代专家模型，而是要给专家模型配一个会查文献、会说人话、还会互相挑错的"外脑"。</strong></p>
+<h2>2：核心思路——把医院的多学科会诊搬进模型</h2>
+<p>论文的灵感来自真实临床里的 MDT（Multidisciplinary Team，多学科会诊）：疑难病例不由一个医生拍板，而是把肾内科、心内科、营养科的医生凑一桌，各自基于自己的专业视角发表意见，主任医师汇总、追问、拍板。<br>
+ColaCare 把这套流程照搬：</p>
+<ul>
+<li><strong>DoctorAgent</strong>（普通医生）：有 3 个，每个 agent 背后绑定<strong>一个不同的专家模型</strong>（比如 AdaCare、ConCare、RETAIN）。这是全文最聪明的一步设计——多智能体辩论最大的通病是"同一个 LLM 复制三份，说的话大同小异"，论文在相关工作里也明确吐槽了这一点（homogeneous reasoning）。ColaCare 让每个 agent 拿到的是<strong>不同模型算出的不同风险分和不同的重要特征</strong>，分歧是天然存在的、有数据支撑的，不是装出来的。</li>
+<li><strong>MetaAgent</strong>（主任医师）：只有 1 个，负责汇总、主持辩论、判断是否继续讨论、写最终报告。</li>
+</ul>
+<p>整个 pipeline 是三段式：结构化信息抽取 → 多智能体会诊 → 多模态融合预测。下面逐段拆。</p>
+<h2>3：第一步——把数字翻译成人话</h2>
+<p>给定病人的 EHR 数据 x，先过专家模型拿到隐层表示 h，再过一个 MLP 得到预测 logit z，同时用 SHAP 算出特征重要性权重 α。<br>
+关键在于怎么把 z 和 α 写成 prompt。论文的做法比想象中细致得多，一条特征会被展开成这样一段描述（这是论文案例里的真实内容，我翻译一下）：</p>
+<blockquote>
+<p>二氧化碳结合力：重要性权重 0.788（满分 1.0）。该病人的值是 18.7 mmol/L，比存活病人的中位数（27.4）低 32%，比死亡病人的中位数（27.5）也低 32%。健康人参考范围是 20–29 mmol/L，ESRD 病人的参考范围是高于 25 mmol/L。</p>
+</blockquote>
+<p>看出门道了吗？这一段里塞了<strong>四层信息</strong>：模型认为它重要（模型视角）、绝对数值（原始数据）、和存活/死亡人群中位数的相对位置（群体统计）、健康人和该病种的参考区间（临床知识）。风险分也不是干巴巴一个 0.55，而是"0.55，在所有 ESRD 病人中处于中间 30% 的水平"。<br>
+<strong>锐评</strong>：这一步没有任何技术含量，全是 prompt 工程和特征描述模板，但我认为它是 ColaCare 真正 work 的地方之一。LLM 处理不了裸数字，但一旦你把"低 32%"、"低于参考下限"这种<strong>相对关系</strong>明确写出来，它就能立刻调用医学知识说出"这是代谢性酸中毒"。这个转换的信息量，比任何花哨的对齐模块都实在。做 EHR agent 的话，这套"数值转描述"的模板本身就值得抄。</p>
+<h2>4：第二步——多智能体会诊怎么跑起来</h2>
+<h3>4.1：初诊——每个 DoctorAgent 先写一份意见书</h3>
+<p>每个 DoctorAgent 拿到自己那份"病历卡片"后，先去 RAG 模块检索证据。检索器用的是 MedCPT（在 2.55 亿条 PubMed 检索日志上对比学习预训练的检索模型），语料库是 MSD《默沙东诊疗手册》专业版，按余弦相似度取 top-K（正式版 K=3）。<br>
+拿到文档后，agent 输出一段分析 review：病人什么情况、哪几个指标异常、引用哪份文档支撑。论文的 ESRD 案例里，三个 agent 的初诊结论是<strong>分裂的</strong>：DoctorAgent 1 盯着二氧化碳结合力和白蛋白，判"中等风险"；DoctorAgent 2 盯着舒张压和血氯，说这两项在 ESRD 病人里算正常，判"低风险"；DoctorAgent 3 盯着血钾 3.11 mmol/L，判"情况危急"。<br>
+这正是设计想要的效果——<strong>三个模型看重的特征不同，所以三个 agent 吵起来了</strong>。</p>
+<h3>4.2：汇总——MetaAgent 出一版初稿</h3>
+<p>MetaAgent 拿到病人基本信息和三份 review，被要求先明确表态"高风险还是低风险"，然后从三份意见里挑出它认可的观点和证据，写成一份综合报告。在案例中，MetaAgent 采纳了 1 号和 3 号的意见，判定高风险。</p>
+<h3>4.3：辩论——同意还是反对，请举证</h3>
+<p>这是核心循环。每个 DoctorAgent 拿到 MetaAgent 的报告，被要求明确表态同意或反对，反对必须给出理由并<strong>附上新检索到的文档作为证据</strong>。然后 MetaAgent 汇总所有表态，做一个二选一的决策（Action）：全体同意就结束；有人反对，就去审查反对者的证据够不够硬，够硬就再开一轮，同时修订报告。<br>
+上限 3 轮。案例里第 1 轮之后，1 号和 2 号都改口同意了 MetaAgent 的高风险判断——2 号明确写了"主任医师指出了我最初分析中忽略的关键因素"。<br>
+<strong>锐评</strong>：这个流程读起来很像回事，但要冷静一点看。第一，MetaAgent 既是裁判又是运动员：报告是它写的，是否继续讨论也是它判的，它有天然动机说"大家都同意了，收工"。论文自己给的统计数据显示平均 1.7–2.6 轮达成共识，说明它确实倾向于早点收工。第二，"改口"这件事在 LLM 多智能体系统里非常廉价——大模型天然有谄媚倾向（sycophancy），你给它一份写得头头是道的报告，它大概率会同意，这未必是"被说服"，可能只是"从众"。论文用"同意/反对比例比较均衡"来论证辩论有效，但这个指标其实证明不了共识的质量。</p>
+<h2>5：第三步——真正给出预测的其实是融合网络</h2>
+<p>会诊结束后，最终报告不是拿来直接当答案的。论文用 GatorTron（在 820 亿词去标识化临床文本上预训练的临床语言模型）把报告编码成向量 h_Report，然后和 N 个专家模型的隐层表示拼接，过一个 MLP 输出最终概率，用 BCE loss 训练。<br>
+换句话说：<strong>LLM 会诊的产物，在系统里的身份是"一路额外的特征"，而不是"预测结果"。</strong> 这是全文最需要看清的一点。整套多智能体系统的作用，本质上是把外部医学知识和多模型的分歧信息，压缩进一个文本 embedding，喂给下游的判别器。<br>
+<strong>锐评</strong>：这个设计非常务实，也非常"诚实"——作者自己在消融实验里承认，让 LLM 直接输出数值就是不行。但反过来讲，这也让整个框架的定位变得微妙：如果 LLM 只是在生产特征，那么"多轮辩论"、"举证反驳"这些拟人化机制到底贡献了多少，就必须靠消融来证明，而不能靠案例故事来证明。这一点我在意见部分展开。</p>
+<h2>6：这套设计的两个隐含前提</h2>
+<p>第一，<strong>专家模型必须先训好</strong>。DoctorAgent 的一切分析都建立在专家模型给出的 logit 和 SHAP 之上，如果专家模型本身在这个数据集上就废了，agent 只会一本正经地为一个错误的风险分找文献背书——RAG 会让错误显得更权威，这是知识增强系统的经典风险。<br>
+第二，<strong>语料库必须覆盖病种</strong>。用的是 MSD 手册这种通科教科书，好处是权威、覆盖广、更新有保障，坏处是它给不出前沿的、细分的、指标级的循证结论。案例里检索出来的文档里甚至混进了一篇"妊娠期肾功能不全"——病人是 46 岁女性 ESRD，检索器被"肾功能不全"这个词带偏了。这说明 RAG 的精度其实相当粗糙。</p>
+<h1>Step 2：实验部分</h1>
+<h2>1：实验怎么设置的</h2>
+<p>数据集三个：MIMIC-IV（ICU，做院内死亡 + 30 天再入院两个任务）、CDSL（西班牙 HM 医院的 4479 例新冠病人，做死亡）、ESRD（终末期肾病，656 人 13091 次随访，跨度 12 年，做死亡）。<br>
+有个细节值得注意：<strong>测试集被限制在 1000 例左右</strong>（MIMIC-IV 968、CDSL 1064、ESRD 仅 146），原因是每个样本要跑一整套多智能体流程，太贵。ESRD 测试集只有 146 例，正样本率 39%，这个规模下的结论要谨慎看待。<br>
+指标三个：AUPRC（主指标，类别不平衡场景下更靠谱）、AUROC、min(+P, Se)。所有结果通过对测试集 bootstrap 100 次报告 mean±std。<br>
+基线分两类。EHR 专用模型：AdaCare、ConCare、RETAIN，外加两个集成基线——简单平均和按 AUPRC 加权平均。LLM 类：单模型的 zero-shot / few-shot / self-consistency，多智能体的 MAD（多智能体辩论）、MedAgents、ReConcile。<br>
+LLM 用的是 DeepSeek-V2.5，硬件是<strong>单张 RTX 3090</strong>（专家模型和融合网络的训练开销就这么点，LLM 全部走 API）。</p>
+<h2>2：主实验——赢了，但赢得不多</h2>
+<p>MIMIC-IV 死亡任务上的 AUPRC（乘 100）：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">方法</th>
+<th scope="col">MIMIC-IV 死亡</th>
+<th scope="col">MIMIC-IV 再入院</th>
+<th scope="col">CDSL 死亡</th>
+<th scope="col">ESRD 死亡</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AdaCare</td>
+<td>52.67±4.50</td>
+<td>50.51±4.24</td>
+<td>82.76±3.74</td>
+<td>60.44±6.94</td>
+</tr>
+<tr>
+<td>RETAIN</td>
+<td>51.89±4.22</td>
+<td>50.89±3.90</td>
+<td>74.46±4.13</td>
+<td>60.02±6.32</td>
+</tr>
+<tr>
+<td>集成（简单平均）</td>
+<td>53.59±4.52</td>
+<td>50.48±4.68</td>
+<td>83.54±3.36</td>
+<td>60.90±7.08</td>
+</tr>
+<tr>
+<td>集成（加权平均）</td>
+<td>53.44±4.51</td>
+<td>50.64±4.69</td>
+<td>84.08±3.34</td>
+<td>61.07±7.11</td>
+</tr>
+<tr>
+<td>LLM zero-shot</td>
+<td>31.01±3.68</td>
+<td>21.63±1.89</td>
+<td>29.71±2.82</td>
+<td>6.71±2.88</td>
+</tr>
+<tr>
+<td>MedAgents</td>
+<td>27.73±3.38</td>
+<td>20.15±2.46</td>
+<td>33.02±3.34</td>
+<td>4.47±2.21</td>
+</tr>
+<tr>
+<td><strong>ColaCare</strong></td>
+<td><strong>54.05±4.88</strong></td>
+<td><strong>51.91±4.99</strong></td>
+<td><strong>85.76±2.99</strong></td>
+<td><strong>63.81±6.43</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>作者宣称的相对提升是 0.86%、2.50%、2.00%、4.49%。两个必须说清楚的事实：<br>
+<strong>第一，LLM 直接做结构化 EHR 预测是灾难性的。</strong> zero-shot 在 MIMIC-IV 上 AUPRC 只有 31，MedAgents 27.7，在 ESRD 上更是掉到 4–9 分（few-shot 的 AUROC 甚至是 54.54±38.33，标准差 38，等于纯随机加噪声）。这个结论比论文的主结论更有价值：<strong>别指望大模型直接读表格做临床预测，2024 年不行，现在也不行。</strong><br>
+<strong>第二，ColaCare 相对最强基线的提升非常有限。</strong> MIMIC-IV 死亡任务上 54.05 vs 53.59，差 0.46 个点，而 bootstrap 标准差是 ±4.5——两个置信区间几乎完全重叠。而且在 ESRD 的 AUROC 上，ColaCare（71.61）反而<strong>输给</strong>了加权平均集成（73.49），论文自己的措辞也从"consistently outperforms all"退成了"in most cases"。</p>
+<h2>3：消融实验——谁才是真正的功臣</h2>
+<p>在 MIMIC-IV 上做了三个变体（AUPRC）：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">变体</th>
+<th scope="col">死亡</th>
+<th scope="col">再入院</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>去掉 RAG</td>
+<td>51.57</td>
+<td>48.00</td>
+</tr>
+<tr>
+<td>去掉融合网络（改由 LLM 直接输出）</td>
+<td>42.61</td>
+<td>49.03</td>
+</tr>
+<tr>
+<td>去掉专家模型（≈ MedAgents）</td>
+<td>27.73</td>
+<td>20.15</td>
+</tr>
+<tr>
+<td>完整 ColaCare</td>
+<td>54.05</td>
+<td>51.91</td>
+</tr>
+</tbody>
+</table></div>
+<p>这张表信息量极大，按贡献从大到小排：<strong>专家模型 &gt;&gt; 融合网络 &gt; RAG &gt; 多智能体本身</strong>。<br>
+去掉专家模型直接崩到 27.7，说明<strong>性能的绝大部分来自那三个传统小模型</strong>；去掉融合网络掉 11.4 个点，说明<strong>让 LLM 直接说数是不行的</strong>；去掉 RAG 掉 2.5 个点，说明检索有用但不是决定性的。<br>
+<strong>锐评</strong>：这张表最刺眼的地方在于<strong>它缺了一行</strong>——"融合网络只拼三个专家模型的 embedding，不拼报告 embedding"。这一行才是真正的对照组。因为融合网络本身是一个额外训练的、有参数的模块，而集成基线（简单/加权平均）是无参数的。ColaCare 相对集成基线那 0.46 个点的提升，到底来自"LLM 会诊报告带来的知识"，还是仅仅来自"多了一个可训练的融合层"？现有实验回答不了这个问题。这是全文最要命的缺口。</p>
+<h2>4：智能体数量与不同 LLM 的影响</h2>
+<p><strong>智能体数量</strong>：0 个 agent（即单个专家模型裸跑）最好的是 AdaCare 52.67；1 个 agent 基本没提升甚至略降（RETAIN 从 51.89 掉到 50.44）；2 个 agent 也没起色；3 个 agent 才跳到 54.05。<br>
+论文的解释是"人少了容易草率达成共识，即使结论不 robust"。这个解释我觉得是合理的，但也暴露了另一件事：<strong>收益是非线性的，且只在 3 个的时候才显现</strong>。只测到 3 个就停了，4 个、5 个会怎样？是继续涨还是掉头向下？没有答案。而且从 0 到 3 涨了 1.4 个点，这个幅度和上面说的置信区间问题是同一个量级。<br>
+<strong>不同 LLM</strong>：换成 GPT-4o-mini、GPT-4o、Qwen-Turbo、Doubao-Pro 都能跑，结论是"DeepSeek-V2.5 和 GPT-4o-mini 稍好"。但看表格，<strong>GPT-4o-mini 在 MIMIC-IV 死亡任务上是 55.27，比主实验用的 DeepSeek-V2.5（54.05）还高</strong>，而 GPT-4o（54.13）几乎和 mini 打平。这其实是个挺有意思的信号：框架对 LLM 的能力不敏感，说明 LLM 在这里干的活确实不难——它只是在把一堆结构化描述改写成一段带医学术语的文本，然后被 GatorTron 编码成向量。这反过来印证了我上面的判断：多智能体的"推理"成分被高估了。</p>
+<h2>5：成本——一个病人要 8 次 API、6 万 token</h2>
+<p>论文老老实实报了成本：每个病人平均消耗 prompt token 5.9 万（MIMIC-IV 死亡）到 12.4 万（CDSL），输出 token 4400–6200，API 调用 8.4–11.9 次。早期版本估算约 0.07 美元/样本。<br>
+<strong>锐评</strong>：作者把这个成本描述为"economical"，我不太同意。为了在 AUPRC 上换来 0.5 到 2 个点（还在置信区间内），每个病人烧掉 6 万到 12 万 token 和十次 API 往返，这在真实临床部署里是很难过 ROI 这一关的。真正说得通的价值主张不是"更准"，而是"顺便产出了一份医生能看懂、带文献出处的报告"——这份报告的价值，恰恰是这篇论文没有量化评估的东西（只有案例展示，没有大规模医生盲评）。</p>
+<h1>Step 3：other</h1>
+<h2>1：重点</h2>
+<p>我认为这篇论文最有价值的东西有三点，且都不是它标题里强调的"多智能体协作"。<br>
+<strong>第一，"专家模型当感官、LLM 当大脑"的分工范式。</strong> 不要让 LLM 去读数字，让训好的小模型把数字嚼碎成"风险分 + 重要性排序 + 相对群体位置 + 参考区间"，再交给 LLM 做知识grounding 和交叉检查。这个分工是对的，而且可迁移——任何"结构化数据 + LLM"的场景都能套。<br>
+<strong>第二，把 LLM 的输出当特征，而不是当答案。</strong> 用一个临床领域的编码器（GatorTron）把会诊报告编码，和专家模型的隐层拼接进融合网络。这一步让 LLM 的知识注入变成了"可学习的、可被下游纠偏的"，而不是"一锤定音的"。消融显示这一步值 11 个点，是全框架第二重要的组件。<br>
+<strong>第三，多智能体的"异质性"要靠底座保证，不能靠角色扮演。</strong> 让三个 agent 绑定三个<strong>不同的专家模型</strong>，分歧就是数据驱动的、有据可查的；如果只是给同一个 LLM 三个不同的 system prompt（MedAgents、MAD 的做法），得到的只是同质化的复读。1–2 个 agent 没收益、3 个才有收益的现象，也支持这个解读。<br>
+另外，一个附带但极其重要的实证结论：<strong>现阶段 LLM 直接对结构化 EHR 做预测的能力接近于无</strong>（AUPRC 27–31 vs 传统模型 52–54，ESRD 上甚至只有个位数）。做这个方向的人应该把这个数字钉在墙上。</p>
+<h2>2：意见</h2>
+<p><strong>消融实验缺了唯一那个能证明核心论点的对照组：只用融合网络拼接三个专家模型的 embedding、不接入任何 LLM 报告。</strong> 现有的对比是 ColaCare（有可训练融合层 + LLM 报告）对阵集成基线（无参数的平均），这是不公平的比较——多出来的 0.46 个 AUPRC 点（54.05±4.88 vs 53.59±4.52，置信区间大面积重叠），完全可以由"多了一个有参数的融合层"来解释，根本不需要引入任何 LLM。也就是说，论文花了整整一套多智能体会诊 + RAG + 6 万 token 的开销，却没有证明这套东西相对于"训一个融合层"有任何统计显著的增益。既没有显著性检验，也没有多随机种子重复，ESRD 测试集甚至只有 146 例。要让这篇文章的核心主张站住，作者必须补上这个 ablation 并给出配对检验的 p 值；在此之前，最诚实的结论只能是"多智能体会诊产出了一份可读的报告，性能上不比无参数集成差"。</p>
+<h2>3：相关工作</h2>
+<p><strong>KARE（ICLR 2025，Reasoning-Enhanced Healthcare Predictions with Knowledge Graph Community Retrieval）</strong>：和 ColaCare 是同一个母题的两条路。ColaCare 检索的是教科书段落，KARE 检索的是知识图谱的"社区"——它先把 UMLS、临床文献、LLM 生成的知识融成一张多源医学知识图谱，再用层次化社区检测把图谱切成一个个语义聚合的社区并生成摘要，检索时按社区粒度召回，避免了朴素 RAG"召回一堆碎片化无关内容"的毛病。同时它训练 LLM 输出推理链或标签，可解释性来自推理链本身。作者报告在 MIMIC-III 上相对最强基线提升 10.8–15.0%、MIMIC-IV 上 12.6–12.7%，幅度远大于 ColaCare，值得对着看两者的评测口径差异。</p>
+<p><strong>MedAgentBench（NEJM AI 2025，arXiv 2501.14654）</strong>：如果说 ColaCare 是"agent 做预测"，MedAgentBench 就是"agent 做操作"。它搭了一个 FHIR 标准的交互式虚拟 EHR 环境，内含 100 个基于 Stanford STARR 数据构建的病人档案、超过 70 万条数据元素，由执业医师撰写了 10 类共 300 个可自动验证的任务，agent 通过标准 API 调用去查询和修改病人数据。当时最强的 Claude 3.5 Sonnet v2 成功率 69.67%，远未饱和，且各类任务间差异很大。这是目前把 EHR agent 从"问答"推向"工具调用 + 长程执行"最实在的一个 benchmark。</p>
+<p><strong>EMERGE（arXiv 2406.00036）</strong>：ColaCare 同组的前作，做的是多模态 EHR 预测里的 RAG 集成——从时序数据和临床文本里抽实体，链接到知识图谱，用 LLM 生成实体描述和病人层面的语义摘要，再和多模态表示融合做下游预测。ColaCare 可以看作是把 EMERGE 的"单路知识注入"换成了"多智能体协商式知识注入"，两篇对照读能比较清楚地看出这条技术线的演进逻辑和边际收益递减。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-6'></script>
+
+</html>

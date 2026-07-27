@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Mon, 27 Jul 2026 10:35:45 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>AgentEHR</title><link>https://powehi12.github.io/post/AgentEHR.html</link><description># 前言
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Mon, 27 Jul 2026 14:13:55 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>ColaCare</title><link>https://powehi12.github.io/post/ColaCare.html</link><description># 前言
+
+标题：ColaCare: Enhancing Electronic Health Record Modeling through Large Language Model-Driven Multi-Agent Collaboration（WWW 2025, pp. 2250–2261）
+论文链接：https://arxiv.org/abs/2410.02551 ｜ https://doi.org/10.1145/3696410.3714877
+代码链接：https://github.com/PKU-AICare/ColaCare ｜ 项目主页：https://colacare.netlify.app
+
+标签：电子病历建模；LLM 多智能体协作；检索增强生成；可解释临床预测
+
+摘要：一句话概括，这篇论文干的事就是——先让几个'小而专'的深度学习模型把病人的化验数值算出风险分和'哪些指标最要命'的清单，再把这些结果翻译成人话丢给几个大模型扮演的'医生'，让它们查着《默沙东诊疗手册》开一场多学科会诊，吵到达成共识后出一份诊断报告，最后把报告的文本向量和专家模型的隐层向量拼起来过一个 MLP，得到最终的死亡/再入院风险。</description><guid isPermaLink="true">https://powehi12.github.io/post/ColaCare.html</guid><pubDate>Mon, 27 Jul 2026 12:46:55 +0000</pubDate></item><item><title>AgentEHR</title><link>https://powehi12.github.io/post/AgentEHR.html</link><description># 前言
 
 标题：AgentEHR: Advancing Autonomous Clinical Decision-Making via Retrospective Summarization（AgentEHR：用回溯式摘要推进自主临床决策）
 
