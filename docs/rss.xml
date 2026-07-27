@@ -1,5 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Mon, 27 Jul 2026 14:13:55 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>ColaCare</title><link>https://powehi12.github.io/post/ColaCare.html</link><description># 前言
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Mon, 27 Jul 2026 14:28:42 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>ConfAgents</title><link>https://powehi12.github.io/post/ConfAgents.html</link><description># 前言
+
+标题：ConfAgents: A Conformal-Guided Multi-Agent Framework for Cost-Efficient Medical Diagnosis（Zhao et al., 2025）
+论文链接：https://arxiv.org/abs/2508.04915
+代码链接：https://github.com/PKU-AICare/ConfAgents
+作者单位：北京大学 / 香港大学 / 爱丁堡大学 / HDR UK（与 ColaCare 是同一个组，Liantao Ma 通讯）
+
+标签：医疗多智能体；保形预测；自适应推理成本；迭代式 RAG
+
+摘要：一句话概括，这篇论文干的事就是给多智能体医疗问诊系统装了一个'分诊台'——简单的题目让一个大模型直接答完就走，只有它自己拿不准的难题才叫上一堆专家 agent 开会查资料，从而在几乎不掉准确率的前提下把耗时砍掉一大半。</description><guid isPermaLink="true">https://powehi12.github.io/post/ConfAgents.html</guid><pubDate>Mon, 27 Jul 2026 14:28:01 +0000</pubDate></item><item><title>ColaCare</title><link>https://powehi12.github.io/post/ColaCare.html</link><description># 前言
 
 标题：ColaCare: Enhancing Electronic Health Record Modeling through Large Language Model-Driven Multi-Agent Collaboration（WWW 2025, pp. 2250–2261）
 论文链接：https://arxiv.org/abs/2410.02551 ｜ https://doi.org/10.1145/3696410.3714877

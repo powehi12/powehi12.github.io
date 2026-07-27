@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-6'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>ConfAgents</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="前言 标题：ConfAgents: A Conformal-Guided Multi-Agent Framework for Cost-Efficient Medical Diagnosis（Zhao et al., 2025） 论文链接：https://arxiv.org/abs/2508.04915 代码链接…">
+<meta property="og:title" content="ConfAgents">
+<meta property="og:description" content="前言 标题：ConfAgents: A Conformal-Guided Multi-Agent Framework for Cost-Efficient Medical Diagnosis（Zhao et al., 2025） 论文链接：https://arxiv.org/abs/2508.04915 代码链接…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/ConfAgents.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ConfAgents">
+<meta name="twitter:description" content="前言 标题：ConfAgents: A Conformal-Guided Multi-Agent Framework for Cost-Efficient Medical Diagnosis（Zhao et al., 2025） 论文链接：https://arxiv.org/abs/2508.04915 代码链接…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/ConfAgents.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">ConfAgents</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/35" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>前言</h1>
+<p>标题：ConfAgents: A Conformal-Guided Multi-Agent Framework for Cost-Efficient Medical Diagnosis（Zhao et al., 2025）<br>
+论文链接：<a href="https://arxiv.org/abs/2508.04915" rel="nofollow">https://arxiv.org/abs/2508.04915</a><br>
+代码链接：<a href="https://github.com/PKU-AICare/ConfAgents">https://github.com/PKU-AICare/ConfAgents</a><br>
+作者单位：北京大学 / 香港大学 / 爱丁堡大学 / HDR UK（与 ColaCare 是同一个组，Liantao Ma 通讯）</p>
+<p>标签：医疗多智能体；保形预测；自适应推理成本；迭代式 RAG</p>
+<p>摘要：一句话概括，这篇论文干的事就是给多智能体医疗问诊系统装了一个"分诊台"——简单的题目让一个大模型直接答完就走，只有它自己拿不准的难题才叫上一堆专家 agent 开会查资料，从而在几乎不掉准确率的前提下把耗时砍掉一大半。核心内容有三块：用**保形预测（Conformal Prediction）**构造一个 CP Judger，把主 agent 输出的选项概率转成一个"预测集合"，集合里只剩一个选项就说明有把握、直接输出，剩下多个选项就说明没把握、触发会诊；对被升级的难题，动态招募对应科室的 AssistAgent，每个 agent 把问题拆成子问题、检索医学指南、合成证据报告，并迭代多轮直到判断明确；最后由 MainAgent 综合所有证据报告给出终审答案。实验在 MedQA、MMLU、MedBullets、AfriMedQA 四个医学选择题基准上完成，ConfAgents 在准确率上追平或超过现有多智能体框架，同时在 MedQA 上比最快的多智能体基线还快 2.76 倍、比最慢的快 7.71 倍。</p>
+<h1>Step 1：论文解读</h1>
+<h2>1：这篇论文想解决什么问题</h2>
+<p>先说清楚这篇文章的"敌人"是谁。过去两年医疗 AI 圈流行一种玩法：让好几个大模型分别扮演不同科室的医生，围坐一桌辩论、投票、达成共识，以此提高诊断准确率。代表作有 MedAgents（投票）、ReConcile（按置信度加权投票）、MDAgents，以及这个组自己上一篇 ColaCare。效果确实有提升。<br>
+但作者拍了一张很扎心的表（论文 Table 1，MedQA + GPT-4o）：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">方法</th>
+<th scope="col">单次耗时</th>
+<th scope="col">准确率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zero-Shot（单模型直接答）</td>
+<td>2.1s</td>
+<td>48.6%</td>
+</tr>
+<tr>
+<td>Self-Consistency</td>
+<td>10.6s</td>
+<td>51.2%</td>
+</tr>
+<tr>
+<td>MedAgents（多智能体）</td>
+<td>113.4s</td>
+<td>58.8%</td>
+</tr>
+<tr>
+<td>ColaCare（多智能体）</td>
+<td>98.3s</td>
+<td>60.8%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>多智能体比单次调用慢了将近 50 倍，换来 12 个百分点。</strong> 这笔账在论文里划得来，在医院里划不来——一个门诊医生不会为了一道简单题等 100 秒。<br>
+更关键的观察是：<strong>这 12 个点的收益，其实集中在一小撮真正的难题上。</strong> 绝大多数医学问题，单个模型就能高置信度、高准确率地答对，把它们也拉去开一场三轮辩论，纯属浪费。作者把这个毛病叫做"one-size-fits-all"（一刀切）。<br>
+所以自然的思路就是：<strong>分诊</strong>。像急诊科一样，简单的直接处理，疑难的才请专家会诊。但要落地，有两个坎：</p>
+<ol>
+<li><strong>怎么判断"这道题我拿不准"？</strong> 直接问大模型"你有多大把握"是不行的——LLM 出了名的校准差（miscalibrated），经常一边胡说八道一边信誓旦旦。</li>
+<li><strong>难题叫来一堆 agent 就够了吗？</strong> 不够，如果这些 agent 全靠预训练里的静态知识，遇到冷门或最新的问题照样集体犯错，它们需要能意识到"我不知道"并主动去查资料。</li>
+</ol>
+<p>ConfAgents 就是分别用 <strong>CP Judger</strong> 和 <strong>迭代式 RAG</strong> 来解这两个坎。</p>
+<h2>2：核心思路——给多智能体系统装一个"分诊台"</h2>
+<p>整个流程是<strong>四阶段、但可能只走一步</strong>：</p>
+<ol>
+<li>MainAgent（主诊医生）先自己看一遍题，输出对每个选项的概率分布；</li>
+<li>CP Judger 拿这个概率分布构造一个"预测集合"，判断要不要升级；</li>
+<li>集合大小 = 1 → 直接采纳 MainAgent 的答案，<strong>流程结束</strong>（这就是省钱的来源）；集合大小 ≥ 2 → 触发会诊，动态招募 AssistAgents 做迭代 RAG 取证；</li>
+<li>MainAgent 拿到所有证据报告，重新综合，出终审答案。</li>
+</ol>
+<p><strong>锐评</strong>：这个骨架本身其实很朴素，就是"自适应推理算力分配"——难题多花算力、简单题少花算力。这个思想在推理模型（长思维链 vs 短思维链）、MoE 路由、cascade 推理里都出现过。这篇论文的真正贡献不在于"要分诊"这个想法（MDAgents 早就在做类似的事），而在于<strong>用什么信号来分诊</strong>。下面这一节才是全文的核心。</p>
+<h2>3：CP Judger——用保形预测判断"要不要会诊"</h2>
+<h3>3.1：保形预测三分钟入门</h3>
+<p>保形预测（Conformal Prediction, CP）是一套统计框架，它不给你"最可能的那个答案"，而是给你<strong>一个候选答案的集合</strong>，并承诺："真实答案落在这个集合里的概率不低于 1−α"。α 是你自己定的容错率，比如 α=0.1 就是 90% 覆盖率。<br>
+它最大的卖点是 <strong>distribution-free</strong>：不需要假设数据服从什么分布，也不管底下的模型是什么，只要满足一个条件（校准集和测试样本"可交换"，exchangeability），这个覆盖率保证就在<strong>有限样本</strong>下严格成立。这个"记住它"很重要，后面的意见部分全靠它。<br>
+具体怎么做（split CP，划分式保形预测）：</p>
+<ul>
+<li>定义一个<strong>不符合度分数</strong> g(x, y)，衡量候选答案 y 对输入 x 有多"不合群"。分类任务的标准选法就是 g(x,y) = 1 − p(y|x)，即"1 减去这个选项的概率"，概率越低越不合群。</li>
+<li>准备一个<strong>校准集</strong> D_cal（有标准答案的历史样本），算出每个样本<strong>正确答案</strong>的不符合度分数，得到一堆分数。</li>
+<li>取这堆分数的 (1−α) 分位数作为阈值 τ（带有限样本修正：τ = Quantile(S_cal, ⌈(n+1)(1−α)⌉/n)）。</li>
+<li>对新样本，把所有分数 ≤ τ 的选项都塞进预测集合。</li>
+</ul>
+<p><strong>集合的大小就是不确定性的直观度量</strong>：只剩一个选项 = 很有把握；剩三四个 = 心里没底。</p>
+<h3>3.2：ConfAgents 具体怎么用它</h3>
+<p>MainAgent 先输出各选项概率 p（白盒模型直接取 logits，黑盒模型靠采样或让模型自报），初诊答案就是概率最大的那个。然后：</p>
+<ul>
+<li>不符合度分数 g(x,y) = 1 − p(y|x)；</li>
+<li><strong>校准集不是固定的</strong>，而是<strong>为每个测试样本临时构造</strong>：从知识库里挑出 N 道语义上最相似的题目当校准集；</li>
+<li>算出 τ，构造预测集合 C(x_test)；</li>
+<li>|C| = 1 → 高置信，直接输出，收工；|C| &gt; 1 → 低置信，触发会诊。</li>
+</ul>
+<p><strong>锐评</strong>：把"要不要升级"这件事从"概率 &gt; 0.8 就算有把握"这种拍脑袋阈值，换成一个有统计学定义的预测集合大小，方向是对的，而且比 MDAgents 那种"让 LLM 自己判断题目难不难"要靠谱得多——毕竟裁判不能是被审的那个人。但**"为每个测试样本挑最相似的题目当校准集"这一步，恰恰把保形预测赖以成立的前提给破坏了**，这是全文最大的问题，我放到意见部分说透。另外还有个细节割裂：正文说黑盒模型可以"近似"概率，但附录 D.1 的 prompt 是直接让模型输出 <code class="notranslate">conf_each_option</code> 这个自报置信度字典——而这篇论文的立论前提，正是"LLM 自报置信度不可信"。用不可信的分数去做严格的统计推断，严格性只存在于阈值那一环。</p>
+<h2>4：升级后的会诊——动态选专家 + 迭代式 RAG</h2>
+<p>被判定为难题之后，系统做两件事。<br>
+<strong>第一，动态招募专家。</strong> MainAgent 看一眼预测集合里剩下哪几个候选选项，判断它们涉及哪些科室（心内科、神经科……），然后每个科室招一个 AssistAgent。注意这里的巧妙之处：<strong>招谁不是预先写死的，而是由不确定性集合的内容决定的</strong>——模型在哪几个诊断之间摇摆，就叫哪几个方向的专家来。<br>
+<strong>第二，每个 AssistAgent 跑一个迭代 RAG 循环：</strong></p>
+<ol>
+<li><strong>问题拆解</strong>：把"这道题该选哪个"拆成几个精确的子问题（prompt 里明确要求写成适合 embedding/BM25 检索的搜索引擎式查询，这个细节很实用）；</li>
+<li><strong>证据检索</strong>：每个子问题去医学语料库（还是《默沙东诊疗手册》MSD）里召回 top-k 篇文档，k=3；</li>
+<li><strong>报告合成</strong>：过滤、抽取、综合成一份连贯的证据报告；</li>
+<li><strong>迭代精炼</strong>：基于报告重新下判断，如果判断变得明确就退出，否则改写子问题再来一轮，最多 3 轮。</li>
+</ol>
+<p><strong>锐评</strong>：这里最值得抄的是 <strong>"让 agent 自己意识到知识缺口，再去检索"</strong> 这个循环，而不是传统 RAG 那种"一次性检索、爱用不用"。prompt 里还专门写了一句"检索到的内容可能不相关或有错误，你必须批判性地评估其可靠性"——这是被 RAG 噪声坑过的人才会写的话。但另一方面，"迭代直到判断明确"这个终止条件是有隐患的：<strong>模型越迭代越自信，不代表越迭代越正确</strong>，这个循环没有任何机制防止它自我强化一个错误结论。</p>
+<h2>5：最后一步——MainAgent 综合裁决</h2>
+<p>所有 AssistAgent 的报告汇总给 MainAgent，它结合自己的初诊意见和这些证据，输出终审答案。论文特意强调：<strong>不是简单数票</strong>（这是在点 MedAgents 的投票机制），而是"整体性地综合各方论证与发现"。<br>
+所以 ConfAgents 里其实<strong>没有真正的辩论</strong>——AssistAgents 之间互相看不见对方的报告，各自独立取证，最后由 MainAgent 一个人融合。作者在局限性里也大方承认了这一点：缺少 agent 之间直接的质疑与论辩机制。</p>
+<h2>6：和 ColaCare 对照着看</h2>
+<p>这两篇是同一个组的连续作，放在一起看很有意思：</p>
+<ul>
+<li><strong>ColaCare</strong> 处理的是<strong>结构化 EHR 数值表格</strong>，靠的是"专家模型算数 + LLM 说人话"，目标是<strong>准</strong>和<strong>可解释</strong>；</li>
+<li><strong>ConfAgents</strong> 处理的是<strong>文本选择题（medical QA）</strong>，靠的是"保形预测分诊 + 迭代 RAG"，目标是<strong>快</strong>和<strong>省</strong>。</li>
+</ul>
+<p>而且 ConfAgents 直接把 ColaCare 当成基线打。这里有个必须说的实验细节：为了让 ColaCare 能跑选择题任务，作者<strong>把它的输入从结构化 EHR 数据改成了文本描述</strong>。可是 ColaCare 的整个性能来源就是背后那三个训练好的专家模型（它自己的消融显示，去掉专家模型 AUPRC 从 54 掉到 27.7）。<strong>被剥掉专家模型的 ColaCare，本质上就退化成了一个 MedAgents 变体</strong>，拿它当"最强多智能体基线"来比，这个比较是不太公平的——虽然公平的方向是对基线不利还是有利，得看具体数字（表 2 里 ColaCare 其实还挺能打）。</p>
+<h1>Step 2：实验部分</h1>
+<h2>1：实验怎么设置的</h2>
+<p>数据集四个，全是<strong>医学选择题</strong>：MedQA（中美执业医师考试题）、MMLU 的医学子任务、MedBullets（USMLE 题库）、AfriMedQA（南非执业考试，非洲医疗语境）。每个数据集按 MedAgentsBench 的采样策略切出 Test-Hard 和 Test-Normal 两个子集，<strong>各 100 个样本</strong>。<br>
+指标四个：ACC（准确率）、P-Time（端到端延迟，秒/题）、C-Tokens（生成 token 数）、T-Tokens（总 token 数），外加一个自定义的 BES（下面讲）。结果用 bootstrap 100 次报告 mean±std。<br>
+基线：单智能体的 zero-shot / few-shot / self-consistency，多智能体的 MedAgents、ReConcile、MDAgents、ColaCare。所有基线统一用 DeepSeek-V3 作为底座、3 个 agent、3 轮迭代。<br>
+超参：α = 0.05，检索 k = 3，最大 RAG 轮数 3。硬件依然是<strong>单张 RTX 3090</strong>（其实只是跑检索和编码，LLM 全走 API）。</p>
+<h2>2：主实验——准确率和延迟能不能双赢</h2>
+<p>GPT-4o 底座下的 MedQA 结果最有代表性：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">方法</th>
+<th scope="col">ACC (%)</th>
+<th scope="col">耗时 (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zero-Shot</td>
+<td>56.80</td>
+<td>1.17</td>
+</tr>
+<tr>
+<td>Few-Shot</td>
+<td>72.40</td>
+<td>1.15</td>
+</tr>
+<tr>
+<td>MedAgents</td>
+<td>78.80</td>
+<td>70.21</td>
+</tr>
+<tr>
+<td>ColaCare</td>
+<td>79.90</td>
+<td>56.74</td>
+</tr>
+<tr>
+<td>MDAgents</td>
+<td>75.10</td>
+<td>25.15</td>
+</tr>
+<tr>
+<td>ReConcile</td>
+<td>78.10</td>
+<td>46.09</td>
+</tr>
+<tr>
+<td><strong>ConfAgents</strong></td>
+<td><strong>80.21</strong></td>
+<td><strong>9.11</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>这一格是全文最漂亮的结果：<strong>准确率最高，耗时只有次快基线（MDAgents）的三分之一、最慢基线的二十分之一。</strong> 在 DeepSeek-V3 底座下 MedQA 也是最高（75.70），AfriMedQA 上更是大幅领先（69.50 vs 次高 61.10）。<br>
+但要泼两盆冷水：<br>
+<strong>第一，不是全赢。</strong> DeepSeek-V3 底座下，MMLU 上 MedAgents（84.40）明显高于 ConfAgents（80.00）；MedBullets 上 GPT-4o 底座的 MedAgents（72.10）也高于 ConfAgents（70.81）。作者的措辞是"superior <strong>or competitive</strong>"，这个"or competitive"是有分量的。<br>
+<strong>第二，Table 1 和 Table 2 的数字对不上。</strong> 引言里那张 Table 1 说 MedQA + GPT-4o 下 zero-shot 是 48.6%、ColaCare 是 60.8%、MedAgents 耗时 113.4s；到了 Table 2，同样是 MedQA + GPT-4o，zero-shot 变成 56.80%、ColaCare 变成 79.90%、MedAgents 耗时变成 70.21s。差了 20 个百分点。论文没有解释这两张表用的是不是不同子集（大概率一张是 Hard、一张是混合，但没写）。<strong>引言里用来立论的那张表，如果口径和主实验不一致，立论的说服力是打折的。</strong></p>
+<h2>3：成本分析与 BES 指标</h2>
+<p>MedQA + GPT-4o 的绝对成本（论文 Table 3）：ConfAgents 耗时 9.11s、生成 token 0.33×10⁵、总 token 2.10×10⁵；对比最省的基线 MDAgents（25.15s / 0.66×10⁵ / 2.56×10⁵），分别快 2.76 倍、少 2.01 倍、少 1.22 倍。<br>
+注意<strong>总 token 只省了 1.22 倍，但生成 token 省了 2.01 倍</strong>。这个差值很说明问题：ConfAgents 省的主要是"输出"（不用长篇大论辩论），输入侧因为要做 RAG 检索、塞文档，反而没省多少。而在真实 API 计费里，输出 token 通常比输入贵好几倍，所以这个省法在钱上是划算的，在上下文长度上则未必。<br>
+作者还自造了一个指标 <strong>BES（Balanced Efficiency Score）= 归一化准确率 − 归一化耗时</strong>，范围 −1 到 +1，越高越好。ConfAgents 在四个数据集上拿到 0.61 / 0.36 / 0.47 / 0.61，基本都是最好或接近最好；ReConcile 则是灾难性的 −0.72 / −1.00 / −0.22 / −1.00。<br>
+<strong>锐评</strong>：BES 这个指标要小心看。它是<strong>在当前这批方法内部做 min-max 归一化</strong>之后再相减的，所以数值完全取决于你把哪些方法放进这张表——加一个更慢的方法进来，所有人的 Timenorm 都会变，排名可能翻转。而且"准确率 1 个点"和"耗时 1 秒"被隐式赋予了相同权重，这在临床上显然不成立。它是个方便的可视化，不是一个可以横向引用的指标。</p>
+<h2>4：消融实验——最有意思的一行是"w/o Adaptive"</h2>
+<p>MedQA + DeepSeek-V3：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">变体</th>
+<th scope="col">ACC (%)</th>
+<th scope="col">耗时 (s)</th>
+<th scope="col">生成 token</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>w/o 迭代 RAG（改成单轮检索）</td>
+<td>65.50</td>
+<td>10.78</td>
+<td>11,093</td>
+</tr>
+<tr>
+<td>w/o CP Judger（改成朴素置信度阈值）</td>
+<td>67.80</td>
+<td>109.87</td>
+<td>153,545</td>
+</tr>
+<tr>
+<td>w/o Adaptive（所有题目都开会诊）</td>
+<td><strong>76.50</strong></td>
+<td>193.29</td>
+<td>277,204</td>
+</tr>
+<tr>
+<td>ConfAgents</td>
+<td>75.70</td>
+<td>65.72</td>
+<td>97,268</td>
+</tr>
+</tbody>
+</table></div>
+<p>三个结论，一个比一个重要：<br>
+<strong>第一，迭代 RAG 是准确率的主要来源。</strong> 换成单轮检索直接掉 10 个点（75.70 → 65.50），掉得比去掉 CP Judger 还多。也就是说，这篇论文标题里挂着的"Conformal-Guided"其实主要贡献<strong>效率</strong>，贡献<strong>准确率</strong>的是那个不那么起眼的迭代 RAG 模块。<br>
+<strong>第二，CP Judger 的价值是"别乱升级"。</strong> 换成朴素置信度阈值后，准确率掉 8 个点，耗时反而暴涨到 109.87s——说明朴素阈值把大量本该直接放行的简单题也误判成难题送去会诊了，既慢又没变准。这个对比确实证明了 CP 判据比拍脑袋阈值好。<br>
+<strong>第三，也是最要命的一行——去掉自适应机制（所有题都会诊），准确率反而更高（76.50 &gt; 75.70）。</strong><br>
+<strong>锐评</strong>：这一行等于承认了：<strong>ConfAgents 不是"更准"，而是"用 0.8 个点的准确率换 3 倍的速度"。</strong> 这本身是一个完全正当、甚至很诚实的 Pareto 权衡，我很欣赏作者把这行数据放出来。但它和摘要里"achieves state-of-the-art accuracy"的表述是有张力的——严格讲，SOTA 准确率属于它自己的 w/o Adaptive 变体，而不是属于 ConfAgents。在医疗场景里，0.8 个点的准确率损失是否可以接受，是一个需要论证的临床问题，而不是一句"trade-off 很划算"能带过的。</p>
+<h2>5：敏感性分析与人工评测</h2>
+<p><strong>换底座</strong>：DeepSeek-chat 73.00%、GPT-4o 77.00%、GPT-4o-mini 55.00%、Kimi-K2 66.00%（MedQA）。有个反直觉的现象：更强的 GPT-4o 不仅更准，<strong>还比更小的 GPT-4o-mini 更快</strong>（9.11s vs 19.01s）。原因很清楚——强模型的预测集合更容易收缩成单元素，触发会诊的比例低，所以整体反而更快。这个观察挺有价值：<strong>在自适应框架下，用更强的模型可能是更省的</strong>。<br>
+不过这张表和主表又对不上：Table 6 里 GPT-4o 的 MedQA 是 77.00，Table 2 里 ConfAgents + GPT-4o 是 80.21；DeepSeek 是 73.00 对 75.70。论文没解释差异来源（大概率一个是单次跑、一个是 bootstrap 均值，或者子集不同），但一篇文章里同一个配置出现两套数字，是审稿人一定会圈出来的。<br>
+<strong>调 α</strong>：α 从 0.005 到 0.2，准确率缓慢下降、耗时显著下降。这符合直觉——α 越小系统越谨慎、越爱开会诊。作者选 α=0.05 作为平衡点。这是个很好的性质：<strong>α 是一个可解释的、单调的旋钮</strong>，医院可以按科室风险等级自己调，急诊调小、常规咨询调大。<br>
+<strong>人工评测</strong>：找了 14 位专家（AI for healthcare、生信、临床医学、生物医学工程方向的 MD 或 PhD 学生），对 ConfAgents / ColaCare / MedAgents / MDAgents 四种方法的回答做匿名随机排序的盲评，题目是 16 道（MedQA 8 + MedBullets 8）。结果 ConfAgents 平均偏好率 <strong>95.54%</strong>，中位数 100%，14 人里有 9 人在全部 16 题上都选它，偏好最低的专家也选了 68.75%。<br>
+<strong>锐评</strong>：95.54% 这个数字高得有点不真实。<strong>16 道题、4 个方法</strong>的样本量，是撑不起"压倒性偏好"这种结论的。而且评委是"AI for healthcare / 生信 / 生物医学工程方向的博士生"，只有一部分是临床医学背景——他们评的很可能是<strong>回答读起来有多结构化、有多像模像样</strong>，而不是临床上有多正确。ConfAgents 的输出因为带 RAG 证据和结构化推理步骤，天然在"看起来专业"这一维度占优。这个实验证明的是"输出可读性好"，不是"临床价值高"，论文的措辞（"significantly more coherent, trustworthy, and clinically valuable"）是超出证据范围的。</p>
+<h1>Step 3：other</h1>
+<h2>1：重点</h2>
+<p><strong>第一，也是最值得带走的：多智能体协作的收益是高度不均匀的，绝大多数样本根本不需要它。</strong> 论文用 Table 1 和消融把这件事量化了——多智能体比单次调用慢约 50 倍，而"全量会诊"相对"自适应会诊"只多了 0.8 个准确率点。任何做 agent 系统的人都应该把这条钉在墙上：<strong>先问"这个 case 值不值得多花算力"，再问"怎么协作更好"</strong>。这本质上是把推理模型里的"自适应思考长度"搬到了多智能体系统上，思路可以迁移到任何 agent 框架。</p>
+<p><strong>第二，用预测集合的大小、而不是概率阈值，作为升级信号。</strong> 概率阈值（"&gt;0.8 就算有把握"）是绝对量，跨题目、跨数据集、跨模型都不可比；预测集合大小是相对量，阈值 τ 由校准集自适应决定，天然做了归一化，还自带一个可解释的旋钮 α。这个设计的<strong>工程价值</strong>是实打实的，哪怕它的<strong>理论保证</strong>（见下）站不住。</p>
+<p><strong>第三，让 agent 在推理中途自己发现知识缺口、拆子问题、再检索的迭代式 RAG，才是准确率的真正来源。</strong> 消融显示它值 10 个点，比 CP Judger 还多。这也提醒一件事：<strong>很多多智能体论文里所谓"协作的收益"，可能大部分其实是"多检索了几轮"的收益</strong>——如果不做这个消融，就会把功劳记错地方。</p>
+<p><strong>第四，一个很自然的落地形态</strong>：CP Judger 天然就是一个 human-in-the-loop 的挂载点。作者自己在 future work 里也提到了——把预测集合大的病例直接转给真人医生，而不是转给另一群 LLM。这可能比论文正文写的东西更有实用价值。</p>
+<h2>2：意见</h2>
+<p><strong>这篇论文的核心卖点是"rigorous statistical guarantee"，但它自己的实现让这个保证失效了，而且它承诺过的验证从未出现。</strong><br>
+保形预测的有限样本覆盖率保证，唯一的前提是校准集与测试样本<strong>可交换（exchangeable）</strong>。而论文 3.2 节明确写道：校准集不是固定的全局集合，而是<strong>针对每个测试样本，从知识库里挑出语义上最相似的 N 道题</strong>。这是一个<strong>用测试点本身去选择校准数据</strong>的操作，直接破坏了可交换性——挑出来的"相似题"分布已经被测试样本条件化了，此时 τ 的 (1−α) 分位数不再具有任何边际覆盖率意义。换句话说，<strong>CP Judger 在实现上退化成了一个"用邻域自适应确定的启发式阈值"，它可能工作得很好（消融里确实比朴素阈值好 8 个点），但它不是保形预测，它享受不到论文反复援引的那个统计保证。</strong> 而这个保证，恰恰是本文相对 MDAgents（同样做自适应路由，但用 LLM 自判难度）声称的全部理论优势所在。<br>
+更糟的是，论文 4.3 节白纸黑字写了"CP Judger 的行为将在敏感性分析部分用覆盖率、平均预测集合大小等标准保形预测指标进一步分析"，而 5.4 节<strong>根本没有报告覆盖率，也没有报告集合大小</strong>，只画了 α 对准确率和耗时的曲线。这意味着读者无从判断：实测覆盖率是否真的达到 1−α？有多少比例的样本被升级了？集合大小分布长什么样？这三个数字是评估这篇论文核心模块的<strong>最基本证据</strong>，一个都没给。另外，关键超参 N（校准集大小）在正文、实现细节和附录中<strong>通篇未曾给出</strong>——而在 α=0.05 下，有限样本修正要求 N ≥ 19，否则分位数根本无定义，可见这个参数对系统行为影响极大。<br>
+<strong>要让这篇文章的核心主张成立，作者必须：(1) 报告实测经验覆盖率与预测集合大小分布，并与名义 1−α 对照；(2) 补一个使用固定全局校准集（满足可交换性）的对照实验，说明动态校准到底是提升了还是仅仅牺牲了理论保证；(3) 公布 N 及其敏感性分析。</strong> 在此之前，最诚实的表述应该是"a confidence-gated adaptive framework"，而不是"conformal-guided with rigorous statistical guarantees"。</p>
+<h2>3：相关工作</h2>
+<p><strong>MDAgents（NeurIPS 2024，MDAgents: An Adaptive Collaboration of LLMs for Medical Decision-Making）</strong>：ConfAgents 最直接的竞争对手，也是它"我们是第一个系统性研究医疗多智能体效率-准确率权衡"这一新颖性声明最大的威胁。MDAgents 同样做自适应协作——它先判断医学问题的复杂度（低/中/高），低复杂度直接单模型解决，中等启动多智能体协作，高复杂度才召集完整的 MDT 式专家团队。二者的差异只在"由谁来判断难度"：MDAgents 让 LLM 自己判，ConfAgents 换成 CP 判据。所以这篇文章更准确的定位应该是"MDAgents 的路由器改进"，而不是一个全新的问题。表 2 里 MDAgents 的耗时也确实是所有多智能体基线里最低的，侧面印证了这一点。</p>
+<p><strong>MedAgentsBench（arXiv:2503.07459, Tang et al., 2025）</strong>：ConfAgents 的评测底座就来自它——Test-Hard / Test-Normal 子集的划分策略是照搬的。这个 benchmark 的动机很值得注意：现有医学 QA 数据集上强模型已经接近饱和，简单题占比过高，导致各种 agent 框架之间的差距被稀释、看不出真实能力差异。它专门筛出需要多步推理的困难题，用来评测 thinking 模型和 agent 框架。做 medical agent 的话，这是目前更能反映方法真实水平的评测集，比在完整 MedQA 上刷分有意义。</p>
+<p><strong>Large Language Model Validity via Enhanced Conformal Prediction Methods（NeurIPS 2024, Cherian, Gibbs &amp; Candès）</strong>：ConfAgents 引用的保形预测方法学基础之一，来自 Candès 组。它关心的是如何给 LLM 的<strong>开放式生成</strong>提供有效性保证——通过对生成内容中的断言（claim）做保形式的筛除，在保证事实性的前提下尽量保留信息量，并引入了条件化的、更贴合具体输入的覆盖率保证。这条线正在解决的问题，恰恰就是 ConfAgents 绕开的那个：<strong>如何在"针对具体输入自适应"和"仍然保有统计保证"之间取得平衡</strong>。想沿着这个方向做的话，从这条线切进去，比从多智能体那条线切进去更有理论纵深。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-6'></script>
+
+</html>
