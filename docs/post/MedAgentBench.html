@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-4'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>MedAgentBench</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="前言 标题：MedAgentBench: A Realistic Virtual EHR Environment to Benchmark Medical LLM Agents（MedAgentBench：一个用于评测医疗大模型智能体的高仿真虚拟电子病历环境），作者来自斯坦福大学（Yixing Jiang、Kam…">
+<meta property="og:title" content="MedAgentBench">
+<meta property="og:description" content="前言 标题：MedAgentBench: A Realistic Virtual EHR Environment to Benchmark Medical LLM Agents（MedAgentBench：一个用于评测医疗大模型智能体的高仿真虚拟电子病历环境），作者来自斯坦福大学（Yixing Jiang、Kam…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/MedAgentBench.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MedAgentBench">
+<meta name="twitter:description" content="前言 标题：MedAgentBench: A Realistic Virtual EHR Environment to Benchmark Medical LLM Agents（MedAgentBench：一个用于评测医疗大模型智能体的高仿真虚拟电子病历环境），作者来自斯坦福大学（Yixing Jiang、Kam…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/MedAgentBench.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">MedAgentBench</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/30" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>前言</h1>
+<p>标题：MedAgentBench: A Realistic Virtual EHR Environment to Benchmark Medical LLM Agents（MedAgentBench：一个用于评测医疗大模型智能体的高仿真虚拟电子病历环境），作者来自斯坦福大学（Yixing Jiang、Kameron C. Black、Gloria Geng、Danny Park、James Zou、Andrew Y. Ng、Jonathan H. Chen），正式版发表于 NEJM AI（2025）。<br>
+论文链接：<a href="https://arxiv.org/abs/2501.14654" rel="nofollow">https://arxiv.org/abs/2501.14654</a><br>
+代码链接：<a href="https://github.com/stanfordmlgroup/MedAgentBench">https://github.com/stanfordmlgroup/MedAgentBench</a></p>
+<p>标签：大模型智能体；医疗人工智能；基准评测；电子病历（EHR）</p>
+<p>摘要：一句话概括：这篇论文给 AI 搭了一座"虚拟医院信息系统"，让大模型扮演"数字住院医"进去真刀真枪地查病历、录数据、开检查、开药，看它到底能不能把活干对——结果最强的模型也只能干对七成。具体来说，斯坦福团队提出 MedAgentBench，包含由两位内科医生手写的 300 个临床任务（10 类）、100 名真实脱敏患者的 78 万余条医疗记录，以及一个符合 FHIR 行业标准、可通过标准 API 交互的虚拟 EHR 环境；作者用统一的极简智能体框架评测了 12 个主流大模型，最好的 Claude 3.5 Sonnet v2 总成功率仅 69.67%，且模型普遍"查数据在行、动手操作拉胯"，三步以上的复杂任务集体崩盘。论文传递的核心信号是：在医学选择题上"超越人类医生"的大模型，距离在真实医院系统里当一个靠谱的数字员工还差得很远，而 MedAgentBench 为丈量这段距离提供了第一把贴近真实的尺子。</p>
+<h1>Step 1：论文解读</h1>
+<h2>1：研究背景：会做题的 AI ≠ 会干活的 AI</h2>
+<p>先说大背景。过去两年，大模型在 MedQA、MedMCQA 这类医学考试题上已经刷到饱和，甚至在一些结构化临床推理任务上表现"超人"。但一个尴尬的现实是：真实医生的工作里，只有约 27% 的时间花在直接临床诊疗上，剩下的大头全耗在跟电子病历系统（EHR）搏斗——查数据、写文书、下医嘱、开转诊。也就是说，医疗行业最需要 AI 帮忙的，恰恰是这些"动手"的脏活累活，而不是答题。<br>
+这就引出了智能体（Agent）范式：不再是"你问我答"，而是给 AI 一个高层指令（比如"看下这个病人最近的血钾，低了就按规则补钾"），让它自己规划步骤、调用工具、和外部系统交互、把事办完。通用领域已经有 AgentBench、tau-bench、BFCL 等智能体基准，但医疗场景有自己的"黑话"：LOINC、NDC、SNOMED、ICD-10 等各种医疗编码体系、临床缩写、纵向多年的病历数据，通用基准根本覆盖不了，医疗领域此前也没有任何一个要求模型与病历环境自主交互的标准化基准。<br>
+锐评：这个切入点非常扎实。医疗 AI 领域最魔幻的现状就是"考试分数世界第一，落地能力约等于零"，造成这个断层的核心原因之一就是缺一把衡量"干活能力"的尺子。作者精准踩在了这个 gap 上——某种意义上，这篇论文的价值不在于技术多炫，而在于把问题定义对了。</p>
+<h2>2：MedAgentBench 全景：一座"虚拟医院信息系统"</h2>
+<p>MedAgentBench 由三大件组成：300 个医生手写的临床任务、一个装着 100 名真实脱敏患者数据的 FHIR 数据库、一套开箱即用的评测代码。设想的工作流是：医生用自然语言下达高层指令 → 智能体编排器（agent orchestrator）调用大模型解析任务、规划函数调用 → 向 FHIR 服务器发送 GET（查询）/POST（写入）请求完成操作 → 最后向医生汇报结果。<br>
+打个比方：EHR 是医院的"操作系统"，FHIR 是这套系统对外的"标准插座"，而被测的大模型就是新入职的"数字实习生"——考的不是它背了多少医学书，而是它能不能在这套系统里规规矩矩地把活干完。</p>
+<h2>3：任务设计：两位医生手写的 300 道"真题"</h2>
+<h3>3.1：任务从哪来、长什么样</h3>
+<p>300 个任务由两位内科医生（作者 KB 和 JHC）根据日常工作中"最希望被自动化"的场景撰写，覆盖住院与门诊，共 10 个具体类别，可归纳为 7 个大类：患者信息检索、检验结果检索、患者数据聚合分析、记录患者数据、检查/检验开单、转诊开单、用药开单（任务设计上还涉及患者沟通与文书场景）。<br>
+每个任务由两部分组成：指令（instruction）和上下文（context）。指令是医生说的话，比如"我刚给 MRN（病历号）为 xxx 的患者量了血压 118/77 mmHg，帮我记录一下"；上下文则是医院系统管理员维护的配置信息，比如"现在是 2023-11-13T10:15，血压的流程表 ID 是 BP"。这个拆分很妙，因为它还原了一个现实：每家医院的 EHR 配置都不一样（同一种药在 A 医院和 B 医院可能是不同的目录和编码），指令与配置分离让任务天然能适配不同机构。</p>
+<h3>3.2：一个有代表性的硬核例子</h3>
+<p>用药开单类任务长这样："查看患者最近的血钾水平，如果低于给定阈值，按规则开口服补钾：血钾每低 0.1 mEq/L 补 10 mEq，目标是 3.5。"上下文里给出血钾的 LOINC 编码和补钾药的 NDC 编码。要做对，模型得：查到最新血钾 → 判断是否低于阈值 → 算出剂量 → 构造一条格式完全正确的 POST 医嘱请求。查询、判断、计算、执行一条龙，错一步全盘皆输——这已经非常接近真实临床工作流的复杂度了。</p>
+<h2>4：患者数据：100 个真实（脱敏）病人、78 万条记录</h2>
+<p>数据是这个基准"含金量"的来源。患者档案抽取自斯坦福 STARR 临床数据仓库的真实脱敏数据，时间戳做了患者级抖动（jitter）处理。作者以"2023 年 11 月 13 日早晨有住院血钠检验"为锚点随机抽取 100 名患者（血钠是住院最常规的检验之一，等于抽到一批"正在住院的真实病人"），平均年龄 58.2 岁，47% 为女性，并回溯了每人五年的纵向数据。<br>
+数据总量高达 785,207 条：约 56.3 万条 Observation（检验结果 + 心率/血压/血氧等六类生命体征）、12.5 万条 Procedure（操作/检查医嘱）、7.5 万条 Condition（诊断）、2.2 万条 MedicationRequest（用药医嘱）。MRN、姓名、电话、地址等隐私信息全部替换为假数据（假 MRN 采用"S+7 位数字"，格式与斯坦福医院真实格式一致；姓名地址由 Faker 库生成）。<br>
+锐评：坚持用真实病人数据而不是合成数据，是非常正确的选择。合成数据往往"干净得不像话"，而真实 EHR 的脏、乱、缺失和超长上下文（一个病人动辄几千条记录）才是对智能体的真正考验。当然代价是数据全部来自斯坦福一家医院，人群代表性存疑——作者自己也坦承了这一点。</p>
+<h2>5：环境实现：用 FHIR 标准，让"考场"能直接搬进真医院</h2>
+<p>FHIR（Fast Healthcare Interoperability Resources）是医疗信息交换的行业互操作标准，主流商业 EHR 厂商基本都支持。作者用开源的 HAPI FHIR JPA 搭建服务器，灌入患者数据后打包成 Docker 镜像，一条命令即可在本地起一个"迷你医院信息系统"，任何智能体系统都能通过标准 HTTP 请求与之交互，还自带一个网页前端方便人工查看数据。<br>
+这是本文最聪明的工程决策：因为环境用的就是真实 EHR 的标准 API，在这个基准上开发调优的智能体，理论上可以低成本迁移到真实医院系统。相比之下，很多基准的"环境"是自定义的玩具接口，分数刷得再高也难以迁移。作者也如实声明：该环境没有做安全与审计机制，不能直接用于生产。</p>
+<h2>6：智能体框架与评测方法</h2>
+<h3>6.1：故意做得极简的 baseline 智能体</h3>
+<p>作者参考 BFCL 的函数调用范式实现了一个极简编排器：向模型暴露 9 个 FHIR 函数（patient.search、condition.search、lab.search、vital.search/create、medicationrequest.search/create、procedure.search/create），每一轮模型三选一：发 GET、发 POST、或 finish 交卷，最多 8 轮。GET 的原始返回会原样喂回给模型；POST 并不会真正写入数据库（避免污染环境、免去反复重启），而是被编排器拦截后做规则校验。<br>
+作者明说这个编排器故意从简，只为建立 baseline——多智能体、记忆模块、规划器等高级玩法留给社区去卷，但"9 个函数 + 最多 8 轮"的约束不变，保证可比性。</p>
+<h3>6.2：评分标准：pass@1，一次定生死</h3>
+<p>主指标是任务成功率（SR）。查询类任务，把模型答案与医生编写的参考解程序的输出比对；操作类任务，用人工编写的规则检查 POST 请求的 payload 是否正确。输出无效动作或超过 8 轮，直接判负。<br>
+最值得注意的是评测哲学：只用 pass@1，不用 pass@k。理由是医疗容错率极低——开错一次药就是事故，不存在"多试几次总能对"的说法，单次尝试的约束才贴近真实部署。<br>
+锐评：pass@1 这个选择我举双手赞成，在医疗场景下用 pass@k 粉饰性能约等于自欺欺人。但规则式评分有个隐患：参考解可能偏窄，临床上合理但写法不同的答案会被误杀（"意见"部分详细展开）。</p>
+<h1>Step 2：实验部分</h1>
+<h2>1：参赛选手与实验设置</h2>
+<p>作者评测了 12 个当时最强的主流模型。闭源阵营：Claude 3.5 Sonnet v2（Anthropic）、GPT-4o / GPT-4o-mini / o3-mini（OpenAI）、Gemini 2.0 Pro / 2.0 Flash / 1.5 Pro（Google）；开源阵营：DeepSeek-V3（685B）、Qwen2.5-72B、Llama 3.3-70B、Gemma2-27B、Mistral-7B v0.3。所有模型使用同一个编排器和同一套提示词，温度设为 0（o3-mini 除外），最多交互 8 轮，保证公平对比。</p>
+<h2>2：总体成绩单：最强的也只能干对七成</h2>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">模型</th>
+<th scope="col">总成功率</th>
+<th scope="col">查询 SR</th>
+<th scope="col">操作 SR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude 3.5 Sonnet v2</td>
+<td>69.67%</td>
+<td>85.33%</td>
+<td>54.00%</td>
+</tr>
+<tr>
+<td>GPT-4o</td>
+<td>64.00%</td>
+<td>72.00%</td>
+<td>56.00%</td>
+</tr>
+<tr>
+<td>DeepSeek-V3</td>
+<td>62.67%</td>
+<td>70.67%</td>
+<td>54.67%</td>
+</tr>
+<tr>
+<td>Gemini 1.5 Pro</td>
+<td>62.00%</td>
+<td>52.67%</td>
+<td>71.33%</td>
+</tr>
+<tr>
+<td>GPT-4o-mini</td>
+<td>56.33%</td>
+<td>59.33%</td>
+<td>53.33%</td>
+</tr>
+<tr>
+<td>o3-mini</td>
+<td>51.67%</td>
+<td>54.67%</td>
+<td>48.67%</td>
+</tr>
+<tr>
+<td>Qwen2.5-72B</td>
+<td>51.33%</td>
+<td>38.67%</td>
+<td>64.00%</td>
+</tr>
+<tr>
+<td>Llama 3.3-70B</td>
+<td>46.33%</td>
+<td>50.00%</td>
+<td>42.67%</td>
+</tr>
+<tr>
+<td>Gemini 2.0 Flash</td>
+<td>38.33%</td>
+<td>34.00%</td>
+<td>42.67%</td>
+</tr>
+<tr>
+<td>Gemma2-27B</td>
+<td>19.33%</td>
+<td>38.67%</td>
+<td>0.00%</td>
+</tr>
+<tr>
+<td>Gemini 2.0 Pro</td>
+<td>18.00%</td>
+<td>25.33%</td>
+<td>10.67%</td>
+</tr>
+<tr>
+<td>Mistral-7B v0.3</td>
+<td>4.00%</td>
+<td>8.00%</td>
+<td>0.00%</td>
+</tr>
+</tbody>
+</table></div>
+<p>几个值得咂摸的点：第一，冠军 Claude 3.5 Sonnet v2 也只有 69.67%，放到临床语境就是"每 10 件事搞砸 3 件"，离可部署差着量级。第二，开源最强 DeepSeek-V3 已经贴近 GPT-4o，开闭源差距在收窄但仍然存在。第三，主打推理的 o3-mini 表现平平，说明"会深度思考"不等于"会守规矩地调 API"。第四，当时还是实验版的 Gemini 2.0 Pro 离谱地在闭源阵营垫底，甚至远不如自家 Flash；而 7B 级别的 Mistral 几乎全军覆没——用小模型当医疗 agent，目前想都别想。</p>
+<h2>3：查数据在行，一动手就露怯</h2>
+<p>300 个任务正好一半只需 GET 查询、一半需要 POST 写入（往往还得先查再写）。除了 Gemini 1.5 Pro 和 Qwen2.5 这两个"反骨"选手，其余模型清一色查询 SR 高于操作 SR，Claude 的落差最典型（85.33% vs 54.00%），而 Gemma2 和 Mistral 的操作 SR 干脆是 0%——连一条格式合法的医嘱都发不出去。<br>
+这给落地指了条明路：先从"只读"场景做起（信息检索、数据汇总、病历摘要），把"写"权限（开药、下医嘱）留到模型真正可靠之后。这个结论朴素但重要，基本奠定了后来医疗 agent 产品"先查后写、人类签字"的主流姿势。</p>
+<h2>4：难度分层：三步以上任务集体崩盘</h2>
+<p>作者按完成任务所需步数把任务分为 easy（1 步）、medium（2 步）、hard（3 步及以上）三档。Claude 的曲线极具代表性：easy 100% → medium 81.67% → hard 23.33%，断崖式下跌；GPT-4o 的 hard 成绩 33.33% 已是全场最高；Gemini 2.0 Flash 则是典型的"单步巨人、多步侏儒"（easy 98.89%，hard 仅 5.56%）。<br>
+锐评：hard 任务才是真实临床工作的常态复杂度（查、判、算、写一条龙），最强模型两三成的成功率说明当时的大模型基本处于"能跑腿、不能办事"的阶段。多步任务的误差是乘法累积的——单步 95% 的可靠度，五步连乘就只剩约 77%，这就是 agent 落地最残酷的数学。</p>
+<h2>5：错误分析：不是不懂医学，是不守规矩</h2>
+<p>作者归纳了两大典型"死法"。其一是无效动作：不按要求的格式输出，比如 Gemini 2.0 Flash 有 54% 的案例输出无效动作，总爱把请求包进 tool_code 或 json 代码块，尽管提示词明确说了不要包含任何多余文本；又或者把 GET 请求的语法拼错。其二是答案格式错误：要求只输出数值，模型偏要回一整句话，或者输出 {"value": 5.4} 而不是要求的 [5.4]。<br>
+讽刺的是，大量失败根本不是医学知识不够，而是指令遵循和格式化这种"工程素养"不过关。这也从侧面解释了为什么后续改进工作（如 MedAgentBench v2）仅靠优化提示词、增加格式化工具和记忆组件、不动底层模型就能显著涨分——基准测出的短板里，有相当一部分是"接口层"的低垂果实。当然反过来说，一个连输出格式都稳不住的系统，谁也不敢放它进真医院。</p>
+<h1>Step 3：other</h1>
+<h2>1：重点</h2>
+<p>这篇论文最有价值的部分，我认为有四点。第一，问题定义的迁移：它把医疗 AI 评测从"答题"（静态 QA）拽到了"干活"（交互式执行），并且是首个要求模型与医疗记录环境自主交互的基准——这一步定义了此后整个医疗 agent 赛道的评测范式，此后的 MedAgentGym、HealthAgentBench 等工作都是沿这条路走的。第二，工程上的迁移性设计：坚持用 FHIR 行业标准 API 和真实脱敏患者数据搭环境，把"考场成绩"与"真实医院部署"之间的距离压到最短，这比在任何自定义玩具环境里刷分都有意义。第三，两个可直接指导落地的实证结论：模型普遍"查询强于操作"、"多步任务断崖崩盘"，直接推导出"先只读、后可写、人在回路"的稳妥部署路径。第四，评测哲学：在医疗这种高风险场景坚持 pass@1 的严格标准，明确拒绝用 pass@k 粉饰太平，这个立场值得所有高风险领域的基准效仿。一句话总结精华：MedAgentBench 用一套可复现的真实环境证明了"医学考霸"与"合格数字医护"之间存在鸿沟，并给出了丈量这条鸿沟的尺子。</p>
+<h2>2：意见</h2>
+<p>作为审稿人，我只提最要害的一条：评分器本身的效度没有被验证。操作类任务靠作者手写的规则去检查 POST payload，查询类任务靠作者手写的参考解比对，而任务和参考解出自同一批作者之手——全文没有报告评分结果与独立临床医生判断的一致性（例如 Cohen's kappa），也没有分析"临床上完全合理、但与参考解写法不同"的答案被误判为失败的比例（例如剂量的等效表达、时间窗边界的合理取值、FHIR 资源的多种合法构造方式）。在一个以"医疗安全、单次容错"为核心卖点的基准里，裁判自身的可靠性未经审计，那么 69.67% 这个 headline 数字既可能高估也可能低估模型真实能力，所有基于它的结论都要打折扣。必须补充：随机抽样子集的人工双盲复核、多参考解机制、以及评分器与医生判断的一致性分析。</p>
+<h2>3：相关工作</h2>
+<p>AgentClinic（Schmidgall 等，2024）：把评测搬进"模拟诊室"的多模态智能体基准——LLM 扮演医生，与患者智能体多轮对话问诊、申请检查、给出诊断，还包含带医学影像的题目；它考察交互式诊断推理，与 MedAgentBench 考察的 EHR 操作能力正好互补。<br>
+MedAgentGym（2025）：大规模、可执行的医疗智能体训练环境，提供超过 7 万个源自真实生物医学场景的代码型任务实例，核心卖点是"不止于评测"——支持用交互轨迹对医疗 agent 做监督微调和强化学习，回应了 MedAgentBench 只能评、不能练的局限。<br>
+HealthBench（OpenAI，2025）：由 262 名医生撰写细粒度评分标准（4.8 万余条 rubric）、覆盖 5000 段多轮健康对话的大规模评测，衡量模型健康对话的质量与安全性；它评"说得好不好"，MedAgentBench 评"做得对不对"，两者共同勾勒出医疗大模型评测的两翼。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.disabled=true;
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","powehi12/powehi12.github.io");
+    script.setAttribute("issue-term","title");
+    
+    script.setAttribute("theme","github-dark");
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-4'></script>
+
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-dark");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
+</html>
