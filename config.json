@@ -13,7 +13,7 @@
   "urlMode": "pinyin",
   "onePageListNum": 10,
   "showPostSource": 1,
-  "needComment": 1,
-  "allHead": "<link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-5'>",
-  "script": "<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-5'></script>"
+  "needComment": 0,
+  "allHead": "<link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-6'>",
+  "script": "<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-6'></script>"
 }

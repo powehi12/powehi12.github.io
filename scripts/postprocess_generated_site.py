@@ -25,7 +25,7 @@ from urllib.parse import quote
 SITE_ORIGIN = "https://powehi12.github.io"
 SITE_NAME = "qbyang 的个人博客"
 SITE_DESCRIPTION = "记录 Agent、LLM、强化学习与论文阅读"
-ASSET_VERSION = "20260727-5"
+ASSET_VERSION = "20260727-6"
 
 RSS_LINK = (
     f'<link rel="alternate" type="application/rss+xml" '
@@ -44,67 +44,6 @@ LINK_TAG_PATTERN = re.compile(
     rf"<link\b{ATTRIBUTE_FRAGMENT}>",
     re.IGNORECASE | re.DOTALL,
 )
-
-COMMENT_RECOVERY_SCRIPT = """<script id="comment-load-recovery">
-(function () {
-  var loadTimer = null;
-  var observer = null;
-
-  function resetButton(button, message) {
-    button.disabled = false;
-    button.dataset.loading = "false";
-    button.textContent = message;
-    button.setAttribute("aria-label", message);
-  }
-
-  window.openComments = function () {
-    var comments = document.getElementById("comments");
-    var button = document.getElementById("cmButton");
-    if (!comments || !button || button.dataset.loading === "true") return;
-
-    if (loadTimer) window.clearTimeout(loadTimer);
-    if (observer) observer.disconnect();
-    comments.replaceChildren();
-    button.dataset.loading = "true";
-    button.disabled = true;
-    button.textContent = "正在加载评论…";
-    button.setAttribute("aria-label", "正在加载评论");
-
-    var script = document.createElement("script");
-    script.src = "https://utteranc.es/client.js";
-    script.setAttribute("repo", "powehi12/powehi12.github.io");
-    script.setAttribute("issue-term", "title");
-    script.setAttribute("theme", "github-dark");
-    script.setAttribute("crossorigin", "anonymous");
-    script.async = true;
-
-    function fail() {
-      if (loadTimer) window.clearTimeout(loadTimer);
-      if (observer) observer.disconnect();
-      script.remove();
-      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
-      resetButton(button, "重试加载评论");
-    }
-
-    function succeed() {
-      if (loadTimer) window.clearTimeout(loadTimer);
-      if (observer) observer.disconnect();
-      button.style.display = "none";
-      button.dataset.loading = "false";
-    }
-
-    script.addEventListener("error", fail, { once: true });
-    observer = new MutationObserver(function () {
-      if (comments.querySelector("iframe.utterances")) succeed();
-    });
-    observer.observe(comments, { childList: true, subtree: true });
-    loadTimer = window.setTimeout(function () {
-      if (!comments.querySelector("iframe.utterances")) fail();
-    }, 10000);
-    comments.appendChild(script);
-  };
-})();
-</script>"""
 
 TAG_FORM_SCRIPT = """<script id="tag-form-events">
 (function () {
@@ -218,6 +157,93 @@ def classify_post_title(html: str) -> str:
         return f'<h1{attrs}>{match.group("content")}</h1>'
 
     return pattern.sub(replace, html, count=1)
+
+
+def remove_javascript_function(source: str, name: str) -> str:
+    """Remove a named generated JavaScript function with balanced braces."""
+    pattern = re.compile(
+        rf"\bfunction\s+{re.escape(name)}\s*\([^)]*\)\s*\{{"
+    )
+    while match := pattern.search(source):
+        brace_start = source.find("{", match.start(), match.end())
+        depth = 0
+        function_end: int | None = None
+        for index in range(brace_start, len(source)):
+            if source[index] == "{":
+                depth += 1
+            elif source[index] == "}":
+                depth -= 1
+                if depth == 0:
+                    function_end = index + 1
+                    break
+        if function_end is None:
+            break
+
+        function_start = match.start()
+        while function_start > 0 and source[function_start - 1] in " \t":
+            function_start -= 1
+        while function_end < len(source) and source[function_end] in " \t\r\n":
+            function_end += 1
+        source = source[:function_start] + source[function_end:]
+    return source
+
+
+def remove_comment_ui(html: str) -> str:
+    """Remove Gmeek's discussion UI and all utterances loading code."""
+    for tag_name, element_id in (("button", "cmButton"), ("div", "comments")):
+        html = re.sub(
+            rf"""<{tag_name}\b(?=[^>]*\bid\s*=\s*(["']){element_id}\1)[^>]*>.*?</{tag_name}>\s*""",
+            "",
+            html,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+
+    html = re.sub(
+        r'<script\b(?=[^>]*\bid\s*=\s*(["\'])'
+        r'comment-load-recovery\1)[^>]*>.*?</script>\s*',
+        "",
+        html,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    html = re.sub(
+        r'<script\b[^>]*\bsrc\s*=\s*(["\'])'
+        r'https://utteranc\.es/client\.js\1[^>]*>\s*</script>\s*',
+        "",
+        html,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    html = re.sub(
+        r"^[ \t]*#(?:cmButton|comments)\s*\{[^{}]*\}\s*\r?\n?",
+        "",
+        html,
+        flags=re.IGNORECASE | re.MULTILINE,
+    )
+
+    script_pattern = re.compile(
+        r"(?P<open><script\b(?![^>]*\bsrc\s*=)[^>]*>)"
+        r"(?P<body>.*?)(?P<close></script>)",
+        re.IGNORECASE | re.DOTALL,
+    )
+
+    def clean_script(match: re.Match[str]) -> str:
+        body = match.group("body")
+        for function_name in ("openComments", "iFrameLoading"):
+            body = remove_javascript_function(body, function_name)
+        body = re.sub(
+            r"^[ \t]*(?:var\s+)?utterancesLoad\s*=\s*0\s*;\s*\r?\n?",
+            "",
+            body,
+            flags=re.IGNORECASE | re.MULTILINE,
+        )
+        body = re.sub(
+            r"^[^\r\n]*\bcmButton\b[^\r\n]*;\s*\r?\n?",
+            "",
+            body,
+            flags=re.IGNORECASE | re.MULTILINE,
+        )
+        return match.group("open") + body + match.group("close")
+
+    return script_pattern.sub(clean_script, html)
 
 
 def clean_description(value: str) -> str:
@@ -870,7 +896,8 @@ def inject_seo(html: str, relative: Path) -> str:
 
 def transform_html(source: str, relative: Path, total_pages: int = 1) -> str:
     kind = page_kind(relative)
-    html = normalize_theme(source)
+    html = remove_comment_ui(source) if kind == "post" else source
+    html = normalize_theme(html)
     html = normalize_assets(html)
     html = add_body_class(html, f"{kind}-page")
     html = add_skip_link(html)
@@ -889,10 +916,6 @@ def transform_html(source: str, relative: Path, total_pages: int = 1) -> str:
     html = add_noopener(html)
     if kind == "tag":
         html = harden_tag_page(html)
-    if kind == "post" and 'id="cmButton"' in html:
-        html = inject_once_before_html_end(
-            html, 'id="comment-load-recovery"', COMMENT_RECOVERY_SCRIPT
-        )
     html = inject_seo(html, relative)
     if not html.endswith("\n"):
         html += "\n"
@@ -1149,19 +1172,26 @@ def validate_html(html: str, relative: Path, total_pages: int = 1) -> list[str]:
             errors.append("post missing current enhancement script")
         if classify_post_title(html) != html:
             errors.append("post title is missing its current length class")
-        if 'id="cmButton"' in html:
-            for marker in (
-                'id="comment-load-recovery"',
-                'script.addEventListener("error"',
-                "10000",
-                "重试加载评论",
-            ):
-                if marker not in html:
-                    errors.append(f"comment recovery missing marker: {marker}")
-            if not re.search(
-                r'script\.setAttribute\("theme",\s*"github-dark"\)', html
-            ):
-                errors.append("comment widget is not using github-dark")
+        forbidden_comment_patterns = (
+            (r'\bid\s*=\s*["\']cmButton["\']', "comment button"),
+            (r'\bid\s*=\s*["\']comments["\']', "comment container"),
+            (r"comment-load-recovery", "comment recovery script"),
+            (r"\bfunction\s+openComments\b", "comment loader"),
+            (r"\bfunction\s+iFrameLoading\b", "comment frame poller"),
+            (r"utteranc\.es/client\.js", "utterances client"),
+            (r"\butterancesLoad\b", "utterances state"),
+            (r"#(?:cmButton|comments)\s*\{", "comment inline styles"),
+        )
+        for pattern, label in forbidden_comment_patterns:
+            if re.search(pattern, html, re.IGNORECASE):
+                errors.append(f"post retains {label}")
+        if not re.search(
+            r'<a\b(?=[^>]*\btitle=["\']Issue["\'])'
+            r'(?=[^>]*\bhref=["\'][^"\']*/issues/\d+["\'])[^>]*>',
+            html,
+            re.IGNORECASE,
+        ):
+            errors.append("post is missing its Issue source link")
     if kind == "error" and not re.search(
         r'<meta\b(?=[^>]*\bname=["\']robots["\'])[^>]*\bnoindex\b',
         html,
