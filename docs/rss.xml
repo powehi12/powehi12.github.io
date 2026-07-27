@@ -1,5 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Mon, 27 Jul 2026 08:07:57 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>PhysicianBench</title><link>https://powehi12.github.io/post/PhysicianBench.html</link><description># 前言
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Mon, 27 Jul 2026 10:35:45 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>AgentEHR</title><link>https://powehi12.github.io/post/AgentEHR.html</link><description># 前言
+
+标题：AgentEHR: Advancing Autonomous Clinical Decision-Making via Retrospective Summarization（AgentEHR：用回溯式摘要推进自主临床决策）
+
+- 论文链接：https://arxiv.org/abs/2601.13918
+- 代码与数据：https://github.com/BlueZeros/AgentEHR
+- 机构：上海交通大学、上海人工智能实验室
+
+标签：临床智能体；电子病历导航；长程上下文压缩；回溯式摘要
+
+摘要：一句话讲，这篇论文的核心思想是'别把翻过的病历扔了——每隔十步回头把全部历史重读一遍，重写一份摘要，而且摘要要和原始记录并排放着用，而不是拿来替换它'。</description><guid isPermaLink="true">https://powehi12.github.io/post/AgentEHR.html</guid><pubDate>Mon, 27 Jul 2026 10:35:05 +0000</pubDate></item><item><title>PhysicianBench</title><link>https://powehi12.github.io/post/PhysicianBench.html</link><description># 前言
 
 标题：PhysicianBench: Evaluating LLM Agents in Real-World EHR Environments（Stanford，2026.05）
 论文链接：https://arxiv.org/abs/2605.02240
