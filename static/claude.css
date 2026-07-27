@@ -560,6 +560,28 @@ body.home-page #content > div:first-child {
 }
 
 @media screen {
+  body.post-page #header {
+    display: grid !important;
+    grid-template-columns: 82px minmax(0, 1fr) 82px;
+    column-gap: 0;
+  }
+
+  body.post-page #header .postTitle {
+    display: block !important;
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    justify-self: stretch;
+    text-align: center;
+  }
+
+  body.post-page #header .title-right {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    margin: 5px 0 0 !important;
+  }
+
   .postTitle {
     overflow-wrap: break-word;
     word-break: normal;
@@ -1430,6 +1452,15 @@ body.home-page #content > div:first-child {
 }
 
 @media screen and (max-width: 700px) {
+  body.post-page #header {
+    grid-template-columns: 74px minmax(0, 1fr) 74px;
+    column-gap: 0;
+  }
+
+  body.post-page #header .title-right {
+    margin-top: 1px !important;
+  }
+
   body.post-page .postTitle.postTitle--long {
     font-size: 26px !important;
     line-height: 1.22 !important;
