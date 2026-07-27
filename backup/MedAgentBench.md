@@ -111,3 +111,49 @@ FHIR（Fast Healthcare Interoperability Resources）是医疗信息交换的行�
 AgentClinic（Schmidgall 等，2024）：把评测搬进"模拟诊室"的多模态智能体基准——LLM 扮演医生，与患者智能体多轮对话问诊、申请检查、给出诊断，还包含带医学影像的题目；它考察交互式诊断推理，与 MedAgentBench 考察的 EHR 操作能力正好互补。
 MedAgentGym（2025）：大规模、可执行的医疗智能体训练环境，提供超过 7 万个源自真实生物医学场景的代码型任务实例，核心卖点是"不止于评测"——支持用交互轨迹对医疗 agent 做监督微调和强化学习，回应了 MedAgentBench 只能评、不能练的局限。
 HealthBench（OpenAI，2025）：由 262 名医生撰写细粒度评分标准（4.8 万余条 rubric）、覆盖 5000 段多轮健康对话的大规模评测，衡量模型健康对话的质量与安全性；它评"说得好不好"，MedAgentBench 评"做得对不对"，两者共同勾勒出医疗大模型评测的两翼。
+
+# 复现
+This is MedAgentBench — a Stanford EHR agent benchmark, which lines up closely with what you're working on. Let me check the repo setup.我查了论文、代码仓库和后续进展，先给结论：**跑通复现的难度很低（工程活儿，不是科研活儿），但"复现出论文里那张表"的难度中等，而"复现完还能发东西"的难度已经很高了。**
+
+## 一、这篇是什么
+
+MedAgentBench（Stanford ML Group，Ng / James Zou / Jonathan Chen 组）不是一个模型论文，是一个 **benchmark**：300 个医生手写的临床任务、10 个类别、100 个虚拟病人（70 万+ 数据元素）、一个 FHIR 标准的交互式 EHR 环境。论文已经正式发表在 NEJM AI（2025）。
+
+关键点：**没有训练环节，纯 evaluation**。所以不需要 GPU、不需要显存、不需要跑几天。这一点决定了它的复现难度和一般深度学习论文完全不是一个量级。
+
+## 二、复现难度分解
+
+**1. 环境搭建：★★☆☆☆（半天到一天）**
+官方 README 给的是 conda + Docker 的标准流程：拉一个 `jyxsu6/medagentbench` 镜像跑 FHIR server（8080 端口），然后 `python -m src.start_task -a` 起 20 个 task worker（占用 5000–5015 端口），再 `python -m src.assigner` 跑评测。坑主要在三处：
+- **refsol.py 要单独下载**：评分器/参考解不在 GitHub 里，得从 Stanford Box 单独下载放进 `src/server/tasks/medagentbench/`。这个链接如果哪天失效就麻烦了，建议你现在就先下下来存好。
+- **端口冲突**：Mac 的 5000 端口被 AirPlay 占用，README 专门提了；Linux 服务器上多人共用也容易撞。
+- **内存**：HAPI FHIR 装 70 万数据元素，机器最好给到 16GB 内存，环境冷启动大约需要 90 秒。
+
+**2. 代码理解：★★★☆☆**
+代码是在 AgentBench 框架上改的。AgentBench 那套 controller + worker + assigner 的多进程架构比较重，报错信息不友好，日志分散。你要改任何东西（换模型、换 prompt、加工具）都得先摸清这个调度链路，这部分大概要花 2–3 天。这是整个复现里最耗时间的一环，不是难，是烦。
+
+**3. API 成本：★★☆☆☆**
+每个 agent 最多 8 轮交互、9 个 EHR 函数。300 个任务 × 8 轮 × FHIR 返回的 JSON（很长）——单个前沿模型跑一轮全量评测，粗估输入几百万 token，成本从 gpt-4o-mini 的几毛钱到前沿模型的二三十美元不等。**如果你要复现整张表（11–12 个模型），预算备个 200–300 美元比较稳。** 另外论文里的 Claude / Gemini 是走 Vertex AI 的，README 让你 `gcloud auth print-access-token`，如果你没有 GCP 账号得换成官方 API 自己改适配层。国内网络环境的话，API 代理是实际最大的摩擦点。
+
+**4. 复现原文数字：★★★☆☆（有个硬伤）**
+论文里最好成绩是 Claude 3.5 Sonnet v2 的 69.67%。问题是现在 2026 年 7 月了，**论文里评测的那批模型（Claude 3.5 Sonnet v2、GPT-4o 那代、Gemini 1.5）大部分已经下线或者被静默升级过**。你几乎不可能精确复现 69.67% 这个数字。加上 LLM 采样本身有随机性、grader 里有大量手写规则，跑出 ±3% 的偏差是正常的。所以现实目标应该是"复现出趋势和相对排序"，而不是"复现出小数点"。
+
+## 三、我更想提醒你的：这个 benchmark 已经快被打穿了
+
+这是我搜到的最重要的信息，和你做 EHR agent 的方向直接相关：
+
+- **MedAgentBench v2**（PSB 2026）：仅靠 prompt engineering + 工具重新设计（让 agent 不用手写 HTTP 请求、加数学计算工具、加 CoT 和 few-shot），用 GPT-4.1 就打到 91.0%；再加一个记忆组件，达到 98.0%。
+- GitHub 上还有一个外部提交的 issue（#6，2026年4月）宣称用 prefetch-and-execute 架构做到了 **300/300 满分**——这个未经官方验证，但方向是明确的。
+- 原论文自己也承认，失败主要来自无效 API 调用、格式错误这类操作性问题，而不是医学推理错误。**这意味着分数的大头是靠工具设计和 prompt 工程刷上去的，不是靠"医学智能"。**
+
+所以：**从 69.67% 到 98% 这条路已经被人走完了。** 如果你的计划是"复现 MedAgentBench，然后想办法提点分数"，那这条路的天花板已经被封住了，而且封得很难看——它证明了这个 benchmark 主要测的是 agent harness 的工程质量。
+
+## 四、我的建议
+
+作为研究生，我认为正确的用法是：**把它当基础设施用，不要当研究目标。**
+
+1. **一定要跑通**（1 周内），因为它是目前唯一一个 FHIR 标准的交互式 EHR agent 环境，你后面做自己的 agent 必然需要一个这样的沙盒。跑通本身对你的价值 >> 复现数字的价值。
+2. **别在提分上花时间**，去看 v2 那篇（PSB 2026，Eric Chen）把他们的工具设计直接拿来当你的 baseline 起点。
+3. **关注更新的靶子**：2026 年出了 **HealthAgentBench**，覆盖医学影像、自由文本、结构化 EHR 多模态，最好的模型只有 42% 左右的成功率，远未饱和，而且它显示 agent harness 对性能影响很大——GPT-5.5 换个 harness 分数就掉。这个才是现在有空间的战场。
+
+**一句话锐评**：MedAgentBench 是一篇"抢占生态位"的论文——它的价值在于第一个把 FHIR 环境标准化了，而不在于它的技术难度。它的分数很快被工程手段刷满，恰恰说明真正难的问题（安全性、多轮纠错、长程病历推理）它还没测到。你去复现它，收获应该是"我有了一个 EHR 沙盒"，而不是"我复现了一篇 NEJM AI"。

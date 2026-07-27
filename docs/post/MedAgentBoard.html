@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-5'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>MedAgentBoard</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="前言 标题：MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks（NeurIPS 2025 Datasets &amp; Benchmarks Track） 论文…">
+<meta property="og:title" content="MedAgentBoard">
+<meta property="og:description" content="前言 标题：MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks（NeurIPS 2025 Datasets &amp; Benchmarks Track） 论文…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/MedAgentBoard.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MedAgentBoard">
+<meta name="twitter:description" content="前言 标题：MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks（NeurIPS 2025 Datasets &amp; Benchmarks Track） 论文…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/MedAgentBoard.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">MedAgentBoard</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/31" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>前言</h1>
+<p>标题：MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks（NeurIPS 2025 Datasets &amp; Benchmarks Track）<br>
+论文：<a href="https://arxiv.org/abs/2505.12371" rel="nofollow">https://arxiv.org/abs/2505.12371</a><br>
+代码：<a href="https://github.com/yhzhu99/MedAgentBoard">https://github.com/yhzhu99/MedAgentBoard</a><br>
+项目主页（含全部结果、数据与 prompt）：<a href="https://medagentboard.netlify.app/" rel="nofollow">https://medagentboard.netlify.app/</a><br>
+OpenReview：<a href="https://openreview.net/forum?id=BPpG4qQaNj" rel="nofollow">https://openreview.net/forum?id=BPpG4qQaNj</a><br>
+单位：北大 / 港大 / 爱丁堡 / ETH，一作 Yinghao Zhu，通讯 Liantao Ma、Lequan Yu</p>
+<p>标签：医疗多智能体；基准评测；EHR 预测建模；临床工作流自动化</p>
+<p>摘要：一句话说本质——<strong>吹了两年的"让好几个 LLM 智能体开会诊"，一旦拉上"一个足够强的单模型"和"老老实实微调过的传统小模型"同台竞技，在大多数医疗任务上其实并没有赢。</strong> 这篇论文做的事情很朴素：它认为现有的医疗多智能体评测有两个硬伤——任务太窄（几乎全是选择题式医学问答）、基线太软（只跟单个 LLM 比，从来不跟传统机器学习比），于是搭了一个叫 MedAgentBoard 的擂台，把四类任务（医学（视觉）问答、通俗摘要生成、结构化 EHR 预测、临床工作流自动化）横跨文本 / 医学图像 / 结构化 EHR 三种模态铺开，然后让三条赛道的选手打全场：传统方法（微调 BERT/VLM、XGBoost、GRU、AdaCare 等）、单个 LLM（zero-shot / few-shot / CoT / self-consistency）、多智能体框架（MedAgents、ReConcile、MDAgents、ColaCare、AgentSimp、SmolAgents、OpenManus、Owl）。结论是一张相当扎脸的成绩单：文本医学问答上单个强 LLM 就够了，医学 VQA 和 EHR 预测上传统专用模型还是断层第一（AdaCare 在 MIMIC-IV 死亡预测上 AUROC 94.28% 对 GPT-4o 的 85.99%），多智能体唯一真正站得住脚的主场是临床工作流自动化——而且赢的不是"更聪明"，而是"更能把活干完"。论文最后给出的机制性解释比结论本身更值钱：多智能体只在<strong>任务可分解性高</strong>的场景有效，而在<strong>感知受限</strong>的任务（如 VQA）上，第一步丢掉的视觉细节是后面无论开多少轮会都捞不回来的。</p>
+<h1>Step 1：论文解读</h1>
+<h2>1：这篇论文到底在跟谁过不去</h2>
+<p>先说清楚它针对的那股风气。2024 年起，"医疗多智能体"成了热门叙事：让一个 LLM 扮演内科医生、一个扮演放射科医生、一个扮演主任，再让它们互相讨论、投票、辩论，最后收敛出一个答案——听起来非常像真实的多学科会诊（MDT），也非常好写故事。MDAgents、MedAgents、ReConcile、ColaCare 这些工作都报告了正向结果，尤其在医学问答上偶尔能超过单个 LLM。<br>
+但作者提出一个很扫兴的问题：这些"超过"是真本事，还是评测设计出来的幻觉？他们把矛头指向两点：</p>
+<ul>
+<li><strong>任务太窄</strong>：绝大多数评测就是 MedQA / PubMedQA 这类选择题。可真实临床里医生要的是自由文本的诊断支持、要做数据分析、要读结构化的化验单趋势，不是从 A/B/C/D 里挑一个。选择题打得好，不代表有临床效用（论文引了 NEJM AI 那篇《It's time to bench the medical exam benchmark》来撑腰）。</li>
+<li><strong>基线太软</strong>：几乎所有工作都只跟"单个 LLM"比，绝口不提"传统方法"。而传统方法是在任务数据上真刀真枪微调过的，在准确率、效率、稳定性上很可能还压着 LLM。你不跟它比，等于田径比赛只让自己队内选手互相跑。<br>
+锐评：这两条批评一点都不新鲜，通用领域已经有 MAST（《Why do multi-agent LLM systems fail?》）和《If multi-agent debate is the answer, what is the question?》干过同样的事。MedAgentBoard 的贡献不在于"提出质疑"，而在于<strong>把这套质疑第一次系统地搬进医疗，并且真的把传统方法请回了基线表</strong>。第二点是它最硬的价值——很多医疗 LLM 论文的表格里根本看不见 XGBoost 和 GRU，这在 2025 年是一件相当离谱的事。</li>
+</ul>
+<h2>2：四类任务是怎么挑出来的</h2>
+<p>作者不是随手抓四个数据集，而是按"医疗 AI 的三类利益相关者"来铺：患者、临床医生、研究者。前两类任务服务患者（把复杂的医学信息变得可读），后两类服务医生和研究者（用结构化数据做决策支持和提效）。</p>
+<h3>2.1：任务一：医学（视觉）问答</h3>
+<p>考的是"知不知道"。分两个子形态：选择题（考知识回忆和判别推理）和自由生成（考生成能力和细粒度理解）。</p>
+<ul>
+<li>文本 QA：<strong>MedQA</strong>（USMLE 美国医师执照考试风格五选一）、<strong>PubMedQA</strong>（基于生物医学摘要，有 Yes/No/Maybe 闭式标签，也有原摘要结论当作自由生成的参考答案）。</li>
+<li>医学 VQA：<strong>PathVQA</strong>（病理切片图，只用其中的 yes/no 二分题）、<strong>VQA-RAD</strong>（临床放射影像，yes/no 题当选择题 + 179 道开放题）。<br>
+每个数据集抽约 200 条测试样本。这里有个不起眼但值得点赞的细节：作者明确说 MDAgents 当年每个数据集只用了 50 条，自己抽 200 条是为了统计可靠性——顺手把前人的样本量问题挂在了明面上。</li>
+</ul>
+<h3>2.2：任务二：通俗摘要生成</h3>
+<p>考的是"能不能说人话"。把系统评价、研究论文这类专业文本改写成非专业人士读得懂、又不失真的版本。这个任务的难点是双重的：既要真读懂术语，又要在不牺牲关键含义、不引入错误的前提下重新表达。<br>
+用了五个数据集：<strong>Cochrane</strong>（系统评价的通俗语言摘要，作者自己写的）、<strong>eLife</strong> 和 <strong>PLOS</strong>（论文 + 作者/编辑写的科普版；eLife 的摘要长度约为 PLOS 的两倍，抽象程度和可读性更高）、<strong>Med-EASi</strong>（细粒度简化标注，众包）、<strong>PLABA</strong>（PubMed 摘要的逐句对齐通俗改写）。每个抽 100 对。</p>
+<h3>2.3：任务三：结构化 EHR 预测建模</h3>
+<p>考的是"看不看得懂化验单"。两个临床上真有意义的目标：<strong>院内死亡</strong>和<strong>30 天再入院</strong>。数据用 <strong>MIMIC-IV v3.1</strong>（ICU，取 17 项化验 + 2 项人口学，按天合并，住院超 7 天只留最后 7 天、更早的聚合）和 <strong>TJH</strong>（同济医院 485 例 COVID-19 住院患者，73 项化验 + 2 项人口学，公开可下）。每个任务抽 200 名患者。<br>
+这里的技术张力最值得注意：结构化 EHR 是<strong>高维、稀疏、带时序、大量缺失</strong>的数值表格，跟自然语言和图像的建模范式完全不同。要喂给 LLM，就得先把它"文本化"——论文用的是按特征展开的列表式 prompt，并且<strong>手工从医学指南里整理了每个特征的单位和参考范围</strong>塞进 prompt 里。这一步是善意的，但也正是后面翻车的伏笔。</p>
+<h3>2.4：任务四：临床工作流自动化</h3>
+<p>考的是"能不能替我干活"。这是四个任务里最贴近真实科研日常、也是全文最有价值的一块新任务。四个子类型：</p>
+<ol>
+<li><strong>数据抽取与统计分析</strong>：从结构化 EHR 里找变量、清洗、变换（细分为 data wrangling / querying / statistics / preprocessing）。</li>
+<li><strong>预测建模</strong>：选模型、训练、评估。</li>
+<li><strong>数据可视化</strong>：一类是"抽数据+统计+画分布"，另一类是"先定义建模任务、再可视化模型参数或性能"。</li>
+<li><strong>报告生成</strong>：把分析结果整合成有结论、有洞见的文档。<br>
+任务是这么造出来的：先用 <strong>Gemini 2.5 Pro</strong> 喂 schema 和数据样本，批量生成一大堆分析问题，再人工审阅筛选，最终留下 <strong>100 道</strong>（MIMIC-IV 50 + TJH 50）。<br>
+锐评：LLM 造题 + 人工筛这套流程现在很常见，但对 benchmark 来说始终是个软肋——题目的难度分布和风格会被出题模型的偏好带走，人工筛只能剔除坏题，剔不掉系统性偏差。而且 100 道题、还要拆成四个子类型，每格的样本量薄到经不起细分分析。</li>
+</ol>
+<h2>3：三条赛道的参赛选手</h2>
+<p>MedAgentBoard 的核心设计就是让三种范式在同一张表里出现，这也是它跟别的 benchmark 最大的区别。</p>
+<h3>3.1：传统方法（Conventional）</h3>
+<ul>
+<li>文本 QA：<strong>BioLinkBERT</strong>、<strong>GatorTron</strong> 微调成分类器（GatorTron 是拿 HuggingFace 预训练权重加 MLP 分类头再微调）。</li>
+<li>医学 VQA：<strong>M³AE</strong>、<strong>BiomedGPT</strong>、<strong>MUMC</strong> 微调；<strong>LLaVA-Med</strong>、<strong>Med-Flamingo</strong> 因为已经在大规模医学 VQA 上训过，直接 zero-shot 评，看开箱泛化能力。</li>
+<li>通俗摘要：<strong>BART</strong>、<strong>BART-CNN</strong>、<strong>T5</strong>、<strong>PEGASUS</strong> 在各数据集上微调。</li>
+<li>EHR 预测：机器学习（决策树、<strong>XGBoost</strong>，只用最后一次就诊）+ 深度学习（GRU、LSTM）+ EHR 专用模型（<strong>AdaCare</strong>、<strong>ConCare</strong>、<strong>GRASP</strong>，吃完整纵向序列）。<br>
+注意一个天生的不对称：这些分类器式的传统方法<strong>做不了自由生成</strong>——它们的答案空间是被限定的词表。所以自由生成那几列，传统方法整行是空的。</li>
+</ul>
+<h3>3.2：单个 LLM</h3>
+<p>提示策略从简到繁铺了一个梯度：<strong>zero-shot</strong>、<strong>few-shot ICL</strong>（给两个示例）、<strong>CoT</strong>（要求先输出 Thought 再输出 Answer，JSON 格式）、<strong>SC</strong>（self-consistency，跑 5 次多数投票）、<strong>CoT-SC</strong>（CoT + 投票）。<br>
+EHR 任务上还额外横向比了一大票模型：OpenBioLLM-8B、Qwen2.5-7B、Gemma-3-4B、HuatuoGPT-o1-7B、DeepSeek-R1-Distill-Qwen-7B（本地 LMStudio 部署）以及 DeepSeek-V3、DeepSeek-R1、GPT-4o、o3-mini-high（走 API）。</p>
+<h3>3.3：多智能体协作</h3>
+<p>作者把医疗多智能体的协作机制归纳成几类形态：带角色的推理（MDAgents）、讨论（MedAgents、ReConcile）、投票、辩论、模拟 MDT 会诊（ColaCare）。具体落地：</p>
+<ul>
+<li>QA/VQA：<strong>MedAgents</strong>、<strong>ReConcile</strong>、<strong>MDAgents</strong>、<strong>ColaCare</strong>，全部适配进统一 pipeline，agent 之间<strong>只用文本交换</strong>以保证公平。</li>
+<li>通俗摘要：改编 <strong>AgentSimp</strong>，编排九个角色、实际跑七个的流水线——项目总监定简化准则 → 结构分析师抽关键信息 → 内容简化师出初稿 → 简化监督员审校 → 比喻分析师加类比 → 术语解释员处理术语 → 校对员终审。</li>
+<li>EHR 预测：把它当自由生成 QA 处理，让 agent 就"患者健康状态和风险因素"辩论。<strong>MDAgents 在这个任务被排除</strong>，理由是它那套复杂交互模式和难度判定对结构化数据预测意义不大，退化后跟固定交互的 agent 没区别。</li>
+<li>工作流自动化：<strong>SmolAgents</strong>、<strong>OpenManus</strong>、<strong>Owl</strong>——这三个是通用 agent 框架，关键是<strong>自带工具调用（能跑 Python）</strong>。<br>
+所有 LLM-based 方法的底座统一是 <strong>DeepSeek-V3-0324</strong>（VQA 的视觉部分用 Qwen-VL-Max；ReConcile 因为设计上要求 agent 多样性，混用 DeepSeek-V3 / Qwen-Max / Qwen-VL 系列）。</li>
+</ul>
+<h2>4：评测怎么打分</h2>
+<p>三层评估手段，按任务性质分配：</p>
+<ul>
+<li><strong>确定性指标</strong>：选择题用 Accuracy；EHR 预测用 AUROC + AUPRC（不平衡数据两个都要看，AUPRC 尤其关键）；通俗摘要用 ROUGE-L（内容重合）+ SARI（专门衡量简化质量，看词的增删保留是否恰当）。</li>
+<li><strong>LLM-as-a-judge</strong>：自由生成 QA 用。VQA-RAD 开放题答案通常就一个词或短语，所以只判二值等价（输出 1 或 0）；PubMedQA 长答案则给 1–10 分的细粒度评分，并且给 judge 也上了 CoT，要求先输出 reasoning 再给 score，最后乘 100 报告。</li>
+<li><strong>专家人评</strong>：工作流自动化用。<strong>六位 PhD/MD 评估者</strong>（3 位做医疗 AI 的 CS 博士、1 位 MD、1 位生物医学工程、1 位生物统计）对照人工整理的参考答案独立打分、归类错误、再汇总。不是简单二分，而是分出"正确 / 无结果 / 答案错误 / 不完整 / 正确但呈现有问题 / 模型未保存 / 缺指标 / 数值异常 / 可读性差"等一整套细粒度错误类型——这套错误分类法本身就是有用的资产。<br>
+锐评：这套评估设计是全文最扎实的部分，尤其是任务四敢上真人专家、还报了 Fleiss' Kappa。但 LLM-as-a-judge 的底座跟被测模型属于同一家族（DeepSeek 系），self-preference bias 的风险论文没有正面处理。</li>
+</ul>
+<h2>5：和已有 benchmark 相比新在哪</h2>
+<p>论文用一张表把自己和前人排开（MedHELM、MedAgentsBench、Strategic Reasoning、MAST、Multi-agent Debate、MDAgents）。差异可以简化成两条：</p>
+<ul>
+<li><strong>横向</strong>：别人评的任务基本落在"医学问答 / 编程 / 数学 / 知识 QA"，MedAgentBoard 是唯一同时覆盖医学（V）QA、EHR 预测、通俗摘要、工作流自动化四类的。</li>
+<li><strong>纵向</strong>：别人的"Benchmarked Methods"一栏基本是"Single LLM"或"Single LLM + Multi-agent"，只有 MedAgentBoard 写着"Conventional Methods, Single LLM, Multi-agent"。<br>
+更有意思的是这张表顺手暴露了领域内的<strong>结论撕裂</strong>：MDAgents 说多智能体在十个任务里赢了七个，MAST 和 Multi-agent Debate 说多智能体基本赢不过 well-prompted 单 LLM。作者把自己定位成"裁决者（adjudicating conflicting claims）"。锐评：这个定位挺聪明，但也有点自我加冕——一个 benchmark 能不能裁决，取决于它的对照设计是否真的公平，而这一点后面（见 Step 3 意见）恰恰是它最脆弱的地方。</li>
+</ul>
+<h1>Step 2：实验部分</h1>
+<h2>1：任务一：文本 QA 单模型够用，VQA 传统模型断层第一</h2>
+<p>先看文本 QA。<strong>LLM 全面碾压传统方法</strong>，而且不是小胜：MedQA 选择题上 BioLinkBERT 只有 32.45%、GatorTron 36.60%，而单 LLM zero-shot 就 77.50%，CoT-SC 冲到 <strong>89.90%</strong>（全场最高）。PubMedQA 选择题上传统方法尚可（BioLinkBERT 70.40%），但仍被所有 LLM 方法压住。<br>
+多智能体呢？<strong>有竞争力，但赢不稳</strong>。MedAgents 在 PubMedQA 选择题上 83.85% 是该列最高，但在 MedQA 上 85.25% 输给 CoT-SC 的 89.90%。最扎心的是 PubMedQA 自由生成：<strong>DeepSeek-V3 裸 zero-shot 就拿到 91.23%（LLM-as-a-judge），比所有多智能体都高</strong>，MedAgents 81.63%、ColaCare 81.72%，MDAgents 更是掉到 62.54%。<br>
+再看 VQA，画风完全变了。<strong>专用传统 VLM 稳坐第一</strong>：PathVQA 上 MUMC 91.40%、M³AE 90.65%；VQA-RAD 选择题 M³AE 89.05%；VQA-RAD 自由生成 M³AE 71.96%。而通用 VLM 无论单模型还是多智能体都差一大截：VQA-RAD 自由生成里最好的 LLM 方法只有 46.42%，<strong>差距超过 25 个百分点</strong>。<br>
+几个值得单独拎出来的现象：</p>
+<ul>
+<li><strong>ReConcile 在 PathVQA 上崩了</strong>，只有 49.00%——一个 yes/no 二分任务，49% 意味着比随机猜还差一点。多智能体在感知任务上的脆弱性在这里暴露得最彻底。</li>
+<li><strong>LLaVA-Med 和 Med-Flamingo 这两个"医学多模态大模型"是全表最差的一档</strong>（VQA-RAD 自由生成 19.94% 和 18.38%）。它们打不过 M³AE 这种更小更专的模型，这件事对"医学多模态基座"的叙事相当不友好。</li>
+<li>锐评：文本 QA 那一栏的传统基线（32%、36%）<strong>弱得不正常</strong>。BioLinkBERT 在 MedQA 上被硬改成五选一分类器，本来就不是它擅长的形态。所以"LLM 碾压传统方法"这个结论在 QA 上其实是被弱基线放大的；真正有说服力的对照是 VQA 和 EHR 那两块。作者把这两种情况混在同一个"传统方法"标签下呈现，读者容易误读。</li>
+</ul>
+<h2>2：任务二：通俗摘要生成，微调小模型继续赢</h2>
+<p>自动指标上，<strong>微调过的 seq2seq 小模型全面领先</strong>：Cochrane 上 BART-CNN ROUGE-L 42.24%，PLABA 上 PEGASUS 59.11%，eLife 上 BART-CNN 47.08%。而 LLM 这边最好的 Opt.+ICL 在 Cochrane 只有 35.58%，AgentSimp（多智能体）34.25%——<strong>多智能体连单 LLM 的最优提示都没打过</strong>。PLABA 上差距更夸张（41.37% 对 59.11%）。<br>
+但这里必须替 LLM 说句公道话，论文自己也承认了：ROUGE 这类指标<strong>天生偏爱风格上像参考答案的输出</strong>，而微调模型正是被显式优化去模仿那个风格的。证据就在 SARI 列里——Cochrane 上 BART-CNN SARI 39.75% 对 LLM 38.56%，差距只有 1.2 个点，比 ROUGE-L 的 6.7 个点小得多。也就是说：<strong>LLM 的简化能力其实不差，差的是"写得像参考答案"</strong>。<br>
+另一个有意思的发现：DeepSeek-V3 用最基础的 prompt（Basic 33.65%）跟精心优化的 prompt（Optimized 33.85%）几乎没差别，加了 ICL 才涨到 35.58%。作者顺手引了 DeepSeek-R1 技术报告的说法：模型强了之后，繁复的提示工程边际收益在下降。<br>
+锐评：这一节的结论"多智能体不如微调小模型"在方法论上是<strong>最弱的一节</strong>。用 ROUGE/SARI 去评判"通俗性"本身就很勉强——一份读者真正读得懂的科普摘要，完全可能 ROUGE 很低。作者只在讨论里轻轻提了一句指标偏向，却仍然让这个结论进了摘要和 key findings。这里真正需要的是人评或可读性指标（FKGL 之类），而不是继续堆 n-gram overlap。九个 agent 的流水线值不值，这张表其实没有回答。</p>
+<h2>3：任务三：EHR 预测，这是全文最扎脸的一张表</h2>
+<p>这一节的差距是全文最大的，而且对做 EHR 方向的人来说信息量最密。<br>
+<strong>传统方法断层第一</strong>：MIMIC-IV 死亡预测上 AdaCare AUROC <strong>94.28%</strong>、ConCare 94.08%、GRASP 93.14%、LSTM 93.12%、GRU 92.49%；TJH 死亡预测上 AdaCare <strong>99.02%</strong>、XGBoost 98.05%。<br>
+<strong>最强单 LLM 有点东西，但不够</strong>：GPT-4o 在 MIMIC-IV 死亡 85.99%、TJH 死亡 95.72%，DeepSeek-R1 在 MIMIC-IV 死亡 83.95%、再入院 73.92%（这是 LLM 里再入院最好的）。对零样本来说确实亮眼，但离 94% 还差近 10 个点。<br>
+<strong>AUPRC 才是真正的照妖镜</strong>：MIMIC-IV 死亡预测上 AdaCare AUPRC <strong>81.93%</strong> 对 GPT-4o 的 <strong>42.20%</strong>——差了将近一倍。AUROC 的差距是 8 个点，AUPRC 的差距是 40 个点。这说明 LLM 在<strong>不平衡数据的正类排序</strong>上远远不如专用模型，而这恰恰是临床最在意的能力（你要的是能把真正会死的病人排到最前面）。任何只报 AUROC 的 LLM+EHR 论文，看到这一列都应该冒汗。<br>
+<strong>小模型基本是在瞎猜</strong>：DeepSeek-R1-Distill-7B 在 MIMIC-IV 死亡 AUROC <strong>40.94%</strong>——低于 50%，意味着它的预测方向是反的；TJH 上 52.70%。OpenBioLLM-8B 再入院 50.21%、TJH 56.75%。Gemma-3-4B、Qwen2.5-7B 也都在及格线附近晃。所谓"医疗微调小模型"（OpenBioLLM、HuatuoGPT-o1）在这个任务上<strong>没有体现出任何领域优势</strong>。<br>
+<strong>多智能体的"提升"来自哪里？这是本节最关键的一笔。ColaCare 在 MIMIC-IV 死亡上 82.91%，确实明显高于它自己的底座 DeepSeek-V3 的 76.86%；MedAgents 81.53%、ReConcile 77.81% 也都有提升。但它们统统打不过 GPT-4o 这个单模型</strong>。论文对此的判断非常直白：这些温和的提升很大程度上是<strong>底座模型的功劳，而不是多智能体策略带来的变革性优势</strong>；QA 式的协作框架对结构化数据预测可能压根就不对路。<br>
+附录里还藏了一个反直觉结果（不同提示策略对比）：DeepSeek-R1 在 MIMIC-IV 死亡上从 Basic 的 73.68% 涨到 Opt.+ICL 的 83.95%（加单位、参考范围和示例很有用），但在 TJH 上反而从 90.63% 掉到 85.59%。<strong>提示工程在 EHR 上的收益不稳定，甚至可能是负的</strong>——这个观察比主表更值得后续研究跟进。<br>
+锐评：如果只让我留这篇论文的一张表，我留这一张。它把一件业内心知肚明但很少写进论文的事钉在了纸面上：<strong>在结构化 EHR 预测上，一个 2020 年的 AdaCare 打十个 2025 年的 LLM agent</strong>。想在这个方向做出真东西的人，第一件事应该是想清楚"我为什么不直接用 GRU"。</p>
+<h2>4：任务四：工作流自动化，多智能体唯一的主场</h2>
+<p>这一节多智能体终于赢了，但赢的方式值得细看。<br>
+<strong>优势体现在"把活干完"，不是"干得更聪明"</strong>。核心对比是"No Result"这一行：TJH 建模任务上，单 LLM 有 <strong>50.00% 直接没结果</strong>、31.83% 是"模型没保存"，最终只有 8.42% 正确；OpenManus 无结果率只有 4.17%，正确率 <strong>64.0%</strong>。MIMIC-IV 建模任务上单 LLM 正确率 9.08%（"模型未保存"高达 57.46%），SmolAgents 47.62%、OpenManus 39.84%。报告生成更明显：MIMIC-IV 上单 LLM <strong>55.23% 干脆没生成报告</strong>，OpenManus 只有 15.38%，清晰呈现率 34.46% 对单 LLM 的 5.15%。<br>
+原因不神秘：这些框架<strong>自带 Python 执行等工具能力</strong>，能真的把代码跑起来、把文件存下来。单 LLM 只是生成一段代码文本，容易在多步之间丢上下文、搞错顺序、忘记落盘。所以这里的胜负，本质上是"<strong>有工具 + 有状态管理</strong>"对"<strong>只会生成文本</strong>"的胜负，不是"多个脑袋"对"一个脑袋"的胜负。<br>
+<strong>但整体正确率依然很低</strong>。除了数据抽取这一档（SmolAgents 在 MIMIC-IV 上 90.25% 正确，是全表最亮的数字），后面越走越崩：可视化正确率 MIMIC-IV 上最高只有 SmolAgents 的 29.25%（单 LLM 18.09%，Owl 12.5%），建模和报告普遍在 40–50% 以下。<strong>流水线越往后，成功率衰减越厉害</strong>——这是 long-horizon 任务的典型失效模式。<br>
+<strong>框架之间差异巨大，选错框架比不用还糟</strong>。Owl 在 MIMIC-IV 建模任务上正确率 <strong>0.00%</strong>、无结果率 76.92%；可视化上 58.33% 完全没画图。OpenManus 和 SmolAgents 明显优于 Owl。这意味着"多智能体"根本不是一个可以整体评价的类别，工程实现质量的方差比范式差异还大。<br>
+可靠性方面，Fleiss' Kappa 为 Data 0.61、Modeling 0.56、Visualization 0.54、Reporting 0.40。前三项算中等到较好，<strong>Reporting 只有 0.40，属于一般水平</strong>——也就是说"报告写得好不好"这件事连六位专家之间都难以达成一致，那一行数字应该打折看。<br>
+锐评：这一节是全文最有前瞻性的部分，也最接近真实的临床科研场景。但作者没有把最关键的消融做掉：<strong>给单 LLM 也配上代码执行工具</strong>。现在的对照是"裸单 LLM"对"带工具的 agent 框架"，赢的到底是协作还是工具，这张表没法区分。而从"No Result"和"Model Not Saved"这两行数字的形态看，我押注绝大部分增益来自工具和状态管理。</p>
+<h2>5：成本账，以及一个反直觉的发现</h2>
+<p>v2 补了一节成本分析（附录 D），按 DeepSeek API 定价算，两个指标：平均讨论轮数和测试集总花费。</p>
+<ul>
+<li>讨论轮数上，<strong>ReConcile 最烧</strong>，PubMedQA 自由生成要 2.30 轮——因为它刻意给每个 agent 用不同底座，意见分歧大，收敛慢。<strong>MDAgents 最省</strong>，VQA-RAD 选择题上低到 0.035 轮，因为它有难度门控（difficulty gating），简单题直接单 agent 上，讨论轮数记零，把均值拉了下来。</li>
+<li>花费上，多智能体普遍比 zero-shot / CoT 贵：ReConcile 在 PubMedQA 自由生成上 $9.32，而 zero-shot 在 MedQA 上只要 $0.39。</li>
+<li><strong>反直觉的地方</strong>：文本 QA 任务上<strong>最贵的方法根本不是多智能体，而是单 LLM 的 CoT-SC</strong>——MedQA $7.99、PubMedQA 选择题 $10.52、自由生成 $13.50，把最能开会的 ReConcile 都超了。原因是它要生成多份 token 密集的思维链再投票。<br>
+锐评：这一节是全文最容易被忽略但对实践最有用的。它顺手拆掉了一个常见的偷懒论证——"多智能体太贵所以不值得"。真相是<strong>复杂的单模型推理策略同样烧钱</strong>，性价比这件事必须每个方法单独算，不能按范式贴标签。同时也说明 MedQA 上 CoT-SC 那个 89.90% 的第一名，是用全场最高的成本换来的。</li>
+</ul>
+<h2>6：作者自己划定的边界</h2>
+<p>论文的 Limitations 写得比多数 benchmark 诚实，三条：</p>
+<ol>
+<li><strong>所有 LLM 方法的表现都绑在底座能力上</strong>，所以这里的排名会随着更强模型出现而改变——结论是"某一时刻的快照"。</li>
+<li><strong>四类任务不穷尽真实临床的复杂度</strong>；尤其工作流自动化只有 100 道人工筛选的题，覆盖不了真实场景的动态性。</li>
+<li><strong>指标可以更深</strong>，需要引入更多定性人评来衡量临床效用、可信度，以及协作动力学的微妙之处。<br>
+Future work 指了三个方向，其中一条格外值得注意：<strong>探索混合架构——让传统模型负责特征提取，让 LLM agent 负责复杂推理</strong>，特别是在 EHR 预测上。另外两条是跨模态的多智能体策略（别再只靠文字交换），以及鲁棒性、可解释性、公平性、隐私。<br>
+Broader impact 里还有一句难得的自我提醒：过度引用本文结论可能被误读成"对多智能体的全面否定"，从而抑制创新。锐评：这句话说得对，但也说明作者清楚自己写出了一篇容易被当作弹药引用的论文。而以我的经验，这类"扫兴型" benchmark 的结论在传播中一定会被简化成一句口号，作者的免责声明基本不会被一起转发。</li>
+</ol>
+<h1>Step 3：other</h1>
+<h2>1：重点</h2>
+<p>最值钱的不是"多智能体不行"这个结论——这个结论在通用领域已经被 MAST 等工作说过了。真正值钱的是三样东西。<br>
+<strong>第一，两个机制性解释，这是全文最可复用的思想。</strong>（a）<strong>任务可分解性（task decomposability）</strong>：多智能体只在复杂任务能被拆成契合角色分工的逻辑子步骤时才有效——工作流自动化里"读数据 → 跑模型 → 画图"天然可拆，所以赢；（b）<strong>信息保真瓶颈（information fidelity bottleneck）</strong>：在感知受限的任务（如 VQA）里，第一步视觉环节丢掉的关键细节，后续无论开多少轮纯文本讨论都无法恢复，所以多个 agent 反而互相放大同一个错误。这两条给了"什么时候该上多智能体"一个可操作的判据，比任何一张表格都更有指导价值。<br>
+<strong>第二，传统方法必须回到基线表。</strong> 在结构化 EHR 预测上，AdaCare 的 AUROC 94.28% 对 GPT-4o 的 85.99%，AUPRC 81.93% 对 42.20%——AUPRC 上的近一倍差距说明 LLM 在不平衡正类排序上还远不能用。任何一篇不跟 GRU/XGBoost/AdaCare 比就宣称 LLM agent 在 EHR 预测上有效的论文，都应该被要求补这一栏。<br>
+<strong>第三，多智能体的"提升"要跟底座解耦。</strong> ColaCare（82.91%）&gt;  它的底座 DeepSeek-V3（76.86%），但 &lt; GPT-4o（85.99%）。这个三段式对比是全文最锐利的一刀：<strong>你以为的协作收益，可能只是换了个更强的模型。</strong> 与之配套的是成本发现——CoT-SC 比多智能体更贵（$13.50 对 $9.32），说明"复杂 vs 简单"的成本直觉也是错的。<br>
+以及一个附带的实践结论：工作流自动化上的增益主要来自<strong>工具调用 + 状态持久化</strong>，而不是"多个脑袋一起想"。这对做 agent 的人是个明确的资源分配信号——把预算花在工具、执行环境和状态管理上，回报大概率高于把预算花在设计更花哨的角色扮演协议上。</p>
+<h2>2：意见</h2>
+<p><strong>最致命的问题：底座不对等，导致核心结论无法成立。</strong> 所有多智能体框架的底座统一是 DeepSeek-V3-0324，而单 LLM 赛道里却放进了 GPT-4o、DeepSeek-R1 这些更强的模型。于是"多智能体打不过最好的单 LLM"这个结论，完全可以被一个远更平凡的解释吃掉——<strong>DeepSeek-V3 打不过 GPT-4o</strong>，跟"协作机制无效"根本没有关系。看 EHR 那一列就很清楚：ColaCare(V3) 82.91% &lt; GPT-4o 85.99%，但 ColaCare(V3) &gt; DeepSeek-V3 76.86%。也就是说，在<strong>同底座</strong>的唯一一组合法对照里，多智能体其实是赢的，涨了 6 个点。论文在 4.3 节自己写下了"提升很大程度上由底座驱动"这句判断，却恰恰没有做那个能验证这句话的实验：<strong>把 GPT-4o 作为底座跑 MedAgents / ColaCare / ReConcile，再跟 GPT-4o 单模型比</strong>。这个消融的成本远低于论文已经做过的工作量（附录显示 MedQA 全量多智能体实验只要几美元），却是整篇论文结论成立的唯一支点。<br>
+这对 benchmark 类论文是致命的，原因在于影响力的不对称：benchmark 的结论会被大量引用当作既定事实，而"多智能体在医疗上不如单 LLM"这句话一旦流传出去，几乎没人会回头检查它是在什么底座配置下得出的。同样的不对等在别处也反复出现——工作流自动化里是"带工具的 agent 框架"对"裸单 LLM"，通俗摘要里是"ROUGE 优化过的微调模型"对"没见过参考风格的 LLM"。每一处都存在一个比"多智能体无效"更简单的替代解释，而论文没有一处把它排除掉。<strong>修改建议很具体：把所有跨范式对比锁定同一底座、同一工具权限，再报结论；否则请把标题和摘要里的因果性措辞降级为相关性描述。</strong></p>
+<h2>3：相关工作</h2>
+<p><strong>MedAgentsBench（arXiv:2503.07459，2025）</strong>：Tang 等人（MedAgents 原作者团队）做的医学推理 benchmark，专门针对<strong>复杂</strong>医学推理任务评测 thinking model 和 agent 框架，结论是最新的推理型模型在复杂医学推理上表现突出。跟 MedAgentBoard 是一对镜像：它把 QA 挖得更深（筛出真正难的题），MedAgentBoard 把任务铺得更宽（跨四类任务三种模态）。两篇一起读能看清"多智能体在医学 QA 上到底有没有用"这个问题的两个切面——如果你只关心推理难度，前者更相关。</p>
+<p><strong>《Why Do Multi-Agent LLM Systems Fail?》/ MAST（arXiv:2503.13657，2025）</strong>：Cemri 等人（Berkeley）在编程、跨应用网页任务、数学推理、知识 QA 上系统研究多智能体失败模式，提出 <strong>MAST 失败分类法</strong>，结论跟 MedAgentBoard 高度一致：多智能体并不能稳定超过一个 well-prompted 的单 LLM 基线。它是 MedAgentBoard 在通用域的前身和思想来源。价值在于它不止说"不行"，还把"为什么不行"拆成了可诊断的类别（规范违背、协作失调、任务验证缺失等），对调试自己的 agent 系统比看 benchmark 分数有用得多。</p>
+<p><strong>ColaCare（WWW 2025）</strong>：Wang 等人的工作，用 LLM 驱动的多智能体模拟多学科会诊（MDT）来做 EHR 建模，思路是把传统 EHR 模型当作"专科医生"接入讨论，再由 LLM agent 整合。有意思的是它既是 MedAgentBoard 的<strong>被测对象</strong>，又跟 MedAgentBoard 出自同一课题组——某种程度上作者在拿自己的方法开刀。但它也正好指向 MedAgentBoard 在 Future Work 里推荐的方向：<strong>混合架构</strong>（传统模型做特征提取和表征、LLM agent 做推理和解释）。同组还有一篇 <strong>ClinicRealm（arXiv:2407.18525）</strong>，是本文在 EHR 预测上"重新评估 LLM vs 传统 ML"这条主线的直接前作，做 EHR agent 方向的话建议连着一起看。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.disabled=true;
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","powehi12/powehi12.github.io");
+    script.setAttribute("issue-term","title");
+    
+    script.setAttribute("theme","github-dark");
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-5'></script>
+
+<script id="comment-load-recovery">
+(function () {
+  var loadTimer = null;
+  var observer = null;
+
+  function resetButton(button, message) {
+    button.disabled = false;
+    button.dataset.loading = "false";
+    button.textContent = message;
+    button.setAttribute("aria-label", message);
+  }
+
+  window.openComments = function () {
+    var comments = document.getElementById("comments");
+    var button = document.getElementById("cmButton");
+    if (!comments || !button || button.dataset.loading === "true") return;
+
+    if (loadTimer) window.clearTimeout(loadTimer);
+    if (observer) observer.disconnect();
+    comments.replaceChildren();
+    button.dataset.loading = "true";
+    button.disabled = true;
+    button.textContent = "正在加载评论…";
+    button.setAttribute("aria-label", "正在加载评论");
+
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", "powehi12/powehi12.github.io");
+    script.setAttribute("issue-term", "title");
+    script.setAttribute("theme", "github-dark");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    function fail() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      script.remove();
+      comments.textContent = "评论暂时无法加载，请检查网络后重试。";
+      resetButton(button, "重试加载评论");
+    }
+
+    function succeed() {
+      if (loadTimer) window.clearTimeout(loadTimer);
+      if (observer) observer.disconnect();
+      button.style.display = "none";
+      button.dataset.loading = "false";
+    }
+
+    script.addEventListener("error", fail, { once: true });
+    observer = new MutationObserver(function () {
+      if (comments.querySelector("iframe.utterances")) succeed();
+    });
+    observer.observe(comments, { childList: true, subtree: true });
+    loadTimer = window.setTimeout(function () {
+      if (!comments.querySelector("iframe.utterances")) fail();
+    }, 10000);
+    comments.appendChild(script);
+  };
+})();
+</script>
+</html>

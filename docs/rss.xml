@@ -1,5 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Mon, 27 Jul 2026 03:14:41 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>MedAgentBench</title><link>https://powehi12.github.io/post/MedAgentBench.html</link><description># 前言
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Mon, 27 Jul 2026 06:24:22 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>MedAgentBoard</title><link>https://powehi12.github.io/post/MedAgentBoard.html</link><description># 前言
+
+标题：MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks（NeurIPS 2025 Datasets &amp; Benchmarks Track）
+论文：https://arxiv.org/abs/2505.12371
+代码：https://github.com/yhzhu99/MedAgentBoard
+项目主页（含全部结果、数据与 prompt）：https://medagentboard.netlify.app/
+OpenReview：https://openreview.net/forum?id=BPpG4qQaNj
+单位：北大 / 港大 / 爱丁堡 / ETH，一作 Yinghao Zhu，通讯 Liantao Ma、Lequan Yu
+
+标签：医疗多智能体；基准评测；EHR 预测建模；临床工作流自动化
+
+摘要：一句话说本质——**吹了两年的'让好几个 LLM 智能体开会诊'，一旦拉上'一个足够强的单模型'和'老老实实微调过的传统小模型'同台竞技，在大多数医疗任务上其实并没有赢。</description><guid isPermaLink="true">https://powehi12.github.io/post/MedAgentBoard.html</guid><pubDate>Mon, 27 Jul 2026 06:01:04 +0000</pubDate></item><item><title>MedAgentBench</title><link>https://powehi12.github.io/post/MedAgentBench.html</link><description># 前言
 
 标题：MedAgentBench: A Realistic Virtual EHR Environment to Benchmark Medical LLM Agents（MedAgentBench：一个用于评测医疗大模型智能体的高仿真虚拟电子病历环境），作者来自斯坦福大学（Yixing Jiang、Kameron C. Black、Gloria Geng、Danny Park、James Zou、Andrew Y. Ng、Jonathan H. Chen），正式版发表于 NEJM AI（2025）。</description><guid isPermaLink="true">https://powehi12.github.io/post/MedAgentBench.html</guid><pubDate>Mon, 27 Jul 2026 03:13:30 +0000</pubDate></item><item><title>info</title><link>https://powehi12.github.io/post/info.html</link><description>结合你做 LLM agent / EHR 这个方向，我按'从源头到消化'的顺序整理一份，顺带标注哪些对你的子方向特别值得盯。</description><guid isPermaLink="true">https://powehi12.github.io/post/info.html</guid><pubDate>Sun, 26 Jul 2026 16:50:13 +0000</pubDate></item><item><title>Biomni Agent（详细版）</title><link>https://powehi12.github.io/post/Biomni%20Agent%EF%BC%88-xiang-xi-ban-%EF%BC%89.html</link><description>## 结论：Biomni 是真正的 Agent
 
