@@ -1,5 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Mon, 27 Jul 2026 06:24:22 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>MedAgentBoard</title><link>https://powehi12.github.io/post/MedAgentBoard.html</link><description># 前言
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Mon, 27 Jul 2026 08:07:57 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>PhysicianBench</title><link>https://powehi12.github.io/post/PhysicianBench.html</link><description># 前言
+
+标题：PhysicianBench: Evaluating LLM Agents in Real-World EHR Environments（Stanford，2026.05）
+论文链接：https://arxiv.org/abs/2605.02240
+代码链接：https://github.com/HealthRex/PhysicianBench
+项目主页：https://healthrex.github.io/PhysicianBench/
+
+标签：EHR 智能体评测；长程多步任务；FHIR 可执行验证；临床工作流
+
+摘要：这篇论文的核心思想一句话就是——**别再考模型'知不知道'，要考它'能不能在真的电子病历系统里，把一整件医生的活干完'**。</description><guid isPermaLink="true">https://powehi12.github.io/post/PhysicianBench.html</guid><pubDate>Mon, 27 Jul 2026 08:06:38 +0000</pubDate></item><item><title>MedAgentBoard</title><link>https://powehi12.github.io/post/MedAgentBoard.html</link><description># 前言
 
 标题：MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks（NeurIPS 2025 Datasets &amp; Benchmarks Track）
 论文：https://arxiv.org/abs/2505.12371
