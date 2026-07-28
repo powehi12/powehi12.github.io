@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-6'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>LongMedBench</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="前言 标题：LongMedBench: Benchmarking Medical Agents for Long-Horizon Clinical Decision-Making 论文链接：https://arxiv.org/abs/2607.09322 （arXiv:2607.09322v1 [cs.AI]，2…">
+<meta property="og:title" content="LongMedBench">
+<meta property="og:description" content="前言 标题：LongMedBench: Benchmarking Medical Agents for Long-Horizon Clinical Decision-Making 论文链接：https://arxiv.org/abs/2607.09322 （arXiv:2607.09322v1 [cs.AI]，2…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/LongMedBench.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LongMedBench">
+<meta name="twitter:description" content="前言 标题：LongMedBench: Benchmarking Medical Agents for Long-Horizon Clinical Decision-Making 论文链接：https://arxiv.org/abs/2607.09322 （arXiv:2607.09322v1 [cs.AI]，2…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/LongMedBench.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">LongMedBench</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/36" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>前言</h1>
+<p><strong>标题</strong>：LongMedBench: Benchmarking Medical Agents for Long-Horizon Clinical Decision-Making</p>
+<ul>
+<li>论文链接：<a href="https://arxiv.org/abs/2607.09322" rel="nofollow">https://arxiv.org/abs/2607.09322</a> （arXiv:2607.09322v1 [cs.AI]，2026 年 7 月 10 日）</li>
+<li>代码链接：<strong>论文正文与脚注中均未给出任何代码或数据仓库地址</strong>（许可证为 CC BY-NC-SA 4.0）</li>
+<li>作者单位：浙江大学（杭州）、阿里巴巴集团（杭州）、经血管植入器械研究院（杭州）</li>
+<li>作者：Zihan Xu*、Yanzhen Chen*、Xiaocheng Zhang*（共同一作）、Zhiting Fan、Weiqi Zhai、Hongxia Xu、Zuozhu Liu（通讯）</li>
+</ul>
+<p><strong>标签</strong>：医疗智能体评测；长程临床决策；EHR 时序推理；智能体记忆架构</p>
+<p><strong>摘要</strong>：这篇论文的核心思想一句话说就是——<strong>现在的医疗 AI 考试题都是"单选题"，但真实医生看病是"连续剧"，所以我们造了一套连续剧版的考卷</strong>。作者认为已有的医疗 agent 评测（MedAgentBench、AgentClinic、EHRSQL 等）几乎都是短上下文的知识问答或单步工具调用，而真实临床是纵向的：医生要把病人几年间几十次住院、无数次化验和不断调整的治疗方案串起来看。于是他们基于 MIMIC-IV 设计了一条可复现的流水线，筛出 335 位反复住院的病人（平均每人 19.72 次住院、每次住院 44.91 个医疗事件），把静态病历转成"时序事件流"，再切成三种粒度的记忆数据集（就诊摘要级、事件级、当前会话级），并在其上设计了三级递进的任务：事实问答 → 时序推理 → 长程决策。实验用 gpt-5-mini、deepseek-v3.2、qwen-turbo 作为底座，配合三种记忆架构（裸长上下文、RAG、Mem0）跑了一遍，得到两个主要发现：模型能很好地利用<strong>显式时间戳</strong>，但在没有时间戳、只能靠病情演变线索推断先后顺序的<strong>隐式时序推理</strong>上表现崩塌；而 RAG 和 Mem0 这类记忆增强能显著改善信息检索，却对最终的决策任务几乎没有帮助——决策质量高度依赖模型"眼前这段上下文"的推理能力，跟你给它翻出多少历史资料关系不大。</p>
+<h1>Step 1：论文解读</h1>
+<h2>1：论文想解决什么问题</h2>
+<h3>1.1：真实看病是一条时间线，不是一道选择题</h3>
+<p>作者开篇讲的道理其实很朴素：医生诊断本质上是纵向、时间依赖的。一个反复住院的慢性病人，医生不会只盯着今天这张化验单，而是要回溯他过去几年做过哪些检查、用过哪些药、哪种方案有效哪种无效、病情整体是在好转还是恶化。这种"长程临床推理"能力，是高质量医疗的基础。当 LLM 从"聊天助手"变成"自主医疗智能体"，能不能在真实 EHR 里走通复杂的时间轨迹，就成了它能否上临床的关键门槛。</p>
+<h3>1.2：现有评测的两类盲区</h3>
+<p>作者用一张对比表（Table 1）把已有 benchmark 按五个维度打分：纵向性（Long.）、多轮上下文（Ctx.）、真实 EHR（EHR.）、决策能力（Dec.）、时间敏感性（Temp.）。结论是没有一个能全打勾。<br>
+一类盲区来自<strong>通用长上下文 benchmark</strong>（LongMemEval、RULER、HotpotQA 等）：它们考的是"大海捞针"，即能不能在超长文本里定位到某个具体事实，但完全不管时间动态。<br>
+另一类盲区来自<strong>医疗 agent benchmark</strong>：MedAgentBench 有真实 EHR 和决策，但不纵向、不多轮、不考时间；AgentClinic 是模拟交互，连真实 EHR 都没有；MedBench v4 有多轮上下文但不考决策也不考时间；EHRSQL 只是关系型查询。它们普遍受限于上下文窗口和会话数量，考的是工具调用和即时预测，而不是对完整临床轨迹的理解。</p>
+<blockquote>
+<p><strong>锐评</strong>：这张对比表的五个维度是作者自己定义的，而且明显是"照着自己的方法反推出来的"——LongMedBench 是唯一一行五个全勾。这是 benchmark 论文的经典写法，读的时候要留个心眼：维度选择本身就是一种叙事。不过平心而论，"纵向多次就诊"这个维度确实是真空地带，选题是站得住的。</p>
+</blockquote>
+<h2>2：数据是怎么造出来的</h2>
+<p>整条流水线分三步，如 Figure 1 所示。理解这三步基本就理解了这篇论文的一半。</p>
+<h3>2.1：第一步——事件与病人筛选</h3>
+<p>为了在减少冗余的同时保留临床信号，作者做了两层过滤：<strong>只保留异常的化验结果</strong>（正常值太多且信息量低），以及<strong>只保留有完整入院/出院记录的病人</strong>。然后卡了一个硬阈值：<strong>住院次数 ≥ 15 次</strong>。筛下来得到 355 位病人、6,999 次就诊，平均每人 19.72 次（中位数 18.00，标准差 5.72）。</p>
+<blockquote>
+<p><strong>锐评（第一处硬伤）</strong>：摘要和引言反复说的是 <strong>335 位病人</strong>，但 2.1.1 节白纸黑字写的是 <strong>355 patients</strong>。一篇 benchmark 论文，核心规模数字在摘要和正文里对不上，这是很低级的疏漏。审稿人第一眼就会抓到。<br>
+更值得警惕的是<strong>样本选择偏倚</strong>：能在 MIMIC-IV 里凑够 15 次以上住院的病人，是极端的"高频住院者"——多半是终末期肾病、心衰、镰状细胞病、肿瘤这类重症慢病，或者社会因素导致的反复入院。这个群体的临床轨迹跟普通病人差别巨大。作者用它来考"长程推理"逻辑上没错（因为只有他们才有长轨迹），但由此得出的结论能不能推广到一般临床，论文一个字都没讨论。</p>
+</blockquote>
+<h3>2.2：第二步——事件流构建</h3>
+<p>每个病人被表示成一条事件流 S = {V₁, V₂, ..., Vₙ}，其中每个 Vᵢ 是第 i 次就诊，n ≥ 15。每次就诊平均含 44.91 个医疗事件（中位数 25.00，标准差 70.32）。<br>
+每次就诊以入院事件 E^adm 开始，以出院事件 E^dis 结束，中间是一串具体医疗事件。<strong>每个事件是一个四元组</strong> E = {a, t, p, o}：</p>
+<ul>
+<li><strong>a</strong>：动作，来自典型临床动作空间 A（影像、化验、用药等）</li>
+<li><strong>t</strong>：事件时间戳</li>
+<li><strong>p</strong>：动作参数，比如影像事件的模态是 CT / X 光 / MRI</li>
+<li><strong>o</strong>：事件结果或临床观察，比如影像事件对应的放射科报告</li>
+</ul>
+<p>除结构化住院数据外，每次就诊还包含两类文本：放射学报告（被解析成影像事件）和出院小结（作为该次就诊的摘要 Nᵢ，可按逻辑拆成入院信息 N^adm 和出院信息 N^dis）。</p>
+<blockquote>
+<p><strong>锐评</strong>：这个四元组设计是本文最扎实的部分，通俗好懂，也确实把 MIMIC-IV 那堆关系表压成了 agent 能消化的形态。但注意"标准差 70.32、中位数 25"——分布极度右偏，说明有少数就诊塞了几百个事件，绝大多数就诊事件很少。论文所有结果都只报均值，没有按事件密度分层分析，这会掩盖掉很多东西。</p>
+</blockquote>
+<h3>2.3：第三步——三级记忆数据集</h3>
+<p>这是本文的第一个贡献点。作者设计了三种粒度递进的记忆模块，并且<strong>严格限制 agent 的记忆访问范围以防止事件泄漏</strong>（不能看到未来）。给定起始历史就诊 Vᵢ、当前就诊 Vⱼ 和推理时刻 T：</p>
+<h4>2.3.1：Note Memory（就诊摘要级）</h4>
+<p>M_N = {Nᵢ, Nᵢ₊₁, ..., Nⱼ₋₁}，即从 Vᵢ 到 Vⱼ₋₁ 的就诊级摘要。这些摘要是高度压缩的，强调<strong>全局轨迹</strong>而非细节事件回忆。通俗说：像病历首页的"既往史"，只有大纲。</p>
+<h4>2.3.2：Event Memory（事件级）</h4>
+<p>M_E = ⋃(k=i to j-1) V_k，包含从 Vᵢ 到 Vⱼ₋₁ 的所有临床事件。关键在于<strong>事件被压平成一条统一的时间序列，丢弃了就诊边界</strong>，形成一条连贯的病人轨迹。通俗说：像把所有病历按时间顺序摊在桌上，但不告诉你哪几张属于同一次住院。</p>
+<h4>2.3.3：Contextual Memory（当前会话级）</h4>
+<p>M_C = {(r₀, m₀), (r₁, m₁), ..., (r_P, m_P)}，r 是对话角色、m 是消息内容。它是把<strong>当前就诊 Vⱼ 的事件流改写成 LLM 风格的对话轨迹</strong>，且只保留时间戳早于推理时刻 T 的事件。具体做法是用 LLM 把每个事件转成一组"动作—反馈"对：assistant 发出 {动作 a, 时间 t, 参数 p}，user 返回 {模拟的临床反馈 f, 对应时间戳}。这一层模拟的是医疗 agent 的<strong>即时交互状态</strong>。</p>
+<blockquote>
+<p><strong>锐评</strong>：三级记忆的划分很有价值，尤其"Event Memory 故意抹掉就诊边界"这一手很聪明——它直接制造了后面 joint_sorting 任务的难度来源。<br>
+但 <strong>Contextual Memory 是用 LLM 改写生成的</strong>，这里埋了个雷：模拟的临床反馈 f 是 LLM 从原始观察 o 推断出来的。这意味着评测环境本身混入了 LLM 的先验和文风。如果被测模型和改写模型同源（论文没说改写用的是哪个模型），就存在分布泄漏的嫌疑。论文对此零讨论，没有任何人工校验或质量抽检的报告。</p>
+</blockquote>
+<h2>3：三级递进的任务体系</h2>
+<p>这是本文的第二个贡献点：一套从"记得住"到"理得清"再到"做得对"的三级考卷，对应记忆依赖度递增。</p>
+<h3>3.1：Task 1 事实问答（Factual QA）</h3>
+<p>考察在事件记忆中的精确检索和时间对齐。从某次就诊 Vᵢ 里随机采一个真值事件，出成两种题型：</p>
+<ul>
+<li><strong>Explicit（显式）</strong>：题干里直接给出时间戳 t，考纯检索能力</li>
+<li><strong>Relative（相对）</strong>：不给时间戳，只给相对时序关系，比如"Vᵢ 这次住院第 2 个用药事件的药名是什么"</li>
+</ul>
+<p>关键设计是：给 agent 的记忆窗口是 M_E^(i-m, i+m+1)，m 是可调超参，并且<strong>故意把目标就诊 Vᵢ 放在窗口正中间</strong>，专门用来检验"Lost in the Middle"效应——即模型在长上下文中间段落的检索能力衰减。</p>
+<h3>3.2：Task 2 时序推理（Temporal Reasoning）</h3>
+<p>考察在不同记忆粒度下重建时间顺序的能力，用 <strong>Kendall's τ</strong>（一个衡量两个排序相似度的统计量，1 表示完全一致，0 表示随机，-1 表示完全颠倒）打分。三个子任务：</p>
+<ul>
+<li><strong>Visit Cloze（就诊内完形填空）</strong>：事件级。把某次就诊里的若干干预事件挖掉、打乱后给 agent，<strong>但保留时间戳</strong>，让它插回原位</li>
+<li><strong>Visit Sorting（就诊排序）</strong>：就诊级。给五份就诊摘要，<strong>抹掉所有时间戳</strong>，只能靠病情演变线索排序</li>
+<li><strong>Joint Sorting（联合排序）</strong>：整合级。把五次就诊拆成十个入院/出院片段，agent 必须先正确配对（哪两个片段属于同一次住院），再按时间排序</li>
+</ul>
+<h3>3.3：Task 3 长程决策（Long-Horizon Decision Making）</h3>
+<p>最综合的一级：在长期历史背景下做下一步规划。从最后一次就诊 Vₙ 采一个真值事件 E^GT，把 Contextual Memory 作为 agent 的工作上下文 S，同时把 Note Memory 或 Event Memory 作为参考 M。三种子任务随机选一：</p>
+<ul>
+<li><strong>T3-N（Next Action Prediction）</strong>：预测下一个动作 a^GT，比如该做 CT 还是该抽血</li>
+<li><strong>T3-A（Argument Prediction）</strong>：预测动作参数 p^GT，比如影像该用哪种模态</li>
+<li><strong>T3-D（Discharge Decision）</strong>：判断病人是否能在 <strong>6 小时内</strong>出院</li>
+</ul>
+<p>前两个预测任务采用<strong>时间衰减打分机制</strong>：真值时刻 t^GT 之后 <strong>24 小时内</strong>发生的事件也算部分正确。</p>
+<blockquote>
+<p><strong>锐评</strong>：三级递进的设计思路是清晰漂亮的，Visit Cloze / Visit Sorting / Joint Sorting 这组消融尤其精巧——<strong>通过控制"有没有时间戳"和"信息是否被碎片化"两个变量，把"显式时间对齐"和"隐式临床推理"这两种能力干净地分离开了</strong>。这是全文我最欣赏的设计。<br>
+但 Task 3 的<strong>真值定义有根本性问题</strong>：ground truth 就是"当年那位医生实际做了什么"。医学上，同一个病人在同一时刻往往有多条同样合理的处置路径，医生做的那一条不等于唯一正确解，甚至不一定是最优解。24 小时时间衰减窗口是个补丁，但补不了这个洞——它只放宽了"时间"，没放宽"选择"。这直接影响后面所有决策实验的可解释性。</p>
+</blockquote>
+<h2>4：与"长上下文 benchmark"的本质区别</h2>
+<p>作者反复强调的一点值得单独拎出来：通用长上下文 benchmark 考的是"needle in a haystack"——能不能在草垛里找到针。而临床场景的挑战超出了检索孤立事实，在于<strong>理解病人状态如何在几十次就诊中演变，以及这种时间演进如何指导治疗策略</strong>。<br>
+换句话说，LongMemEval 问的是"你三个月前说过什么"，LongMedBench 问的是"这个病人三年来是在变好还是变坏，所以现在该怎么办"。前者是记忆题，后者是推理题。</p>
+<blockquote>
+<p><strong>锐评</strong>：这个区分讲得很好，是全文立论最有说服力的地方。可惜的是——正如 Step 2 会看到的——<strong>论文最终的实验结果恰恰没能证明 Task 3 真的在考后者</strong>。立论和验证之间断了一截。</p>
+</blockquote>
+<h1>Step 2：实验部分</h1>
+<h2>1：实验设置</h2>
+<h3>1.1：被测模型</h3>
+<p>作者选了三类代表性长上下文 LLM 作为 agent 底座，全部使用默认配置：</p>
+<ul>
+<li><strong>gpt-5-mini</strong>：闭源前沿模型的轻量版，上下文 400K</li>
+<li><strong>qwen-turbo</strong>：轻量模型，上下文 128K</li>
+<li><strong>deepseek-v3.2</strong>：开源高性能模型，上下文 128K（另测了开启思考模式的 deepseek-v3.2-thinking）</li>
+</ul>
+<h3>1.2：三种记忆架构</h3>
+<ul>
+<li><strong>Naive Long-Context</strong>：不用任何外部工具，把历史就诊记忆贪心地塞满上下文窗口</li>
+<li><strong>RAG</strong>：用 text-embedding-3-small 把记忆条目向量化，回答时检索 Top-K 相似片段</li>
+<li><strong>Agent Memory System</strong>：引入 <strong>Mem0</strong>（一个产品级的 agent 长期记忆架构），带动态更新的外部存储层，agent 可以按需自主检索</li>
+</ul>
+<blockquote>
+<p><strong>锐评</strong>：模型选择明显是<strong>成本导向</strong>而非能力导向——用的是 gpt-5-mini 而不是 gpt-5，qwen-turbo 更是四个模型里最弱的一个。对一篇要给"当前最强模型能力边界"下结论的 benchmark 论文，这是个不小的让步。更麻烦的是后面会看到，最关键的几张表恰恰是用最弱的 qwen-turbo 跑的。</p>
+</blockquote>
+<h2>2：Task 1 结果——历史越长，越会一本正经地胡说</h2>
+<p>Table 2 用 qwen-turbo 跑 Naive Long-Context，对比窗口大小 {3, 5, 7}（即 m ∈ {1,2,3}）和全历史（m = ∞），并与 Mem0 对比。指标里 Lab-T 是"存在的化验指标的召回"，Lab-F 是"对不存在的化验指标的正确拒答"。</p>
+<h3>2.1：裸长上下文的雪崩式衰减</h3>
+<p>显式检索的平均分从 m=1 时的 <strong>0.88 一路掉到 m=∞ 时的 0.42</strong>，相对检索从 0.80 掉到 0.34。也就是说，历史一变长，性能直接腰斩。<br>
+更值得注意的是 <strong>Lab-F 全程 ≤ 0.57</strong>，全历史时只有 0.29。这意味着当被问到病历里根本不存在的化验指标时，模型有超过一半的概率会<strong>编一个出来</strong>，而不是说"没有"。作者称之为"普遍存在的幻觉偏倚"。</p>
+<blockquote>
+<p><strong>锐评</strong>：Lab-F 这个指标设计得很好，是全文最有临床价值的发现之一。<strong>一个会编造化验值的医疗 agent，比一个查不到就说查不到的 agent 危险一万倍</strong>。0.29 意味着在长历史场景下，它七成时间在编。这个数字应该被放到摘要里，但没有。</p>
+</blockquote>
+<h3>2.2：Mem0 的两极分化</h3>
+<p>Mem0 在显式设定下的表现极度分裂：Lab-T 达到 0.99、用药 0.98、入出院 0.98，几乎满分；但<strong>影像只有 0.07</strong>，整体相对检索仅 0.33。<br>
+作者给了两条解释：第一，即使有 few-shot 提示，agent 也很难为影像报告生成精确的检索查询；有意思的是，退回向量检索时，<strong>相对语义查询反而比显式 ID/时间戳匹配效果更好，因为后者在向量空间里缺乏足够的嵌入密度</strong>（通俗说：时间戳和 ID 这种字符串，embedding 模型压根不擅长区分）。第二，agent 的记忆架构缺乏对事件间关系的系统性索引。</p>
+<blockquote>
+<p><strong>锐评</strong>：0.07 这个数字，我倾向于认为<strong>这不是一个"发现"，而是一个 bug 或严重的工程失配</strong>。从 0.98 掉到 0.07 不是性能退化，是功能失效。论文用两句话轻描淡写地解释过去，既没有做错误案例分析，也没有报告 Mem0 的具体配置和 chunking 策略。如果我是审稿人，会要求作者贴出至少 20 个失败样例。<br>
+不过"时间戳在向量空间里嵌入密度不足"这个观察本身很有洞见，对做 EHR agent 的人是实打实的工程启示：<strong>别指望 embedding 检索能处理精确的时间和 ID 匹配，那需要结构化索引兜底</strong>。</p>
+</blockquote>
+<h2>3：Task 2 结果——显式时间戳好用，隐式时序崩盘</h2>
+<p>Table 3 报告三个时序子任务的 Kendall's τ。</p>
+<h3>3.1：事件级——有时间戳就是好办</h3>
+<p>Visit Cloze 上，强模型接近满分：deepseek-v3.2-thinking 达到 <strong>0.969</strong>，gpt-5-mini <strong>0.925</strong>；弱模型则彻底失败：qwen-turbo 仅 <strong>0.047</strong>（约等于随机）。开启思考模式带来的提升是戏剧性的：deepseek-v3.2 从 <strong>0.316 跃升到 0.969</strong>。<br>
+Figure 3(a) 进一步显示，这个成绩<strong>与选项数量（即事件流长度）无关</strong>。作者据此确认：强 LLM 能有效利用显式时间戳线索完成事件级排序。</p>
+<h3>3.2：就诊级——抹掉时间戳后集体失能</h3>
+<p>Visit Sorting 抹掉时间戳，要求模型<strong>纯靠临床演变线索</strong>给五份就诊摘要排序，成绩断崖式下跌，最好的 deepseek-v3.2-thinking 只有 <strong>0.424</strong>。</p>
+<h3>3.3：联合级——难度叠加</h3>
+<p>Joint Sorting 把每份摘要拆成入院和出院两个片段，需要同时完成事件级配对和就诊级排序，最好成绩进一步降到 <strong>0.330</strong>。Figure 3(b) 显示了清晰的递减趋势。</p>
+<blockquote>
+<p><strong>锐评</strong>：这组实验是全文最漂亮的部分，<strong>三个任务构成了一个干净的受控实验：0.969 → 0.424 → 0.330，唯一变化的是"时间戳可用性"和"信息碎片化程度"</strong>。结论因此非常可信：模型不是在做时序推理，它只是在<strong>读时间戳并排序</strong>——这是个字符串比较任务，不是临床理解任务。一旦拿掉这根拐杖，它就不会走路了。这个发现对整个医疗 agent 领域都有警示意义。<br>
+顺带一提，qwen-turbo 的 0.047 低于随机基线（0 附近）的表现值得单独说一句：τ 为正的极小值加上 0.257 的标准差，说明它基本在瞎排。用这样一个模型去跑后面的关键消融实验，说服力是要打折扣的。</p>
+</blockquote>
+<h2>4：Task 3 结果——本文最尴尬也最诚实的一节</h2>
+<h3>4.1：所有模型都卡在同一条线上</h3>
+<p>Table 4 显示，四个模型在长程决策上的平均分挤在 <strong>0.419 ~ 0.452</strong> 这个极窄区间内。gpt-5-mini 最好（Event Memory 下 0.452），但优势微弱。结构化的 Event Memory 在多数模型上略优于 Note Memory。<br>
+一个反直觉的发现：<strong>deepseek-v3.2 开启思考模式后决策性能没有提升，甚至略降</strong>（0.420 vs 0.422）。作者的解释是，思考模式让 agent 变得更保守，<strong>倾向于提问以获取即时信息，而不是去查阅过往记忆</strong>。</p>
+<h3>4.2：致命的消融——记忆越多，成绩越差</h3>
+<p>Table 5 是全文最关键的一张表，用 qwen-turbo 做基线。左半部分调整注入的历史就诊数量，右半部分对比记忆架构：</p>
+<ul>
+<li><strong>不注入任何记忆的裸基线（n=0）：0.45</strong></li>
+<li>注入 2 次就诊（event）：0.44 ｜ 注入 5 次（event）：0.43</li>
+<li>注入 2 次（note）：0.44 ｜ 注入 5 次（note）：0.44</li>
+<li>RAG + event：<strong>0.40</strong> ｜ Mem0 + event：0.44 ｜ RAG + note：0.44 ｜ Mem0 + note：0.41</li>
+</ul>
+<p><strong>没有任何一种记忆增强方案超过了"什么记忆都不给"的裸基线。</strong> 增加上下文长度反而让 agent 表现更差。Mem0 和 RAG 的差异微乎其微，都贴着基线。</p>
+<h3>4.3：作者自己的结论</h3>
+<p>论文原文直言：在当前 LongMedBench 设定下，<strong>决策质量与检索到的历史信息量并无强相关，agent 表现更多取决于模型在即时上下文内的临床推理能力</strong>。因此，作者明确表示需要设计"能放大深层推理需求和更高决策相互依赖性"的任务，以便更好地揭示当前模型的局限。</p>
+<blockquote>
+<p><strong>锐评（这是全文的核心问题，也是我最想说的一段）</strong>：<br>
+请注意这段话的逻辑含义。<strong>如果给不给历史记忆对成绩没有影响，那么这个任务测的就不是"长程"能力。</strong> 一个号称评测长程临床决策的 benchmark，其旗舰任务（Task 3）在自己的消融实验里被证明<strong>与长程信息无关</strong>——这在方法论上叫做"构念效度（construct validity）失败"：你造的尺子没有在量你声称要量的东西。<br>
+这里有两种可能，论文没有区分开：<strong>（A）当前模型确实不会用长程记忆</strong>（这是关于模型的结论，有价值）；<strong>（B）任务设计本身不需要长程记忆就能做对</strong>（这是关于 benchmark 的缺陷，致命）。想区分 A 和 B 其实不难——只要加一个"人类医生在有/无历史记忆条件下的表现对比"，如果医生有记忆时显著更好而模型没有，就是 A；如果医生也没差别，就是 B。<strong>论文完全没有做人类基线</strong>，所以这个根本歧义悬而未决。<br>
+另外必须指出：T3-D（6 小时内能否出院）是个二分类任务，各模型成绩在 0.578~0.625 之间。<strong>论文没有报告多数类基线（majority baseline）</strong>。如果数据集里"不能出院"占了 60%，那么无脑全答"不能"就有 0.60——恰好落在所有模型的成绩区间内。在缺失这个基线的情况下，T3-D 的所有数字都无法解读。<br>
+话说回来，作者在结尾主动承认任务设计需要重做，这份<strong>学术诚实值得肯定</strong>——很多人会选择把这段藏进附录，或者干脆不做这个消融。但诚实不能替代有效性：承认尺子有问题，不等于尺子能用。</p>
+</blockquote>
+<h2>5：实验整体的复现性问题</h2>
+<p>论文声称流水线是"可复现的（reproducible pipeline）"，但实际情况需要泼一盆冷水：</p>
+<ul>
+<li><strong>没有给出任何代码或数据仓库链接</strong>，全文找不到 GitHub / HuggingFace 地址</li>
+<li>底层数据 MIMIC-IV 需要 PhysioNet 认证授权（CITI 培训 + 数据使用协议），通常要等 1~4 周</li>
+<li>Contextual Memory 的 LLM 改写、Note Memory 的摘要压缩，<strong>都没有公布所使用的模型和提示词</strong></li>
+<li>Mem0 的具体配置、chunking 策略、检索 Top-K 取值均未说明</li>
+<li>Factual QA 的 Table 2 和消融的 Table 5 只用了 qwen-turbo 单一模型，没有跨模型验证</li>
+</ul>
+<blockquote>
+<p><strong>锐评</strong>：这些缺失叠加起来，意味着<strong>目前这篇论文实际上无法被独立复现</strong>。对一篇 Datasets &amp; Benchmarks 类型的工作，这是最伤的：benchmark 的全部价值就在于被别人拿去用。如果没有配套开源，它就只是一份实验报告，不是一个 benchmark。这大概率是 v1 预印本的状态，正式版应该会补上，但目前引用它要谨慎。</p>
+</blockquote>
+<h1>Step 3：other</h1>
+<h2>1：重点</h2>
+<p>我认为这篇论文最有价值的东西不是它建的数据集，而是<strong>它无意中做出的两个"揭穿式"发现</strong>。</p>
+<p><strong>第一个是关于时序推理的解构</strong>：0.969（有时间戳）→ 0.424（无时间戳）→ 0.330（信息碎片化）这条曲线，干净利落地证明了<strong>当前 LLM 在医疗时序任务上的高分，绝大部分来自"读时间戳并排序"这个字符串操作，而非任何形式的临床演变理解</strong>。这个结论对所有做医疗 agent 的人都是当头一棒：你的模型在时序 benchmark 上刷到 0.95，可能只说明你的数据里时间戳标得很整齐。这是本文最扎实、最可信、最有传播价值的贡献。</p>
+<p><strong>第二个是关于记忆架构的祛魅</strong>：Table 5 里"零记忆基线打赢所有记忆增强方案"这个结果，虽然作者自己把它当作 benchmark 需要改进的证据，但它同时也是一个关于工程现实的强信号——<strong>RAG 和 Mem0 这类通用记忆架构在临床决策场景下的增益接近于零</strong>。结合 Task 1 里"Mem0 影像检索 0.07"和"时间戳在向量空间嵌入密度不足"的观察，可以拼出一个相当明确的技术判断：<strong>通用语义检索与临床记忆的结构需求是错配的</strong>。临床记忆本质上是一个带精确时间轴、带因果链、带实体关系的图，把它压成一堆向量再做相似度匹配，注定丢掉最关键的那部分信息。这一条对做 EHR agent 的人来说是可以直接转化为设计决策的。</p>
+<p>另外还有一个容易被忽略但很实用的点：<strong>Lab-F 指标（对不存在指标的拒答率）在全历史条件下只有 0.29</strong>。医疗 agent 的安全性瓶颈不在"答不出来"，而在"编得像真的"。任何认真的 EHR agent 都应该把"拒答校准"当作一等公民指标，而不是事后补的 guardrail。</p>
+<h2>2：意见</h2>
+<p><strong>这篇论文的旗舰任务没有通过自身的构念效度检验，而作者用"需要设计更难的任务"这句话把它带过去了。</strong> Table 5 明确显示，在长程决策任务上，零记忆基线（0.45）不劣于任何记忆增强配置，增加历史上下文甚至使性能下降。这意味着 Task 3 无法区分"agent 是否利用了长程历史"——而这恰恰是整篇论文标题所承诺要测量的能力。作者没有提供任何证据来排除"任务本身不需要长程信息"这一可能性：既没有人类专家基线（无法确定任务上限，也无法判断医生在有无历史时是否表现不同），也没有多数类基线（T3-D 的 0.58~0.63 完全可能只是类别先验），更没有做过"给出错误历史/打乱历史"的对照实验（这是最简单的构念效度检验：如果注入被打乱的历史不导致性能下降，就说明模型压根没在用历史）。在这三项缺失的情况下，Task 3 的全部实验结果既不能支持"模型缺乏长程推理能力"的结论，也不能支持这个 benchmark 有效——它们是不可解读的。一个 benchmark 论文可以报告负面结果，但不能报告一个连自己都无法证明在测量目标能力的任务，然后把责任推给未来工作。</p>
+<p>（附带的次级问题，若有修订机会应一并解决：摘要与 2.1.1 节的病人数量 335 与 355 不一致；未公开代码与提示词，与"可复现流水线"的表述矛盾；Mem0 影像检索 0.07 缺乏错误分析，无法排除工程实现缺陷；关键结论表 Table 2 与 Table 5 仅使用 qwen-turbo 单一且能力最弱的模型。）</p>
+<h2>3：相关工作</h2>
+<p><strong>MedAgentBench（Jiang et al., NEJM AI 2025，斯坦福）</strong> 是本文对比表里的头号靶子，也是目前医疗 agent 领域最有影响力的环境类 benchmark。它构建了一个基于 FHIR 标准 API 的虚拟 EHR 环境，让 LLM agent 通过真实的医疗信息系统接口去查数据、下医嘱，重点考察工具调用能力和端到端的任务完成度。它的优势是环境真实、动作可执行验证；LongMedBench 对它的批评是任务局限在单次就诊内、缺乏跨会话的纵向轨迹、也不考察时间敏感性。两者其实是互补的：MedAgentBench 强在"agent 会不会操作系统"，LongMedBench 强在"agent 记不记得住病人"。做 EHR agent 的话，这两个环境值得一起搭起来当双重基线。</p>
+<p><strong>DiagBench / Evolving Interactive Diagnostic Agents in a Virtual Clinical Environment（Qiu et al., arXiv:2510.24654）</strong> 走的是另一条路线：不是评测静态数据，而是构建一个虚拟临床环境，让诊断 agent 在其中通过多轮交互式问诊、开检查、看结果来逐步收敛诊断，并且强调 agent 在环境中的<strong>演化/自我改进</strong>。它有真实 EHR 支撑和决策评估，但同样不涉及跨越多次住院的长期历史。相比 LongMedBench 的"离线出题"范式，DiagBench 的交互式环境更接近真实诊疗的信息获取过程——LongMedBench 里 deepseek-thinking "倾向于提问而非查记忆"的那个观察，其实正说明模型天然更适应 DiagBench 那种范式。</p>
+<p><strong>LongMemEval（Wu et al., arXiv:2410.10813）</strong> 是通用域的长期交互记忆 benchmark，本文在方法上大量借鉴了它（三种记忆架构的设置直接参考了它和 Maharana et al. 的长期对话记忆工作）。它评测聊天助手在超长对话历史中的信息抽取、多会话推理、时间推理和知识更新能力。可以把 LongMedBench 理解为"LongMemEval 的医疗特化版"，二者共享"记忆检索 ≠ 记忆推理"的核心问题意识。值得注意的是，LongMemEval 里同样报告了记忆增强方案在推理类子任务上收益有限的现象——这暗示 LongMedBench 遇到的困境<strong>可能不是医疗领域独有的，而是当前 agent 记忆架构的通病</strong>。这一点如果作者能在论文里挑明，说服力会强很多。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-6'></script>
+
+</html>

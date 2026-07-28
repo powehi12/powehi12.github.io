@@ -181,3 +181,50 @@ v2 补了一节成本分析（附录 D），按 DeepSeek API 定价算，两个�
 **《Why Do Multi-Agent LLM Systems Fail?》/ MAST（arXiv:2503.13657，2025）**：Cemri 等人（Berkeley）在编程、跨应用网页任务、数学推理、知识 QA 上系统研究多智能体失败模式，提出 **MAST 失败分类法**，结论跟 MedAgentBoard 高度一致：多智能体并不能稳定超过一个 well-prompted 的单 LLM 基线。它是 MedAgentBoard 在通用域的前身和思想来源。价值在于它不止说"不行"，还把"为什么不行"拆成了可诊断的类别（规范违背、协作失调、任务验证缺失等），对调试自己的 agent 系统比看 benchmark 分数有用得多。
 
 **ColaCare（WWW 2025）**：Wang 等人的工作，用 LLM 驱动的多智能体模拟多学科会诊（MDT）来做 EHR 建模，思路是把传统 EHR 模型当作"专科医生"接入讨论，再由 LLM agent 整合。有意思的是它既是 MedAgentBoard 的**被测对象**，又跟 MedAgentBoard 出自同一课题组——某种程度上作者在拿自己的方法开刀。但它也正好指向 MedAgentBoard 在 Future Work 里推荐的方向：**混合架构**（传统模型做特征提取和表征、LLM agent 做推理和解释）。同组还有一篇 **ClinicRealm（arXiv:2407.18525）**，是本文在 EHR 预测上"重新评估 LLM vs 传统 ML"这条主线的直接前作，做 EHR agent 方向的话建议连着一起看。
+
+# 复现
+查了论文和代码仓库，给你一个分难度的判断。
+
+## 先定性：这是 benchmark 论文，不是方法论文
+MedAgentBoard（NeurIPS 2025 D&B Track，港大+北大 Lequan Yu / Liantao Ma 组）的核心结论是"多智能体协作并不总是更好"——在医学 VQA 和 EHR 预测任务上，专门的传统方法通常表现更好；在文本医学 QA 上，先进的单个 LLM 就够了；多智能体只在临床工作流自动化这类任务上体现出完整性优势。
+所以"复现"它 ≠ 训练一个模型，而是**重跑一整套评测流水线**。难度不在算法，在工程 + 数据授权 + API 预算。
+
+## 四个任务分开看，难度差异极大
+
+**Task 1 医学（视觉）问答 — ⭐⭐ 容易**
+数据集都是公开的（PubMedQA、MedQA、VQA-RAD 等），代码就是 `medagentboard/medqa/` 下几个脚本，复现了 ColaCare、MDAgents、MedAgents、ReConcile 等框架。仓库用 uv 管理依赖，`uv sync` 装好，配 `.env` 里的 API key（DeepSeek / DashScope / ARK 等）就能跑。真正的成本是 API 调用费。
+
+**Task 2 通俗摘要生成 — ⭐⭐ 容易**
+数据集公开（Cochrane/PLOS 系列），`laysummary/` 目录有 AgentSimp 多智能体实现和单 LLM baseline。唯一坑是评测用了 LLM-as-judge（`utils/llm_scoring.py`），judge 模型换了分数就会漂。
+
+**Task 3 结构化 EHR 预测 — ⭐⭐⭐ 中等，卡在数据授权**
+这是跟你方向最相关的一块。数据是 MIMIC-IV + TJH（清华同济新冠数据集，公开可下）。作者明确说明 MIMIC 相关的数据和结果没有放进开源包，因为需要 PhysioNet 授权。
+→ **这一步的时间成本主要不是写代码，是等审批**：PhysioNet credentialed access 要做 CITI "Data or Specimens Only Research" 培训、签 DUA、找导师做 referee，通常 1–4 周。**建议你现在就去申请**，不管最后复不复现都用得上。
+TJH 数据集小（几百人），可以先拿它把 pipeline 跑通。
+
+**Task 4 临床工作流自动化 — ⭐⭐⭐⭐⭐ 最难，本质上无法完全复现**
+两个硬伤：
+1. 要分别 clone 并配好 OpenManus、Owl、SmolAgents 三个框架的环境——这三个 agent 框架依赖重、版本漂移快，2025 年 5 月的代码到现在大概率已经装不动了，需要自己 pin 版本或改代码。这些框架会生成并执行代码，还得配沙箱。
+2. 评测是 3 位标注者（A/B/C）的人工评估 + 合并共识。你一个人做不了这个，最多用 LLM-as-judge 近似替代，那就不算严格复现了。
+
+## 综合结论
+
+| 复现范围 | 难度 | 时间估计 |
+|---|---|---|
+| Task 1+2（纯文本/图像 QA + 摘要） | ⭐⭐ | 3–5 天 |
+| + Task 3 EHR（TJH 部分） | ⭐⭐⭐ | 再加 3–5 天 |
+| + Task 3 MIMIC 部分 | ⭐⭐⭐ | 卡在 1–4 周授权等待 |
+| + Task 4 全套 | ⭐⭐⭐⭐⭐ | 1–2 个月且结果无法对齐 |
+
+**几个必须提前知道的坑：**
+- **API 费用是真实开销**。论文跑了多个模型 × 多个框架 × 多个数据集，多智能体一个 case 就要十几到几十次调用。全量复现估计几百到上千元人民币。建议先用 DeepSeek/Qwen 这类便宜模型 + 小样本切片跑通。
+- **数字对不上是正常的**。LLM 有随机性，且论文用的模型版本（DeepSeek-V3、Qwen-Max 等）现在的 checkpoint 已经变了。你能复现的是**趋势和排序**，不是小数点。
+- 仓库文档偏薄，README 里出现"may need specific setup"这种措辞，说明作者自己也知道不是开箱即用。但作者留了邮箱且 Issue 区活跃度不低（52 star / 2 issues），可以直接问。
+
+## 锐评 + 给你的建议
+说句实在的：**你可能不该"复现"这篇论文，而该"用"它**。
+
+它是个 benchmark，复现出来你只是重新验证了"多智能体没那么神"这个结论——发不了论文，也不构成你 EHR agent 的技术积累。对你更有价值的做法是：
+1. **只跑 `medagentboard/ehr/` 这一个模块**，把它当成你自己 EHR agent 的**对照基线**。你未来做的 agent 直接在这套评测框架上比，省掉自己搭 baseline 的巨大工作量。
+2. **把 MedAgentBoard 当作"负面结果地图"**——它告诉你多智能体在 EHR 预测上打不过传统方法（GRU/Transformer/XGBoost）。这恰恰是你的机会：你的 agent 要么在它证明"多智能体有用"的方向（workflow automation）发力，要么想办法解决它指出的失败原因。
+3. 顺带一提，**同一作者组（yhzhu99）后续做了 HealthFlow**——一个自演化多智能体框架，专门做 EHR 分析自动化，而且直接把 MedAgentBoard 当 benchmark 用。这基本就是"从这篇论文往下走一步"的标准答案，值得你先去看看，避免撞车或者可以站在它肩上。
