@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-6'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>ClinEnv</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="前言 标题：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents（arXiv:2606.02568v1，2026 年 6 月 1 日提交，20 页 6 图 12 表） 论文链接：https://arxiv.org/a…">
+<meta property="og:title" content="ClinEnv">
+<meta property="og:description" content="前言 标题：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents（arXiv:2606.02568v1，2026 年 6 月 1 日提交，20 页 6 图 12 表） 论文链接：https://arxiv.org/a…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/ClinEnv.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ClinEnv">
+<meta name="twitter:description" content="前言 标题：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents（arXiv:2606.02568v1，2026 年 6 月 1 日提交，20 页 6 图 12 表） 论文链接：https://arxiv.org/a…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/ClinEnv.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">ClinEnv</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/37" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>前言</h1>
+<p>标题：<strong>ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents</strong>（arXiv:2606.02568v1，2026 年 6 月 1 日提交，20 页 6 图 12 表）<br>
+论文链接：<a href="https://arxiv.org/abs/2606.02568" rel="nofollow">https://arxiv.org/abs/2606.02568</a><br>
+代码/数据：论文正文标注了 GitHub 仓库、PhysioNet/HuggingFace 数据发布页和一个交互式 demo 网站，但 arXiv HTML 版里这三个链接都是未渲染的占位符，需要去 PDF 或作者主页找实际地址；数据本身要求使用者先通过 PhysioNet 的合规认证才能拿到。<br>
+作者单位：Georgia Institute of Technology（第一/通讯，Yuxing Lu、May Dongmei Wang 等）、北京大学（Jinzhuo Wang）、UT Southwestern Medical Center（Wenqi Shi）、清华大学（Xukai Zhao）。<br>
+标签：医疗 Agent 评测基准；EHR 长程序贯决策；交互式信息获取；确定性本体评分<br>
+摘要：一句话说清这篇论文——<strong>它把"考医生做选择题"改成了"让模型真的当一次住院总"：模型被扔进一个什么都不告诉你的病房里，必须自己张嘴去问病人、问护士、开化验，然后在一次住院的多个时间点上依次拍板"用什么药、做什么操作、下什么诊断"，而且每一个决定都拿真实病历里医生当时的实际动作来对答案。</strong> 具体来说，作者从 MIMIC-IV 的真实住院记录出发，用一条全自动流水线（无需人工标注）把每次住院切成有先后顺序的"决策阶段"，构建了 3509 个 case、9297 个决策阶段、26043 条 ground-truth 决策；环境里挂了 patient / nurse / lab / history 四个专职信息 agent，信息默认全部隐藏、问了才给；评分同时看"决策对不对"（药物走 ATC 层级部分给分、诊断和操作走 ICD 层级 F1、组内用匈牙利算法做最优匹配）和"信息问得好不好"（覆盖率、查询效率、化验浪费金额、药物日均成本）。作者把这一整套性质命名为 <strong>Longitudinal Inpatient Simulation（LIS，纵向住院模拟）</strong>。结果相当刺眼：七个模型里最强的 GPT-5.4 只有 0.306 的决策 F1，诊断能拿 0.51 但用药只有 0.097，阶段越靠后分数掉得越狠，而且"结果好"和"过程好"几乎是脱钩的——这正是只看最终答案的传统 benchmark 完全看不见的窟窿。</p>
+<h1>Step 1：论文解读</h1>
+<h2>1：这篇论文到底在跟谁过不去</h2>
+<h3>1.1：医学 LLM 评测的"虚假繁荣"</h3>
+<p>现在的医学大模型宣传口径基本都是"USMLE 超过人类平均分"。论文开篇就点破这件事：LLM 在医学执照考试和结构化临床问答上已经接近甚至超过专家水平，但真实的住院实践根本不是从给定选项里挑一个答案。作者列了真实临床的三个性质，静态选择题一个都测不到：<strong>信息是残缺的、必须主动去要</strong>；<strong>决策是序贯的、而且不可撤销</strong>；<strong>每个决策横跨药物、操作、诊断三类，最终要跟病人真实的住院过程对账</strong>。<br>
+锐评：这段 motivation 说实话不算新，"选择题测不出真本事"这个论点从 AgentClinic 到 MedAgentBench 已经被反复说过。ClinEnv 的真正差异化不在"我发现了问题"，而在"我第一次把五个性质凑齐了"，这一点作者自己也清楚，所以第 2 节直接上了一张对比表格来抢定位。</p>
+<h3>1.2：对已有交互式基准的"逐个点名"</h3>
+<p>作者把前人工作分成三类，每类都指出一个结构性妥协：</p>
+<ul>
+<li><strong>数据交互类</strong>（EHRSQL、MIMIC-SQL、FHIR-AgentBench、MedAgentBench）：把 EHR 当成一个可查询的数据库，评的是"你会不会取数"，任务是原子的、外部给定的，不涉及"哪些数据重要、取到了该干什么"。</li>
+<li><strong>诊断对话类</strong>（AgentClinic、MedDialBench、MAQuE、HELPMed、AMIE）：用 LLM 扮演病人，于是 ground truth 上限被"喂给模拟器的那点考题材料"锁死了，而且中间过程只能靠 LLM-as-judge 打分。</li>
+<li><strong>代码执行类</strong>（MedAgentGym、MedCalc-Env）：借鉴 SWE-bench 的可执行思路，但评测单元退化成了"代码/公式写得对不对"，而不是临床决策本身。</li>
+</ul>
+<p>锐评：这个三分法切得很干净，是全文写得最漂亮的一段。但"点名批评"的力度和自己的实现之间是有落差的——ClinEnv 自己的四个信息 agent 也是 GPT-5.4-mini 扮演的，process 分也是 LLM judge 打的，只是把"结果分"做成了确定性的而已。说自己完全摆脱了模拟器和 judge，属于话说得比做的满。</p>
+<h2>2：核心概念：什么是 Longitudinal Inpatient Simulation</h2>
+<p>LIS 是作者自造的范式名，由五条性质定义，缺一不可：<strong>① 真实 EHR 纵向轨迹</strong>（不是编的 vignette）、<strong>② 多阶段序贯决策</strong>（不是一锤子买卖）、<strong>③ 跨异构信息源的主动信息获取</strong>（不是把病历一次性喂给你）、<strong>④ 确定性本体评分</strong>（不是 LLM 打分）、<strong>⑤ 成本感知的过程指标</strong>（不只看答案）。作者用 Table 1 论证，没有任何已有基准同时满足这五条，ClinEnv 是第一个全部实例化的。<br>
+锐评：这是典型的"用维度表定义新范式"打法——每一维单独看都有前人做过，但把维度组合起来就成了 novelty。审稿人对这套路的容忍度取决于组合本身是否带来了新发现。ClinEnv 运气不错，它确实测出了"结果好但过程烂"这个前人测不出来的现象，所以这个维度表算是站住了。但取一个大写缩写 LIS 并在全文反复使用，属于品牌营销大于学术必要性。</p>
+<h2>3：数据从哪来：从 MIMIC 表格到一条时间线</h2>
+<h3>3.1：预处理（完全不用 LLM）</h3>
+<p>底座是 MIMIC-IV v3.1 加 MIMIC-IV-Note v2.2。做法说白了很朴素：把十几张结构化表（入院、化验、微生物、医嘱、给药、ICU 图表事件、出入量、操作、ICD 编码）加上出院小结和影像报告，全部按 <code class="notranslate">subject_id</code> + <code class="notranslate">hadm_id</code> 拼到一起，每一行变成一个带来源标记（<code class="notranslate">source_table</code>）和统一时间戳（<code class="notranslate">event_time</code>）的"事件"，再按时间排成一条队。时间戳的取值有个优先级链：charttime → starttime → admittime → chartdate → stoptime → endtime，缺谁用谁。<br>
+这一步产出的规模其实相当惊人：229,482 份住院时间线文件，覆盖 24,760 个病人，保留了 2.378 亿条事件——也就是说，最终发布的 3509 个 case 是从这个池子里挑出来的一小撮。<br>
+锐评：这一步值得复现者重点关注。<strong>2.378 亿条事件的预处理产物是这篇工作里最有复用价值、也最耗工程量的中间资产</strong>。如果你的目标不是复现它的 benchmark 数字而是自己搭 EHR agent 环境，这一层的价值可能比后面的评测框架更大。</p>
+<h3>3.2：五阶段自动造题流水线</h3>
+<p>这是全文技术含量最高的部分，用 <strong>Claude-Sonnet-4.6</strong> 当规划骨干。五个阶段：</p>
+<ul>
+<li><strong>Phase A 决策抽取</strong>：读出院小结，把这次住院里所有"主治级别"的决策抠出来，标上类型（medication / procedure / plan）。没有完整出院小结就退化成拼接四个 section（主诉、现病史、住院经过、出院诊断）。</li>
+<li><strong>Phase B 时间锚定</strong>：把每个决策"钉"到时间线的具体位置上。用的是<strong>前向滑动窗口 agent</strong>：从上一个决策的锚点之后开始，给 LLM 看一个 20 事件的窗口，配 <code class="notranslate">mark_single</code> 和 <code class="notranslate">mark_range</code> 两个工具；找到就记录并把起点推进，找不到就窗口整体前移再试；走到底还没找到就放弃这条决策。<strong>关键约束是单调前进</strong>——第 i+1 个决策只能从第 i 个的锚点之后开始找，这保证了出院小结里的叙述顺序被翻译成了真实的时间顺序。</li>
+<li><strong>Phase C 阶段构造与校验</strong>：阶段 k 的可见上下文是 <code class="notranslate">[上一阶段结束+1, 当前锚点-1]</code>，也就是**"决策发生之前你能看到的东西"**。两种情况会跳过：上下文窗口为空；或者这个药在窗口里已经在用了（避免把"续开原来的药"当成新决策）。每个 case 最后额外追加一个诊断阶段，上下文是从最后一个决策到出院的全部事件。</li>
+<li><strong>Phase D 诊断可落地扫描</strong>：用 100 事件窗口、50 事件步长的重叠滑窗，扫一遍这次住院的出院 ICD 码，只有<strong>在时间线里真的有证据支撑或被主动管理过</strong>的码才能进最终诊断阶段的答案。</li>
+<li><strong>Phase E 分类与富化</strong>：LLM 只负责给决策分类（四类）和判断用药动作（start / stop / switch / adjust，adjust 还可带 increase/decrease 方向）；而<strong>真正被打分的字段全部从结构化表里直接抄</strong>——药名抄 prescriptions/pharmacy/eMAR，ICD 码抄编码行，零 LLM 调用。</li>
+</ul>
+<p>最终每个阶段被形式化为 <code class="notranslate">S_k = (C_k, G_k, A_k)</code>：可见事件窗口、结构化标准答案集、本阶段激活的信息源集合。<br>
+锐评：<strong>"LLM 只做定位和分类，不生成答案"这个分工是整篇论文最值得学的工程哲学。</strong> 它把 LLM 的不可靠性限制在"找位置"上（找错了顶多是这个 case 质量差），而把"答案是什么"完全交给数据库行。这就是他们敢说 evaluation targets 独立于被测模型的底气。不过 Phase A 依然是纯 LLM 抽取，出院小结里的叙述性偏差（比如医生事后合理化的"因为 X 所以我们做了 Y"）会原封不动地传下去，这个风险论文没有量化。另外有个小 bug：正文写的是 "a four-phase pipeline"，但紧接着列了 A 到 E 五个 phase，图 1 的 caption 又写 "five-step pipeline"——写作层面没校对干净。</p>
+<h3>3.3：一堆藏在附录里的"补丁"</h3>
+<p>附录 C.3 列的几个 planner 安全阀，其实比正文重要，复现的人必看：</p>
+<ul>
+<li><strong>泄露扩展（leakage expansion）</strong>：找到锚点后，向前后各扫 10 个事件，把同一个药/操作的邻近记录一并吸收进锚点区间——否则模型会在"决策前的上下文"里直接看到答案。</li>
+<li><strong>续用过滤</strong>：同一个药已经在活跃医嘱里就跳过，防止例行续方被当成决策。</li>
+<li><strong>小上下文合并</strong>：上下文少于 10 个事件的阶段会被合并进相邻阶段。<br>
+锐评：这三条全是防泄露和防退化的补丁，说明作者确实跑过数据、踩过坑。但也说明这套自动流水线的质量高度依赖这些魔法数字（20 / 10 / 10 / 100 / 50），论文没有做任何敏感性分析。</li>
+</ul>
+<h2>4：交互环境：一个"你不问就不给"的病房</h2>
+<h3>4.1：四个信息 agent</h3>
+<p>环境用 <strong>GPT-5.4-mini</strong> 驱动四个专职 agent，每个只能看自己的 readview（EHR 事件的一个过滤投影）：</p>
+<ul>
+<li><strong>patient</strong>：人口学、主诉、现病史、既往史，用<strong>大白话</strong>回答，不给客观测量值。</li>
+<li><strong>nurse</strong>：生命体征、出入量、给药记录（MAR），报床旁观察。</li>
+<li><strong>lab</strong>：<strong>不主动给结果</strong>，你得用自然语言点名要什么检查，它做语义匹配（能处理缩写、CBC/BMP 这种套餐展开、同义词），命中了返回数值/单位/参考范围，<strong>没这项检查就返回空</strong>。</li>
+<li><strong>history</strong>：既往住院的出院小结，只在病人真有既往住院时才激活。</li>
+</ul>
+<p>Readview 是<strong>累积</strong>的：阶段 k 时该角色能看 0 到本阶段结束的全部记录，只按角色过滤来源表。agent 激活条件是 readview 与当前上下文窗口有交集，避免出现"问了个啥也没有的 agent"。<br>
+锐评：<strong>lab agent 的"没有就返回空"是整个环境里设计得最狠的一刀。</strong> 它把"你会不会开检查"变成了一个可测量的能力——开错了不但拿不到信息，还会计入浪费成本。后面实验里 Llama 和 Gemma 系列 60-73% 的化验请求打空，直接暴露了小模型对"这个病人现在到底做过哪些检查"完全没概念。这个指标很有味道。</p>
+<h3>4.2：两种模式</h3>
+<p><strong>Direct 模式</strong>：一次性把静态病人信息加上到本阶段末的全部累积事件都给你，直接交答案——本质上是个消融对照，测"给全信息你能做多好"。<br>
+<strong>Interactive 模式</strong>：每个阶段从零信息开始，<strong>每轮只允许一次工具调用</strong>，观测靠 <code class="notranslate">(query, response)</code> 对逐步累积，直到模型调 <code class="notranslate">finalize_decision</code> 或者<strong>打满 60 轮</strong>。<br>
+另外一个容易被忽略的设定在附录 C.6：<strong>跨阶段时，环境会把上一阶段的"真实标准答案"注入进来</strong>，同时把模型自己的 submit / finalize 调用从上下文里删掉。也就是说模型不会被自己前面的错误带偏，每个阶段都是在"真实病程"上继续。<br>
+锐评：这个"真答案注入"是必要的（否则误差累积会让长程 case 全线崩盘、无法归因），但它也<strong>从根本上改变了任务性质</strong>——真实医生是要在自己前面决策造成的后果上继续工作的，ClinEnv 里的模型永远活在一个被纠正过的平行世界里。所以论文标题里的 "Long Horizon" 严格说是"长上下文的多次独立决策"，而不是真正的长程序贯规划。这个区别对想做 RL 训练的人尤其关键：<strong>这个环境里没有真正的信用分配问题，因为状态转移不依赖你的动作。</strong></p>
+<h2>5：被低估的设计选择：那个"过于善良"的提交接口</h2>
+<p>论文 3.4 节末尾有一段，我认为是整篇工作最需要被拿出来单独讨论的：为了"把临床推理质量从输出格式的干扰中剥离出来"，提交接口做了两件事：</p>
+<ul>
+<li><strong>只暴露本阶段答案里真实出现过的类型的 submit 工具</strong>——本阶段没有用药决策？那 <code class="notranslate">submit_medication</code> 这个工具你根本看不见。</li>
+<li><strong>直接告诉模型每种类型要交几条</strong>：<code class="notranslate">n_k^(t) = |{g ∈ G_k : g.type = t}|</code>。</li>
+</ul>
+<p>作者的理由是：这样每种类型的匈牙利匹配就是等大小集合之间的匹配，precision 和 recall 只由匹配质量决定，不受数量错配影响，于是分数纯粹反映决策准确度。<br>
+锐评：<strong>理由在技术上完全成立，在临床上完全站不住。</strong> "现在该不该动手"和"该动几下"恰恰是主治医生最核心的判断——决定不加药、决定再观察一天、决定同时上三个药，这些都是真正的临床决策。ClinEnv 把这两个决定直接送给了模型，剩下的任务退化成了**"我已经告诉你现在要开两个药了，你猜是哪两个"<strong>。这不仅让任务变简单了（消除了假阳性风险），更糟的是它</strong>改变了任务的性质**：从"临床判断"变成了"给定行动槽位的填空"。而 0.31 这个吓人的低分是在这么优待的条件下拿到的——从"暴露差距"的角度这反而让结论更强，但从"benchmark 度量的到底是什么能力"的角度，这是个必须在 limitation 里写清楚的东西，论文却只字未提。</p>
+<h2>6：评分体系（一）：模型决定得对不对</h2>
+<p>匹配在每个类型组内独立用<strong>匈牙利算法</strong>做最大化总匹配分的分配，再拼成阶段级分配，阶段 F1 是连续 precision 和 recall 的调和平均。</p>
+<h3>6.1：药物评分——动作是硬门槛</h3>
+<p>用药先过 <strong>action gate</strong>：提交的动作（start/stop/switch/adjust）和标准答案不一致，<strong>不管药名多像都直接 0 分</strong>，这会逼着匈牙利算法优先选动作一致的配对。<br>
+动作对上了才比药名：完全同名给 1.0；否则两边都通过 RxNorm API 解析成 ATC 码，按最长公共前缀长度 ℓ 给部分分——ℓ 到化学子组（5 位）给 0.8，药理学类（4 位）给 0.6，治疗组（3 位）给 0.3，解剖组（1 位）给 0.1，再往上 0 分。ℓ ≥ |c*| 时给满分，这是为了兼容那些 RxNorm 条目根本到不了第 5 级的药。<br>
+adjust 类还有方向惩罚：<strong>只有</strong>在提交和答案都明确写了方向且相反（一个 increase 一个 decrease）时，分数打对折；有一边没写就不罚。</p>
+<h3>6.2：诊断与操作评分——ICD 层级 F1</h3>
+<p>模型交的是自由文本，标准答案是 ICD 码，所以中间要过一个两步管线：先用 embedding 在完整 ICD 词表（ICD-9-CM / ICD-10-CM / ICD-9-PCS / ICD-10-PCS）上按余弦相似度召回 top-15，再用一个 LLM reranker 挑最佳。然后把预测码和答案码各自展开成"自己 + 全部祖先"的集合，算 <strong>Hierarchical F1</strong>：<code class="notranslate">HDF1 = 2|Â ∩ A*| / (|Â| + |A*|)</code>。<br>
+锐评：ATC 部分给分和 ICD 层级 F1 这两个设计是对的方向——临床上"开了同类的另一种质子泵抑制剂"显然不该和"开了降压药"同样是 0 分。但<strong>打分管线里塞了 embedding 检索 + LLM reranker，这就把"确定性评分"这个卖点戳破了一个洞</strong>：同一份提交，换个 reranker 或者换个 embedding 模型，分数是会变的。作者在 limitation 里承认"部分评分步骤用了 LLM"，但没报告 reranker 的准确率，也没做 reranker 的一致性/敏感性实验。这是一个严格审稿人一定会追的点。</p>
+<h2>7：评分体系（二）：模型问得好不好</h2>
+<p>这部分只在 interactive 模式下有效，是 ClinEnv 相对同类工作最独特的地方。</p>
+<h3>7.1：信息引出质量（覆盖率与效率）</h3>
+<p>对每个激活的角色 a，给一个 judge 看<strong>完整的 readview</strong> 和该 agent 本阶段实际返回过的内容，judge 枚举 readview 里的关键临床事实，逐条判断是否在对话里出现过。角色覆盖率 <code class="notranslate">cov_a = 覆盖的事实数 / 总事实数</code>，阶段覆盖率是各激活角色的<strong>宏平均</strong>。<br>
+光有覆盖率不惩罚"无脑猛问"，所以还有个效率分。正文式 (12) 写的是：<code class="notranslate">eff = cov / max(1, K/|A_k|)</code>，K 是本阶段的信息获取查询数，<code class="notranslate">|A_k|</code> 是激活 agent 数——<strong>"一个来源问一句就该问干净"</strong>，问的次数不超过来源数就不罚，超了就按冗余度按比例压。</p>
+<h3>7.2：成本指标</h3>
+<ul>
+<li><strong>化验浪费比</strong>：每个开出的检查通过 embedding + LLM rerank 映射到 <strong>CMS 临床化验收费表</strong>拿到费用，凡是"标准答案的临床图景不支持"的检查算无谓支出，<code class="notranslate">r_waste = 冗余检查费用 / 全部开单费用</code>。</li>
+<li><strong>药物获取成本</strong>：药名 → RxNorm CUI → NDC 码 → <strong>NADAC 数据库</strong>拿单价 p；同时 RxNorm CUI → ATC 码 → <strong>WHO DDD（限定日剂量）</strong>；日均成本 <code class="notranslate">c = p × DDD</code>，阶段级指标是所有合格提交的日均成本总和。</li>
+</ul>
+<p>锐评：<strong>把钱算进去是这篇论文最有想象力的一笔。</strong> 医疗 AI 的评测长期只谈准确率不谈成本，但真实世界里"多开了三万块的检查最后诊断对了"和"直奔要害"是两件完全不同的事。用 CMS 收费表和 NADAC + WHO DDD 这些公开权威源来估价，也算认真。但这里有一个<strong>必须点出来的实现级矛盾</strong>：附录 C.7 说实际实现的效率指标是 <code class="notranslate">cov × N/(N+K)</code>（N 是被判定的关键事实数），这和正文式 (12) 的 <code class="notranslate">cov / max(1, K/|A_k|)</code> <strong>是两个完全不同的公式，量纲和行为都不一样</strong>。图 2c 那条"效率随阶段下降"的曲线到底是用哪个算的，论文没交代。这不是笔误级别的问题，是可复现性问题。</p>
+<h1>Step 2：实验部分</h1>
+<h2>1：实验设置与被测模型</h2>
+<p>七个模型：<strong>GPT-5.4 / GPT-5.4-mini / GPT-5.4-nano</strong>（闭源，因 PhysioNet 要求走零数据保留策略）、<strong>Llama-3.1-70B / Llama-3.1-8B</strong>、<strong>Gemma-3-27B / Gemma-3-12B</strong>。基准规模：3,509 次住院、1,809 个病人、9,297 个决策阶段、26,043 条标准答案决策，平均每 case 2.65 个阶段，49.8% 是长程（≥3 阶段）case；诊断占决策的 71.7%，用药 21.4%，操作 6.9%；覆盖 2,128 个不同 ICD 码和 488 种不同药物。用药动作分布严重不均：start 加 stop 占 79.1% + 7.5%，switch 只有 3.8%，adjust 9.5%。<br>
+锐评：<strong>被测模型的选择是这篇论文最大的实验短板。</strong> 一篇 2026 年 6 月的论文，非闭源侧只测了 Llama-3.1 和 Gemma-3——这两个在当时已经相当老了，而 Qwen、DeepSeek、Claude、Gemini 全部缺席。更尴尬的是：<strong>造题骨干是 Claude-Sonnet-4.6，四个信息 agent 是 GPT-5.4-mini，然后被测榜首是 GPT-5.4。</strong> 环境 agent 和被测模型同源，是否存在语义习惯上的隐性对齐优势？论文没有做任何环境骨干的替换消融。这一条在顶会审稿里是很容易被拿来打的。另外，标题里的 "Long Horizon" 配上平均 2.65 个阶段，多少有点撑不住——不过考虑到最长到 9 阶段，勉强算合理。</p>
+<h2>2：主结果——0.31 的天花板</h2>
+<p>GPT-5.4 在所有结果指标上领先：决策 F1 0.306、诊断 0.511、操作 0.379、信息覆盖率 0.430，但离榜单饱和差得很远。整体排序上闭源三兄弟 &gt; Gemma-27B ≈ Llama-70B &gt; Llama-8B ≈ Gemma-12B。<br>
+最有意思的是<strong>结果与过程的脱钩</strong>：Llama-3.1-70B 拿到了全场最高的用药分（0.101），但同时是覆盖率最低（0.140）、轮数最多（14.1）、化验浪费最高（35.8%）的模型；GPT-5.4-nano 则是镜像——准确率有竞争力，轮数最少（4.4），浪费最低（4.1%），用一半的查询量拿到了 GPT-5.4 大部分的覆盖率，成了信息效率最高的模型（0.281 vs 0.274）。<br>
+锐评：<strong>"最强模型的决策 F1 只有 0.31"这个 headline 数字的解读需要极度小心。</strong> 0.306 是宏平均，而其中诊断 0.511、用药 0.097——整体分被用药这一项拖到地上。而用药分低的直接原因，是它在要求模型<strong>猜中治疗组当时选的那个具体药</strong>。同一个适应症下有十几种临床上完全等价的选择（论文自己的例子就很典型：模型交 Ferrous Sulfate，答案是 Ferrous Gluconate，两个都是口服铁剂，临床上没有实质区别）。ATC 部分给分能缓解一部分，但缓解不了根本问题。<strong>在没有人类医生 baseline 的情况下，"0.31 说明模型远未达到临床可用"这个推论是不成立的</strong>——很可能一个真正的主治医生在这个 benchmark 上也拿不到 0.6，因为这本来就不是一个有唯一正确答案的任务。作者在 limitation 里承认了"衡量的是与真实实践的一致性而非最优性"，但结论段的措辞仍然按"能力差距"来写，两者是不一致的。</p>
+<h2>3：长程崩塌——分数随阶段单调下滑</h2>
+<p>作者把每个 case 末尾那个诊断阶段单独摘出去（因为它分高，会掩盖管理决策的真实轨迹），只看带用药或操作决策的<strong>管理阶段</strong>：决策 F1 随阶段序号急剧下降，GPT-5.4 从第一个管理阶段的 0.21 掉到第四个阶段的 0.03 以下，其他模型全部趋近于零。<br>
+但真正的洞见在归因上：<strong>瓶颈不是信息获取</strong>。覆盖率对 GPT-5.4 基本持平，对弱模型甚至随着记录变长而上升；崩掉的是效率——GPT-5.4 的查询次数从每阶段约 4 次涨到 50 次以上，而覆盖率一直卡在 0.45 左右，也就是说后期阶段被大量问不出新东西的冗余查询占满了。<br>
+附录还补了一个很重要的澄清：全阶段平均下最终阶段的分数会"反弹"，是因为多阶段 case 的首个和中间阶段有 98.87% 和 99.07% 含管理决策，而最终阶段 89.31% 是纯诊断——所谓反弹是结构假象，不是模型后期变强了。<br>
+锐评：<strong>"覆盖率不掉、查询次数暴涨、决策崩溃"这个三元组是全篇最扎实、最有价值的实证发现。</strong> 它精确刻画了一个 agent 失效模式：模型知道该去问，也确实问到了东西，但<strong>在长上下文里丧失了"我已经知道够了"的判断力</strong>，于是陷入查询循环。这个现象在通用 agent 里也普遍存在，ClinEnv 第一次把它量化到了每阶段粒度。查询数从 4 涨到 50+ 这个数字尤其触目——60 轮上限就在旁边，说明后期阶段模型基本是撞着 turn limit 结束的。<strong>如果我要从这篇论文里只带走一张图，就是 Figure 2。</strong></p>
+<h2>4：诊断 vs 管理——三倍鸿沟与"药物身份"瓶颈</h2>
+<p>纯诊断阶段模型恢复出院诊断还算不错（汇总 0.40，GPT-5.4 0.51），但管理阶段的 F1 塌到 0.13，差距约三倍，且对每个模型都成立。一句话总结：<strong>认出病人得了什么，比决定拿它怎么办，容易得多。</strong><br>
+用药是极端情形。所有模型的动作类型（start/stop/switch/adjust）准确率都在 53–73%，但用药匹配分最好也就 0.10 左右——动作这道门槛基本过了，残差全在<strong>药物身份</strong>上：模型能提出一个合理的治疗类别，但很少能命中治疗组实际选的那个药。反证也很干净：Llama-3.1-8B 动作准确率最高（0.73），但用药分是最低之一（0.082）。<br>
+还有两个附带发现：<strong>阶段级上覆盖率和决策 F1 基本不相关</strong>（整体 Pearson r = 0.08，GPT-5.4 内部 0.04），也就是说"多读点记录"本身不会让决策变好；<strong>信息获取严重偏科</strong>——所有模型问护士最多、问化验最少（GPT-5.4 覆盖了 0.89 的护士事实，却只覆盖 0.25 的化验事实），而且弱模型 60–73% 的化验请求点的是本阶段根本不存在的检查，闭源模型这个比例是 11–19%。<br>
+锐评：诊断-管理三倍差是个真发现，而且和临床直觉高度吻合（诊断可以从出院小结的叙述里反推，用药选择却嵌在具体医院的处方集、药品可及性和医生个人习惯里）。但这恰恰又指向前面那个问题：<strong>用药分 0.10 里，有多少是"模型不会看病"，有多少是"这家医院当年恰好用了这个牌子的铁剂"？论文没有拆开。</strong> 一个最小成本的补救实验是：找几位临床医生对随机抽样的 200 个管理阶段独立作答，报一个人类分数。没有这个数，0.10 就只是一个无法解释的数字。</p>
+<h2>5：过程指标真的测出了新东西</h2>
+<p>覆盖率和化验浪费呈反向关系：覆盖更多相关信息的模型同时浪费更少。GPT-5.4 处在"高覆盖低浪费"的理想角落，Llama-70B 和 Gemma-27B 落在"低覆盖、浪费超过 35%"的反面区域，而 GPT-5.4-nano 以中等覆盖率拿到全场最低浪费（约 4%），说明高效的信息获取不需要靠模型规模堆。<br>
+作者由此论证：覆盖率和浪费不是两个独立轴，而是同一项底层技能——<strong>"知道什么信息值得获取"</strong>——的两面。附录 G 补了模型级相关性：覆盖率与决策 F1 强相关（r = 0.865），与化验浪费中度负相关（r = -0.496），与化验花费几乎不相关（r = 0.103）；轮数与覆盖率负相关（r = -0.404）、与浪费正相关（r = 0.644）。<br>
+锐评：<strong>"nano 用一半查询拿到接近 GPT-5.4 的覆盖率"这个结果比主表任何一个数字都更有产品意义</strong>——它说明信息获取效率是一个可以和参数量解耦的能力维度，小模型完全可能在这上面赢大模型。这对算力受限的研究非常友好。但要注意 r = 0.865 这个数字是<strong>只有七个点算出来的模型级相关</strong>，统计效力极弱，随便换两个模型就可能翻盘；而<strong>阶段级</strong>（样本量近万）的相关是 r = 0.08。论文正文用阶段级的 0.08 论证"信息不是瓶颈"，附录用模型级的 0.865 论证"覆盖率很重要"，两处结论听起来是打架的，虽然技术上可以用"生态学谬误"调和（模型间差异 ≠ 模型内差异），但论文完全没有解释，读者极易被误导。</p>
+<h2>6：几处必须记下来的自相矛盾</h2>
+<p>复现之前建议先把这几条列成 checklist：<strong>①</strong> 正文式 (12) 的效率公式 <code class="notranslate">cov / max(1, K/|A_k|)</code> 与附录 C.7 的实现 <code class="notranslate">cov × N/(N+K)</code> 不一致，且图 2c 未说明用的哪个；<strong>②</strong> 正文称造题流水线是 "four-phase"，实际列了 A–E 五个 phase，图 1 caption 写 five-step；<strong>③</strong> 摘要第二句 "Static benchmarks cannot probe and existing interactive medical benchmarks each compromise on at least one of them" 语法破损，probe 后面缺宾语；<strong>④</strong> 论文自称确定性评分，但 ICD 映射、化验计价、药价映射三处都用了 embedding + LLM reranker，且都没有报准确率；<strong>⑤</strong> 表 5 的 Long Horizon 行里有些数字反直觉（如 GPT-5.4 长程浪费 2.3% 反而低于全集 10.4%，Llama-70B 从 35.8% 掉到 10.2%），论文没有解释。<br>
+锐评：这些不是致命伤，但加在一起会让审稿人怀疑投稿是赶 deadline 拼出来的。<strong>对你而言，第 ① 和第 ④ 条是复现路上的实际风险点</strong>：如果你复现出来的过程指标数字对不上作者的，八成就卡在这两处。</p>
+<h1>Step 3：other</h1>
+<h2>1：重点</h2>
+<p>我认为这篇论文最有价值的东西有三层，重要性依次递减。<strong>第一层，也是最硬的一条：它证明了"信息获取"是一个独立于"决策准确率"的、可测量的能力维度，而且这两者在真实任务上是脱钩的。</strong> 传统的只看终点答案的评测，会把一个"疯狂开检查、烧掉三万块、最后蒙对了"的模型和一个"直奔要害、一击命中"的模型给出同样的分数，而 ClinEnv 让这两者在覆盖率、效率、浪费比三个数字上一眼可辨。这个洞见完全可以迁移出医疗——任何长程 agent 评测都该问一句"你是怎么拿到信息的"，而不只是"你答对了没有"。<strong>第二层是那个失效模式的精确刻画</strong>：随着阶段推进，覆盖率不掉、查询次数从 4 涨到 50+、决策 F1 从 0.21 崩到 0.03。这说明长程 agent 的瓶颈不在"能不能拿到信息"，而在"知不知道信息够了"——这是一个非常具体、可以直接作为改进目标的失效模式，而不是一句空泛的"长程能力不足"。<strong>第三层是造题范式本身</strong>：让 LLM 只负责定位和分类、让数据库负责提供答案，从而在完全无人工标注的前提下拿到确定性可验证的 ground truth。这一条对任何想在 EHR 上造 benchmark 或造 RL 环境的人，都是可以直接抄的工程蓝图。</p>
+<h2>2：意见</h2>
+<p><strong>这篇论文的核心定量结论建立在一个没有人类基线的、且很可能没有唯一正确答案的指标上，而作者却用它来断言"模型远未达到临床可用"。</strong> 具体说：0.306 的整体 F1 被 0.097 的用药分死死拖住，而用药分度量的是"能否猜中该治疗组当时选的那个具体药"——在同一适应症下往往有十几种临床等价的选择，论文自己附录 F 的例子就是模型交 Ferrous Sulfate、答案是 Ferrous Gluconate 这种毫无临床差别的"错误"。作者在 Limitations 里承认这测的是"与真实实践的一致性而非最优性"，但摘要和结论仍按"能力差距"来叙述，这是一处必须消除的不一致。<strong>要救这篇论文，最小成本的实验是：请 3–5 位主治医师，在完全相同的交互环境下独立完成 200 个随机抽样的管理阶段，报出人类的决策 F1、覆盖率和浪费比。</strong> 如果人类拿 0.65 而 GPT-5.4 拿 0.31，"存在巨大差距"这个结论就坐实了，论文的价值会翻倍；如果人类只拿 0.35，那这篇论文真正的贡献就得从"揭示能力差距"改写成"揭示临床决策的内在不确定性上限"——那同样是个好结论，但是完全不同的一篇论文。<strong>在拿到这个数之前，Table 5 里的所有绝对数值都只有模型间横向比较的意义，不具备任何"临床就绪度"的解释力。</strong></p>
+<h2>3：相关工作</h2>
+<p><strong>MedAgentBench</strong>（Jiang et al., NEJM AI 2025, 2(9):AIdbp2500144）是 ClinEnv 在"真实 EHR + 结构化动作"这条线上最直接的前辈。它在 Stanford STARR 的 100 份病人档案上放了 300 个由医生撰写的任务，覆盖病历查阅、下医嘱、结果检索等 10 个类别，环境暴露的是符合现代 EMR 标准的 FHIR API，成功与否直接看操作后的数据库状态。它的强项是任务真实、评分干净；ClinEnv 点它的地方是任务<strong>原子且外部给定</strong>——每个任务都是预先定义好的一次性操作，不是从一段真实的纵向病程里自然长出来的多阶段决策。如果你的目标是"agent 能不能正确操作 EHR 系统"，MedAgentBench 更贴题；如果是"agent 能不能像主治一样管一次住院"，ClinEnv 更贴题。</p>
+<p><strong>MedAgentGym</strong>（Xu et al., arXiv:2506.04405，注意它和 ClinEnv 共享通讯作者 May D. Wang）走的是"SWE-Gym 的医学版"路线，提供了 129 个类别、7.2 万个任务实例的可执行环境，涵盖 MIMIC-III / eICU 上的 SQL 查询、计算器式推理和数据分析代码生成，明确定位为<strong>训练时</strong>环境而不只是评测集。它和 ClinEnv 的分界线很清楚：MedAgentGym 的评测单元是<strong>代码或公式</strong>，ClinEnv 的评测单元是<strong>临床决策本身</strong>（开哪个药、下哪个诊断），后者用医生实际使用的本体（ATC、ICD）来验证。对算力有限的人来说这个对比很实际：MedAgentGym 有 7.2 万条实例、明确支持 RL 后训练；ClinEnv 只有 9,297 个阶段，且每个阶段最多 60 轮交互、每轮都要调多个 LLM agent，<strong>采样成本高得多，更适合当评测集而不是训练环境</strong>。</p>
+<p><strong>FHIR-AgentBench</strong>（Lee et al., arXiv:2509.19319）代表了"数据交互"这一支最新的形态。它在 MIMIC-IV-FHIR 上提供 2,931 个问题，同时给出 SQL 和 FHIR-API 两条答案路径，用执行结果匹配来打分。相比更早的 EHRSQL（2.4 万问题，MIMIC-III + eICU）和 MIMIC-SQL（1 万对），它的进步在于对接了真实互操作标准 FHIR 而不是裸 SQL，更接近医院里的实际集成环境。同样地，它的任务是单轮的自然语言到结构化查询的翻译，测的是取数能力。<strong>把这三个工作和 ClinEnv 摆在一起，能看出一条很清晰的演进曲线：从"会不会取数"（FHIR-AgentBench）到"会不会写代码解决医学问题"（MedAgentGym）再到"会不会做临床决策"（ClinEnv）——评测单元一路往临床本身靠，而每往前一步，可自动验证的确定性就损失一点，ClinEnv 就是靠 ATC/ICD 本体和"答案直接从数据库行抄"这两招，才勉强把确定性守在了最后一步上。</strong></p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-6'></script>
+
+</html>
