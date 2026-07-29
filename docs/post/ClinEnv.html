@@ -16,15 +16,15 @@
 <title>ClinEnv</title>
 <meta name="theme-color" content="#262624">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="前言 标题：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents 论文链接：https://arxiv.org/abs/2606.02568 （arXiv:2606.02568v1，2026-06-01 提交，20…">
+<meta name="description" content="前言 标题：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents 作者单位：Georgia Institute of Technology、北京大学、UT Southwestern Medical Center、清华…">
 <meta property="og:title" content="ClinEnv">
-<meta property="og:description" content="前言 标题：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents 论文链接：https://arxiv.org/abs/2606.02568 （arXiv:2606.02568v1，2026-06-01 提交，20…">
+<meta property="og:description" content="前言 标题：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents 作者单位：Georgia Institute of Technology、北京大学、UT Southwestern Medical Center、清华…">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/ClinEnv.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ClinEnv">
-<meta name="twitter:description" content="前言 标题：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents 论文链接：https://arxiv.org/abs/2606.02568 （arXiv:2606.02568v1，2026-06-01 提交，20…">
+<meta name="twitter:description" content="前言 标题：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents 作者单位：Georgia Institute of Technology、北京大学、UT Southwestern Medical Center、清华…">
 <meta name="twitter:image" content="https://github.com/powehi12.png">
 <link rel="canonical" href="https://powehi12.github.io/post/ClinEnv.html">
 <link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
@@ -82,144 +82,114 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>前言</h1>
 <p><strong>标题</strong>：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents<br>
-论文链接：<a href="https://arxiv.org/abs/2606.02568" rel="nofollow">https://arxiv.org/abs/2606.02568</a> （arXiv:2606.02568v1，2026-06-01 提交，20 页 / 6 图 / 12 表）<br>
-代码与数据：GitHub 开源代码 + PhysioNet 托管数据（需先通过 PhysioNet 的合规认证才能使用）<br>
-作者单位：Georgia Institute of Technology、北京大学、UT Southwestern Medical Center、清华大学（一作 Yuxing Lu，通讯 May D. Wang）</p>
-<p><strong>标签</strong>：EHR 交互式环境；长程序贯决策；确定性本体打分；过程质量评测</p>
-<p><strong>摘要</strong>：这篇论文的核心思想说白了就一句话——<strong>别再让大模型做选择题了，让它当一回住院部的主治医生</strong>：病人的信息不会主动摆在它面前，它得自己去问病人、问护士、开化验、查既往病历，问完之后必须在"开什么药、做什么操作、下什么诊断"上做出不可撤销的决定，然后拿真实病历里医生当时的实际操作来对答案。具体做法是从 MIMIC-IV 里把每次住院自动切成一串按时间排序的"决策阶段"（全自动，无需人工标注），每个阶段搭一个由四个专职 agent（患者/护士/化验/既往史）组成的信息环境，模型必须先主动查询再提交决策；评分同时打两套分——结果分用 ATC 药物本体和 ICD 层次结构做确定性匹配，过程分则衡量信息覆盖率、查询效率、化验浪费金额和用药日成本。最终得到 3,509 个 case、9,297 个决策阶段、26,043 条 ground-truth 决策，七个模型跑下来最强的 GPT-5.4 也只有 0.306 的 decision F1，而且诊断（0.51）远好于管理决策（0.17），结果质量和过程质量严重脱钩。</p>
+<strong>作者单位</strong>：Georgia Institute of Technology、北京大学、UT Southwestern Medical Center、清华大学（Yuxing Lu, Yushuhong Lin, Wenqi Shi, J. Ben Tamo, Xukai Zhao, Jinzhuo Wang, May Dongmei Wang）<br>
+<strong>论文</strong>：<a href="https://arxiv.org/abs/2606.02568" rel="nofollow">https://arxiv.org/abs/2606.02568</a> （arXiv:2606.02568v1，2026-06-01）<br>
+<strong>代码</strong>：<a href="https://github.com/ylin766/ClinEnv">https://github.com/ylin766/ClinEnv</a> ｜ <strong>数据</strong>：<a href="https://huggingface.co/datasets/ylin766gatech/ClinEnv%EF%BC%88%E9%9C%80%E5%85%88%E9%80%9A%E8%BF%87" rel="nofollow">https://huggingface.co/datasets/ylin766gatech/ClinEnv（需先通过</a> PhysioNet 合规审核）｜ <strong>Demo</strong>：<a href="https://clinenv-demo.vercel.app/" rel="nofollow">https://clinenv-demo.vercel.app/</a><br>
+<strong>标签</strong>：EHR 智能体；临床决策 Benchmark；长程序贯决策；交互式评测环境</p>
+<p><strong>摘要</strong>：一句话核心思想——<strong>别再让模型做选择题了，把它扔进真实住院病历里当主治医生，让它自己开口问信息、一步步下不可撤回的医嘱，然后看它能不能还原这个病人真实的诊疗过程</strong>。具体来说，ClinEnv 从 MIMIC-IV 真实住院记录出发，用一条全自动流水线把每次住院切成有先后顺序的"决策阶段"，每个阶段模型开局什么都看不到，必须主动去问病人、护士、化验、既往史四个专门 agent，问够了再提交用药、操作、诊断三类决定；打分同时看"决定对不对"（用 ATC 药物本体和 ICD 层级 F1 做确定性匹配）和"信息是怎么问出来的"（覆盖率、查询效率、化验浪费率、药费）。作者把这套范式命名为 Longitudinal Inpatient Simulation（LIS）。结果七个模型里最强的只拿到 0.31 决策 F1，而且"结果好"和"过程好"几乎不相关，诊断能还原（0.51）但管理动作几乎不会做（0.17）。</p>
 <h1>Step 1：论文解读</h1>
-<h2>1：为什么说现有的医疗 benchmark 全都不够用</h2>
-<p>作者开篇的态度非常明确：<strong>临床工作不是从给定选项里挑一个答案</strong>。真实的住院场景有三个静态题库根本碰不到的性质——信息是不完整的、必须主动去找；决策是序贯的、而且泼出去的水收不回来；每个决策横跨用药、操作、诊断三类，最后要拿病人真实的病程来验证。</p>
-<h3>1.1：四类前作各自的"结构性妥协"</h3>
-<p>作者把前人工作分成四类，逐个点名批评，逻辑相当干净：</p>
-<ul>
-<li><strong>知识型</strong>（MedQA、MedMCQA、PubMedQA、MMLU-Health、MultiMedQA）：把"临床能力"等同于"知识检索"，既没有信息获取，也没有不确定下的承诺。</li>
-<li><strong>数据交互型</strong>（EHRSQL、MIMIC-SQL、FHIR-AgentBench、MedAgentBench）：把 EHR 当成一个可查询的数据库，评的是 SQL/API 调得对不对。任务是原子化的、外部预先指定好的，所以测的是"数据访问技能"，而不是"判断哪些数据重要、这些数据该导向什么行动"的临床推理。</li>
-<li><strong>问诊对话型</strong>（AgentClinic、MedDialBench、MAQuE、HELPMed、AMIE）：用 LLM 扮演病人。这一派的贡献是确立了交互式评测的重要性，但天花板被它自己的模拟器锁死了——ground truth 上限就是喂给模拟器的那点东西（通常是考试 vignette），而中间过程只能靠 LLM-as-judge 去评自由文本对话。</li>
-<li><strong>代码执行型</strong>（MedAgentGym、MedCalc-Env）：类比 HumanEval/SWE-bench 做可执行环境，但评的单位是代码和公式，不是临床决策本身。</li>
-</ul>
-<h3>1.2：锐评——这张对比表是"为自己量身定做"的</h3>
-<p>作者在 Table 1 / Table 7 里列了 5~7 个设计维度，然后展示只有 ClinEnv 全勾。这是 benchmark 论文的经典操作：<strong>维度是自己选的，选完当然只有自己全满足</strong>。比如"自动构建"这一维度，对 MedAgentBench 打 ✗ 是因为它是医生手写任务——可人家手写恰恰是为了保证任务的临床合理性，在这张表里反而成了减分项。这种"把别人的设计取舍重新编码成能力缺失"的写法，OpenReview 上是会被抓的。不过话说回来，"真实 EHR 轨迹 + 多阶段 + 主动求证 + 确定性打分 + 成本指标"这五条同时满足，确实此前没人做到，卡位是站得住的。</p>
-<h2>2：核心范式 Longitudinal Inpatient Simulation（纵向住院模拟）</h2>
-<p>论文给自己的范式起了个名字，简称 LIS。拆开看就是五件事凑在一起：真实 EHR 纵向轨迹、多阶段序贯决策、跨异质来源的主动信息获取、基于医学本体的确定性打分、带成本意识的过程指标。</p>
-<p><strong>通俗理解</strong>：可以把 ClinEnv 想成"医疗版的 SWE-bench，但是加了迷雾"。SWE-bench 给你一个 GitHub issue 和整个仓库，你写补丁跑测试；ClinEnv 给你一个病人，但<strong>病历本是锁着的</strong>，你得一句句问出来，然后你开的医嘱会被拿去和当年那位主治医生真实开的医嘱做本体级别的比对。</p>
-<h2>3：数据底座——把 MIMIC-IV 压成一条事件时间线</h2>
-<h3>3.1：预处理是纯确定性的，不碰 LLM</h3>
-<p>底座是 MIMIC-IV v3.1 + MIMIC-IV-Note v2.2。做法是按 <code class="notranslate">subject_id</code> 和 <code class="notranslate">hadm_id</code> 把结构化表和临床文书拼成一条住院级时间线：入院记录、化验和微生物、医嘱与给药、ICU 监护记录、出入量、操作事件、ICD 编码、出院小结、影像报告，全部打平成"事件"。</p>
-<p>关键的工程细节是<strong>时间戳的优先级回退</strong>：按 charttime → starttime → admittime → chartdate → stoptime → endtime 的顺序取第一个可用的时间作为 canonical event_time，然后按时间、来源表、原始行序做确定性排序（保证 tie-break 可复现）。每个事件都保留 <code class="notranslate">source_table</code> 溯源字段。这一步的产出规模很吓人：24,760 个病人、229,482 个住院时间线文件、约 2.378 亿条事件。也就是说 ClinEnv 最终用的 3,509 个 case 只是从这个池子里采样出来的一小撮，<strong>扩展空间极大</strong>。</p>
-<h3>3.2：锐评——这里其实是本文最有复用价值的部分</h3>
-<p>论文正文对预处理着墨很少，全塞进了附录 B，但对想做 EHR agent 的人来说，<strong>这条"MIMIC-IV → 统一事件时间线"的管线本身比 benchmark 更值钱</strong>。它是无 LLM 的、确定性的、带溯源的，任何人拿去改造成自己的环境都能用。作者把它当成边角料，我认为是低估了。</p>
-<h2>4：自动造题流水线——五个阶段（Phase A~E）</h2>
-<p>这是全文技术含量最集中的地方，核心目标是：<strong>不用任何人工标注，把一次住院自动变成一串可评测的决策题</strong>。规划骨干用的是 Claude-Sonnet-4.6。</p>
+<h2>1：为什么现有的医疗 Benchmark 都不太够</h2>
+<p>大模型在 USMLE 这类医学执照考试上已经能追平甚至超过专家，但作者一句话戳破：真实住院压根不是从 A/B/C/D 里挑一个。真实的主治医生每天面对的是这三件事：<strong>信息是残缺的、要自己去要</strong>（没人主动把化验单塞你手里）；<strong>决定是有先后、且不可撤回的</strong>（今天上了万古霉素，明天不能假装没上过）；<strong>决定是多模态的</strong>（同时要管药、操作、诊断三条线）。</p>
+<h3>1.1：三类现有工作各自"缺一块"</h3>
+<p>作者把已有工作分成三家，每家都有一处结构性妥协：一是<strong>数据交互类</strong>（EHRSQL、MIMIC-SQL、FHIR-AgentBench、MedAgentBench），把病历当成一个可查询的数据库，考的是"你会不会写 SQL / 调 API"，而不是"你知不知道该查什么、查到了该干嘛"；二是<strong>问诊对话类</strong>（AgentClinic、MedDialBench、MAQuE、HELPMed、AMIE），确实是交互的，但病人是 LLM 演的，标准答案的上限就被"喂给模拟器的那份考题短案例"锁死了，而且中间过程只能靠 LLM-as-judge 打分；三是<strong>代码执行类</strong>（MedAgentGym、MedCalc-Env），把临床推理降维成"写对一段代码或一个公式"。</p>
+<h3>1.2：一个很好用的类比</h3>
+<p>论文反复拿<strong>编程 agent</strong> 做类比，这个类比是本文叙事的骨架：HumanEval 那种静态函数测试 → SWE-bench 那种可执行的真实仓库环境，评测基建的升级直接把整个领域往前推了一大截，而且环境本身还能当训练信号用。医疗评测现在正卡在"从 HumanEval 往 SWE-bench 走"的这一步上。</p>
+<blockquote>
+<p>🔪 <strong>锐评</strong>：这个类比是本文最好卖的地方，但也是最需要警惕的地方。SWE-bench 之所以成立，是因为"单元测试通过"是<strong>客观且唯一</strong>的成功判据。而"这个病人该用哪个药"根本没有唯一解。后面 Step 3 我会展开——这不是细节问题，是这篇论文整个分数体系能不能被解读的根子问题。</p>
+</blockquote>
+<h2>2：LIS 范式——它到底"新"在哪五个维度</h2>
+<p>作者定义的 Longitudinal Inpatient Simulation 由五个维度共同构成：真实 EHR 纵向轨迹、多阶段序贯决策、跨异构源的主动信息获取、基于医学本体的确定性打分、以及成本感知的过程指标。作者做了一张对比表逐个打勾，宣称 ClinEnv 是第一个五项全占的工作。<br>
+说人话就是：<strong>别的 benchmark 每次只满足其中三四项，ClinEnv 想一次性全要</strong>。</p>
+<blockquote>
+<p>🔪 <strong>锐评</strong>：这种"我做一张表，把五个维度列出来，然后只有我这一行全是 ✓"的写法，在 benchmark 论文里是标准操作，也是 OpenReview 上审稿人最爱开火的地方——因为<strong>维度是作者自己定的</strong>。你完全可以反过来定一套维度（比如"是否有医生基线""是否支持多正确答案""标注是否人工校验过"），那 ClinEnv 这一行就会出现 ✗。这张表的说服力取决于你信不信这五个维度是"临床评测该有的样子"，而不是"我做出来的样子"。</p>
+</blockquote>
+<h2>3：数据是怎么来的——把住院记录拍平成一条时间线</h2>
+<p>底座是 MIMIC-IV v3.1 + MIMIC-IV-Note v2.2。对每一次住院（按 subject_id 和 hadm_id 关联），把结构化表和临床文本合并成一条"住院级时间线"：结构化侧包括入院记录、化验和微生物结果、医嘱与给药记录、ICU 监测事件、出入量、操作事件、ICD 编码的诊断与操作；文本侧是出院小结和影像报告。每一行都变成一个带出处的事件，携带统一的 event_time 和 source_table，然后按时间排序。<br>
+<strong>打个比方</strong>：原来病历是散在十几个抽屉里的一堆纸（化验单一叠、医嘱一叠、护理记录一叠），现在全部按时间戳串成了一条微博时间线，每条都标注了"这条来自哪个抽屉"。文本负责给决策抽取和既往史查询提供叙事上下文，结构化记录负责提供带时间戳的客观观测和可用于评测的编码金标准。</p>
+<h2>4：全自动造题流水线——不用人工标注是怎么做到的</h2>
+<p>这是全文工程量最大、也最值得复现者细看的部分。整条流水线用 Claude-Sonnet-4.6 当规划骨干。</p>
 <h3>4.1：Phase A 决策抽取</h3>
-<p>读出院小结，把整次住院期间"主治级别"的决策全抽出来，标注类型（用药/操作/计划）。如果没有完整的自由文本出院小结，就退化成拼接四个章节：主诉、现病史、住院经过简述、出院诊断。</p>
-<h3>4.2：Phase B 时间锚定（本文最巧的一步）</h3>
-<p>抽出来的决策是"什么时候做的"？这一步用一个<strong>顺序前向滑窗 agent</strong> 来定位。设时间线有 T 个事件，从上一个决策的锚点之后开始，给 LLM 一个宽度为 W 的窗口（实现里 W=20），LLM 有 <code class="notranslate">mark_single</code> 和 <code class="notranslate">mark_range</code> 两个工具可用；标中了就记录锚点 $a_i$ 并把下一个决策的搜索起点推到 $a_i+1$，没标中就窗口整体前移重试，走到头还没找到就判定该决策"未锚定"。<strong>这个顺序约束保证了出院小结里的叙述顺序被映射成时间线上的严格递增顺序</strong>，这是很聪明的一招——它把"LLM 定位"这个不可靠操作，用单调性约束给硬性收紧了。只能锚定到入院前事件的决策会被丢弃。</p>
-<h3>4.3：Phase C 阶段构建与三道过滤</h3>
-<p>阶段 k 的上下文窗口定义为"上一阶段结束+1"到"本决策锚点-1"，也就是<strong>模型能看到的，只有做出这个决策之前的证据</strong>。三个安全阀值得注意：</p>
-<ul>
-<li>如果没有上下文窗口（前一阶段直接顶到锚点）就跳过；</li>
-<li><strong>如果这个药在上下文里已经是在用的活跃药，就跳过</strong>——防止"常规续方"被误当成一次真实决策；</li>
-<li>上下文事件少于 10 个的阶段，会被合并进相邻阶段，避免出现几乎无信息的决策点。</li>
-</ul>
-<p>还有一个叫 <strong>leakage expansion（泄露扩展）</strong> 的处理：找到锚点后，会往前后各扫最多 10 个事件，把同一药物/操作的相邻记录一并吸收进锚点区间，防止"答案"以证据的形式提前出现在上下文里。这一步做得很细，是防泄露的关键。</p>
-<h3>4.4：Phase D 诊断可落地性扫描</h3>
-<p>每次住院最后都会追加一个"最终诊断阶段"，但出院 ICD 码里有很多是历史合并症、跟本次住院八竿子打不着。作者用重叠滑窗（窗口 100、步长 50）扫全时间线，<strong>只有被至少一个窗口确认"在本次住院中有证据或被主动管理"的 ICD 码，才会进入最终诊断的 ground truth</strong>。</p>
+<p>让规划器读出院小结，把这次住院里主治医生做过的每一个决定抽出来，并标上类型（用药 / 操作 / 计划）。如果拿不到完整的出院小结自由文本，就退化成拼接四个章节：主诉、现病史、住院经过、出院诊断。</p>
+<h3>4.2：Phase B 时间锚定（把"做过什么"钉到"什么时候做的"）</h3>
+<p>出院小结只说"住院期间予以抗感染治疗"，但不说是第几天。于是作者用一个<strong>顺序向前滑动窗口</strong>的 agent：给它一个窗口内的事件序列，配 mark_single / mark_range 两个工具，让它标出这个决策对应哪个（或哪段）事件。标中了就把指针推到该位置，下一个决策从这之后接着找；没标中就整体前移一窗重试；找到时间线尽头还没匹配上就放弃这个决策。只锚定在入院前事件上的决策直接丢弃。<br>
+<strong>关键设计是"单调向前"</strong>——因为出院小结的叙述顺序基本等于时间顺序，指针只进不退，既省算力又天然保证了阶段之间不会时间倒错。</p>
+<h3>4.3：Phase C 阶段切分</h3>
+<p>第 k 个阶段能看到的上下文，是"上一阶段用掉的最后一个事件之后" 到 "本次决策锚点之前"的那一段。两种情况会跳过：一是根本没有上下文窗口（上一阶段已经吃到了这里）；二是这条用药决策对应的药在当前窗口里已经在用了（避免把"继续用药"当成"新决定"）。另外，每个 case 末尾都会强行追加一个"最终诊断阶段"，它的上下文是从最后一个决策一直到出院。</p>
+<h3>4.4：Phase D 诊断可溯性扫描</h3>
+<p>出院时的 ICD 码不是每一个都在住院过程里真的被处理过（有些是陈旧合并症，顺手编上去的）。所以作者用带重叠的滑窗（窗口 W、步长 S&lt;W）扫一遍时间线，只有被至少一个窗口确认"确有证据或确有处理"的 ICD 码，才进入最终诊断阶段的金标准。这一步很实在——<strong>不做的话，模型会被要求猜出一堆病历里根本没体现的编码</strong>。</p>
 <h3>4.5：Phase E 分类与确定性富化</h3>
-<p>先用 LLM 把决策分成 medication / procedure / diagnosis / plan 四类，用药决策再细分 action 为 start / stop / switch / adjust（adjust 还可带 increase/decrease 方向）。<strong>然后最关键的一句话</strong>：ground-truth 字段是从 EHR 里确定性富化的，零 LLM 调用——药名直接读 prescription / pharmacy / eMAR 表，ICD 码直接取对应的编码事件。最终每个阶段是三元组 $S_k = (\mathcal{C}_k, \mathcal{G}_k, \mathcal{A}_k)$，分别是可见事件窗口、结构化答案集、本阶段激活的信息源集合。</p>
-<p><strong>锐评</strong>：LLM 只负责"这是什么类型"，不负责"答案是什么"——这个职责切分是本文能自称"确定性"的全部底气，也是它比 AgentClinic 那一派硬气的地方。但要注意，Phase A 的"抽哪些决策"和 Phase B 的"锚在哪"仍然完全由 LLM 决定，<strong>题目的存在性和位置是 LLM 定的，只有答案的内容是确定性的</strong>。论文在附录 D.2 声称三条性质"by construction 得到保证"，但全文<strong>没有做任何人工抽检来验证 Phase A/B 的错误率</strong>，这在一个宣称零人工标注的 benchmark 里是个明显的窟窿。</p>
-<h2>5：交互环境——四个信息 agent 与两种模式</h2>
-<h3>5.1：四个专职 agent 各管一摊</h3>
-<p>四个信息 agent 全部由 GPT-5.4-mini 驱动，各自被限制在一个 readview $\mathcal{V}_a$ 上，也就是 EHR 事件按角色过滤后的投影：</p>
-<ul>
-<li><strong>患者 agent</strong>：只能看人口学、主诉、现病史、既往史，用大白话回答，<strong>看不到任何客观检查数值</strong>；</li>
-<li><strong>护士 agent</strong>：生命体征、出入量、给药记录（MAR）、床旁观察、影像小结、操作事件；</li>
-<li><strong>化验 agent</strong>：这个设计最有意思——它<strong>不被动展示结果</strong>，你必须用自然语言点名要什么，它做语义匹配（能处理缩写、CBC/BMP 这类套餐展开、同义词），命中了返回数值/单位/参考范围，<strong>没做过的检查返回空</strong>；</li>
-<li><strong>既往史 agent</strong>：只在该患者有既往住院记录时才激活，提供既往出院小结的摘要级和全文级两档。</li>
-</ul>
-<p>激活规则也很讲究：只有当某个 agent 的 readview 与当前上下文窗口有交集时才激活它，免得模型对着一个没数据的 agent 空转。</p>
-<h3>5.2：Direct 模式 vs Interactive 模式</h3>
-<p>Direct 模式把该阶段的完整事件序列一次性喂给模型，直接提交决策——这是<strong>消融基线，用来分离"信息获取能力"和"临床判断能力"</strong>。Interactive 模式则是每阶段从零信息开始，每回合只允许一次工具调用，直到模型调用 finalize_decision 或达到 60 回合上限。</p>
-<h3>5.3：提交接口做了两处强约束（重点看这里）</h3>
-<p>为了把"临床推理质量"和"输出格式能力"解耦，作者做了两件事：第一，只暴露本阶段 ground truth 中真实存在的那些 submit 工具，不存在的类型完全隐藏；第二，直接告诉模型每种类型需要提交的确切数量 $n_k^{(t)}$。这样一来匈牙利匹配总是在等大的两个集合上做，precision 和 recall 只由匹配质量决定，不受数量错配影响。</p>
-<p><strong>锐评</strong>：作者的动机（去掉格式混淆）我理解，但这是<strong>一个非常重的先验泄露</strong>。现实中主治医生面对一个病人，最难的恰恰是"此刻到底要不要下医嘱、下几条、下什么类型"。ClinEnv 把这三个问题全部替模型答完了，只留下"填空题：请给出这 2 个药名"。所以严格说，ClinEnv 测的不是"能不能当主治"，而是"在被告知答案的类型和条数之后，能不能猜中主治当年具体开的那个药"。<strong>这个泄露有多大？我认为它是本文 0.31 这个数字最大的向上偏置来源之一</strong>——真实开放场景下的分数只会更低。</p>
-<h2>6：打分体系——结果分与过程分双轨</h2>
-<h3>6.1：结果分：类型内匈牙利匹配</h3>
-<p>按类型分组（诊断/用药/操作）<strong>各自独立</strong>做匈牙利匹配（Kuhn, 1955），最大化组内总匹配分，然后拼起来算阶段级 F1（连续 precision/recall 的调和平均）。</p>
-<h4>6.1.1：用药——action 作硬门 + ATC 层次部分分</h4>
-<p><strong>action 类型是硬门禁</strong>：提交的 action 和匹配到的 ground truth 对不上，<strong>不管药名多像都是 0 分</strong>，这会逼匈牙利算法优先选 action 一致的配对。action 对上之后才比药名：完全同名给 1.0，否则通过 RxNorm API 解析成 ATC 码，按最长公共前缀长度 $\ell$ 给分——$\ell \geq |c^*|$ 给 1.0，$\ell=5$（化学亚组）给 0.8，$\ell=4$（药理学分类）给 0.6，$\ell=3$（治疗学组）给 0.3，$\ell=1$（解剖学组）给 0.1，其余 0。对 adjust 类决策，如果双方都明确指定了方向且相反，药名分<strong>减半</strong>（只有一方没指定则不罚）。</p>
-<h4>6.1.2：诊断与操作——ICD 层次 F1</h4>
-<p>模型交的是自由文本，答案是结构化 ICD 码，所以先做两步映射：在完整 ICD 词表（ICD-9-CM / ICD-10-CM / ICD-9-PCS / ICD-10-PCS）上用 embedding 检索出 top-15 候选，再用 LLM reranker 选最佳。然后把预测码和答案码各自扩展成"自身 + 全部祖先节点"的集合，算集合层面的 Hierarchical F1：<br>
-$$HDF1(\hat{c}, c^<em>) = \frac{2|\hat{\mathcal{A}} \cap \mathcal{A}^</em>|}{|\hat{\mathcal{A}}| + |\mathcal{A}^*|}$$<br>
-好处是"猜到了大类但没猜到具体亚型"能拿部分分，符合临床直觉。</p>
-<h3>6.2：过程分：覆盖率、效率、化验浪费、用药成本</h3>
-<p><strong>信息覆盖率</strong>：对每个激活的角色，让一个 judge 拿着该角色的<strong>完整 readview</strong>，枚举出其中的关键临床事实集合 $I_a$，再逐条判断这些事实有没有在实际对话里被问出来，算出 $cov_a$，然后跨角色做宏平均。平均下来每个 readview 有 32.8 条关键事实。</p>
-<p><strong>效率</strong>：光看覆盖率不惩罚"乱问一通"，所以正文给了一个折扣式定义 $eff = cov / \max(1, K/|\mathcal{A}_k|)$，其中 $K$ 是本阶段的信息查询次数。<strong>直觉是：一个高效的医生，一个信息源问一句话就该把该问的问完</strong>；查询数不超过 agent 数就不罚，超了按冗余程度线性压制。</p>
-<p><strong>化验浪费率</strong>：每个模型开的化验，通过 embedding 检索 + LLM 重排映射到 <strong>CMS 临床化验收费表</strong>拿到费用；那些"ground truth 临床图景不支持"的检查算作无谓开销：<br>
-$$r_{\text{waste}} = \frac{\sum_{t \in \mathcal{T}<em>{\text{excess}}} \text{fee}(t)}{\sum</em>{t \in \mathcal{T}_{\text{ordered}}} \text{fee}(t)}$$</p>
-<p><strong>药品获取成本</strong>：药名 → RxNorm CUI → NDC 码 → <strong>NADAC 全国平均采购价</strong> $p$；同时 CUI → ATC 码 → <strong>WHO 定义日剂量 DDD</strong>；单药日均成本 $c = p \times \text{DDD}$，阶段级指标是所有新开药的总日成本。</p>
-<h3>6.3：锐评——效率指标在正文和附录里是两个公式</h3>
-<p>这是我在通读时抓到的一个<strong>实打实的硬伤</strong>：正文式 (12) 写的是 $eff = cov/\max(1, K/|\mathcal{A}_k|)$，而附录 C.7 描述实现时写的是"coverage 乘以 $N/(N+K)$，其中 $N$ 是判定的关键事实数、$K$ 是信息查询次数"。<strong>这两个公式的量纲、归一化基准、惩罚曲线全都不一样</strong>，而且论文正文专门有一段论证"按信息源数而非事实总数归一化，才能让效率成为独立于覆盖率的一个轴"——附录的实现恰恰是按事实数归一化的，正好是正文明确否定的那个方案。表 5 里报告的 Efficiency 列到底是哪个算出来的，读者无从判断。这不是笔误级别的问题，是<strong>核心指标不可复现</strong>。</p>
-<h2>7：几个正文没强调、但决定了结论解读的实现细节</h2>
-<h3>7.1：跨阶段是"教师强制"的，错误不会累积</h3>
-<p>附录 C.6 里藏着一句极其关键的话：进入新阶段时，前一阶段的信息检索对话会保留，但<strong>提交和 finalize 调用会被删掉，然后环境把上一阶段的真实 ground-truth 决策注入上下文</strong>，这样后续阶段是基于住院期间真实发生的事情来推理，而不是基于模型早先的错误。</p>
-<p><strong>这意味着什么？</strong> 意味着 ClinEnv 的"long horizon"是<strong>教师强制（teacher forcing）下的长程</strong>，不是真正的自主长程。真实 agent 最致命的失败模式——早期一个错误决策把整条轨迹带进沟里、误差指数放大——在 ClinEnv 里被系统性地消除了。作者的取舍是可以理解的（否则评分会被早期错误污染、模型之间不可比），但<strong>论文标题里那个"Long Horizon"因此含金量要打折</strong>：它测的是"在给定正确历史的条件下，第 k 步能不能做对"，而不是"能不能独立走完 k 步"。这一点论文正文完全没提。</p>
-<h3>7.2：最终诊断阶段几乎是"送分题"</h3>
-<p>附录 G 的表 11 揭示：在多阶段 case 里，98.87% 的首阶段和 99.07% 的中间阶段包含用药或操作类答案，而 89.31% 的末阶段是纯诊断。也就是说 case 的结构是**"一路管理决策 + 最后收一个诊断"**，而诊断分数普遍是管理分数的三倍。所以任何"全阶段平均"的曲线，都会在最后一格神秘反弹——这不是模型"恢复"了，纯粹是题型变了。作者自己意识到了这点并在 6.2 节把最终诊断阶段剔除后单独画管理轨迹，<strong>这一步处理是诚实且正确的</strong>，值得表扬。</p>
-<h2>8：锐评总结——这篇工作真正的贡献边界在哪</h2>
-<p>我的判断是：<strong>ClinEnv 的贡献是"评测基础设施"级别的，不是"科学发现"级别的</strong>。</p>
-<p>它最扎实的东西有三件：(1) 那条从 2.38 亿条事件的原始 MIMIC-IV 到结构化决策阶段的全自动管线；(2) 用 ATC / ICD 层次结构做部分分，替代了医疗 agent 领域泛滥成灾的 LLM-as-judge；(3) 把"信息获取"从一个定性描述变成了覆盖率、效率、浪费率、日成本四个可测量的数字。第 (2) 点尤其重要——<strong>医疗 agent 评测长期被 LLM-as-judge 的噪声和不可复现性所困扰，本文提供了一条真正可审计的替代路径</strong>。</p>
-<p>它最弱的东西是"结论"。0.31 的 F1 被作者反复用作"AI 离临床还很远"的证据，但这个数字同时被四个方向拉扯：向上（提交接口泄露类型与条数、教师强制消除误差累积、末阶段送分题），向下（ground truth 是"当年那位医生做了什么"而非"什么是对的"，临床等效替代方案一律计 0）。<strong>这些偏置的量级作者一个都没估计</strong>，所以 0.31 这个数只能用来在同一套固定 case 上排序模型，不能用来做任何关于"临床可用性"的绝对判断。论文在 Limitations 里承认了第二点，但用的是"这是任何基于真实 EHR 的 benchmark 的固有属性"来搪塞——<strong>固有不等于不可测量</strong>，做个医生对照实验就能量化。</p>
+<p>先用 LLM 把每个阶段的原始决策描述归类成四种之一（用药 / 操作 / 诊断 / 计划）；用药还要再判定动作类型：start / stop / switch / adjust，其中 adjust 可以带方向（增量 / 减量）。然后是关键的一句——<strong>金标准字段的填充是零 LLM 调用的</strong>：药名直接从处方、药房、eMAR 表里读；操作和诊断的 ICD 码直接取自对应的编码事件。</p>
+<blockquote>
+<p>🔪 <strong>锐评</strong>：这个"分类靠 LLM、取值靠数据库"的分工是聪明的，它把 LLM 的错误限制在"标签打歪"而不是"编造了一个不存在的药"。但要注意，<strong>Phase A 和 Phase B 仍然完全是 LLM 的活儿</strong>，而这两步决定了"有哪些题"和"每道题该在什么时刻问"——流水线最上游的误差会一路传到底，正文里没给这两步的准确率数字（只说附录 D.2 有构建质量检查）。另外一个小瑕疵：正文写的是 "four-phase pipeline"，却实打实列了 A 到 E 五个阶段，Figure 1 的说明里又写成 five-step。<strong>同一页里自相矛盾</strong>，这种细节在顶会 rebuttal 阶段会被逮到。</p>
+</blockquote>
+<h2>5：交互环境——四个"只能看自己那一块"的信息 agent</h2>
+<p>环境用四个专门 agent 暴露临床信息，每个都由 GPT-5.4-mini 驱动，并且被限制在一个专属的 readview（EHR 事件的一个过滤投影）里：<strong>病人 agent</strong> 拿人口学、主诉、现病史、既往史，用大白话像真病人一样回答主观感受；<strong>护士 agent</strong> 拿生命体征、出入量、给药记录，报床旁客观观察；<strong>化验 agent</strong> 拿化验和微生物结果，用语义匹配去解析自然语言的检验名，没这项记录就什么都不返回；<strong>既往史 agent</strong> 在有过既往住院时提供之前的出院小结。<br>
+<strong>这个"readview 隔离"是环境设计的精髓</strong>：护士 agent 哪怕内部知道化验结果，它的视野里也根本没有这些字段，所以不可能漏答案给你。平均每个阶段有 3.67 个 agent 可用，每个 readview 里平均藏着 32.8 条关键临床事实。</p>
+<h2>6：两种模式，以及一个很有争议的"提交接口"</h2>
+<h3>6.1：Direct 模式 vs Interactive 模式</h3>
+<p>Direct 模式下，模型一上来就拿到该阶段的全部观测（静态患者背景 + 到本阶段结束为止的累积事件序列），不用问直接交答案——这是消融用的对照组。Interactive 模式才是主菜：模型开局零临床数据，每一轮只允许调用一个工具，观测靠一问一答累积；直到它调用 finalize_decision，或者到达 60 轮上限。可用工具是 ask_patient、ask_nurse、order_lab、get_history_summary、get_history_detail 五个查询工具，加 submit_medication / submit_diagnosis / submit_procedure / submit_plan / finalize_decision 五个提交工具。</p>
+<h3>6.2：结构化提交接口——"我告诉你要交几个"</h3>
+<p>这是全文最值得单独拿出来说的设计。为了把临床推理质量和输出格式的干扰解耦，提交接口做了两重约束：第一，<strong>只暴露本阶段金标准里真实存在的那几类提交工具</strong>，不存在的类型直接不给（比如这个阶段没有操作决策，就压根没有 submit_procedure 这个按钮）；第二，<strong>直接告诉模型每一类要交几个</strong>。因为提交数量和金标准数量强制相等，每类内部的匈牙利匹配就在等大的两个集合上进行，precision 和 recall 的差异只来自匹配质量而非数量错配。</p>
+<blockquote>
+<p>🔪 <strong>锐评</strong>：作者的辩护是"这样测的才是临床决策准确率，而不是模型猜格式的能力"，逻辑上说得通。但代价极其昂贵：<strong>"知道现在要不要动手、要动几手"本身就是临床能力的核心组成部分</strong>。真实的主治医生没人会告诉他"你今天该开 2 个药 1 个操作"。这个接口等于把"决策的触发与规模判断"这个最难的部分免费送给了模型，然后声称测的是"attending physician 的能力"。更微妙的是，它还泄露了信息：告诉模型"这个阶段有 submit_procedure"，等价于告诉它"这里该做个操作了"。所以 0.31 这个数字是一个<strong>被大幅放水后的上界</strong>，真实的端到端能力只会更低——从这个角度说，作者的悲观结论其实是被低估了，这反而对论文有利。</p>
+</blockquote>
+<h2>7：怎么打分——"确定性"这个卖点有多硬</h2>
+<h3>7.1：决策准确率（结果侧）</h3>
+<p>在诊断、用药、操作三个类型组内部<strong>分别</strong>用匈牙利算法做最大化总匹配分的指派，再拼接成阶段级指派；阶段 F1 是从匹配分导出的连续 precision 与 recall 的调和平均。<br>
+<strong>用药打分</strong>：动作类型是<strong>硬门</strong>——start/stop/switch/adjust 只要和匹配到的金标准不一致，不管药名多像都直接判 0，这会驱使匈牙利算法优先选择动作一致的配对。动作对上之后，药名相似度走 ATC 层级部分给分：完全同名直接 1.0；否则通过 RxNorm API 把两个药名都解析成 ATC 码，按最长公共前缀长度给分——化学亚组（5 位）0.8、药理学类（4 位）0.6、治疗学组（3 位）0.3、解剖学组（1 位）0.1，其余 0。对 adjust 决策，如果双方都明确指定了方向且相反，最终得分再乘 0.5；只要有一方没指定方向就不罚。<br>
+<strong>这个 ATC 阶梯很符合临床直觉</strong>：你把头孢曲松写成了头孢他啶（同为三代头孢），比你写成布洛芬要有价值得多，不该同样是 0 分。<br>
+<strong>诊断和操作打分</strong>：模型交的是自由文本，金标准是 ICD 码，所以先两步映射：在覆盖 ICD-9-CM / ICD-10-CM / ICD-9-PCS / ICD-10-PCS 全表的 embedding 索引上按余弦相似度取 top-15，再用一个 LLM reranker 选最佳。然后把预测码和金标准码各自展开成 ICD 层级里的完整祖先集合，在两个集合上算 Hierarchical F1（HDF1）。</p>
+<h3>7.2：过程质量（信息采集侧）</h3>
+<p><strong>覆盖率</strong>：对每个被激活的 agent 角色，把完整 readview 和该 agent 本阶段的所有回答一起交给一个 judge，让它枚举 readview 里的关键临床事实，逐条标记"这条有没有在对话里出现过"，得到该角色的覆盖率；阶段覆盖率是各激活角色的宏平均。<strong>效率</strong>：光看覆盖率不惩罚滥问，所以再除以"平均每个信息源被问了几次"——设 K 为本阶段的信息查询次数，激活 agent 数为 |A|，效率 = 覆盖率 / max(1, K/|A|)。当 K ≤ |A| 时不罚，超过之后按冗余程度成比例压低。作者的理念是：<strong>一个高效的问诊，应该用大约一句话就把一个信息源榨干</strong>。<br>
+<strong>化验浪费率</strong>：每个模型点的化验，通过同样的"embedding 检索 + LLM 重排"两步流程映射到 CMS 临床实验室收费表的报销价；凡是超出金标准临床画面所支持的化验，一律算不必要开销，浪费率 = 多余化验费用之和 / 所点化验费用之和。<strong>药费</strong>：药名 → RxNorm CUI → NDC 码 → NADAC 数据库单价 p；同时 RxNorm CUI → ATC 码 → WHO 限定日剂量 DDD，单药日费用 c = p × DDD，阶段级指标是所有合格提交的日费用总和。</p>
+<blockquote>
+<p>🔪 <strong>锐评</strong>：注意看这里的<strong>内在张力</strong>。论文在 Related Work 里明确批评 AgentClinic 那一家"中间行为只能靠 LLM-as-judge 打分"，把"确定性打分"立成自己的核心卖点。但你数一数：诊断/操作打分要靠 <strong>LLM reranker</strong> 选 ICD 码，覆盖率要靠 <strong>LLM judge</strong> 枚举并核对事实，化验费和药费映射也各要一次 <strong>LLM 重排</strong>。真正 100% 确定性的，其实只有"用药动作门 + ATC 前缀比对"这一小块。所以准确的说法是"<strong>比对手更确定性</strong>"，而不是"确定性的"。这个措辞在 rebuttal 里是会被要求改的。另外，把"金标准里没有的化验"一律定义成浪费，等于假设<strong>真实医生点的化验集合是最优的</strong>——现实中医生漏点、乱点都很常见，这个指标本质上测的是"模仿这家医院的开单习惯"，不是"临床上是否必要"。</p>
+</blockquote>
 <h1>Step 2：实验部分</h1>
-<h2>1：实验设置</h2>
-<p>评了七个模型：GPT-5.4、GPT-5.4-mini、GPT-5.4-nano、Llama-3.1-70B、Llama-3.1-8B、Gemma-3-27B、Gemma-3-12B。闭源模型是在 PhysioNet 要求的零数据保留（ZDR）政策下访问的——这是合规必需，也说明想复现这套评测必须自己申请 ZDR，不能随便调 API。</p>
-<p>报告的指标是<strong>阶段级宏平均</strong>（stage-macro），包括总 F1、诊断/用药/操作三个分项分、覆盖率、效率、平均回合数、化验浪费率、化验支出、日均药费。长程子集定义为<strong>至少 3 个决策阶段</strong>的住院，占比 49.8%。</p>
-<p><strong>锐评</strong>：这个模型阵容有个明显的洞——<strong>没有任何一个医疗专用模型</strong>（如 MedGemma、Med-PaLM 系、HuatuoGPT），也没有任何推理型开源模型（DeepSeek-R1 / QwQ 一类）。一个宣称要衡量"临床准备度"的 benchmark，只测通用模型，结论的适用范围其实很窄。更要命的是<strong>没有人类基线</strong>——见 Step 3 的意见部分。</p>
-<h2>2：总体结果——最强的也只有 0.31</h2>
-<p>GPT-5.4 在所有结果类指标上领先：决策 F1 0.306、诊断分 0.511、操作分 0.379、信息覆盖率 0.430。但离饱和差得非常远。</p>
-<h3>2.1：结果质量和过程质量彻底脱钩</h3>
-<p>这是全文最有意思的一组观察。Llama-3.1-70B 拿到了全场最高的用药分（0.101），却同时是覆盖率最低（0.140）、回合数最多（14.1）、化验浪费率最高（35.8%）的模型。而 GPT-5.4-nano 完全是它的镜像：准确率有竞争力，回合数最少（4.4），浪费率最低（4.1%），用一半的查询量达到了 GPT-5.4 大部分的覆盖率，反而是信息效率最高的模型（0.281 vs GPT-5.4 的 0.274）。</p>
-<p><strong>通俗地说</strong>：Llama-70B 像一个话痨实习医生，问了一大堆，开了一堆没用的检查，但偶尔蒙对药名；nano 像一个话少但精准的住院医。<strong>只看终点准确率，你根本看不出这两个是完全不同的临床行为模式</strong>——这正是作者要论证的核心。</p>
-<h3>2.2：锐评——但这个"脱钩"的统计基础太薄了</h3>
-<p>论证很漂亮，证据链有点单薄。Llama-70B 用药分 0.101 对比 GPT-5.4 的 0.097，<strong>这个 0.004 的差距完全在噪声范围内</strong>，论文没给任何置信区间或显著性检验，却用它撑起了"最好的用药分属于最差的过程"这个反直觉叙事。同样，nano 的效率 0.281 对 GPT-5.4 的 0.274 也只差 0.007。<strong>用两个不显著的差异去讲一个强故事，是这一节最大的问题。</strong></p>
-<h2>3：长程退化——每个模型无一幸免</h2>
-<p>所有模型在 ≥3 阶段的 case 上都比全集分数低，GPT-5.4 从 0.306 掉到 0.235。附录表 12 给出了细账：绝对跌幅在 0.029~0.072 之间，相对跌幅 14.4%~23.4%，同时每个模型的交互轮数都在增加，其中 Llama-3.1-70B 增加最多（+4.0 轮），但多出来的交互并没有换来更好的覆盖率或更低的浪费。</p>
-<h3>3.1：真正的瓶颈不是"看不到信息"</h3>
-<p>作者做了一个很关键的解剖（Figure 2，且只在管理阶段上画）：决策 F1 随阶段序号单调下降，GPT-5.4 从第一个管理阶段的 0.21 掉到第四个阶段的 0.03 以下，其余模型齐齐趋近于零。但同时，覆盖率对 GPT-5.4 基本持平、对弱模型甚至随病历变长而上升——信息是拿到了的。<strong>塌掉的是效率</strong>：GPT-5.4 的查询数从约 4 次涨到每阶段 50 多次，而覆盖率始终停在 0.45 附近，说明后期全是不产生新信息的冗余提问。</p>
-<p>结论是：<strong>后期的瓶颈是临床推理，不是信息获取</strong>。这个 dissociation（分离）确实是只看终点指标的评测抓不到的，是本文最有说服力的一个发现。</p>
-<h3>3.2：锐评——50 次查询 vs 60 次上限，这条曲线撞天花板了</h3>
-<p>正文说 GPT-5.4 后期查询数超过 50，而 Interactive 模式的硬上限是 60 回合。<strong>当查询数逼近上限时，"F1 掉到 0.03"到底是模型判断力崩溃，还是模型被强制截断、还没问完就被迫交卷？</strong> 论文没有报告各阶段的截断率（hit-the-cap rate），这两个解释在数据上无法区分。要坐实"临床推理是瓶颈"这个结论，最直接的实验是<strong>把上限放到 150 再跑一遍</strong>，或者直接看 Direct 模式（信息全给）在深层阶段的表现——<strong>论文虽然定义了 Direct 模式，却从头到尾没有报告任何 Direct 模式的结果</strong>。这是本文最令人费解的缺失：一个专门为"分离信息获取与临床判断"而设计的对照组，做了却不报。</p>
-<h2>4：信息获取与浪费——覆盖率越高，反而越省钱</h2>
-<p>Figure 3 展示了一个反直觉的关系：覆盖率与化验浪费呈负相关，问得越到位的模型浪费越少。GPT-5.4 位于"高覆盖低浪费"的理想角落，Llama-70B 和 Gemma-27B 落在对角（低覆盖 + 35% 以上浪费），而 GPT-5.4-nano 以中等覆盖率取得了全场最低的约 4% 浪费率——<strong>说明高效的信息获取不需要靠模型规模堆出来</strong>。</p>
-<p>作者的解释很到位：覆盖率和浪费率<strong>不是两个独立的轴，而是同一种能力（知道什么信息值得去拿）的两面</strong>。知道该找什么的模型，既能捞到相关证据，也不会去开临床图景不支持的检查。</p>
-<h3>4.1：为什么弱模型会浪费这么多钱</h3>
-<p>Table 6 的"Lab miss"列给出了机制层面的答案：弱模型 60<del>73% 的化验点名的是本阶段根本不存在的检查项，而 GPT 系只有 11</del>19%。也就是说浪费不是因为"多开了检查"，而是因为<strong>开的检查名字都对不上</strong>——化验 agent 对不存在的项返回空，模型再换个说法接着试，钱就这么烧掉了。</p>
-<p>同时，所有模型的信息来源分布都是偏的：每个模型都最爱问护士、最少问化验，GPT-5.4 覆盖了 0.89 的护士事实，但只覆盖 0.25 的化验事实。<strong>这个偏好很值得玩味</strong>：护士 agent 是"你问什么它都能答一点"的宽泛来源，而化验 agent 要求精确点名。模型在偷懒，捡软柿子捏。</p>
-<h2>5：诊断能认出来，管理做不对</h2>
-<p>这是全文最重的一个发现。在纯诊断阶段上模型表现尚可（池化 0.40，GPT-5.4 达 0.51），但在管理阶段 F1 塌到 0.13，差距约三倍，且对每个模型都成立。一句话：<strong>认出病人得了什么病，比决定拿它怎么办容易得多。</strong></p>
-<h3>5.1：用药是最极端的情况</h3>
-<p>所有模型判对 action 类型（start/stop/switch/adjust）的比例在 53%~73% 之间，但用药匹配分最高也就 0.10 上下。门禁基本过了，说明残余误差<strong>全在药物身份上</strong>——模型能提出一个合理的治疗类别，但很少能命中治疗组当时实际选用的那个具体药物，ATC 部分分把这个距离如实反映了出来。Llama-8B 的 action 准确率最高（0.73）却是用药分最低之一（0.082），进一步坐实了"难在选药，不在选动作"。</p>
-<h3>5.2：多问信息救不了这个</h3>
-<p>在阶段层面，覆盖率与决策 F1 基本不相关（整体 Pearson r=0.08，GPT-5.4 内部 r=0.04）。翻译一下：<strong>你把病历翻烂了也不会更知道该开哪个药</strong>。</p>
-<h3>5.3：锐评——这里有一处自相矛盾，而且相当致命</h3>
-<p>正文 6.4 节说阶段级覆盖率与 F1 <strong>基本不相关</strong>（r=0.08）；附录 G 却说"跨表 5 的七个模型级数据点，覆盖率与决策 F1 <strong>强相关</strong>（r=0.865）"。</p>
-<p>这不是矛盾，而是典型的<strong>生态学谬误 / 辛普森悖论</strong>：模型之间"越强的模型覆盖率越高、F1 也越高"，但在同一个模型内部，多覆盖一点并不会让这次决策变好。问题在于，<strong>论文没有点破这一点，反而在附录里把 n=7 的 r=0.865 当作"过程指标有效"的正面证据来用</strong>。n=7 的相关系数本身就极其脆弱（拿掉 GPT-5.4 一个点，这个 0.865 大概率就散了），何况它和正文的核心结论方向相反。审稿人会直接问：<strong>你到底想论证覆盖率有用还是没用？</strong></p>
-<h2>6：数据侧的两个补充观察</h2>
-<p>Figure 4 显示 ClinEnv 的诊断分布被慢性住院合并症主导（高血压、高脂血症、GERD、糖尿病），而用药和操作决策则分散得多。Figure 5 则给出一个有价值的相关性：决策密度随时间线变长而下降（Pearson r = -0.365, p &lt; 0.001），说明更长的住院是"每个决策附带更多上下文"，而不是简单地"决策更多"。</p>
-<p><strong>锐评</strong>：这条 Figure 5 的观察其实和长程退化的解释高度相关，但作者没把两者接起来。长程 case 变难，到底是因为"步数多了"（真长程推理难），还是因为"每步要读的上下文多了"（单纯的长文本大海捞针）？<strong>这是两个完全不同的能力，也是两条完全不同的改进路线</strong>。用 Figure 5 的密度变量做一次分层分析就能拆开，论文放着现成的数据没做。</p>
+<h2>1：这个 Benchmark 长什么样</h2>
+<p>从 1,809 名患者中采样了 3,509 次住院（只保留至少能产出一个有效决策阶段的），并按时间跨度做了分层，保证长短住院都有充分代表。最终得到 9,297 个决策阶段、26,043 条金标准决策，平均每个 case 2.65 个阶段、每个阶段 2.80 条决策。<br>
+Case 长度分布：单阶段 718 个（20.5%）、双阶段 1,043 个（29.7%）、长程（≥3 阶段）1,748 个（49.8%）。决策类型分布严重不均：诊断 18,664 条（71.7%）、用药 5,571 条（21.4%）、操作 1,808 条（6.9%）。用药动作里 start 占 79.1%、stop 7.5%、adjust 9.5%、switch 3.8%。因为来自真实住院而非人工题库，覆盖面很宽：2,128 个不同 ICD 码、488 种不同药物。</p>
+<blockquote>
+<p>🔪 <strong>锐评</strong>：<strong>71.7% 是诊断</strong>这件事值得警惕。诊断恰恰是模型最擅长的那一类（Dx 0.51），而全文的核心叙事是"管理决策才是硬骨头"。好在总 F1 用的是 stage-macro 平均而非按决策数加权，一定程度上稀释了这个失衡；但也意味着 0.306 这个总分的构成需要小心解读——它不是"71.7% 的题拿了 0.51 分"那种加权结果。另外 switch 只占 3.8%（约 210 条），而 switch 是临床上最考验推理的动作（"为什么要换药"），<strong>样本量小到几乎无法单独做统计</strong>。</p>
+</blockquote>
+<h2>2：总体结果——最强的模型也只有 0.31</h2>
+<p>测了七个模型：GPT-5.4 / mini / nano、Llama-3.1-70B / 8B、Gemma-3-27B / 12B（专有模型是在 PhysioNet 要求的零数据留存策略下访问的）。GPT-5.4 在所有结果指标上领先：决策 F1 0.306、诊断 0.511、操作 0.379、信息覆盖率 0.430。但这离"刷爆"差得很远。<br>
+其余模型的总 F1 挤在一个很窄的带里：GPT-5.4-mini 0.258、GPT-5.4-nano 0.254、Gemma-3-27B 0.228、Llama-3.1-70B 0.226、Llama-3.1-8B 0.202、Gemma-3-12B 0.197。</p>
+<blockquote>
+<p>🔪 <strong>锐评</strong>：<strong>8B 拿 0.202，最强模型拿 0.306</strong>——这个差距小得让人不安。一个健康的 benchmark 应该能把 8B 和旗舰模型拉开代差。这里只有 1.5 倍，说明分数里有相当大一块来自"任务本身的天花板"（等效方案被判 0 分、ICD 映射误差等），而不是模型能力差异。作为<strong>训练信号</strong>（作者暗示的 SWE-bench 式用法）这是个隐患：信噪比太低，RL 很难从中学到东西。</p>
+</blockquote>
+<h2>3：结果好 ≠ 过程好，这是全文最有价值的观察</h2>
+<p>Llama-3.1-70B 拿到了全场最高的用药分（0.101），但同时是覆盖率最低（0.140）、轮数最多（14.1）、化验浪费最高（35.8%）的那个。GPT-5.4-nano 是它的镜像：准确率有竞争力，轮数最少（4.4），浪费最低（4.1%）；它用一半的查询量就摸到了 GPT-5.4 大部分的覆盖率，成为信息效率最高的模型（0.281 对 0.274），尽管 GPT-5.4 绝对采集量更大。<br>
+<strong>说人话</strong>：有的模型像个话痨实习医生，问了一堆废话、开了一堆没用的化验，最后蒙对了药；有的模型三两句问到点子上。<strong>只看最终答案，你完全分不出这两种</strong>——而在真实医院里，这两种医生的成本和风险差着数量级。</p>
+<blockquote>
+<p>🔪 <strong>锐评</strong>：观察本身很有价值，但<strong>证据强度撑不住这个叙事</strong>。所谓"最高用药分"是 0.101 对 GPT-5.4 的 0.097——<strong>差 0.004</strong>，论文没给置信区间。用一个几乎必然落在噪声里的差距去讲"最强用药能力却最差过程"的反差故事，是典型的 cherry-pick。把这个例子换成"Llama-3.1-70B 用药分与最强模型持平，但浪费率高 3.5 倍"，结论不变而且站得住脚——作者选了更戏剧化但更脆的那个说法。</p>
+</blockquote>
+<h2>4：越往后越不会——长程退化是真的</h2>
+<p>所有模型在 ≥3 阶段的子集上都比全集更差，GPT-5.4 从 0.306 掉到 0.235。<br>
+更细的分析只看<strong>管理阶段</strong>（带用药或操作决策的），把每个 case 末尾那个分数虚高的诊断阶段剔除掉，否则会掩盖管理决策的真实轨迹。结果：决策 F1 随阶段序号单调下降，GPT-5.4 从第一个管理阶段的 0.21 掉到第四个阶段的 0.03 以下，其余模型全部收敛到接近零。<br>
+<strong>最关键的一句在这里</strong>：瓶颈不是信息获取。覆盖率对 GPT-5.4 基本持平，对弱模型甚至随病历变长而上升，但决策照样劣化。真正崩掉的是效率——GPT-5.4 的每阶段查询次数从约 4 次飙到 50 次以上，而覆盖率还是停在 0.45 附近。也就是说，后期阶段被大量"问不出新东西"的冗余查询占满，决策反而更差。真正的约束是后期的临床推理，不是信息可得性。<br>
+<strong>打个比方</strong>：这个模型不是"看不到化验单"，而是"化验单摊了一桌子，它反复重看同一张，却不知道该怎么把今天的血象和三天前用的抗生素联系起来"。<strong>这是记忆整合 / 状态维护的失败，不是检索的失败</strong>——对你做 long-horizon agent 来说，这一条比全文任何一个数字都重要。</p>
+<blockquote>
+<p>🔪 <strong>锐评</strong>：Table 5 里有个和叙事对不上的数：GPT-5.4 在长程子集上的化验浪费率是 <strong>2.3%</strong>，反而<strong>低于</strong>全集的 10.4%。如果长程真的是"被冗余查询淹没"，浪费率不该降。合理解释可能是分母（总化验开销）在长程里涨得更快，稀释了比率——但论文一个字没提这个反常。审稿人会问。</p>
+</blockquote>
+<h2>5：问得越准，浪费越少（而不是问得越多）</h2>
+<p>如果"采集信息"只是"多问几句"，那覆盖率越高就该买来越多的无用化验。Figure 3 显示的恰恰相反：覆盖率和化验浪费呈负相关，采集到更多相关信息的模型，浪费也更少，GPT-5.4 落在最有利的那个角。<br>
+这条结论很干净：<strong>"会问"和"瞎问"是两种能力，而不是同一条轴的两端</strong>。它顺带为过程指标的存在合法性做了辩护——如果覆盖率只是查询次数的代理变量，那这个指标就没必要单独存在了。</p>
+<h2>6：诊断能还原，管理学不会</h2>
+<p>这是全文最锋利的对比：模型还原出院诊断远比还原管理动作可靠，0.51 对 0.17 F1。拆开看用药分尤其惨烈——七个模型的 Rx 分全部落在 0.070 到 0.101 之间，也就是说<strong>在开药这件事上，旗舰模型和 12B 小模型没有实质区别，且都接近地板</strong>。<br>
+<strong>为什么会这样？</strong> 直觉上讲得通：诊断在某种意义上是<strong>回溯性</strong>的——所有证据都摆在时间线里，模型只要做一次模式识别（"发热+白细胞高+胸片浸润影 = 肺炎"），这正是它在 MedQA 上练了千百遍的技能。而管理是<strong>前瞻性</strong>的——"现在该上哪个抗生素"取决于本院药敏谱、患者肾功能、既往过敏史、成本、以及一堆没写在病历里的科室惯例。<strong>前者是识别，后者是选择</strong>，而模型只学会了前者。</p>
+<blockquote>
+<p>🔪 <strong>锐评</strong>：这是本文最有说服力、也最应该被后续工作接着做的发现。但要诚实地说，0.17 这个数字里有多少是"模型不会"、多少是"等效方案被判 0 分"，论文<strong>没有做任何拆解</strong>。哪怕只做一个小规模人工复核（抽 100 个被判 0 的用药提交，让临床医生标注"这个方案在临床上是否也可接受"），整篇论文的可信度会完全不同。这正是我下面那条意见的核心。</p>
+</blockquote>
 <h1>Step 3：other</h1>
 <h2>1：重点</h2>
-<p><strong>第一，本文最有价值的思想是"把临床决策的验证锚定到医学本体上，而不是锚定到 LLM 裁判上"。</strong> 用 ATC 层次做药物部分分、用 ICD 祖先集合做 Hierarchical F1、用匈牙利算法做类型内最优匹配，再叠加 action 硬门禁——这一整套让"临床决策对不对"第一次变成了一个确定性的、可审计的、跨论文可比较的数字。医疗 agent 领域此前被 LLM-as-judge 的噪声折磨了太久，这套方法论的价值远超 ClinEnv 这一个 benchmark 本身，任何做医疗 agent 的人都应该把它抄过去当评估工具。</p>
-<p><strong>第二，"信息获取"被拆成了可测量的两个正交事实：拿得全不全（覆盖率）和拿得省不省（效率/浪费率），而它们共同指向同一种底层能力——知道什么信息值得去要。</strong> 覆盖率与化验浪费的负相关，以及弱模型 60~73% 的化验点名落空，共同说明"多问"和"会问"是两件事。这给临床 agent 的优化目标提供了一个比"准确率"具体得多的靶心：<strong>高覆盖、低浪费的那个角落</strong>。</p>
-<p><strong>第三，最重要的实证结论是那个"分离现象"：随着病程推进，信息覆盖率保持甚至上升，但决策质量单调塌陷。</strong> 这直接否掉了当下医疗 agent 最流行的一条改进路线——"给它更长的上下文、让它检索更多的病历"。数据说得很明白：<strong>瓶颈在于临床判断，不在于信息通路</strong>。配合"诊断 0.51 / 管理 0.17"这个三倍差距，可以得出一个对整个领域都成立的判断：<strong>当前 LLM 的医学能力集中在"识别"，而不在"处置"；而所有主流 benchmark 恰好测的都是识别。</strong></p>
+<p><strong>最有价值的是"过程/结果解耦"这个测量维度本身，而不是 0.31 这个分数。</strong> 具体三点：<strong>第一，长程失败的根因被定位到了推理而非检索</strong>——覆盖率基本不掉、查询次数暴涨到 50 次以上、决策 F1 却单调塌到 0.03，这个三联证据清晰地指向"模型无法把新观测和自己此前的行为整合成连贯的病程状态"。对任何做 long-horizon agent 的人来说，这意味着<strong>优化方向应该是状态压缩 / 决策记忆，而不是继续堆检索能力</strong>。<strong>第二，"诊断 0.51 vs 管理 0.17"揭示了一个被 MedQA 类评测系统性掩盖的能力断层</strong>：识别能力已经到位，选择能力几乎为零，而后者才是临床落地的必要条件。<strong>第三，工程上最可复用的资产是那条零人工标注的造题流水线</strong>——"LLM 负责定位和分类、数据库负责填值"的分工，加上"顺序单调滑窗锚定"和"诊断可溯性扫描"两个小设计，是可以直接搬到其他 EHR 数据集（乃至中文病历）上的。坦白说，<strong>这条流水线的可迁移价值高于 ClinEnv 这个数据集本身</strong>。</p>
 <h2>2：意见</h2>
-<p><strong>没有人类专家基线，使得本文所有的绝对数字——以及建立在这些数字之上的全部结论——都无法解释。</strong></p>
-<p>论文的核心叙事是"最强模型只有 0.31 F1，说明只看结果的 benchmark 严重高估了临床准备度"。但 ClinEnv 的 ground truth 是"当年那位主治医生实际做了什么"，而不是"什么是正确的"。在这种设定下，<strong>一位没有参与过该次住院的主治医生，在同样的信息环境里、被同样告知了决策的类型和条数，能拿多少分？</strong> 我的判断是这个数字会显著低于 1.0，而且很可能落在 0.4~0.6 这个区间——因为"用哪个 PPI、哪种铁剂、哪个喹诺酮"在很大程度上取决于本院处方集、当班药师习惯和当时的库存，而不取决于临床推理。论文自己在附录 F 里给了最好的反例：模型提交了硫酸亚铁，答案是葡萄糖酸亚铁——<strong>任何一位医生都会说这两个是等效的，但在 ClinEnv 里这只能拿 0.8 的部分分</strong>；而用药分整体只有 0.10 这个"惊人"的数字，恰恰主要由这一类等效替代所贡献。</p>
-<p>也就是说，<strong>本文最重的那个结论（"管理决策 0.13，模型远未准备好"）是建立在最不可解释的那个指标之上的</strong>。作者在 Limitations 里承认了"临床上合理的替代方案可能被判为错"，然后用一句"这是任何基于真实 EHR 的 benchmark 的固有属性"就翻篇了——但"固有"不等于"不可测量"。哪怕只请 2~3 位主治医生在 50 个随机抽取的 case 上跑一遍完整流程，得出一个哪怕很粗糙的人类上界，整篇论文的说服力都会是另一个量级：0.31 相对于人类的 0.55 是"追平了一半"，相对于人类的 0.95 才是"远未准备好"。<strong>在没有这个数之前，本文只能支持"模型 A 比模型 B 更接近这家医院当年的实际处置"，而不能支持任何关于临床准备度的判断——而后者恰恰是标题、摘要和结论里反复主张的东西。</strong></p>
+<p><strong>整篇论文的分数体系建立在"MIMIC-IV 里这家医院实际做了什么 = 唯一正确答案"这个未经辩护的假设上，而缺少人类医生基线让这个假设无法被检验——因此 0.31 这个核心数字在字面上不可解释。</strong> 临床决策存在大量等效路径：换一个同类抗生素、把 CT 推迟到明天早上、选择观察等待，都可能同样正确甚至更优，但在 ClinEnv 里全部得 0 分（ATC 部分给分只能缓解同类药的情况，完全救不了"不同但同样合理的治疗策略"）。这直接导致论文的核心论断——"outcome-only benchmark 大幅高估了临床准备度"——<strong>在逻辑上不成立</strong>：0.31 究竟是"模型只有 31% 的临床能力"，还是"模型只有 31% 的概率复现这家医院这一次的具体行为"，作者提供的证据完全无法区分这两者。补救方案其实很便宜：<strong>让若干名主治医生在完全相同的 interactive 环境里盲测同一批阶段</strong>。如果医生自己也只拿到 0.4，那读者立刻就知道这个 benchmark 的天花板在哪、0.31 意味着什么；如果医生拿到 0.85，作者的论断就被强力坐实。没有这条基线，所有绝对分数都只是内部可比的相对排名，却被当成对"临床准备度"的绝对判决来用——这是我作为审稿人会要求在 rebuttal 阶段补上、否则倾向拒稿的一点。</p>
 <h2>3：相关工作</h2>
-<p><strong>MedAgentGym（arXiv:2506.04405）</strong> 是这篇论文在"可执行环境"路线上的最直接对照，同样出自 May D. Wang 组，因此可以看作是同一团队的路线延伸。它提供了 跨 129 个类别的 7.2 万个任务实例，覆盖 MIMIC-III 和 eICU 上的 SQL 查询、计算器式推理、数据分析代码生成，定位是 SWE-Gym 的训练时对应物。它和 ClinEnv 的根本差别在于<strong>评测单位</strong>：MedAgentGym 评的是模型产出的代码和公式对不对，ClinEnv 评的是临床决策本身对不对。对算力受限的研究者来说，MedAgentGym 的规模更适合做 RL 后训练，而 ClinEnv 更适合做纯评测——<strong>两者其实是互补的，"在 MedAgentGym 上训、在 ClinEnv 上评"是一条自然的组合路线</strong>。</p>
-<p><strong>MedAgentBench（NEJM AI 2025）</strong> 代表了"数据交互"路线的最高完成度：300 个医生手写任务、覆盖病历审阅/下医嘱/结果检索等 10 个类别、作用于取自 Stanford STARR 的 100 份患者档案，环境暴露的是与现代 EMR 系统一致的 FHIR 兼容 API，成功与否由操作后的数据库状态判定。ClinEnv 批评它的点是"任务是原子的、预先指定的，而不是从纵向患者管理中自然涌现的"。但反过来看，MedAgentBench 的 FHIR 接口和医生手写任务在<strong>临床有效性</strong>上比 ClinEnv 的全自动流水线更有保障，而且它不需要 PhysioNet 的 MIMIC 认证门槛。<strong>如果目标是快速做出一个能落地的 EHR agent 原型，MedAgentBench 的工程贴近度更高；如果目标是研究长程序贯决策，ClinEnv 才是对的靶子。</strong></p>
-<p><strong>MedDialBench（arXiv:2604.06846）</strong> 是"模拟患者"路线上最新的一步，走的方向和 ClinEnv 恰好相反。它在问诊 case 上叠加了 24 种参数化的对抗性患者行为，也就是让病人隐瞒、夸大、答非所问，专门测模型在患者不配合时的诊断鲁棒性。ClinEnv 的四个信息 agent 都是<strong>完全合作</strong>的——问对了就如实给，问错了就返回空，不会撒谎也不会误导。<strong>这恰好暴露了 ClinEnv 环境的一个真实缺口</strong>：现实住院场景里，护士记录会漏、患者会记不清用药史、化验会有假阳性。把 MedDialBench 的对抗行为参数注入 ClinEnv 的四个 agent，做成一个"不可靠信息源下的长程决策"环境，是一个非常自然、工作量可控、而且明显有增量的后续方向——<strong>如果你在找一个可以接着做的题目，这个缝隙我认为是目前最大的一个。</strong></p>
+<p><strong>MedAgentBench（Jiang et al., 2025）</strong> 是"把 EHR 当可查询系统"这一路的代表作，构建了一个虚拟 EHR 环境，配上 100 份患者档案和由医生撰写的交互式任务，考察 agent 在真实医疗数据接口（FHIR 风格）上执行明确定义操作的能力。ClinEnv 对它的批评是：任务是原子的、且由外部预先定义好的，所以测的是数据访问技能，而不是"判断哪些数据重要、这些数据该导向什么行动"的临床推理。它和 ClinEnv 恰好构成互补——<strong>前者测手，后者测脑</strong>。</p>
+<p><strong>MedAgentGym（Xu et al., 2025）</strong> 走的是"编程 agent 类比"的另一条支路，是一个面向生物医学数据科学的、以代码为中心的可扩展 agentic <strong>训练</strong>环境（注意是 training environment 而非纯 benchmark）。ClinEnv 承认自己和它精神相通，但强调差别在于：MedAgentGym 要模型产出的是代码或公式，而 ClinEnv 直指临床决策本身（该开哪个药、该定哪个诊断），并用医生真正在用的医学本体来验证。如果你关心"环境能不能当训练信号用"，这篇是必读的对照。</p>
+<p><strong>MedDialBench（Luo et al., 2026）</strong> 属于问诊对话这一家的最新成员，在 AgentClinic 奠定的"医生 agent × LLM 扮演病人"范式上，加入了参数化的对抗性病人行为（病人会隐瞒、误报、情绪化），专门测诊断鲁棒性。同一家族还有 MAQuE（问诊能力评估）、HELPMed（发现临床知识并不能自动转化为有效的人际互动）和 AMIE（引入真人参与者）。ClinEnv 对整个这一族的核心批评是双重的：金标准的上限被"喂给模拟器的那份考题短案例"锁死，且中间行为只能靠 LLM-as-judge 在自由文本上打分。不过如我在 Step 1 里指出的，<strong>ClinEnv 自己的覆盖率指标同样是 LLM judge</strong>，这个批评打得没有它自己以为的那么干净。</p>
 <h1>复现</h1>
 <h1>ClinEnv 复现难度评估</h1>
 <p>先说结论：<strong>"跑通"不难，"完整复现"很贵，但它可能是目前最值得你投入的一个环境</strong>——因为它正好落在你之前纠结的"程序性/序贯决策"那一支上，而且是少数带确定性奖励的医疗 agent 环境。</p>
@@ -298,6 +268,6 @@ document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
 
 
 </script>
-<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-6'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-6'></script>
 
 </html>

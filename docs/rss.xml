@@ -1,14 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Tue, 28 Jul 2026 12:28:28 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>ClinEnv</title><link>https://powehi12.github.io/post/ClinEnv.html</link><description># 前言
-
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Wed, 29 Jul 2026 07:04:08 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>ClinEnv</title><link>https://powehi12.github.io/post/ClinEnv.html</link><description># 前言
 **标题**：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents
-论文链接：https://arxiv.org/abs/2606.02568 （arXiv:2606.02568v1，2026-06-01 提交，20 页 / 6 图 / 12 表）
-代码与数据：GitHub 开源代码 + PhysioNet 托管数据（需先通过 PhysioNet 的合规认证才能使用）
-作者单位：Georgia Institute of Technology、北京大学、UT Southwestern Medical Center、清华大学（一作 Yuxing Lu，通讯 May D. Wang）
+**作者单位**：Georgia Institute of Technology、北京大学、UT Southwestern Medical Center、清华大学（Yuxing Lu, Yushuhong Lin, Wenqi Shi, J. Ben Tamo, Xukai Zhao, Jinzhuo Wang, May Dongmei Wang）
+**论文**：https://arxiv.org/abs/2606.02568 （arXiv:2606.02568v1，2026-06-01）
+**代码**：https://github.com/ylin766/ClinEnv ｜ **数据**：https://huggingface.co/datasets/ylin766gatech/ClinEnv（需先通过 PhysioNet 合规审核）｜ **Demo**：https://clinenv-demo.vercel.app/
+**标签**：EHR 智能体；临床决策 Benchmark；长程序贯决策；交互式评测环境
 
-**标签**：EHR 交互式环境；长程序贯决策；确定性本体打分；过程质量评测
-
-**摘要**：这篇论文的核心思想说白了就一句话——**别再让大模型做选择题了，让它当一回住院部的主治医生**：病人的信息不会主动摆在它面前，它得自己去问病人、问护士、开化验、查既往病历，问完之后必须在'开什么药、做什么操作、下什么诊断'上做出不可撤销的决定，然后拿真实病历里医生当时的实际操作来对答案。</description><guid isPermaLink="true">https://powehi12.github.io/post/ClinEnv.html</guid><pubDate>Tue, 28 Jul 2026 11:25:25 +0000</pubDate></item><item><title>LongMedBench</title><link>https://powehi12.github.io/post/LongMedBench.html</link><description># 前言
+**摘要**：一句话核心思想——**别再让模型做选择题了，把它扔进真实住院病历里当主治医生，让它自己开口问信息、一步步下不可撤回的医嘱，然后看它能不能还原这个病人真实的诊疗过程**。</description><guid isPermaLink="true">https://powehi12.github.io/post/ClinEnv.html</guid><pubDate>Tue, 28 Jul 2026 11:25:25 +0000</pubDate></item><item><title>LongMedBench</title><link>https://powehi12.github.io/post/LongMedBench.html</link><description># 前言
 
 **标题**：LongMedBench: Benchmarking Medical Agents for Long-Horizon Clinical Decision-Making
 - 论文链接：https://arxiv.org/abs/2607.09322 （arXiv:2607.09322v1 [cs.AI]，2026 年 7 月 10 日）
