@@ -1,5 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Wed, 29 Jul 2026 07:04:08 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>ClinEnv</title><link>https://powehi12.github.io/post/ClinEnv.html</link><description># 前言
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Sun, 02 Aug 2026 11:46:51 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>Flare 为什么推理不等于规划</title><link>https://powehi12.github.io/post/Flare%20-wei-shen-me-tui-li-bu-deng-yu-gui-hua.html</link><description># 前言
+
+**标题：** Why Reasoning Fails to Plan: A Planning-Centric Analysis of Long-Horizon Decision Making in LLM Agents
+**论文链接：** https://arxiv.org/abs/2601.22311
+**代码链接：** 论文中未公开代码仓库
+**作者单位：** 圣母大学（Notre Dame）、斯坦福、爱丁堡大学、耶鲁、普渡、牛津、UIUC
+**投稿信息：** 2026年1月29日，ICML 格式
+
+**标签：** 长程规划；推理与规划的区分；MCTS 与前瞻搜索；KGQA 智能体
+
+**摘要：** 这篇论文一句话概括就是——**大模型的'一步一步想'本质上是个贪心算法，短任务够用，长任务必翻车**。</description><guid isPermaLink="true">https://powehi12.github.io/post/Flare%20-wei-shen-me-tui-li-bu-deng-yu-gui-hua.html</guid><pubDate>Sun, 02 Aug 2026 08:50:00 +0000</pubDate></item><item><title>ClinEnv</title><link>https://powehi12.github.io/post/ClinEnv.html</link><description># 前言
 **标题**：ClinEnv: An Interactive Multi-Stage Long Horizon EHR Environment for Agents
 **作者单位**：Georgia Institute of Technology、北京大学、UT Southwestern Medical Center、清华大学（Yuxing Lu, Yushuhong Lin, Wenqi Shi, J. Ben Tamo, Xukai Zhao, Jinzhuo Wang, May Dongmei Wang）
 **论文**：https://arxiv.org/abs/2606.02568 （arXiv:2606.02568v1，2026-06-01）
@@ -65,23 +75,11 @@ OpenReview：https://openreview.net/forum?id=BPpG4qQaNj
 
 摘要：一句话说本质——**吹了两年的'让好几个 LLM 智能体开会诊'，一旦拉上'一个足够强的单模型'和'老老实实微调过的传统小模型'同台竞技，在大多数医疗任务上其实并没有赢。</description><guid isPermaLink="true">https://powehi12.github.io/post/MedAgentBoard.html</guid><pubDate>Mon, 27 Jul 2026 06:01:04 +0000</pubDate></item><item><title>MedAgentBench</title><link>https://powehi12.github.io/post/MedAgentBench.html</link><description># 前言
 
-标题：MedAgentBench: A Realistic Virtual EHR Environment to Benchmark Medical LLM Agents（MedAgentBench：一个用于评测医疗大模型智能体的高仿真虚拟电子病历环境），作者来自斯坦福大学（Yixing Jiang、Kameron C. Black、Gloria Geng、Danny Park、James Zou、Andrew Y. Ng、Jonathan H. Chen），正式版发表于 NEJM AI（2025）。</description><guid isPermaLink="true">https://powehi12.github.io/post/MedAgentBench.html</guid><pubDate>Mon, 27 Jul 2026 03:13:30 +0000</pubDate></item><item><title>info</title><link>https://powehi12.github.io/post/info.html</link><description>结合你做 LLM agent / EHR 这个方向，我按'从源头到消化'的顺序整理一份，顺带标注哪些对你的子方向特别值得盯。</description><guid isPermaLink="true">https://powehi12.github.io/post/info.html</guid><pubDate>Sun, 26 Jul 2026 16:50:13 +0000</pubDate></item><item><title>Biomni Agent（详细版）</title><link>https://powehi12.github.io/post/Biomni%20Agent%EF%BC%88-xiang-xi-ban-%EF%BC%89.html</link><description>## 结论：Biomni 是真正的 Agent
-
-**Biomni 不是一个单纯回答生物医学问题的聊天机器人，也不是一个新的生物医学大模型。</description><guid isPermaLink="true">https://powehi12.github.io/post/Biomni%20Agent%EF%BC%88-xiang-xi-ban-%EF%BC%89.html</guid><pubDate>Fri, 24 Jul 2026 14:52:34 +0000</pubDate></item><item><title>从DNA到细胞：打造能够理解生命全链条的通用生物AI</title><link>https://powehi12.github.io/post/cong-DNA-dao-xi-bao-%EF%BC%9A-da-zao-neng-gou-li-jie-sheng-ming-quan-lian-tiao-de-tong-yong-sheng-wu-AI.html</link><description># 前言
+标题：MedAgentBench: A Realistic Virtual EHR Environment to Benchmark Medical LLM Agents（MedAgentBench：一个用于评测医疗大模型智能体的高仿真虚拟电子病历环境），作者来自斯坦福大学（Yixing Jiang、Kameron C. Black、Gloria Geng、Danny Park、James Zou、Andrew Y. Ng、Jonathan H. Chen），正式版发表于 NEJM AI（2025）。</description><guid isPermaLink="true">https://powehi12.github.io/post/MedAgentBench.html</guid><pubDate>Mon, 27 Jul 2026 03:13:30 +0000</pubDate></item><item><title>info</title><link>https://powehi12.github.io/post/info.html</link><description>结合你做 LLM agent / EHR 这个方向，我按'从源头到消化'的顺序整理一份，顺带标注哪些对你的子方向特别值得盯。</description><guid isPermaLink="true">https://powehi12.github.io/post/info.html</guid><pubDate>Sun, 26 Jul 2026 16:50:13 +0000</pubDate></item><item><title>从DNA到细胞：打造能够理解生命全链条的通用生物AI</title><link>https://powehi12.github.io/post/cong-DNA-dao-xi-bao-%EF%BC%9A-da-zao-neng-gou-li-jie-sheng-ming-quan-lian-tiao-de-tong-yong-sheng-wu-AI.html</link><description># 前言
 
 **标题**：[[Generalist biological artificial intelligence in modeling the language of life](https://www.nature.com/articles/s41587-026-03064-w)](https://www.nature.com/articles/s41587-026-03064-w)
 
-*（说明：这是发表于《Nature Biotechnology》的受邀综述/展望文章，并没有对应的arXiv预印本，所以标题直接链接到期刊原文页面，而非arXiv。</description><guid isPermaLink="true">https://powehi12.github.io/post/cong-DNA-dao-xi-bao-%EF%BC%9A-da-zao-neng-gou-li-jie-sheng-ming-quan-lian-tiao-de-tong-yong-sheng-wu-AI.html</guid><pubDate>Fri, 24 Jul 2026 09:32:08 +0000</pubDate></item><item><title>PerturbHD：用有限实验预算检验虚拟细胞能否真正找出关键基因</title><link>https://powehi12.github.io/post/PerturbHD%EF%BC%9A-yong-you-xian-shi-yan-yu-suan-jian-yan-xu-ni-xi-bao-neng-fou-zhen-zheng-zhao-chu-guan-jian-ji-yin.html</link><description>## 一句话概括
-
-这篇论文直接追问：
-
-&gt; **现在的“AI虚拟细胞”虽然能预测基因扰动后的表达变化，但它们真的能帮助科学家更快找到重要基因和药物靶点吗？**
-
-作者认为，过去的考试方式没有真正回答这个问题，于是提出了新的评测框架 **PerturbHD**，专门衡量模型能否帮助科学家完成“有效发现”。</description><guid isPermaLink="true">https://powehi12.github.io/post/PerturbHD%EF%BC%9A-yong-you-xian-shi-yan-yu-suan-jian-yan-xu-ni-xi-bao-neng-fou-zhen-zheng-zhao-chu-guan-jian-ji-yin.html</guid><pubDate>Thu, 23 Jul 2026 09:34:34 +0000</pubDate></item><item><title>PULSAR：把3600万个单细胞汇聚成患者级“免疫坐标系”</title><link>https://powehi12.github.io/post/PULSAR%EF%BC%9A-ba-3600-wan-ge-dan-xi-bao-hui-ju-cheng-huan-zhe-ji-%E2%80%9C-mian-yi-zuo-biao-xi-%E2%80%9D.html</link><description>## 一句话概括
-
-这篇论文提出了 **PULSAR**：
-
-&gt; **它不再只理解“一个细胞是什么”，而是同时观察一个人身上的大量免疫细胞，尝试理解这个人的整体免疫状态、疾病风险和治疗反应。</description><guid isPermaLink="true">https://powehi12.github.io/post/PULSAR%EF%BC%9A-ba-3600-wan-ge-dan-xi-bao-hui-ju-cheng-huan-zhe-ji-%E2%80%9C-mian-yi-zuo-biao-xi-%E2%80%9D.html</guid><pubDate>Thu, 23 Jul 2026 04:51:54 +0000</pubDate></item><item><title>Biomni：让AI从“回答问题”走向自主执行生物医学研究流程</title><link>https://powehi12.github.io/post/Biomni%EF%BC%9A-rang-AI-cong-%E2%80%9C-hui-da-wen-ti-%E2%80%9D-zou-xiang-zi-zhu-zhi-xing-sheng-wu-yi-xue-yan-jiu-liu-cheng.html</link><description>## 一句话概括
+*（说明：这是发表于《Nature Biotechnology》的受邀综述/展望文章，并没有对应的arXiv预印本，所以标题直接链接到期刊原文页面，而非arXiv。</description><guid isPermaLink="true">https://powehi12.github.io/post/cong-DNA-dao-xi-bao-%EF%BC%9A-da-zao-neng-gou-li-jie-sheng-ming-quan-lian-tiao-de-tong-yong-sheng-wu-AI.html</guid><pubDate>Fri, 24 Jul 2026 09:32:08 +0000</pubDate></item><item><title>Biomni：让AI从“回答问题”走向自主执行生物医学研究流程</title><link>https://powehi12.github.io/post/Biomni%EF%BC%9A-rang-AI-cong-%E2%80%9C-hui-da-wen-ti-%E2%80%9D-zou-xiang-zi-zhu-zhi-xing-sheng-wu-yi-xue-yan-jiu-liu-cheng.html</link><description>## 一句话概括
 
 这篇论文推出了 **Biomni**：
 
@@ -91,11 +89,7 @@ OpenReview：https://openreview.net/forum?id=BPpG4qQaNj
 
 **标签**：虚拟细胞；单细胞扰动预测；Transformer 架构；最优传输理论
 
-**摘要**：这篇论文的核心思想很朴素——单细胞测序会把细胞'杀死'，你永远无法看到同一个细胞在被扰动前后的真实对比，所以与其死磕'预测某一个细胞的命运'，不如教模型去预测'一群细胞'扰动之后整体会变成什么样的分布。</description><guid isPermaLink="true">https://powehi12.github.io/post/STATE%EF%BC%9A-rang-xi-bao-%E2%80%9C-zu-tuan-si-kao-%E2%80%9D%EF%BC%8C-yu-ce-yao-wu-he-ji-yin-rao-dong-hou-de-qun-ti-zhuang-tai-bian-hua.html</guid><pubDate>Wed, 22 Jul 2026 14:30:15 +0000</pubDate></item><item><title>CausalBench：用大规模单细胞扰动实验检验算法能否还原基因“因果线路图”</title><link>https://powehi12.github.io/post/CausalBench%EF%BC%9A-yong-da-gui-mo-dan-xi-bao-rao-dong-shi-yan-jian-yan-suan-fa-neng-fou-huan-yuan-ji-yin-%E2%80%9C-yin-guo-xian-lu-tu-%E2%80%9D.html</link><description>## 一句话概括
-
-这篇论文提出了 **CausalBench**：
-
-&gt; **用真实的大规模基因敲低实验，给各种“基因因果网络推断算法”组织一场统一考试，看看它们能否画出细胞内部谁影响谁的线路图。</description><guid isPermaLink="true">https://powehi12.github.io/post/CausalBench%EF%BC%9A-yong-da-gui-mo-dan-xi-bao-rao-dong-shi-yan-jian-yan-suan-fa-neng-fou-huan-yuan-ji-yin-%E2%80%9C-yin-guo-xian-lu-tu-%E2%80%9D.html</guid><pubDate>Wed, 22 Jul 2026 09:33:02 +0000</pubDate></item><item><title>Cell Embedding Metrics：用“漂移孤岛”揭示高分细胞地图背后的评估陷阱</title><link>https://powehi12.github.io/post/Cell%20Embedding%20Metrics%EF%BC%9A-yong-%E2%80%9C-piao-yi-gu-dao-%E2%80%9D-jie-shi-gao-fen-xi-bao-di-tu-bei-hou-de-ping-gu-xian-jing.html</link><description>## 一句话概括
+**摘要**：这篇论文的核心思想很朴素——单细胞测序会把细胞'杀死'，你永远无法看到同一个细胞在被扰动前后的真实对比，所以与其死磕'预测某一个细胞的命运'，不如教模型去预测'一群细胞'扰动之后整体会变成什么样的分布。</description><guid isPermaLink="true">https://powehi12.github.io/post/STATE%EF%BC%9A-rang-xi-bao-%E2%80%9C-zu-tuan-si-kao-%E2%80%9D%EF%BC%8C-yu-ce-yao-wu-he-ji-yin-rao-dong-hou-de-qun-ti-zhuang-tai-bian-hua.html</guid><pubDate>Wed, 22 Jul 2026 14:30:15 +0000</pubDate></item><item><title>Cell Embedding Metrics：用“漂移孤岛”揭示高分细胞地图背后的评估陷阱</title><link>https://powehi12.github.io/post/Cell%20Embedding%20Metrics%EF%BC%9A-yong-%E2%80%9C-piao-yi-gu-dao-%E2%80%9D-jie-shi-gao-fen-xi-bao-di-tu-bei-hou-de-ping-gu-xian-jing.html</link><description>## 一句话概括
 
 这篇论文发现：
 
@@ -105,27 +99,7 @@ OpenReview：https://openreview.net/forum?id=BPpG4qQaNj
 
 **标签：** 单细胞基础模型；跨物种表征；零样本学习；细胞图谱
 
-**摘要：** 最本质地说，这篇论文想给所有物种、组织和实验中的细胞建立一套统一的“全球坐标系”：无论一个细胞来自人、鼠、鸡，还是来自一个模型从没见过的新实验，都能直接被放进同一张细胞地图，而不需要针对新数据重新训练模型。</description><guid isPermaLink="true">https://powehi12.github.io/post/UCE%EF%BC%9A-wei-3600-wan-ge-xi-bao-jian-li-yi-tao-kua-wu-zhong-de-%E2%80%9C-quan-qiu-zuo-biao-xi-%E2%80%9D%E3%80%82.html</guid><pubDate>Wed, 22 Jul 2026 03:43:41 +0000</pubDate></item><item><title>scGPT：从3300万个细胞中学会“读懂”基因表达。</title><link>https://powehi12.github.io/post/scGPT%EF%BC%9A-cong-3300-wan-ge-xi-bao-zhong-xue-hui-%E2%80%9C-du-dong-%E2%80%9D-ji-yin-biao-da-%E3%80%82.html</link><description># 前言
-
-**标题：** [scGPT: toward building a foundation model for single-cell multi-omics using generative AI](https://www.biorxiv.org/content/10.1101/2023.04.30.538439v2)  
-**说明：** 截至 2026 年 7 月，我没有检索到这篇论文的独立 arXiv 页面，因此标题链接到 bioRxiv 预印本，而非虚构一个 arXiv 地址。</description><guid isPermaLink="true">https://powehi12.github.io/post/scGPT%EF%BC%9A-cong-3300-wan-ge-xi-bao-zhong-xue-hui-%E2%80%9C-du-dong-%E2%80%9D-ji-yin-biao-da-%E3%80%82.html</guid><pubDate>Tue, 21 Jul 2026 03:31:38 +0000</pubDate></item><item><title>X-Cell：用大规模因果扰动数据预测陌生细胞如何响应基因敲低。</title><link>https://powehi12.github.io/post/X-Cell%EF%BC%9A-yong-da-gui-mo-yin-guo-rao-dong-shu-ju-yu-ce-mo-sheng-xi-bao-ru-he-xiang-ying-ji-yin-qiao-di-%E3%80%82.html</link><description># 前言
-
-标题：[X-Cell: Scaling Causal Perturbation Prediction Across Diverse Cellular Contexts via Diffusion Language Models](https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1)
-
-&gt; 说明：截至 2026 年 7 月 20 日，我没有检索到该论文的 arXiv 版本，因此没有虚构 arXiv 链接，而是链接到 bioRxiv v1；[作者发布的完整 PDF 在这里](https://www.cdn.xaira.com/papers/X_CELL_V1_0316_final.pdf)。</description><guid isPermaLink="true">https://powehi12.github.io/post/X-Cell%EF%BC%9A-yong-da-gui-mo-yin-guo-rao-dong-shu-ju-yu-ce-mo-sheng-xi-bao-ru-he-xiang-ying-ji-yin-qiao-di-%E3%80%82.html</guid><pubDate>Mon, 20 Jul 2026 11:56:57 +0000</pubDate></item><item><title>高分不等于会预测：Systema揭开单细胞扰动模型的“平均效应”幻觉</title><link>https://powehi12.github.io/post/gao-fen-bu-deng-yu-hui-yu-ce-%EF%BC%9ASystema-jie-kai-dan-xi-bao-rao-dong-mo-xing-de-%E2%80%9C-ping-jun-xiao-ying-%E2%80%9D-huan-jue.html</link><description># 前言
-
-**论文**：[Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation](https://www.nature.com/articles/s41587-025-02777-8)  
-**作者**：Ramon Viñas Torné, Maciej Wiatrak, Zoe Piran, Shuyang Fan, Liangze Jiang, Sarah A. Teichmann, Mor Nitzan, Maria Brbić  
-**期刊**：Nature Biotechnology，2025 年在线发表  
-**代码**：[Systema GitHub](https://github.com/mlbio-epfl/systema)  
-**说明**：未检索到 arXiv 版本，因此标题链接指向开放获取的期刊原文。</description><guid isPermaLink="true">https://powehi12.github.io/post/gao-fen-bu-deng-yu-hui-yu-ce-%EF%BC%9ASystema-jie-kai-dan-xi-bao-rao-dong-mo-xing-de-%E2%80%9C-ping-jun-xiao-ying-%E2%80%9D-huan-jue.html</guid><pubDate>Mon, 20 Jul 2026 11:48:37 +0000</pubDate></item><item><title>把细胞写成程序：首个从基因功能推演生命表型的整细胞模型</title><link>https://powehi12.github.io/post/ba-xi-bao-xie-cheng-cheng-xu-%EF%BC%9A-shou-ge-cong-ji-yin-gong-neng-tui-yan-sheng-ming-biao-xing-de-zheng-xi-bao-mo-xing.html</link><description># 前言
-
-标题：[A Whole-Cell Computational Model Predicts Phenotype from Genotype](https://pmc.ncbi.nlm.nih.gov/articles/PMC3413483/)  
-（该论文未发现对应的 arXiv 版本，因此链接至 PMC 开放全文。</description><guid isPermaLink="true">https://powehi12.github.io/post/ba-xi-bao-xie-cheng-cheng-xu-%EF%BC%9A-shou-ge-cong-ji-yin-gong-neng-tui-yan-sheng-ming-biao-xing-de-zheng-xi-bao-mo-xing.html</guid><pubDate>Mon, 20 Jul 2026 11:40:39 +0000</pubDate></item><item><title>从数据到生命模拟：AI 如何用统一表征与虚拟实验构建虚拟细胞</title><link>https://powehi12.github.io/post/cong-shu-ju-dao-sheng-ming-mo-ni-%EF%BC%9AAI%20-ru-he-yong-tong-yi-biao-zheng-yu-xu-ni-shi-yan-gou-jian-xu-ni-xi-bao.html</link><description># 前言
-
-标题：[How to Build the Virtual Cell with Artificial Intelligence: Priorities and Opportunities](https://arxiv.org/abs/2409.11654)
-
-正式发表：*Cell* 187(25), 7045–7063，2024 年 12 月；[DOI: 10.1016/j.cell.2024.11.015](https://doi.org/10.1016/j.cell.2024.11.015)。</description><guid isPermaLink="true">https://powehi12.github.io/post/cong-shu-ju-dao-sheng-ming-mo-ni-%EF%BC%9AAI%20-ru-he-yong-tong-yi-biao-zheng-yu-xu-ni-shi-yan-gou-jian-xu-ni-xi-bao.html</guid><pubDate>Mon, 20 Jul 2026 08:22:15 +0000</pubDate></item><item><title>DiscoBench：让搜索智能体学会“该搜时搜、该问时问”</title><link>https://powehi12.github.io/post/DiscoBench%EF%BC%9A-rang-sou-suo-zhi-neng-ti-xue-hui-%E2%80%9C-gai-sou-shi-sou-%E3%80%81-gai-wen-shi-wen-%E2%80%9D.html</link><description># 前言
+**摘要：** 最本质地说，这篇论文想给所有物种、组织和实验中的细胞建立一套统一的“全球坐标系”：无论一个细胞来自人、鼠、鸡，还是来自一个模型从没见过的新实验，都能直接被放进同一张细胞地图，而不需要针对新数据重新训练模型。</description><guid isPermaLink="true">https://powehi12.github.io/post/UCE%EF%BC%9A-wei-3600-wan-ge-xi-bao-jian-li-yi-tao-kua-wu-zhong-de-%E2%80%9C-quan-qiu-zuo-biao-xi-%E2%80%9D%E3%80%82.html</guid><pubDate>Wed, 22 Jul 2026 03:43:41 +0000</pubDate></item><item><title>DiscoBench：让搜索智能体学会“该搜时搜、该问时问”</title><link>https://powehi12.github.io/post/DiscoBench%EF%BC%9A-rang-sou-suo-zhi-neng-ti-xue-hui-%E2%80%9C-gai-sou-shi-sou-%E3%80%81-gai-wen-shi-wen-%E2%80%9D.html</link><description># 前言
 
 **标题：** [When Search Agents Should Ask: DiscoBench for Clarification-Aware Deep Search](https://arxiv.org/abs/2606.27669)
 
@@ -146,24 +120,12 @@ OpenReview：https://openreview.net/forum?id=BPpG4qQaNj
 论文最初以技术报告形式发布于 2025 年 8 月，目前已经以 **ACL 2026 Main Conference 长论文**正式发表，最终标题改为 *BrowseComp-Plus: A Fair and Disentangled Evaluation Benchmark for Deep Search Agents*。</description><guid isPermaLink="true">https://powehi12.github.io/post/BrowseComp-Plus.html</guid><pubDate>Wed, 15 Jul 2026 15:13:53 +0000</pubDate></item><item><title>Watching, Reasoning, and Searching</title><link>https://powehi12.github.io/post/Watching%2C%20Reasoning%2C%20and%20Searching.html</link><description># 论文解读：A Video Deep Research Benchmark on Open Web for Agentic Video Reasoning
 
 **题目：** *Watching, Reasoning, and Searching: A Video Deep Research Benchmark on Open Web for Agentic Video Reasoning*
-**核心贡献：** 提出 **VideoDR**，评测多模态智能体能否从视频中提取线索，再到开放网络搜索、验证并进行多跳推理。</description><guid isPermaLink="true">https://powehi12.github.io/post/Watching%2C%20Reasoning%2C%20and%20Searching.html</guid><pubDate>Wed, 15 Jul 2026 13:55:37 +0000</pubDate></item><item><title>Agentic Reasoning for Large Language Models</title><link>https://powehi12.github.io/post/Agentic%20Reasoning%20for%20Large%20Language%20Models.html</link><description># 论文解读：Agentic Reasoning for Large Language Models
+**核心贡献：** 提出 **VideoDR**，评测多模态智能体能否从视频中提取线索，再到开放网络搜索、验证并进行多跳推理。</description><guid isPermaLink="true">https://powehi12.github.io/post/Watching%2C%20Reasoning%2C%20and%20Searching.html</guid><pubDate>Wed, 15 Jul 2026 13:55:37 +0000</pubDate></item><item><title>关于 Who&amp;When 的想法</title><link>https://powehi12.github.io/post/guan-yu-%20Who%26When%20-de-xiang-fa.html</link><description>猜测：多数决定性错误会直接影响接下来的步骤，多数普通错误会在接下来的步骤被修复/被验证无关紧要。</description><guid isPermaLink="true">https://powehi12.github.io/post/guan-yu-%20Who%26When%20-de-xiang-fa.html</guid><pubDate>Wed, 15 Jul 2026 04:41:37 +0000</pubDate></item><item><title>Who&amp;When：Which Agent Causes Task Failures and When?</title><link>https://powehi12.github.io/post/Who%26When%EF%BC%9AWhich%20Agent%20Causes%20Task%20Failures%20and%20When-.html</link><description># 论文解读：Which Agent Causes Task Failures and When?
 
-**题目：** *Agentic Reasoning for Large Language Models*
-**类型：** 大型综述论文
-**核心主题：** 如何把 LLM 从“静态回答问题的模型”，升级为能够规划、行动、记忆、学习和协作的智能体。</description><guid isPermaLink="true">https://powehi12.github.io/post/Agentic%20Reasoning%20for%20Large%20Language%20Models.html</guid><pubDate>Wed, 15 Jul 2026 11:49:04 +0000</pubDate></item><item><title>关于 Who&amp;When 的想法</title><link>https://powehi12.github.io/post/guan-yu-%20Who%26When%20-de-xiang-fa.html</link><description>猜测：多数决定性错误会直接影响接下来的步骤，多数普通错误会在接下来的步骤被修复/被验证无关紧要。</description><guid isPermaLink="true">https://powehi12.github.io/post/guan-yu-%20Who%26When%20-de-xiang-fa.html</guid><pubDate>Wed, 15 Jul 2026 04:41:37 +0000</pubDate></item><item><title>Who&amp;When：Which Agent Causes Task Failures and When?</title><link>https://powehi12.github.io/post/Who%26When%EF%BC%9AWhich%20Agent%20Causes%20Task%20Failures%20and%20When-.html</link><description># 论文解读：Which Agent Causes Task Failures and When?
-
-&gt; **论文发表信息**：ICML 2025，论文集 PMLR 267。</description><guid isPermaLink="true">https://powehi12.github.io/post/Who%26When%EF%BC%9AWhich%20Agent%20Causes%20Task%20Failures%20and%20When-.html</guid><pubDate>Wed, 15 Jul 2026 04:26:40 +0000</pubDate></item><item><title>Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems</title><link>https://powehi12.github.io/post/Beyond%20Individual%20Intelligence-%20Surveying%20Collaboration%2C%20Failure%20Attribution%2C%20and%20Self-Evolution%20in%20LLM-based%20Multi-Agent%20Systems.html</link><description># 论文解读：Beyond Individual Intelligence
-
-&gt; **论文：** *Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems*
-&gt; **类型：** 综述论文
-&gt; **核心框架：** **LIFE——能力基础、协作整合、故障归因、自我演化**
-
-这篇论文于 2026 年 5 月发布。</description><guid isPermaLink="true">https://powehi12.github.io/post/Beyond%20Individual%20Intelligence-%20Surveying%20Collaboration%2C%20Failure%20Attribution%2C%20and%20Self-Evolution%20in%20LLM-based%20Multi-Agent%20Systems.html</guid><pubDate>Tue, 14 Jul 2026 17:40:46 +0000</pubDate></item><item><title>Sherlock：Reliable and Efficient Agentic Workflow Execution</title><link>https://powehi12.github.io/post/Sherlock%EF%BC%9AReliable%20and%20Efficient%20Agentic%20Workflow%20Execution.html</link><description># 论文解读：Sherlock
+&gt; **论文发表信息**：ICML 2025，论文集 PMLR 267。</description><guid isPermaLink="true">https://powehi12.github.io/post/Who%26When%EF%BC%9AWhich%20Agent%20Causes%20Task%20Failures%20and%20When-.html</guid><pubDate>Wed, 15 Jul 2026 04:26:40 +0000</pubDate></item><item><title>Sherlock：Reliable and Efficient Agentic Workflow Execution</title><link>https://powehi12.github.io/post/Sherlock%EF%BC%9AReliable%20and%20Efficient%20Agentic%20Workflow%20Execution.html</link><description># 论文解读：Sherlock
 
 **论文**：Reliable and Efficient Agentic Workflow Execution
-**版本**：我检索到的是 2025 年 11 月发布的 arXiv v1，标注为 MLSys 在审的 preliminary work。</description><guid isPermaLink="true">https://powehi12.github.io/post/Sherlock%EF%BC%9AReliable%20and%20Efficient%20Agentic%20Workflow%20Execution.html</guid><pubDate>Tue, 14 Jul 2026 15:38:06 +0000</pubDate></item><item><title>关于 Multi-Agent 的想法</title><link>https://powehi12.github.io/post/guan-yu-%20Multi-Agent%20-de-xiang-fa.html</link><description># Q
-
-multi-agent中，多个agent分别对应每个角色，对于每一个agent，可以给他设置个“影子”，也就是相同的agent，这个agent可以是监督者，也可以是辩论者，也可以是“杠精”，或者是一个小模型，总之就是使主agent的成功率尽可能高，这样，multi-agent的成功率就会高一点。</description><guid isPermaLink="true">https://powehi12.github.io/post/guan-yu-%20Multi-Agent%20-de-xiang-fa.html</guid><pubDate>Tue, 14 Jul 2026 14:11:37 +0000</pubDate></item><item><title>R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning</title><link>https://powehi12.github.io/post/R1-Searcher%2B%2B-%20Incentivizing%20the%20Dynamic%20Knowledge%20Acquisition%20of%20LLMs%20via%20Reinforcement%20Learning.html</link><description># 论文解读：R1-Searcher++
+**版本**：我检索到的是 2025 年 11 月发布的 arXiv v1，标注为 MLSys 在审的 preliminary work。</description><guid isPermaLink="true">https://powehi12.github.io/post/Sherlock%EF%BC%9AReliable%20and%20Efficient%20Agentic%20Workflow%20Execution.html</guid><pubDate>Tue, 14 Jul 2026 15:38:06 +0000</pubDate></item><item><title>R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning</title><link>https://powehi12.github.io/post/R1-Searcher%2B%2B-%20Incentivizing%20the%20Dynamic%20Knowledge%20Acquisition%20of%20LLMs%20via%20Reinforcement%20Learning.html</link><description># 论文解读：R1-Searcher++
 
 **论文：** *R1-Searcher++: Incentivizing the Dynamic Knowledge Acquisition of LLMs via Reinforcement Learning*
 **核心主题：** 让大模型学会在“自己想”和“上网搜”之间动态切换，并将搜索得到的知识进一步写入模型参数。</description><guid isPermaLink="true">https://powehi12.github.io/post/R1-Searcher%2B%2B-%20Incentivizing%20the%20Dynamic%20Knowledge%20Acquisition%20of%20LLMs%20via%20Reinforcement%20Learning.html</guid><pubDate>Tue, 14 Jul 2026 06:24:15 +0000</pubDate></item></channel></rss>

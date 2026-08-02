@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-6'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>Flare 为什么推理不等于规划</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="前言 标题： Why Reasoning Fails to Plan: A Planning-Centric Analysis of Long-Horizon Decision Making in LLM Agents 论文链接： https://arxiv.org/abs/2601.22311 代码链接： 论文…">
+<meta property="og:title" content="Flare 为什么推理不等于规划">
+<meta property="og:description" content="前言 标题： Why Reasoning Fails to Plan: A Planning-Centric Analysis of Long-Horizon Decision Making in LLM Agents 论文链接： https://arxiv.org/abs/2601.22311 代码链接： 论文…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/Flare%20-wei-shen-me-tui-li-bu-deng-yu-gui-hua.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flare 为什么推理不等于规划">
+<meta name="twitter:description" content="前言 标题： Why Reasoning Fails to Plan: A Planning-Centric Analysis of Long-Horizon Decision Making in LLM Agents 论文链接： https://arxiv.org/abs/2601.22311 代码链接： 论文…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Flare%20-wei-shen-me-tui-li-bu-deng-yu-gui-hua.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">Flare 为什么推理不等于规划</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/38" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>前言</h1>
+<p><strong>标题：</strong> Why Reasoning Fails to Plan: A Planning-Centric Analysis of Long-Horizon Decision Making in LLM Agents<br>
+<strong>论文链接：</strong> <a href="https://arxiv.org/abs/2601.22311" rel="nofollow">https://arxiv.org/abs/2601.22311</a><br>
+<strong>代码链接：</strong> 论文中未公开代码仓库<br>
+<strong>作者单位：</strong> 圣母大学（Notre Dame）、斯坦福、爱丁堡大学、耶鲁、普渡、牛津、UIUC<br>
+<strong>投稿信息：</strong> 2026年1月29日，ICML 格式</p>
+<p><strong>标签：</strong> 长程规划；推理与规划的区分；MCTS 与前瞻搜索；KGQA 智能体</p>
+<p><strong>摘要：</strong> 这篇论文一句话概括就是——<strong>大模型的"一步一步想"本质上是个贪心算法，短任务够用，长任务必翻车</strong>。作者把 CoT/ReAct 这类逐步推理形式化为"逐步贪心策略"（step-wise greedy policy），在完全确定、状态显式的可控环境（知识图谱问答）中做了控制变量实验和理论证明，揭示了一个核心失败机制：局部最优的选择会在决策早期就把 Agent 锁进一条错误轨道，而且<strong>几乎无法回头</strong>。理论上作者证明了三条命题：逐步贪心策略的次优性可以任意大、扩大 beam 宽度也救不了、但哪怕只加一步前瞻（lookahead）就能严格提升最坏情况保证。基于这个诊断，作者提出了 FLARE（Future-aware LookAhead with Reward Estimation），用显式前瞻、反向价值传播、有限承诺（滚动时域重规划）三个最小机制组合起来，在 CWQ/WebQSP/GrailQA/ALFWorld 上一致提升性能，甚至能让 LLaMA-8B + FLARE 超过 GPT-4o + 标准逐步推理。</p>
+<hr>
+<h1>Step 1：论文解读</h1>
+<h2>1：一句扎心的话——推理不等于规划</h2>
+<p>现在大家都在卷"推理能力"：CoT、self-consistency、o1 式的长思维链……但一个越来越明显的现象是，<strong>推理能力很强的模型在长程决策任务上照样翻车</strong>。这篇论文给出的诊断是：这不是能力不够，而是<strong>范式错了</strong>。<br>
+作者的核心论点是：标准的 LLM 推理（比如 CoT）从规划的视角看，本质上是一个<strong>逐步贪心策略</strong>——每一步都基于局部分数（比如"下一步看起来有多合理"）选择动作。这在短任务里没问题，因为局部最优≈全局最优。但在长任务里，<strong>早期的动作必须考虑延迟到来的后果</strong>，而贪心策略天生做不到这一点。<br>
+打个比方：你在下棋，逐步推理就像是每步都吃掉眼前分值最高的棋子，而不去想三步之后会不会被将军。短局面能赢，长局面必输。</p>
+<h2>2：为什么要在"作弊环境"里做实验？</h2>
+<p>长程任务失败的原因太多了：环境本身复杂、反馈稀疏或延迟、部分可观测、有随机性……这些因素混在一起，你根本分不清是<strong>环境太难</strong>还是<strong>Agent 的决策机制本身有问题</strong>。<br>
+所以作者做了一个非常聪明的实验设计：<strong>故意把环境的难度全部去掉</strong>。他们选择了确定性、状态完全显式、转移函数已知、且在规划时就能拿到评估信号的环境——具体是知识图谱问答（KGQA），Agent 的行为对应多跳图遍历。而且用的是 oracle-structure 设定：每个问题都配一个<strong>保证包含正确答案路径</strong>的子图。<br>
+换句话说：路就在那儿，地图全给你，走错了立刻能知道。<strong>在这么友好的条件下如果 Agent 还是失败，那问题就一定出在决策机制本身</strong>。这就是控制变量法的精髓。</p>
+<h2>3：三个观测——失败到底长什么样</h2>
+<h3>3.1：观测一，长程崩溃是"策略"的失败而不是"任务长"的失败</h3>
+<p>随着所需规划步数增加，单步贪心的准确率急剧下降；beam search 只能带来有限且短暂的改善；而带前瞻的策略下降得慢得多。三条曲线的分化说明：<strong>长程失败不是因为轨迹长本身，而是因为你用了逐步贪心策略</strong>。</p>
+<h3>3.2：观测二，早期近视是系统性的</h3>
+<p>作者专门构造了"近视陷阱"（myopic traps）：那些<strong>局部评分很高、但会把你带到全局糟糕区域</strong>的动作。结果发现，贪心和 beam 策略在<strong>第一个决策步</strong>就以很高的比例掉进这些陷阱（单步55.6%、beam search 甚至71.9%），而前瞻策略只有23.6%。<br>
+更狠的是因果干预实验：<strong>强行让 Agent 第一步走对，所有策略的性能就拉平了；强行让它第一步掉进陷阱，所有策略都全军覆没</strong>。这直接证明了"早期近视承诺"就是长程退化的主导原因，而不是众多原因之一。</p>
+<h3>3.3：观测三，错误几乎不可逆</h3>
+<p>推理型策略通常在头几步就偏离最优轨迹，然后就<strong>再也回不来了</strong>。数据很扎眼：单步策略首次出错后的恢复率只有5.4%，beam search 11.4%，而前瞻策略22.4%、FLARE 29.7%。<br>
+一个反直觉的点：加宽搜索（beam search）只是<strong>推迟</strong>了不可逆承诺的发生，并没有阻止它。因为 beam 排序用的还是那套局部分数，最优路径可能在第一层就被剪掉了。</p>
+<h2>4：三条理论结论——这不是工程问题，是数学问题</h2>
+<p>这是这篇论文最硬的部分，作者用三个命题把上面的经验观测形式化了。</p>
+<h3>4.1：命题3.1——逐步贪心的次优程度可以任意大</h3>
+<p>只要存在一个状态，贪心策略在这个状态上的偏好和最优选择不一致，那么对于任意时域长度 H≥2 和任意常数 M&gt;0，都<strong>能构造出一个确定性环境</strong>，使得贪心策略的总回报为 0，而最优策略的回报≥M。也就是说，贪心策略可以差到无限差。</p>
+<h3>4.2：命题3.2——加宽 beam 也救不了</h3>
+<p>对于任意固定的 beam 宽度 B，都存在这样的环境：唯一的最优轨迹的前缀会在<strong>深度1</strong>（第一步！）就被 beam search 剪掉，最终回报为0。原因很简单：beam 排序依然基于累积的局部代理分数，在还没观测到任何有信息量的未来奖励之前，最优路径就已经被判死刑了。</p>
+<h3>4.3：命题3.3——哪怕一步前瞻也能严格改进</h3>
+<p>存在一类确定性环境，其中<strong>所有</strong>仅基于逐步代理分数的策略都可证明地拿到零回报，而一个仅做 k=1 步前瞻的策略却能拿到最优回报。这就在最坏情况保证的意义上，把"规划"和"推理"划出了一条严格的分界线。<br>
+<strong>锐评：</strong> 这三个命题的构造性证明其实并不难（本质上就是构造一个"糖衣陷阱"图），但它们的价值在于把一个模糊的直觉锚定成了不可辩驳的数学事实。做研究经常犯的错是"我实验做出来了但不知道为什么"，这篇论文反过来——"我先证明它必然发生，再去实验里找到它"。</p>
+<h2>5：连贯长程规划的三个最小机制</h2>
+<p>从上面的诊断出发，作者提炼出连贯长程规划<strong>必须</strong>满足的三个条件：<br>
+（1）<strong>显式前瞻（explicit lookahead）</strong>——真的去模拟未来轨迹，而不是靠一个局部启发式打分。<br>
+（2）<strong>反向价值传播（backward value propagation）</strong>——把轨迹级的结果反传回去，修正早期动作的价值估计。<br>
+（3）<strong>有限承诺（limited commitment）</strong>——只承诺下一步动作，走一步重新规划一次（滚动时域）。<br>
+然后作者做了一件很有杀伤力的事：<strong>用这三条把现有范式全部审判了一遍</strong>。<br>
+CoT 和 beam search：缺（1）和（2）——没有显式的未来评估和价值传播。<br>
+Reflexion 和 ReAct：缺（1）——反思是事后的，不是前瞻的。<br>
+强化学习（如 DeepSeek-R1 式）：规划被<strong>离线</strong>编码进模型参数里了，推理时缺乏对早期承诺的<strong>在线修正</strong>能力。<br>
+<strong>锐评：</strong> 这个"三机制审判表"是全文最有传播力的一张牌。它把一堆看起来毫无关系的方法（提示工程、树搜索、RL）放进同一个坐标系里比较，且解释力惊人。特别是把 RL 归为"离线规划"这个定性——很多人一直觉得 RL 训出来的模型"会规划"，这篇论文指出那只是把规划烘焙进了权重，推理时依然是逐步贪心地展开。</p>
+<h2>6：FLARE 是怎么做的</h2>
+<p>FLARE 的实现其实就是 <strong>MCTS + 滚动时域</strong>，作者自己也大方承认了："我们的贡献是概念性的而非算法性的"。</p>
+<h3>6.1：显式前瞻</h3>
+<p>维护一棵以当前状态为根的搜索树，用标准的 UCT 公式分配模拟预算：既偏向 Q 值高的分支（利用），又给访问次数少的分支加探索奖励。为了控制成本，树扩展时用一个 LLM 提出候选动作，把每个状态的分支数限制在 k 个以内（<strong>动作剪枝</strong>）。关键设计：剪枝只限制"哪些未来被评估"，<strong>不影响动作的价值和偏好排序</strong>。</p>
+<h3>6.2：价值传播</h3>
+<p>每条模拟轨迹（默认深度 H=3）被赋予一个累积回报。有意思的是，这个回报<strong>不是简单地把逐步奖励加起来算的</strong>——作者用 LLM 通过<strong>比较多条采样候选轨迹、给出相对偏好评分</strong>的方式来打分。这样动作就完全通过其下游后果来评估，彻底摆脱了逐步分数。<br>
+为了省钱，FLARE 还维护了一个有界的<strong>轨迹记忆库</strong>：新轨迹先去库里找最相似的，相似度超过阈值就直接复用缓存的评分，否则才真算。<br>
+最后把轨迹回报<strong>反向传播</strong>给路径上所有的状态-动作对，更新 Q 值，根节点按最大 Q 值选动作。</p>
+<h3>6.3：为什么必须是滚动时域</h3>
+<p>这一点作者解释得很好：即便环境完全可观测，<strong>离线一次性规划出整条动作序列在评估信号不完美时是极其脆弱的</strong>——而 LLM 做验证器恰恰就是不完美的。早期估计误差会沿整条轨迹传播放大。只承诺下一步、走一步重规划一次，就能把早期错误的影响限制住，并让后续的轨迹级证据反过来修正早期的动作价值。<br>
+<strong>锐评：</strong> 这个论证是整篇论文中我最欣赏的一段——它把"为什么要滚动时域"从一个工程 trick 上升到了对 LLM 验证器不可靠性的直接回应。很多做 MCTS+LLM 的工作都是"因为 AlphaGo 这么做所以我也这么做"，而这里给出了一个 LLM 特有的理由。</p>
+<hr>
+<h1>Step 2：实验部分</h1>
+<h2>1：实验设置</h2>
+<p>主战场是 KGQA 三个数据集：<strong>CWQ</strong>（复杂多跳）、<strong>WebQSP</strong>（相对简单）、<strong>GrailQA</strong>。之所以选它们，是因为它们完全满足"可控诊断"的假设：状态显式、转移确定、oracle 子图保证存在解路径。<br>
+为了测试跨域泛化，额外加了 <strong>ALFWorld</strong>（通过 AgentGym）作为工具使用环境，这个环境<strong>不严格满足</strong>可控状态假设，所以只用来测鲁棒性，不用来做诊断。<br>
+基础框架用了 ToG（Think-on-Graph）和 PoG（Plan-on-Graph）两个，工具环境上则套在 ReAct 和 Reflexion 上。骨干模型覆盖 LLaMA-8B / 70B、GPT-4o-mini / GPT-4o。<strong>关键是：四种策略（单步、beam、lookahead、FLARE）只在动作选择上不同，其他一切固定</strong>——这是典型的控制变量实验设计。</p>
+<h2>2：主实验——一致的提升，且和模型规模正交</h2>
+<p>Table 1 的结果非常齐整，四种策略在所有数据集、所有骨干、所有框架上都呈现同样的单调顺序：<strong>单步 &lt; beam search &lt; lookahead &lt; FLARE</strong>。<br>
+以 CWQ 为例（跨全部配置的平均）：单步59.8、beam search 63.3、lookahead 66.5、FLARE 71.8。WebQSP：78.2 → 81.8 → 84.7 → 89.9。GrailQA：76.5 → 79.0 → 81.6 → 87.8。<br>
+最有冲击力的一组数据是<strong>跨模型规模的对比</strong>：在 PoG 框架的 CWQ 上，LLaMA-8B + FLARE 拿到73.9，而 GPT-4o + 单步推理只有68.6。也就是说，<strong>一个8B的小模型加上正确的规划机制，能干过一个顶级大模型加上标准推理</strong>。这直接支撑了作者的核心论点：规划能力无法通过更强的推理恢复。<br>
+和 SOTA 的对比（Table 2）也很能打：FLARE(PoG) 在 CWQ 78.8、WebQSP 93.9、GrailQA 92.0，全面超过或持平 ToT、RAP、LATS、GCR、ProgRAG 等一堆专门方法。作者强调的一点很重要：<strong>很多现有方法依赖任务特定的训练或精心设计的搜索启发式，而 FLARE 用的是一套统一的通用机制</strong>。</p>
+<h2>3：机制级分析——不只是准确率高，而是行为方式变了</h2>
+<p>这是我认为全文最有价值的实验表（Table 3）。作者没有只报准确率，而是设计了三个<strong>机制级指标</strong>来直接量化决策动力学：<br>
+<strong>首步陷阱选择率（越低越好）：</strong> 单步55.6% → beam search 71.9% → lookahead 23.6% → FLARE 17.8%。注意 beam search <strong>比单步还差</strong>——因为它维护多条候选，反而更容易被高局部分数的陷阱吸引。<br>
+<strong>首次出错位置（越靠后越好）：</strong> 1.6 → 2.0 → 2.8 → 3.2 步。<br>
+<strong>首错后的恢复率（越高越好）：</strong> 5.4% → 11.4% → 22.4% → 29.7%。<br>
+这三个指标合起来讲了一个完整的故事：FLARE 不只是"分数更高"，而是<strong>把脆弱的、不可修正的决策方式替换成了稳定的、可修正的决策方式</strong>。</p>
+<h3>3.1：失败模式发生了转移</h3>
+<p>一个非常有洞察力的补充分析：FLARE 之后残余的失败<strong>不再是早期近视承诺</strong>，而变成了<strong>探索不足和终止控制不当</strong>（比如陷入循环、或者还没找到解就停了）。作者点明：这些失败已经不是"改进推理能力"能解决的问题了，而是搜索覆盖度和时域管理的新挑战。<br>
+<strong>锐评：</strong> 一篇好的论文不仅要解决问题，还要诚实地说明"我解决完之后下一个瓶颈是什么"。这一段做得很漂亮，它同时也是给后续研究者的路线图。</p>
+<h2>4：效率分析——FLARE 不是靠堆算力赢的</h2>
+<p>这是审稿人最容易攻击的点：你做 MCTS 当然比单步准，但你烧了多少 token？<br>
+作者用性能-预算曲线（Figure 3）正面回应：单步策略几乎不随预算增加而改善（它没有可以消耗预算的地方）；beam search 和 lookahead 一开始有提升但<strong>很快饱和</strong>，且饱和点远低于 FLARE；只有 FLARE 呈现<strong>持续的性能增长</strong>。而且虽然单步决策成本更高，但在<strong>相当甚至更低的总 token 预算下</strong>，FLARE 的准确率仍然更高。<br>
+关键结论：FLARE 把额外的计算<strong>转化成了有效的规划</strong>，而不是重复的局部探索。这一点和上一篇综述里提到的"测试时扩展不可靠"形成了有趣的对照——那篇说加算力不一定有用，这篇说<strong>加对地方就有用</strong>。</p>
+<h2>5：消融实验</h2>
+<p>两个效率组件的消融（Table 4）：<br>
+<strong>动作剪枝：</strong> 去掉剪枝后在默认预算下性能从74.9掉到69.5；要恢复到原有精度需要<strong>近3倍的 token</strong>（15k → 61k）。说明剪枝不是简单地"降成本"，而是<strong>把算力导向高价值动作</strong>。<br>
+<strong>轨迹记忆：</strong> 去掉后 token 用量从21k飙到34k，但准确率几乎不变（74.9 → 74.6）；而在对齐 token 预算的条件下，性能明显下降（72.7）。说明记忆库的作用是<strong>避免对相似未来的重复评估</strong>，把省下的预算释放给更有信息量的探索。</p>
+<h2>6：跨域验证与机制归因</h2>
+<p>ALFWorld 上的结果（Table 5）把所有方法按三个机制维度做了一次归类，然后看性能是否和机制对齐：<br>
+ReAct（无前瞻、无价值传播）61.3%；ReAct+Beam 66.7%；Reflexion 64.2%；RL Policy (Greedy) 69.4%；RL Policy (Think，部分支持前瞻和价值传播) 77.4%；ReAct+MCTS（有前瞻、有价值传播、但完全承诺）73.5%；<strong>ReAct+FLARE（三者齐全）77.8%</strong>。<br>
+作者的解读非常锋利：<strong>性能差异与"机制配置"对齐，而不是与"训练范式"对齐</strong>。也就是说，RL 训出来的模型表现好，不是因为 RL 本身神奇，而是因为它部分地实现了这三个机制。而 ReAct+MCTS 比 FLARE 差的唯一原因，就是它做的是完全承诺而非滚动时域。<br>
+<strong>锐评：</strong> 这张表是整篇论文最好的"总结陈词"。它把提示工程、RL、树搜索这三条平行的技术路线拉到同一个解释框架下，且预测力惊人。如果这个框架成立，它的意义已经超出了这篇论文本身。</p>
+<hr>
+<h1>Step 3：other</h1>
+<h2>1：重点</h2>
+<p>这篇论文最有价值的东西不是 FLARE 这个方法（作者自己都承认那就是 MCTS + 滚动时域，没什么算法新意），而是它提出的**"规划三机制"审判框架**：显式前瞻、反向价值传播、有限承诺。这个框架的威力在于，它把 CoT、ToT、ReAct、Reflexion、beam search、RL 训练、MCTS 这些看似毫无关系的技术路线，全部投影到同一个三维坐标系里，并且<strong>能准确预测它们在长程任务上的表现排序</strong>（ALFWorld 的 Table 5 就是这个预测的验证）。配合三条理论命题——贪心可以任意次优、加宽 beam 无用、一步前瞻严格改进——这篇论文把"为什么长程 Agent 会崩"这个问题从"经验观察"提升到了"结构性必然"。对于任何做 Agent 系统的人来说，最实用的一条结论是：<strong>如果你的 Agent 在长任务上不稳定，不要去优化提示或换更大的模型，去检查你的系统是否缺失这三个机制中的任何一个</strong>。</p>
+<h2>2：意见</h2>
+<p>最致命的问题是：<strong>核心实验环境（oracle 子图的 KGQA）几乎是为 FLARE 量身定做的，而这个"定做"恰恰掏空了结论的外部有效性。</strong> 论文声称在"完全确定、状态显式、评估信号在规划时可得"的环境中隔离出了决策机制的问题，但现实中的长程 Agent 任务（多轮工具调用、Web 导航、软件工程）<strong>没有一个满足这三个条件</strong>——你无法免费模拟"调用了这个 API 之后世界变成什么样"，前瞻本身就要付出不可逆的真实代价甚至有副作用。论文在第4.3节用一句"这些条件在广泛的部分可观测环境中成立"就把这个鸿沟带过去了，但唯一的跨域证据只有 ALFWorld —— 而 ALFWorld 是个可以随意回滚的模拟器，仍然不是真实约束。更关键的是，FLARE 的轨迹评分依赖 LLM 对多条候选轨迹做相对偏好判断，这本身就是一个逐步推理产物；论文花了大力气论证"局部分数不可靠"，却把整个价值估计建立在另一个不可靠的 LLM 判断上，且完全没有分析<strong>当评估器本身有系统性偏差时前瞻会不会反而把错误放大</strong>。要让这个工作真正立住，至少需要在一个不可回滚、动作有真实代价的环境（如真实 API 调用或 WebArena）上给出结果，以及一个针对评估器噪声水平的敏感性分析。</p>
+<h2>3：相关工作</h2>
+<p><strong>LATS（Language Agent Tree Search, Zhou et al., 2024）</strong> 是把蒙特卡洛树搜索、ReAct 式的环境交互和自我反思统一到一个框架里的代表性工作，用 LLM 同时充当价值函数和反思器，在 HotpotQA、HumanEval 等任务上取得了不错的效果。它和 FLARE 在机制上高度重叠（都有树搜索和价值回传），但采用的是完全承诺而非滚动时域，且没有从理论层面论证这些机制的必要性——按本文 Table 5 的框架看，LATS 恰好缺了"有限承诺"这一环。</p>
+<p><strong>RAP（Reasoning with Language Model is Planning with World Model, Hao et al., 2023）</strong> 提出把 LLM 同时当作推理器和世界模型，用 MCTS 在 LLM 自己想象出的状态空间中做规划。这是"LLM+规划"这条线上最早的奠基性工作之一，本文在 Table 2 中把它作为基线（CWQ 68.2、WebQSP 75.6）。RAP 与 FLARE 的关键差异在于：RAP 依赖 LLM 自己模拟状态转移，误差会在模拟中复合；而 FLARE 在其主实验环境中使用的是真实的转移函数。</p>
+<p><strong>ProAct（Grounded LookAhead Distillation）</strong> 是2026年出现的一条不同思路：与其在推理时做昂贵的显式搜索，不如通过两阶段训练把"准确的前瞻推理"<strong>内化进模型参数</strong>——先用环境搜索产生的轨迹做监督微调，再做强化。这条路线和 FLARE 形成了一个有意思的对照：FLARE 主张必须在线规划，ProAct 主张离线蒸馏前瞻能力。本文在第5.5节实际上已经对这个争论给出了初步答案——RL Policy (Think) 拿到77.4%，非常接近 FLARE 的77.8%，说明内化的前瞻确实有效，但仍略逊于在线的滚动修正。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-6'></script>
+
+</html>
