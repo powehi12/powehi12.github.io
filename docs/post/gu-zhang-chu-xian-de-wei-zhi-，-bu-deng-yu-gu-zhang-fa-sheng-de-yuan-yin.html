@@ -16,15 +16,15 @@
 <title>故障出现的位置，不等于故障发生的原因</title>
 <meta name="theme-color" content="#262624">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="故障出现的位置，不等于故障发生的原因 长程 Agent 基准能力诊断的因果审计 Where It Breaks Is Not Why It Failed: A Causal Audit of Capability Diagnosis in Long-Horizon Agent Benchmarks 第一轮干预实验…">
+<meta name="description" content="阅读说明 本稿采用「预期 → 实际结果」的并列写法。">
 <meta property="og:title" content="故障出现的位置，不等于故障发生的原因">
-<meta property="og:description" content="故障出现的位置，不等于故障发生的原因 长程 Agent 基准能力诊断的因果审计 Where It Breaks Is Not Why It Failed: A Causal Audit of Capability Diagnosis in Long-Horizon Agent Benchmarks 第一轮干预实验…">
+<meta property="og:description" content="阅读说明 本稿采用「预期 → 实际结果」的并列写法。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/gu-zhang-chu-xian-de-wei-zhi-%EF%BC%8C-bu-deng-yu-gu-zhang-fa-sheng-de-yuan-yin.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="故障出现的位置，不等于故障发生的原因">
-<meta name="twitter:description" content="故障出现的位置，不等于故障发生的原因 长程 Agent 基准能力诊断的因果审计 Where It Breaks Is Not Why It Failed: A Causal Audit of Capability Diagnosis in Long-Horizon Agent Benchmarks 第一轮干预实验…">
+<meta name="twitter:description" content="阅读说明 本稿采用「预期 → 实际结果」的并列写法。">
 <meta name="twitter:image" content="https://github.com/powehi12.png">
 <link rel="canonical" href="https://powehi12.github.io/post/gu-zhang-chu-xian-de-wei-zhi-%EF%BC%8C-bu-deng-yu-gu-zhang-fa-sheng-de-yuan-yin.html">
 <link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
@@ -90,12 +90,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content" role="main" tabindex="-1">
-<div class="markdown-body" id="postBody"><h1>故障出现的位置，不等于故障发生的原因</h1>
-<h2>长程 Agent 基准能力诊断的因果审计</h2>
-<p><em>Where It Breaks Is Not Why It Failed: A Causal Audit of Capability Diagnosis in Long-Horizon Agent Benchmarks</em></p>
-<p><strong>第一轮干预实验总稿｜2026-08-03</strong></p>
-<hr>
-<blockquote>
+<div class="markdown-body" id="postBody"><blockquote>
 <p><strong>阅读说明</strong></p>
 <p>本稿采用「<strong>预期 → 实际结果</strong>」的并列写法。每一节先写论文的设计与主张（<strong>预期</strong>，即本研究要论证的立场），再用 <strong>【实际实验结果】</strong> 块如实报告第一轮实验的产出。两者分开，便于判断哪些已获支持、哪些受限于本轮规模与设计尚未验证。</p>
 <p>本轮实验用 <code class="notranslate">deepseek-v4-flash</code>（推理强度设为 high），在 6 个任务、49 个检查点、18 个注入点上完成，共产生 2,352 个"过/不过"的结果记录。</p>
@@ -130,10 +125,6 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <tr>
 <td><strong>健康臂 / 病灶臂</strong></td>
 <td>对照组和实验组。同一个任务跑两遍，一遍不动，一遍注入病灶</td>
-</tr>
-<tr>
-<td><strong>rollout</strong></td>
-<td>跑一次任务的完整过程。因为 Agent 有随机性，同一配置要跑多次</td>
 </tr>
 <tr>
 <td><strong>注入点（task-root）</strong></td>
@@ -179,9 +170,6 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p><strong>检查点上的能力标签，说的是"这一步在检查什么"，不是"失败从哪儿来的"。</strong> 我们看到的失败分布，是真实根因经过一层"放大与串味"之后的结果。在这层混合被证明可以忽略之前，"最弱能力"这个诊断不成立。</p>
 <h2>第一轮实验的位置</h2>
 <p>第一轮的目的是<strong>证明这层混合确实存在</strong>，并给出几个关键指标的首次估计。</p>
-<p><strong>已达成</strong>：主要指标通过——一处受控的环境故障平均额外造成 <strong>0.833 个检查点失败</strong>（95% 置信区间 [0.574, 1.148]，明显高于噪声地板 0.315，校正后 p = 0.0002）。更重要的是，这些失败<strong>散落在多个能力类别上</strong>：文书类的净增加是 0.222，置信区间不跨零——<strong>而文书类检查点在这次干预中根本没被碰过，它们多出来的失败就是回声。</strong></p>
-<p><strong>未达成</strong>：分页缺陷那一臂没过门；"故障位置越靠前、波及越广"这条曲线没验证出来（分层设计有缺陷）；有一个比例指标因分母不可辨算不出来；核心的分列矩阵没冻结。这几项主要受限于本轮规模（只跑了 6/100 个任务）和三处可修正的设计问题。</p>
-<hr>
 <hr>
 <h1>一、引言：从打分到诊断</h1>
 <p>Agent 基准正在做一件比打分更强的事：它们开始下诊断。</p>
