@@ -1,5 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Sun, 02 Aug 2026 11:46:51 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>Flare 为什么推理不等于规划</title><link>https://powehi12.github.io/post/Flare%20-wei-shen-me-tui-li-bu-deng-yu-gui-hua.html</link><description># 前言
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>qbyang 的个人博客</title><link>https://powehi12.github.io</link><description>记录 Agent、LLM、强化学习与论文阅读</description><copyright>qbyang 的个人博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/powehi12.png</url><title>avatar</title><link>https://powehi12.github.io</link></image><lastBuildDate>Mon, 03 Aug 2026 06:43:48 +0000</lastBuildDate><managingEditor>qbyang 的个人博客</managingEditor><ttl>60</ttl><webMaster>qbyang 的个人博客</webMaster><item><title>故障出现的位置，不等于故障发生的原因</title><link>https://powehi12.github.io/post/gu-zhang-chu-xian-de-wei-zhi-%EF%BC%8C-bu-deng-yu-gu-zhang-fa-sheng-de-yuan-yin.html</link><description># 故障出现的位置，不等于故障发生的原因
+
+## 长程 Agent 基准能力诊断的因果审计
+
+*Where It Breaks Is Not Why It Failed: A Causal Audit of Capability Diagnosis in Long-Horizon Agent Benchmarks*
+
+**第一轮干预实验总稿｜2026-08-03**
+
+---
+
+&gt; **阅读说明**
+&gt;
+&gt; 本稿采用「**预期 → 实际结果**」的并列写法。</description><guid isPermaLink="true">https://powehi12.github.io/post/gu-zhang-chu-xian-de-wei-zhi-%EF%BC%8C-bu-deng-yu-gu-zhang-fa-sheng-de-yuan-yin.html</guid><pubDate>Mon, 03 Aug 2026 06:42:55 +0000</pubDate></item><item><title>Flare 为什么推理不等于规划</title><link>https://powehi12.github.io/post/Flare%20-wei-shen-me-tui-li-bu-deng-yu-gui-hua.html</link><description># 前言
 
 **标题：** Why Reasoning Fails to Plan: A Planning-Centric Analysis of Long-Horizon Decision Making in LLM Agents
 **论文链接：** https://arxiv.org/abs/2601.22311

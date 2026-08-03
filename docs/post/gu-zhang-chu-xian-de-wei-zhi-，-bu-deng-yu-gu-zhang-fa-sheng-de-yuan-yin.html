@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-6'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>故障出现的位置，不等于故障发生的原因</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="故障出现的位置，不等于故障发生的原因 长程 Agent 基准能力诊断的因果审计 Where It Breaks Is Not Why It Failed: A Causal Audit of Capability Diagnosis in Long-Horizon Agent Benchmarks 第一轮干预实验…">
+<meta property="og:title" content="故障出现的位置，不等于故障发生的原因">
+<meta property="og:description" content="故障出现的位置，不等于故障发生的原因 长程 Agent 基准能力诊断的因果审计 Where It Breaks Is Not Why It Failed: A Causal Audit of Capability Diagnosis in Long-Horizon Agent Benchmarks 第一轮干预实验…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/gu-zhang-chu-xian-de-wei-zhi-%EF%BC%8C-bu-deng-yu-gu-zhang-fa-sheng-de-yuan-yin.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="故障出现的位置，不等于故障发生的原因">
+<meta name="twitter:description" content="故障出现的位置，不等于故障发生的原因 长程 Agent 基准能力诊断的因果审计 Where It Breaks Is Not Why It Failed: A Causal Audit of Capability Diagnosis in Long-Horizon Agent Benchmarks 第一轮干预实验…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/gu-zhang-chu-xian-de-wei-zhi-%EF%BC%8C-bu-deng-yu-gu-zhang-fa-sheng-de-yuan-yin.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">故障出现的位置，不等于故障发生的原因</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/39" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>故障出现的位置，不等于故障发生的原因</h1>
+<h2>长程 Agent 基准能力诊断的因果审计</h2>
+<p><em>Where It Breaks Is Not Why It Failed: A Causal Audit of Capability Diagnosis in Long-Horizon Agent Benchmarks</em></p>
+<p><strong>第一轮干预实验总稿｜2026-08-03</strong></p>
+<hr>
+<blockquote>
+<p><strong>阅读说明</strong></p>
+<p>本稿采用「<strong>预期 → 实际结果</strong>」的并列写法。每一节先写论文的设计与主张（<strong>预期</strong>，即本研究要论证的立场），再用 <strong>【实际实验结果】</strong> 块如实报告第一轮实验的产出。两者分开，便于判断哪些已获支持、哪些受限于本轮规模与设计尚未验证。</p>
+<p>本轮实验用 <code class="notranslate">deepseek-v4-flash</code>（推理强度设为 high），在 6 个任务、49 个检查点、18 个注入点上完成，共产生 2,352 个"过/不过"的结果记录。</p>
+</blockquote>
+<hr>
+<h1>术语速查</h1>
+<p>正文第一次出现时也会再解释一遍，这里先集中列出。</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">术语</th>
+<th scope="col">通俗解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>检查点（checkpoint）</strong></td>
+<td>基准在一个任务里埋的评分点，逐个判"过"或"不过"。PhysicianBench 有 670 个</td>
+</tr>
+<tr>
+<td><strong>能力标签</strong></td>
+<td>每个检查点被事先归到四类之一：检索、推理、动作执行、文书</td>
+</tr>
+<tr>
+<td><strong>根因（root cause）</strong></td>
+<td>一次失败最初的起因。与"失败最后表现在哪个检查点"不是一回事</td>
+</tr>
+<tr>
+<td><strong>病灶（lesion）</strong></td>
+<td>我们人为制造的一处故障。因为是自己造的，所以它的根因是确定的</td>
+</tr>
+<tr>
+<td><strong>健康臂 / 病灶臂</strong></td>
+<td>对照组和实验组。同一个任务跑两遍，一遍不动，一遍注入病灶</td>
+</tr>
+<tr>
+<td><strong>rollout</strong></td>
+<td>跑一次任务的完整过程。因为 Agent 有随机性，同一配置要跑多次</td>
+</tr>
+<tr>
+<td><strong>注入点（task-root）</strong></td>
+<td>一个"任务 × 一处病灶"的组合。本轮共 18 个</td>
+</tr>
+<tr>
+<td><strong>噪声地板</strong></td>
+<td>什么都不改时结果本身的波动幅度。小于这个幅度的差异不算数</td>
+</tr>
+<tr>
+<td><strong>ITT</strong></td>
+<td>按分配的组别统计，不因中途出意外而剔除样本。医学试验的标准做法，避免挑样本造成偏差</td>
+</tr>
+<tr>
+<td><strong>Holm 校正</strong></td>
+<td>同时做多个检验时，把显著性标准调严，防止碰运气碰出"显著"</td>
+</tr>
+<tr>
+<td><strong>共同主终点</strong></td>
+<td>事先说好的两个必须都达标的主要指标。只过一个就叫 MIXED</td>
+</tr>
+<tr>
+<td><strong>等价带</strong></td>
+<td>事先划定的"可以认为没差别"的区间。落在带内才算恢复到原状</td>
+</tr>
+<tr>
+<td><strong>冻结 / 解盲</strong></td>
+<td>先把分析方法写死（冻结），再去看完整结果（解盲）。防止看到数据后再改算法</td>
+</tr>
+<tr>
+<td><strong>fail-closed</strong></td>
+<td>判不出来就算失败。本基准中 PARTIAL、异常都算不过</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h1>汇报摘要</h1>
+<h2>问题</h2>
+<p>Agent 基准现在不只给系统打分，还给出诊断——"这个模型的主要短板是临床推理"。</p>
+<p>这个诊断是怎么来的？给每个评分检查点贴一个能力标签，然后数各类别下失败了多少个，最多的那类就是瓶颈。</p>
+<p><strong>但在长程任务里，一个上游错误会让下游一连串检查点跟着失败。</strong> 于是一个根因被记成好几笔不同能力的账。本文检验这条记账规则。</p>
+<h2>核心主张（立场）</h2>
+<p><strong>检查点上的能力标签，说的是"这一步在检查什么"，不是"失败从哪儿来的"。</strong> 我们看到的失败分布，是真实根因经过一层"放大与串味"之后的结果。在这层混合被证明可以忽略之前，"最弱能力"这个诊断不成立。</p>
+<h2>第一轮实验的位置</h2>
+<p>第一轮的目的是<strong>证明这层混合确实存在</strong>，并给出几个关键指标的首次估计。</p>
+<p><strong>已达成</strong>：主要指标通过——一处受控的环境故障平均额外造成 <strong>0.833 个检查点失败</strong>（95% 置信区间 [0.574, 1.148]，明显高于噪声地板 0.315，校正后 p = 0.0002）。更重要的是，这些失败<strong>散落在多个能力类别上</strong>：文书类的净增加是 0.222，置信区间不跨零——<strong>而文书类检查点在这次干预中根本没被碰过，它们多出来的失败就是回声。</strong></p>
+<p><strong>未达成</strong>：分页缺陷那一臂没过门；"故障位置越靠前、波及越广"这条曲线没验证出来（分层设计有缺陷）；有一个比例指标因分母不可辨算不出来；核心的分列矩阵没冻结。这几项主要受限于本轮规模（只跑了 6/100 个任务）和三处可修正的设计问题。</p>
+<hr>
+<hr>
+<h1>一、引言：从打分到诊断</h1>
+<p>Agent 基准正在做一件比打分更强的事：它们开始下诊断。</p>
+<p>成功率回答的是"Agent 有没有做成"；能力分解声称回答的是"它为什么没做成"。<strong>后一句话的分量重得多</strong>——它决定该改哪个组件、该选哪个模型、一个领域该把力气花在哪。</p>
+<p>这类诊断的做法很简单：给每个检查点分配一个能力标签（检索、推理、动作执行、文书），然后在各类别内数失败个数，最多的那类就叫主要瓶颈。</p>
+<p>这个做法隐含一个假设：<strong>在推理检查点上看到失败，就等于推理有毛病。</strong> 长程任务直接挑战这个假设——前面的动作决定了后面能拿到什么信息、环境处于什么状态，所以一个上游错误会让好几个下游检查点接连不过：</p>
+<pre class="notranslate"><code class="notranslate">关键数据没进入 Agent 能看到的范围
+          ↓
+临床判断建立在残缺证据上
+          ↓
+动作计划跟着出偏差
+          ↓
+最终文书继承了这个偏差
+</code></pre>
+<p><strong>有一点必须马上说清楚，否则全文会被误读。</strong> 这些下游失败不一定是评分错了。推理检查点可能确实没满足要求，文书可能确实不完整。<strong>出错的是把它们当成"四条互相独立的能力证据"来数。</strong> 换句话说：</p>
+<blockquote>
+<p><strong>基准记录的是故障在哪里显现，研究者推断的却是故障从哪里产生；在长程任务里，这两个量不是一回事。</strong></p>
+</blockquote>
+<p>我们把同一个根因在下游留下的那些失败叫 <strong>failure echoes（失败回声）</strong>，把"一个根因被记成多笔账"这件事叫 <strong>causal amplification（因果放大）</strong>。</p>
+<p>本文用一个数学模型把这个区分讲清楚，再提出一种<strong>干预式审计</strong>：人为制造一处来源明确、又能撤销的故障，观察它在下游造成了哪些检查点失败，从而估计"一个根因是怎么变成一堆能力标签的"。</p>
+<p>我们需要这样一个环境：能在不动 Agent 的前提下操纵故障的<strong>来源</strong>，同时还能观察到它的下游<strong>表现</strong>。为此我们选了 PhysicianBench——一个可执行的长程 EHR 基准，检查点覆盖检索、推理、动作执行、文书四类（arXiv 2605.02240）。<strong>我们的目标不是判某一篇论文的对错，而是检验这类诊断共同依赖的那个假设。</strong></p>
+<h2>1.1 本文处在哪一层</h2>
+<p>近期的评测审计工作已经填了两层，本文是第三层：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">层级</th>
+<th scope="col">问的是什么</th>
+<th scope="col">代表工作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>结果效度</td>
+<td>Agent 到底成没成功？</td>
+<td><em>Benchmarking the Benchmarks</em>（2607.02577），审计了 4 个基准的 496 条轨迹</td>
+</tr>
+<tr>
+<td>过程效度</td>
+<td>这个分数是不是通过基准预期的路径拿到的？</td>
+<td>success provenance 类工作</td>
+</tr>
+<tr>
+<td><strong>诊断效度</strong></td>
+<td><strong>失败之后，基准说的"为什么失败"站不站得住？</strong></td>
+<td><strong>本文</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>前两层验证的是"任务成没成功"，或者是在评测那些专门做归因的模型。<strong>没有人回头检验基准自己发布的那套能力标签，是不是真的指向了根因。</strong></p>
+<hr>
+<h1>二、失败表现不等于失败来源</h1>
+<h2>2.1 两种被混在一起的标签</h2>
+<p><strong>表现标签</strong>：这个检查点在检查什么。比如"有没有查到某项化验"、"临床判断对不对"、"动作有没有执行"、"文书里有没有写明"。</p>
+<p><strong>来源标签</strong>：这次失败最初是什么引起的。</p>
+<p>举个例子。一个临床推理检查点没通过，至少有三种可能：</p>
+<ol>
+<li>Agent 拿到了完整证据，但推理错了；</li>
+<li>Agent 压根没拿到关键证据；</li>
+<li>上游工具返回了残缺或错误的信息。</li>
+</ol>
+<p><strong>只有第一种能支持"推理能力有缺陷"，后两种不能。</strong></p>
+<p>由此得到本文的核心措辞——它比"标签贴错了"精确得多，也更难被反驳：</p>
+<blockquote>
+<p><strong>检查点上的能力标签，是对"这一步要求什么"的语义标注，它本身并不自动说明失败从哪儿来。</strong></p>
+</blockquote>
+<h2>2.2 失败传播矩阵</h2>
+<p>现在把上面的话写成公式。</p>
+<p>先定义一个数：</p>
+<p>$$P_{ij} = \text{注入一个 } j \text{ 类根因，平均会在 } i \text{ 类检查点上造成几个失败}$$</p>
+<p><strong>读法</strong>：$j$ 是"我们制造的故障属于哪一类"，$i$ 是"失败最后记在哪一类账上"。比如 $P_{\text{文书},\text{检索}}$ 就是"一处检索故障，平均在文书类检查点上造成几个失败"。</p>
+<p>把所有 $P_{ij}$ 排成一个方阵，就是<strong>失败传播矩阵</strong> $\mathbf P$：</p>
+<ul>
+<li>
+<strong>对角线上的数</strong>（$i = j$，比如"检索故障 → 检索失败"）：根因老老实实表现在自己的类别里；</li>
+<li>
+<strong>对角线以外的数</strong>（$i \neq j$，比如"检索故障 → 文书失败"）：串到别的类别去了，也就是<strong>失败回声</strong>。</li>
+</ul>
+<p>有了它，就能写出本文的核心式子：</p>
+<p>$$\mathbf y = \mathbf P,\mathbf r + \boldsymbol\epsilon$$</p>
+<p><strong>读法</strong>（这是全文最关键的一个式子，逐项解释）：</p>
+<ul>
+<li>
+$\mathbf y$ —— <strong>我们实际看到的</strong>：四类能力下各失败了多少个检查点，也就是基准论文里那张直方图；</li>
+<li>
+$\mathbf r$ —— <strong>我们真正想知道的</strong>：四类能力实际各出了多少次根因；</li>
+<li>
+$\mathbf P$ —— 把 $\mathbf r$ 变成 $\mathbf y$ 的那层"放大与串味"；</li>
+<li>
+$\boldsymbol\epsilon$ —— 随机噪声。</li>
+</ul>
+<p><strong>现有做法直接把 $\mathbf y$ 当 $\mathbf r$ 来读。</strong> 这等于假设 $\mathbf P$ 是单位矩阵——即"一个根因只造成一个失败，而且绝不串到别的类别"。这个假设从来没被检验过。</p>
+<p>由 $\mathbf P$ 可以定义三个指标，都是"看某一列"得到的：</p>
+<p>$$N_j=\sum_i P_{ij} \qquad M_j=\big|{i: P_{ij}&gt;0}\big| \qquad Q_j=\frac{P_{jj}}{\sum_i P_{ij}}$$</p>
+<p><strong>读法</strong>：</p>
+<ul>
+<li>
+$N_j$（<strong>失败倍数</strong>）：把第 $j$ 列所有数加起来。含义是"一个 $j$ 类根因总共造成几个失败"。$N = 1$ 表示一因一果，$N = 3$ 表示一个根因被记了三笔账。</li>
+<li>
+$M_j$（<strong>类别跨度</strong>）：数一数第 $j$ 列有几行不是零。含义是"一个根因波及了几个能力类别"，取值 1 到 4。</li>
+<li>
+$Q_j$（<strong>诊断保真度</strong>）：对角线上那个数，占整列总和的比例。含义是"这些失败里，有多大比例老实待在了自己类别里"。$Q$ 越接近 1，标签越可信。</li>
+<li>
+$1 - Q_j$（<strong>串味比例</strong>，off-origin spillover）：反过来，就是"跑到别的类别名下去了"的比例。</li>
+</ul>
+<h2>2.3 为什么"最弱能力"这个结论不成立</h2>
+<blockquote>
+<p><strong>命题</strong>：如果 $\mathbf P$ 未知、又不保证是对角阵，那么光看 $\mathbf y$ 就无法唯一确定 $\mathbf r$。因此"$\mathbf y$ 里哪一类最大"不等于"$\mathbf r$ 里哪一类最大"。</p>
+</blockquote>
+<p>用大白话说：</p>
+<blockquote>
+<p><strong>失败最多的那个类别，可能是因为它根因最多，也可能只是因为它接住了从上游滚下来的错误最多。</strong></p>
+</blockquote>
+<p>心理测量学里早就处理过类似问题：如果几道题共用材料或有先后依赖，就不能当成独立观测。<strong>Agent 的情况更严重</strong>——前面的动作会直接改变后面检查点面对的信息和环境，这是有明确方向的因果依赖，不只是统计相关。</p>
+<hr>
+<h1>三、什么时候能力诊断会出问题</h1>
+<h2>3.1 三条结构前提 + 一条解释条件（预期）</h2>
+<p>要让失败传播真的扭曲诊断，需要同时满足：</p>
+<ul>
+<li><strong>P1</strong>：基准有 checkpoint 级的能力标签；</li>
+<li><strong>P2</strong>：同一任务内的检查点之间有因果依赖（前面影响后面）；</li>
+<li><strong>P3</strong>：失败被独立计数，不做根因合并；</li>
+<li><strong>P4（解释条件）</strong>：论文或下游工作把这些计数解读成能力瓶颈。</li>
+</ul>
+<p>前三条决定基准<strong>有没有失真的结构风险</strong>，第四条决定这个风险有没有真的变成错误结论。</p>
+<h2>3.2 跨基准结构审计（预期）</h2>
+<p>预期这些条件在长程 Agent 基准中广泛成立，从而支撑结论的普遍性：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">Benchmark</th>
+<th scope="col" align="center">有能力标签</th>
+<th scope="col" align="center">有依赖</th>
+<th scope="col" align="center">独立计数</th>
+<th scope="col" align="center">解读成瓶颈</th>
+<th scope="col" align="center">诊断风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PhysicianBench (2605.02240)</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">High</td>
+</tr>
+<tr>
+<td>ART (2601.08988)</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">High</td>
+</tr>
+<tr>
+<td>VitaBench (2509.26490)</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">High</td>
+</tr>
+<tr>
+<td>FHIR-AgentBench</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">待核</td>
+<td align="center">待定</td>
+</tr>
+<tr>
+<td>MedAgentBench</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">待核</td>
+<td align="center">待定</td>
+</tr>
+<tr>
+<td>Mem2ActBench (2601.19935)</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">✓</td>
+<td align="center">待核</td>
+<td align="center">待定</td>
+</tr>
+</tbody>
+</table></div>
+<h3>【实际实验结果】更严格判据下的审计</h3>
+<p>最终锁定的审计用了比上表<strong>严得多</strong>的标准：P1 要求能力标签在<strong>评分程序的输出里能直接读到</strong>（而不是写在论文正文中），P2 要求依赖关系<strong>能从源码证明</strong>。该审计<strong>没有评估上表的第四列</strong>，所以不能直接拿来补上表。</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">外部 benchmark</th>
+<th scope="col" align="center">P1</th>
+<th scope="col" align="center">P2</th>
+<th scope="col" align="center">P3</th>
+<th scope="col" align="center">源码是否够看</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VitaBench</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">partial</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td>FHIR-AgentBench</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td>CocoaBench</td>
+<td align="center">no</td>
+<td align="center">no</td>
+<td align="center">no</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td>MedAgentBench</td>
+<td align="center">no</td>
+<td align="center">no</td>
+<td align="center">no</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td>ART</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">否（版本与评分器证据不全）</td>
+</tr>
+</tbody>
+</table></div>
+<p>4 个源码够看的外部基准中，<strong>0/4 同时满足 P1–P3</strong>，卡点全在 P1。</p>
+<p><strong>和预期的关系</strong>：严判据下的结果低于预期，但有两点要说明——</p>
+<p>（i）这个判据要求标签在<strong>评分产物</strong>里可读，而多数基准把能力归类写在论文正文或附录里，<strong>这会让 P1 判成 no，但不等于它们实践上没做能力分解</strong>。普遍性论证换成"论文层面的能力分解实践"这个口径重做即可。</p>
+<p>（ii）本轮只能陈述这 4 个基准，<strong>不能外推到全部 Agent 基准</strong>。</p>
+<p><strong>要分清</strong>：PhysicianBench 上做的是因果测量；其他基准上做的是结构风险审计，不是因果验证。</p>
+<hr>
+<h1>四、干预式诊断审计</h1>
+<h2>4.1 为什么必须人为制造故障</h2>
+<p>最自然的做法是：翻真实的失败记录，人工判断根因，再看标签对不对。</p>
+<p><strong>这条路走不通。</strong> 因为根因判定本身就有争议——"Agent 没查到某项化验"，你说是检索失败，别人说它是<strong>不知道该查什么</strong>，那属于工作流规划，而工作流规划恰好被归进临床推理。<strong>你想用来当尺子的东西，本身是弯的。</strong></p>
+<p>所以我们的做法是：<strong>自己制造一处来源明确的故障。</strong></p>
+<p>干预时保持不变的：Agent 的提示词、模型和解码参数、任务集合、评分规则和评分标准。<strong>只改一个环境或工具机制。</strong> 这样根因属于哪一类是设计时就定死的，不需要事后判断。</p>
+<h2>4.2 怎么算</h2>
+<p>对每一个检查点 $v$，算两个概率的差：</p>
+<p>$$\Delta_v = \Pr(v \text{ 失败} \mid \text{有病灶}) - \Pr(v \text{ 失败} \mid \text{无病灶})$$</p>
+<p><strong>读法</strong>：同一个检查点，注入病灶时失败的概率，减去不注入时失败的概率。差出来的部分，就是这处病灶造成的。</p>
+<p>再按检查点的标签把它们加起来：</p>
+<p>$$\widehat P_{ij} = \sum_{\text{所有标签为 } i \text{ 的检查点 } v}\Delta_v$$</p>
+<p><strong>读法</strong>：把所有"标签是 $i$ 类"的检查点的增量加总，就得到"$j$ 类根因在 $i$ 类上造成了多少失败"的估计。</p>
+<p><strong>为什么用概率差而不是直接比两次运行的失败清单</strong>：Agent 有随机性，同一配置跑两次结果就不一样，单次对比分不清是干预造成的还是运气。所以必须跑多次、比概率。</p>
+<h2>4.3 因果可达范围（causal reach）</h2>
+<p>我们不用含义模糊的"注入深度"，而用 <strong>causal reach</strong>：某个注入点在任务依赖图里<strong>能够影响到的下游检查点有多少个</strong>。</p>
+<p>预测是：</p>
+<p>$$\text{causal reach 越大} \implies N \text{ 越大，串味比例越高}$$</p>
+<p><strong>读法</strong>：故障发生的位置越靠前、下游依赖它的步骤越多，它造成的失败就越多、波及的类别就越广。</p>
+<p>由此得到本文最本质的机制结论：</p>
+<p>$$\text{看到的失败数} = \text{根因发生次数} \times \text{因果可达范围}$$</p>
+<p><strong>能力直方图把这两个量混在了一起，而现有解读只承认前一个。</strong></p>
+<h2>4.4 统计上要做的事（预期设计）</h2>
+<ul>
+<li><strong>噪声地板</strong>：什么都不改，重复跑 8–10 次，看结果本身波动多大。小于这个幅度的差异不算数。</li>
+<li><strong>可逆性</strong>：注入 → 撤销 → 再注入三段，确认变化确实是干预造成的。</li>
+<li><strong>模型档位</strong>：太强的模型失败点太少、没样本；太弱的到处失败、根因混在一起。</li>
+</ul>
+<h3>【实际实验结果】实际怎么跑的</h3>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">项目</th>
+<th scope="col">预期设计</th>
+<th scope="col">实际执行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>重复次数</td>
+<td>同配置 8–10 次，并把检查点分成稳定/不稳定两层</td>
+<td><strong>每臂 3 次 rollout</strong>（分页共 18 次/臂，合成注入共 54 次/臂），另加了 <code class="notranslate">control_prime</code>、<code class="notranslate">original_prime</code> 两个匹配对照</td>
+</tr>
+<tr>
+<td>噪声怎么估</td>
+<td>靠重复实验的经验波动</td>
+<td>分页用精确噪声分布；合成注入的全局尺度用 10,000 次蒙特卡洛模拟；类别跨度指标逐格精确枚举 8 种可能</td>
+</tr>
+<tr>
+<td>可逆性</td>
+<td>注入→撤销→再注入的时间序列</td>
+<td>改成<strong>随机分配的四组</strong>：对照、对照副本、故障、撤销后</td>
+</tr>
+<tr>
+<td>模型</td>
+<td>按档位原则选</td>
+<td><code class="notranslate">deepseek-v4-flash</code>，推理强度 high</td>
+</tr>
+<tr>
+<td>换模型验证</td>
+<td>暗含比较</td>
+<td>未做</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关于模型的一点说明</strong>：<code class="notranslate">deepseek-v4-flash</code> 在 high 推理强度下属于<strong>较强档位</strong>，不是弱模型。所以本轮测到的传播效应，<strong>不能归因于"模型太差所以到处失败"</strong>——恰恰相反，在一个较强的 Agent 上仍能测出稳定的跨类别失败增量，对本文主张是<strong>更强</strong>的证据。</p>
+<p><strong>覆盖范围</strong>：计划的 288 个运行全部完成并进入分析（实际跑了 292 次，4 次因技术原因作废）。正式结论覆盖 <strong>6/100 个任务、49/670 个检查点</strong>，共 2,352 条"过/不过"记录。<strong>不能说成对全部 100 个任务的验证。</strong></p>
+<p><strong>证据状态</strong>是「看完整结果之前就把分析方法锁死」，不是外部正式预注册：锁定前只看到了前 48 次运行的总数（11 过、37 不过），没有按任务、组别、注入点或标签拆开，也没有据此改过设计。</p>
+<hr>
+<h1>五、在这个临床基准上估计失败传播</h1>
+<h2>5.1 为什么选它</h2>
+<p>PhysicianBench 满足四个条件：长程的跨阶段临床工作流；检查点级能力标签（100 任务 / 670 检查点 / 四类）；真实可操作的环境（Docker 打包的 FHIR 服务器、14 个工具、9 类可直接操作的医疗数据资源）；能在不动 Agent 的前提下做可撤销的环境干预。</p>
+<p><strong>它是一个特别透明的实例，用来观察一种更普遍的诊断实践</strong>，不是一个"结论有误"的靶子。这个基准一方面根据类别份额推断临床推理是主要瓶颈，另一方面又在错误分析里写了文书类失败主要来自上游错误的级联——<strong>这个张力本身就是本文所讲现象的直接体现。</strong></p>
+<h2>5.2 已完成的静态审计</h2>
+<p>在做任何干预之前，我们把这个基准的评分代码逐个检查点解析了一遍，得到三条结果。</p>
+<p><strong>（a）能力类型和评分方式高度绑在一起。</strong></p>
+<p>四类能力用 LLM 裁判打分的比例极不均衡：临床推理 344/356、文书 99/99，而动作执行只有 3/112。用统计学的关联强度指标（Cramér's V，取值 0 到 1，越接近 1 说明两个分类变量绑得越紧）测出来是 <strong>0.836 到 0.921</strong>，随机置换检验的 p 值为 1/100001。</p>
+<p><strong>通俗地说</strong>：能被程序确定性检查的部分，被命名为"检索"和"动作"；难以写成确定性判断的部分，主要被归进"推理"和"文书"。</p>
+<p><strong>（b）能被机器复原判据的检查点，各类别相差约三百倍。</strong></p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">能力类别</th>
+<th scope="col" align="right">宽松口径</th>
+<th scope="col" align="right">严格口径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>动作执行</td>
+<td align="right">112/112 = 100%</td>
+<td align="right">106/112</td>
+</tr>
+<tr>
+<td>数据检索</td>
+<td align="right">101/103 = 98.1%</td>
+<td align="right">46/103</td>
+</tr>
+<tr>
+<td>临床推理</td>
+<td align="right">20/356 = 5.6%</td>
+<td align="right">1/356 = 0.3%</td>
+</tr>
+<tr>
+<td>文书</td>
+<td align="right">0/99 = 0%</td>
+<td align="right">0/99</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>这张表直接决定了实验的边界</strong>：只有检索和动作能确定性地建立"已知根因"，推理和文书不能。所以病灶只能注入在环境侧，<strong>推理和文书是我们观察回声落在哪里的位置，不是注入的入口</strong>。</p>
+<p><strong>（c）换一种数法，"最弱能力"就翻转。</strong></p>
+<p>原论文用的是份额（某类失败数 ÷ 总失败数）。改用条件失败率（某类失败数 ÷ 该类题量），排序变成：文书 1.245 &gt; 动作执行 1.125 &gt; 临床推理 0.949 &gt; 数据检索 0.807。</p>
+<p><strong>推理低于全表平均，而且在 12 个模型中的 11 个上，排第一的从临床推理变成了别的。</strong></p>
+<p>份额法之所以偏袒推理，是因为推理类题量占了 53.1%——题多，失败自然多。</p>
+<p>这三条合起来说明：<strong>"最弱能力"这个结论对数法高度敏感，而且能力标签和"能不能被确定性评分"根本不独立。</strong></p>
+<h2>5.3 可用的注入入口</h2>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">入口</th>
+<th scope="col">属于哪类根因</th>
+<th scope="col">机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>各搜索工具的翻页上限 <code class="notranslate">page_limit</code></td>
+<td>检索</td>
+<td>可逐个工具单独调，能做出剂量梯度</td>
+</tr>
+<tr>
+<td>ICD 编码匹配语义</td>
+<td>检索</td>
+<td>工具侧是精确匹配，评分侧是前缀匹配</td>
+</tr>
+<tr>
+<td>工具返回截断阈值（默认 1 万字符）</td>
+<td>检索</td>
+<td>调低等于让 Agent 看到的内容被切得更狠</td>
+</tr>
+<tr>
+<td>屏蔽某个工具</td>
+<td>检索 / 动作</td>
+<td>影响范围最大的一类</td>
+</tr>
+<tr>
+<td>阻断特定的数据写入</td>
+<td>动作</td>
+<td>用来估计传播矩阵的第二列</td>
+</tr>
+</tbody>
+</table></div>
+<h3>【实际实验结果】实际用了哪些</h3>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">入口</th>
+<th scope="col">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>搜索工具翻页上限</td>
+<td><strong>已做</strong>：72 次运行，四组为 加重 / 原样 / 原样副本 / 修复</td>
+</tr>
+<tr>
+<td>屏蔽某个工具</td>
+<td><strong>已做</strong>：18 个注入点，其中 12 个检索类位于前段和中段，6 个动作类位于后段</td>
+</tr>
+<tr>
+<td>ICD 匹配语义</td>
+<td>未做</td>
+</tr>
+<tr>
+<td>返回截断阈值</td>
+<td>未做</td>
+</tr>
+<tr>
+<td>阻断数据写入</td>
+<td>未单独做；本轮的动作类根因来自"工具不可用"这一机制</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5.4 观测能力的限制</h2>
+<p><strong>预期</strong>：基准的裁判只有判 PASS 才算过，PARTIAL、FAIL 和调用异常一律算不过，而且<strong>裁判结果不存盘</strong>。所以要先打补丁，把每次裁判调用的输入输出存下来，才能解释传播路径。</p>
+<h3>【实际实验结果】实际能看到什么</h3>
+<p>跑出来的数据足以估计失败增量。<strong>但为了保护临床数据，导出到本地分析的内容刻意不含</strong>模型输出文本、裁判的判断理由、病历内容、完整轨迹、工作区、原始工具参数与返回值。</p>
+<p>所以本轮能回答"失败计数有没有随受控根因改变"，但<strong>给不出逐例的机制重建证据</strong>——也无法从本地验证机制层存盘到底做了没有。</p>
+<hr>
+<h1>六、一因多果：主结果</h1>
+<h2>6.1 只能估计部分列（预期）</h2>
+<p>由 §5.2(b)，只有检索和动作能干净地注入，所以<strong>严格来说只估计了矩阵 $\mathbf P$ 的部分列</strong>，不声称恢复了完整矩阵。</p>
+<p><strong>这不削弱主结论</strong>：只要发现一个明显的非对角元素，就足以否定"$\mathbf P$ 是单位矩阵"这个默认假设——而这正是现有能力分解隐含的前提。</p>
+<h2>6.2 主结果表（预期结构）</h2>
+<p><strong>表 6.1｜传播矩阵的估计列</strong>（行 = 失败记在哪一类；列 = 我们注入的是哪一类根因）</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">记在哪一类 \ 注入的是哪一类</th>
+<th scope="col" align="right">检索病灶</th>
+<th scope="col" align="right">动作病灶</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据检索</td>
+<td align="right">〔·〕</td>
+<td align="right">〔·〕</td>
+</tr>
+<tr>
+<td>临床推理</td>
+<td align="right">〔·〕</td>
+<td align="right">〔·〕</td>
+</tr>
+<tr>
+<td>动作执行</td>
+<td align="right">〔·〕</td>
+<td align="right">〔·〕</td>
+</tr>
+<tr>
+<td>文书</td>
+<td align="right">〔·〕</td>
+<td align="right">〔·〕</td>
+</tr>
+<tr>
+<td><strong>$N_j$ 失败倍数（列和）</strong></td>
+<td align="right">〔·〕</td>
+<td align="right">〔·〕</td>
+</tr>
+<tr>
+<td><strong>$M_j$ 类别跨度（非零行数）</strong></td>
+<td align="right">〔·〕</td>
+<td align="right">〔·〕</td>
+</tr>
+<tr>
+<td><strong>$Q_j$ 诊断保真度</strong></td>
+<td align="right">〔·〕</td>
+<td align="right">〔·〕</td>
+</tr>
+<tr>
+<td><strong>$1-Q_j$ 串味比例</strong></td>
+<td align="right">〔·〕</td>
+<td align="right">〔·〕</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>对角线是"记对了"，对角线以外就是失败回声。</strong></p>
+<p><strong>预期主结果句</strong>：一处受控根因平均额外造成 $N$ 个检查点失败、波及 $M$ 个能力类别，其中 $1-Q$ 的比例落在了根因自己的类别之外。</p>
+<h3>【实际实验结果】</h3>
+<p>本轮<strong>没有</strong>冻结"按检索/动作分列"的两列矩阵。为避免看到数据后再补分析，表 6.1 保持空白，不作事后回填。正式输出的是 18 个注入点在四类标签上的平衡汇总。</p>
+<p><strong>主要指标</strong></p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">指标</th>
+<th scope="col" align="right">估计值</th>
+<th scope="col" align="right">95% 置信区间</th>
+<th scope="col">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>失败倍数 <code class="notranslate">N_ITT</code></td>
+<td align="right"><strong>0.833</strong></td>
+<td align="right">[0.574, 1.148]</td>
+<td>高于噪声地板 0.315；校正后 p = <strong>0.0002</strong>；<strong>通过</strong></td>
+</tr>
+<tr>
+<td>类别跨度 <code class="notranslate">M_ITT</code></td>
+<td align="right">0.944（17/18）</td>
+<td align="right">[0.611, 1.278]</td>
+<td>72 个格子中有 17 格明显超过各自的噪声门</td>
+</tr>
+<tr>
+<td>类别跨度（不设噪声门）<code class="notranslate">M_raw</code></td>
+<td align="right">1.389（25/18）</td>
+<td align="right">[1.167, 1.611]</td>
+<td>只要求该格增量为正</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>怎么读这三行</strong>：<code class="notranslate">N_ITT = 0.833</code> 的意思是——平均而言，注入一处环境故障，会额外造成 0.83 个检查点失败。这个数明显高于"什么都不改时的自然波动"（0.315），而且校正后仍然显著。</p>
+<p>72 个格子（18 个注入点 × 4 个标签）中，<strong>25 格为正、38 格为零、9 格为负</strong>，其中 17 个正格超过噪声门。</p>
+<p>换一种更保守的算法（只统计依赖图上确实位于注入点下游的检查点）得到 <code class="notranslate">N_ITT = 0.852</code>，区间 [0.593, 1.167]，<strong>方向一致</strong>。</p>
+<p><strong>失败落在哪几类</strong></p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">记在哪一类</th>
+<th scope="col" align="right">净增加</th>
+<th scope="col" align="right">95% 置信区间</th>
+<th scope="col" align="right">超噪声的注入点数 / 18</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>动作执行</td>
+<td align="right"><strong>0.315</strong></td>
+<td align="right">[0.241, 0.426]</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>数据检索</td>
+<td align="right"><strong>0.278</strong></td>
+<td align="right">[0.148, 0.407]</td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td>文书</td>
+<td align="right"><strong>0.222</strong></td>
+<td align="right">[0.111, 0.315]</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td>临床推理</td>
+<td align="right">0.019</td>
+<td align="right">[-0.111, 0.167]</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>这张表最重要的一行是文书</strong>：净增加 0.222，置信区间不跨零。<strong>而文书类检查点在这次干预中根本没有被直接碰过</strong>——我们改的是搜索工具的翻页上限和工具可用性，全在检索和动作侧。文书多出来的这些失败，就是从上游滚下来的<strong>回声</strong>。</p>
+<p><strong>因此 §6.1 所述的主结论成立条件已被满足</strong>：矩阵 $\mathbf P$ 存在明显的非对角元素，"它是单位矩阵"这个默认假设被否证。</p>
+<p><strong>还缺什么</strong>：<br>
+（i）这是对<strong>表现标签</strong>的汇总，没有按根因来源分列，所以传播矩阵本身仍然是空的；<br>
+（ii）72 个格子没有单独做多重检验；<br>
+（iii）临床推理的区间跨零，本轮 6 任务子集上没测到稳定的回声效应——该类别在冻结子集中的注入点覆盖较少（只有 2/18 格超噪声门），需要扩大样本后重估，<strong>暂不下方向性结论</strong>。</p>
+<p><strong>一处口径差异要注意</strong>：初稿里 $M_j$ 是"这一列有几行不是零"，而实际算的 <code class="notranslate">M_ITT</code> 是"经过逐格噪声门筛选、再按 18 个注入点平衡后的平均标签跨度"。<code class="notranslate">M_raw</code> 概念上更接近初稿，但仍不是列级统计量。<strong>两个都不能直接填进表 6.1。</strong></p>
+<h2>6.3 预注册判据</h2>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">串味比例 $1-Q$
+</th>
+<th scope="col">结论</th>
+<th scope="col">论文形态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>≥ 30%</td>
+<td>非对角传播显著</td>
+<td>按本设计，因果审计为主线</td>
+</tr>
+<tr>
+<td>10–30%</td>
+<td>传播存在但幅度有限</td>
+<td>收窄主张，以传播矩阵为主结果</td>
+</tr>
+<tr>
+<td>&lt; 10%</td>
+<td>该基准的归因近似局部</td>
+<td>转为正面校准证据</td>
+</tr>
+</tbody>
+</table></div>
+<h3>【实际实验结果】这个比例算不出来</h3>
+<p>实际冻结的分页版 $Q$ 定义是"非检索类的下降 ÷ 全部下降"，概念上接近串味比例，但<strong>不是</strong>表 6.1 里那个列对角占比。</p>
+<p>问题出在分母：分页组的<strong>总失败下降只有 0.111</strong>，置信区间 [-0.167, 0.389]，跟零分不开。做 10,000 次重抽样时，有 <strong>2,960 次（29.6%）分母不大于零</strong>，远超冻结时定的 5% 上限。分母都可能是零或负数，比值自然没意义。</p>
+<p><strong>正式状态：<code class="notranslate">Q = NA</code>（总下降不可辨）。</strong> 代数上算出来的 2.0 不可解释，不报区间。</p>
+<p><strong>上面三档判据本轮无法触发</strong>——原因是<strong>统计功效不足</strong>（分页组每臂只有 18 次运行），而不是 $Q$ 的真实取值落在某一档。</p>
+<hr>
+<h1>七、传播与任务拓扑</h1>
+<h2>7.1 预期</h2>
+<p>横轴是注入点的 causal reach（能影响到多少个下游检查点），纵轴分别画失败倍数、串味比例、类别跨度。<strong>预期三条曲线都随 causal reach 单调上升。</strong></p>
+<p>最有力的结果形式是：</p>
+<blockquote>
+<p><strong>同一类根因，仅仅因为在依赖图里的位置不同，就获得了不同的"能力失败权重"。</strong></p>
+</blockquote>
+<p>如果这个单调关系成立，就证明了能力直方图把"根因发生次数"和"拓扑位置"两件事混在了一起。</p>
+<h2>7.2 【实际实验结果】未验证，降为描述性</h2>
+<p>冻结清单里的前段/中段/后段三层，<strong>同时改变了工具身份、故障机制和失败机会</strong>，三层之间不可比。所以这份分析在看完整结果之前就已经标记为"仅描述性"，不构成对 causal reach 的确认性检验。</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">层级</th>
+<th scope="col">失败倍数（95% CI）</th>
+<th scope="col">类别跨度（95% CI）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>前段</td>
+<td>0.389 [0.000, 0.722]</td>
+<td>0.500 [0.167, 0.833]</td>
+</tr>
+<tr>
+<td>中段</td>
+<td><strong>1.333</strong> [0.778, 2.056]</td>
+<td><strong>1.667</strong> [1.167, 2.333]</td>
+</tr>
+<tr>
+<td>后段</td>
+<td>0.778 [0.556, 1.056]</td>
+<td>0.667 [0.333, 1.000]</td>
+</tr>
+</tbody>
+</table></div>
+<p>两条都在中段达到峰值，点估计不是单调上升。任务内的秩相关系数汇总为 0.553 和 0.334（<strong>方向为正</strong>，但只能作描述）。</p>
+<p><strong>和预期的关系</strong>：本轮<strong>没有验证</strong>单调关系。但这不构成对预期的否证——<strong>问题出在分层设计</strong>：前中后三层同时变动了工具身份和故障机制，所以层间差异混合了"可达范围"和"机制不同"两个来源，分不开。正确做法是构造"除可达范围外其他条件都一样"的分层。<strong>这是可修正的设计问题，应在第二轮重做。</strong> 秩相关为正，与预期方向一致，可作为重做的先验依据。</p>
+<hr>
+<h1>八、生态学复现与稳健性</h1>
+<h2>8.1 用真实存在的环境缺陷复现（预期）</h2>
+<p>静态审计发现了三处环境契约不一致，其中两处可以当作"天然病灶"：</p>
+<p><strong>（i）翻页契约不一致</strong>：7 个搜索工具的说明书告诉 Agent "不指定参数我默认翻 6 页"（Condition 类是 3 页），但代码实现里省略参数时只翻 2 页（Condition 只翻 1 页）。Agent 发出的查询完全正确、数据也确实在服务器上，是工具层把后面几页扣下了，还什么提示都没给。</p>
+<p><strong>（ii）ICD 编码匹配语义不一致</strong>：诊断搜索用的是<strong>精确匹配</strong>，不支持层级或前缀；而评分侧的辅助函数对 ICD 码做的是<strong>前缀匹配</strong>。两边语义不一样，而且说明书没告诉 Agent。</p>
+<p><strong>预期实验形式</strong>：三档剂量——加重（只翻 1 页）／原样／修复（与说明书一致）。如果多个能力类别的失败数随损伤剂量单调变化，这一节就承担了"这个现象不是我们合成注入造出来的假象"这个职责。</p>
+<h3>【实际实验结果】分页这一臂没过门</h3>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">指标</th>
+<th scope="col" align="right">估计值</th>
+<th scope="col" align="right">95% 置信区间</th>
+<th scope="col">噪声 / 校正 p</th>
+<th scope="col">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>非检索类的下降</td>
+<td align="right">0.222</td>
+<td align="right">[-0.056, 0.500]</td>
+<td>噪声 0.500；Holm p = 0.099</td>
+<td>未通过</td>
+</tr>
+<tr>
+<td>全部类别的下降</td>
+<td align="right">0.111</td>
+<td align="right">[-0.167, 0.389]</td>
+<td>噪声 0.556；p = 0.293</td>
+<td>不可辨</td>
+</tr>
+<tr>
+<td>检索类的下降</td>
+<td align="right">-0.111</td>
+<td align="right">[-0.222, 0.000]</td>
+<td>噪声 0.278</td>
+<td>方向不符预期</td>
+</tr>
+<tr>
+<td>加重 − 原样</td>
+<td align="right">-0.056</td>
+<td align="right">[-0.444, 0.222]</td>
+<td>Holm p = 0.706</td>
+<td>未通过</td>
+</tr>
+<tr>
+<td>原样 − 修复</td>
+<td align="right">0.111</td>
+<td align="right">[-0.167, 0.389]</td>
+<td>Holm p = 0.586</td>
+<td>未通过</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>冻结分类：单调性不获支持。</strong> 因为两个共同主终点一个通过（合成注入的失败倍数）、一个未通过（分页的非检索下降），<strong>总状态记为 MIXED</strong>。</p>
+<p><strong>和预期的关系</strong>：分页这一臂本轮没能承担复现职责。三点说明——</p>
+<p>（i）该臂每组只有 18 次运行，而分页的噪声地板高达 0.5 到 0.56，<strong>信噪比结构性不足</strong>；<br>
+（ii）非检索下降的点估计是 0.222，<strong>方向与预期一致</strong>，只是区间跨零；<br>
+（iii）这个缺陷的实际损伤强度可能比设计时假设的小——"说明书 6 页 vs 实现 2 页"的差距，对一个较强的 Agent 来说可以通过显式指定参数绕过去。</p>
+<p><strong>结论是这个天然病灶的效应量小于预期，需要更大样本或更强的天然病灶（比如 ICD 语义那一处）来复现，而不是这个现象不存在。</strong></p>
+<p><strong>这些缺陷在论文里的地位不变</strong>：它们是<strong>量具</strong>，不是发现。<strong>bug 是可以修的，"把互相依赖的检查点当独立证据分别计数"这条记账规则不是修 bug 能消除的。</strong> 所以标题和摘要里不出现具体缺陷名称。</p>
+<h2>8.2 撤销病灶，看能不能恢复</h2>
+<p><strong>预期</strong>：注入 → 撤销 → 再注入三段，报告标签恢复率。</p>
+<h3>【实际实验结果】部分恢复</h3>
+<p>实际用的是随机分配的四组（对照 / 对照副本 / 故障 / 撤销后），不是同一条轨迹上的三段。</p>
+<ul>
+<li><strong>恢复率 = 0.765</strong>，95% 置信区间 [0.556, 0.932]。即撤销病灶后，约 77% 的失败增量消失了。</li>
+<li><strong>故障组 − 撤销组 = 0.722</strong>，区间 [0.352, 1.000]，高于噪声 0.315，<strong>改善这一关通过</strong>。</li>
+<li><strong>撤销组 − 对照组 = 0.111</strong>，区间 [-0.204, 0.426]，<strong>没有完全落进等价带</strong> [-0.315, +0.315]。等价带的意思是"落在这个范围内就可以认为跟原状没差别"——没完全落进去，说明撤销后还残留一点差异。</li>
+</ul>
+<p><strong>正式分类：仅部分恢复。</strong> 方向与预期一致，但不能写成"完全可逆"。</p>
+<h2>8.3 排除"评分方式造成的假象"</h2>
+<p><strong>预期</strong>：</p>
+<p>（a）<strong>评分标准原子化</strong>——现在的评分是"全对才算过"：一个检查点挂了 $k$ 条要求，差一条整题算失败，而且 PARTIAL 也算失败。如果每条要求被误判的概率是 $\varepsilon$，那么整题被误判的概率大约是 $1-(1-\varepsilon)^k$。<strong>读法</strong>：$k$ 越大，整题失败的概率越高——<strong>这跟能力完全无关，纯粹是算术。</strong> 而文书类的要求条数确实比推理类多。所以必须把观测差异拆成"单条误判 + 要求条数 + 全对才算过"三项，排除这个替代解释。</p>
+<p>（b）<strong>裁判误杀率</strong>——把医师写的参考答案交给基准自带的裁判，看它会不会把满分答案判成失败，为主结果配一个误差棒。</p>
+<p>（c）<strong>不做换裁判实验</strong>——这个位置已被既有工作占据。</p>
+<h3>【实际实验结果】这部分没执行</h3>
+<p>这一阶段保持"未执行"。现有 492 条评分标准的拆分只是机器自动切出来的候选；60 条人工复核表里的 3 个人工字段和备注，<strong>填写率是 0/60</strong>。</p>
+<p>缺的前置条件包括：前瞻性冻结协议、来源可追溯且有授权的真实医师参考答案、临床复核者、独立方法复核者、第三方裁决者、抽样与预算规则、独立审批记录。</p>
+<p>所以本轮<strong>没有</strong>单条误判率、没有医师参考答案的误杀率、没有人工确认的原子化结果。评分机制的静态计数可以保留；<strong>要求条数只能当作机器拆分候选的描述性统计</strong>（文书类中位数 4、均值 5.30、最长 26 条；推理类中位数 3），不构成人工确认的证据。</p>
+<p><strong>这意味着"要求条数多 × 全对才算过"这个算术替代解释还没被排除</strong>，需要第二轮补上。</p>
+<h2>8.4 执行状态一览</h2>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">检验</th>
+<th scope="col">状态</th>
+<th scope="col">允许怎么说</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>噪声地板</td>
+<td>已做（设计有变）</td>
+<td>每组 3 次 rollout + 匹配对照</td>
+</tr>
+<tr>
+<td>合成注入主指标</td>
+<td><strong>已做，通过</strong></td>
+<td>失败倍数显著超噪声</td>
+</tr>
+<tr>
+<td>撤销恢复</td>
+<td>已做动态部分</td>
+<td>仅部分恢复</td>
+</tr>
+<tr>
+<td>分页三剂量</td>
+<td>已做，未通过</td>
+<td>单调性不获支持</td>
+</tr>
+<tr>
+<td>causal reach 曲线</td>
+<td>未完成确认性估计</td>
+<td>仅描述，分层不可比</td>
+</tr>
+<tr>
+<td>ICD 语义干预</td>
+<td>未做</td>
+<td>—</td>
+</tr>
+<tr>
+<td>评分标准原子化</td>
+<td>机器候选已备，人工阶段未做</td>
+<td>不得当成人工校准结果</td>
+</tr>
+<tr>
+<td>裁判误杀率</td>
+<td>未做</td>
+<td>无参考答案对照</td>
+</tr>
+<tr>
+<td>跨基准结构审计</td>
+<td>已完成锁定</td>
+<td>严判据下 0/4</td>
+</tr>
+<tr>
+<td>换模型验证</td>
+<td>未做</td>
+<td>仅适用于 <code class="notranslate">deepseek-v4-flash</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>8.5 可复现性与一次结果后修正</h2>
+<p>权威结果入口：最终实验报告、结果汇总表、冻结分析 v4 的结果文件、发布清单。</p>
+<p><strong>v4 是一次透明的结果后机械修正</strong>：第一版输出里，有一个数学上本该相等（2/3 对 2/3）的比较，因为浮点数精度被误判成了"严格大于"。改用整数分子比较后，类别跨度 <code class="notranslate">M_ITT</code> 从 1.0 改为 17/18，后段的类别跨度从 5/6 改为 4/6。<strong>失败倍数、不设门的类别跨度、分页结果、$Q$、剂量、恢复率以及所有论文级判定都没有变化</strong>，第一版输出也保留了。</p>
+<p>最终回归验证 <strong>24/24 通过</strong>；独立的敏感性一致性检查 <strong>28/28 通过</strong>。这些检查验证的是"分析程序和冻结结果一致"，<strong>不会把没做的实验变成结果</strong>。</p>
+<hr>
+<h1>九、新颖性边界</h1>
+<p><strong>已经被人占了的位置：</strong></p>
+<ul>
+<li><strong>任务级对错的有效性审计</strong>——<em>Benchmarking the Benchmarks</em>（2607.02577）审计了 4 个工具调用基准的 496 条轨迹，提出"基准分数往往反映的是评分器的性质而非 Agent 的性质"。它停在<strong>结果效度</strong>这一层。</li>
+<li><strong>LLM 裁判可靠性与换裁判</strong>——2607.08535。<strong>所以本文不做换裁判实验。</strong></li>
+<li><strong>用故障注入生成归因金标签</strong>——Who&amp;When Pro（2607.09996）、AgenTracer（2509.03312）。<strong>所以不主张"首次用故障注入研究失败归因"。区别在于：它们审计的对象是归因模型，本文审计的对象是基准自己的诊断系统。</strong></li>
+<li><strong>重新设计一个解耦基准</strong>——<em>Delegation Intelligence in Deep Search</em>（2607.23524）。本文走审计路线，不重设计。</li>
+<li><strong>"查到了但没用上"这类失败模式</strong>——Mem2ActBench（2601.19935）已覆盖。</li>
+<li><strong>评测失败模式的综述</strong>——<em>Beyond the Leaderboard</em>（2607.05775）综述 27 篇 / 19 个基准。本文可视为对其中测量效度那一簇的一次定量实例化。</li>
+</ul>
+<p><strong>还没被占的位置：</strong></p>
+<p>上面这些验证的都是任务级对错，或者是在评测归因模型。<strong>没有工作检验基准自己发布的能力标签，是不是真的指向了根因。</strong></p>
+<hr>
+<h1>十、局限</h1>
+<p><strong>（a）只干预环境侧根因。</strong> Agent 遇到环境异常时可能察觉、重试、换个查法，级联被削弱；而它自己的推理错误无从察觉，级联可能更强。所以测出的失败倍数严格来说只适用于环境侧根因。</p>
+<p><strong>（b）只估计部分列。</strong> 推理和文书的可复原覆盖率是 5.6% 和 0%，没法确定性建立已知根因；而且本轮没冻结按来源分列的汇总，所以传播矩阵仍是空的。</p>
+<p><strong>（c）因果测量只在一个基准上做。</strong> 其他基准只做了结构风险审计。</p>
+<p><strong>（d）传播依赖于模型。</strong> 本轮只用了 <code class="notranslate">deepseek-v4-flash</code>，没做换模型验证。</p>
+<p><strong>（e）样本规模有限。</strong> 6/100 任务、49/670 检查点、18 个注入点，不能外推到全部任务。</p>
+<p><strong>（f）拿不到机制层证据。</strong> 安全导出不含轨迹、裁判理由和工具返回，做不了逐例重建。</p>
+<p><strong>（g）替代解释没排除。</strong> "要求条数多 × 全对才算过"的算术效应还没测。</p>
+<p><strong>（h）标签同源性待确认。</strong> 承载能力标签的那个文件是在基准 arXiv 首版之后约七周才加进去的，而且不被官方评分脚本使用，需要写信问原作者它和论文正文用的标签是不是同一套。</p>
+<h2>必须守住的措辞边界</h2>
+<ul>
+<li><strong>不说"能力标签贴错了"</strong>——准确说法是：标签可能正确描述了这一步在检查什么，但还没被验证为"失败根因"的标签。</li>
+<li><strong>不说"临床推理不是主要瓶颈"</strong>——当前干预只能识别检索和动作来源的传播，足以证明"失败直方图不能被无条件当成根因直方图"，但不足以完整还原推理和文书类真实的错误数量。</li>
+<li><strong>不声称已估计完整传播矩阵。</strong></li>
+<li><strong>不把跨基准的静态表说成跨基准的因果验证。</strong></li>
+</ul>
+<hr>
+<h1>十一、贡献与下一步</h1>
+<h2>11.1 贡献</h2>
+<p><strong>贡献一｜指出一个新的测量缺口。</strong> 区分"这一步在检查什么"和"失败从哪来"，并为序贯 Agent 评测中的能力分解定义<strong>诊断效度</strong>。新意不在于"发现级联"（级联本身不新），而在于<strong>把级联从一句定性提醒，变成能力诊断的测量模型</strong>。</p>
+<p><strong>贡献二｜给出干预式审计方法，并完成一次可复现的实例化。</strong> 用人为故障去估计"已知来源 → 已发布能力标签"之间的响应关系；四组随机分配 + 匹配噪声 + 看完整结果前锁定分析 + 24/24 回归与 28/28 一致性验证。</p>
+<p><strong>贡献三｜提出一组可复用的诊断校准指标，并给出首次估计。</strong> 失败倍数已估计（0.833，校正后 p = 0.0002）；类别跨度已估计；串味比例和 causal reach 曲线待第二轮补足。</p>
+<p><strong>贡献四｜改变报告规范。</strong></p>
+<blockquote>
+<p>在"因果局部性"被确立之前，基准论文应该把能力类别计数报告为<strong>失败表现的分布</strong>，而不是根因能力缺陷的诊断。</p>
+</blockquote>
+<p>具体建议：没做因果校准时，用"检查点失败分布"这个说法，避免直接写"主要能力瓶颈"；同时报告表现计数和根因聚类；发布检查点依赖图；对代表性的上游机制做可撤销的病灶测试；跨模型比较时报告"该模型条件下的传播"。</p>
+<h2>11.2 第二轮实验计划</h2>
+<p>本轮四项没达成，都对应可识别的设计或规模问题，不是主张本身被否证：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">没达成的项</th>
+<th scope="col">原因</th>
+<th scope="col">怎么改</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>causal reach 单调性</td>
+<td><strong>分层设计缺陷</strong>——前中后三层同时变了工具身份和故障机制，层间不可比</td>
+<td>重构分层，让层间除可达范围外其他条件一致</td>
+</tr>
+<tr>
+<td>分页复现</td>
+<td><strong>信噪比不足</strong>——每组 18 次对噪声地板 0.5+；且该缺陷效应量小于假设</td>
+<td>扩大样本；补 ICD 语义臂作为效应量更大的天然病灶</td>
+</tr>
+<tr>
+<td>串味比例算不出</td>
+<td><strong>功效不足</strong>——分母（总下降）不可辨，29.6% 的重抽样分母 ≤ 0</td>
+<td>随样本扩大自然改善；或改用分列口径直接估</td>
+</tr>
+<tr>
+<td>分列传播矩阵</td>
+<td><strong>没冻结这项分析</strong></td>
+<td>第二轮预注册时直接冻结按来源分列的汇总</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>执行顺序</strong>：① 把冻结子集从 6 个任务扩到 20–25 个；② 冻结分列传播矩阵（论文核心图现在还是空的）；③ 重做 causal reach 分层；④ 补第二个模型；⑤ 补裁判与评分标准校准；⑥ 补 ICD 语义臂。</p>
+<hr>
+<blockquote>
+<p><strong>留给读者的一句话</strong><br>
+一个基准可以正确地判定 Agent 失败了，却仍然错误地诊断它为什么失败。</p>
+</blockquote>
+<hr>
+<p><em>附注：本文所引 2026 年 6–8 月的 arXiv 编号来自一次专项核验（9/9 存在且对应正确），其中两处描述已修正；投稿前需再次复核。</em></p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2" aria-hidden="true"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none" aria-hidden="true"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-6'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+
+</html>
