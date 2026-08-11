@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-6'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>RSI 开发一个医学模型</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="RSI 开发一个医学模型 摘要 本文是参考通用领域 AIDE² 的工作，在医学领域提出一项新任务：给定一份 EHR 数据和一个固定的算力预算，让一个 agent 从零做出一个 EHR 基础模型。">
+<meta property="og:title" content="RSI 开发一个医学模型">
+<meta property="og:description" content="RSI 开发一个医学模型 摘要 本文是参考通用领域 AIDE² 的工作，在医学领域提出一项新任务：给定一份 EHR 数据和一个固定的算力预算，让一个 agent 从零做出一个 EHR 基础模型。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/RSI%20-kai-fa-yi-ge-yi-xue-mo-xing.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RSI 开发一个医学模型">
+<meta name="twitter:description" content="RSI 开发一个医学模型 摘要 本文是参考通用领域 AIDE² 的工作，在医学领域提出一项新任务：给定一份 EHR 数据和一个固定的算力预算，让一个 agent 从零做出一个 EHR 基础模型。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/RSI%20-kai-fa-yi-ge-yi-xue-mo-xing.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">RSI 开发一个医学模型</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/40" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>RSI 开发一个医学模型</h1>
+<h2>摘要</h2>
+<p>本文是参考通用领域 AIDE² 的工作，在医学领域提出一项新任务：给定一份 EHR 数据和一个固定的算力预算，让一个 agent 从零做出一个 EHR 基础模型。</p>
+<p>这件事不是做一次就结束。我们把它放进一个双层循环里：内循环 agent 在固定预算内做出一个模型；外循环 agent 去改写内循环 agent 的代码，让它下一次做得更好。这样一轮一轮下去，改进的是"做模型的方法"。</p>
+<hr>
+<h2>一、通用领域与医学领域</h2>
+<h3>通用领域的 RSI 工作</h3>
+<p>我要模仿的是 AIDE²（Weco AI，2026 年 7 月）。它有两层循环：内循环有一个agent，负责针对某个评测把分数往上做；外循环 agent 不断重写内循环 agent 的代码，让它下一次做得更好。</p>
+<p>这套系统在没人干预的情况下跑八天，产出了七个一代比一代强的版本。</p>
+<h3>通用领域存在的问题</h3>
+<p>在很多通用领域的评测里，分数决定一切，但当循环的分数往上涨时，我们不知道系统是真的变强了，还是只学会了应付这套评测。</p>
+<p>AIDE² 设两套分数：公开分、私有分。</p>
+<p><strong>公开分</strong>：只给内循环 agent 看，据此去当优化目标，目的是训出更好的模型。</p>
+<p><strong>私有分</strong>：由<strong>同一个数据集</strong>隐藏的部分数据来计算。</p>
+<p>不过，私有分的分值不会直接给外循环 agent，这样是为了防止外循环 agent 拿到多个私有分值后进行拟合。私有分只向外循环agent 透露“接受”或者“拒绝”，如果接受，就迭代版本，否则不迭代。AIDE² 的私有分只能防“背测试集”，泛化能力难说。</p>
+<h3>医学领域的特点</h3>
+<p>对于通用领域评测的这个问题，医学领域天然可以比较好的解决。</p>
+<p>具体来说，在医学领域内，我们将<strong>私有分定义为“换一家医院的表现”</strong>。这样可以一举两得，从 RSI 的角度来看，这样可以防止循环靠适应评测协议（取巧）来虚假涨分，从医学的角度来看，跨机构泛化本来就是一个非常核心的实用要求。</p>
+<p>此外，<strong>医学领域里的任务算力消耗比较小</strong>。</p>
+<p>通用领域，让 AI 端到端开发一个20亿参数量级的模型，以 Qwen2.5-1.5B 为例，它在 18 万亿 token 上预训练，学校里是做不了的。而在医学领域，结构化 EHR 数据有约束：能拿到的患者数量有限，一个人一辈子的临床事件也就几百到几千条。比如，CLMBR-T-base 的预训练语料是 257 万名患者，按文献估计的平均每人约 706 个临床事件推算，总量约 18 亿个事件，每个事件有上千 token 才有可能达到通用的级别，而且257万名患者太多了，事实上我们很难采用这么多。</p>
+<hr>
+<h2>二、定义任务</h2>
+<p>最终要交付是一个任务环境和一套规则。</p>
+<h3>任务规格</h3>
+<p><strong>任务是什么</strong>：在给定的结构化 EHR 数据和锁死的算力预算内，从零做出一个 EHR 基础模型。</p>
+<p><strong>给 agent 什么</strong>：原始结构化 EHR 数据、评测脚本的接口、算力预算的计量器、训练器 trainer.py</p>
+<p><strong>不给什么</strong>：基线代码、超参数、数据配比方案、把事件序列切成 token 的方案、架构选择等，这些全部由 agent 自己定，agent 交付的是一份完整的训练代码。</p>
+<p><strong>预算怎么锁</strong>：按 GPU·分钟计量，超支的运行直接判无效。锁预算很重要，不锁的话 agent 就会多训几轮刷分，没有意义。锁定之后，就迫使 agent 在同样的算力下，尽力去探索更好的方法，做出更好的模型。</p>
+<p><strong>两种分数</strong>：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">层级</th>
+<th scope="col">用什么数据</th>
+<th scope="col">谁用它、怎么用</th>
+<th scope="col">被查询的频率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公开分</td>
+<td>同一家医院，EHRSHOT的 15 项任务</td>
+<td>内循环 agent 拿它当优化目标，看到的是具体数值</td>
+<td>每训完一版 trainer.py 查一次，一次内循环十几次</td>
+</tr>
+<tr>
+<td>私有分</td>
+<td>另一家医院，同样这15 项任务</td>
+<td>外循环 agent 用它判断一次代码改动该不该接受，但只收到"接受"或"拒绝"信息，看不到私有分数值</td>
+<td>每步外循环查一次</td>
+</tr>
+<tr>
+<td>终裁评测</td>
+<td>第三家医院，同样这15 项任务</td>
+<td>只在最后 A、B 两臂比较时用，任何 agent 都读不到</td>
+<td>全程只查一次</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2>三、方法</h2>
+<h3>三个核心部件</h3>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">部件</th>
+<th scope="col">干什么</th>
+<th scope="col">谁能改它</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>训练代码（trainer.py）</td>
+<td>tokenization、架构、数据流、优化器、训练循环。算力都消耗在这里</td>
+<td>由内循环 agent 每次运行重写</td>
+</tr>
+<tr>
+<td>内循环 agent (inner_agent.py)</td>
+<td>决定下一版 trainer 怎么写、给它分多少算力、读结果、压缩历史</td>
+<td>由外循环 agent 重写</td>
+</tr>
+<tr>
+<td>评测器</td>
+<td>算公开分和私有分</td>
+<td>冻结，只读挂载</td>
+</tr>
+</tbody>
+</table></div>
+<p>内循环 agent 写的是<strong>模型</strong>，外循环 agent 改的是<strong>写模型的方法</strong>。</p>
+<h3>内循环：跑一次 ，产出一个模型</h3>
+<p>跑一次 <code class="notranslate">inner_agent.py</code> ，它会在固定预算内反复调用 <code class="notranslate">trainer.py</code> 多次，最终交付模型，也就是：</p>
+<p>写一版 trainer → 跑训练 → 抽表征、看公开分 → 决定下一版怎么改 → 再写一版 …… 直至预算花完，交出公开分最好的那个模型。</p>
+<h3>外循环：修改内循环 agent 的源码</h3>
+<p>外循环 agent 拿到 <code class="notranslate">inner_agent.py</code> 的源码，修改一遍，改完之后评估它，整个内循环再重跑几次（压噪音），比较前后两个版本的<strong>私有分信息</strong>。</p>
+<p>外循环根据<strong>执行证据包</strong>来修改 inner_agent.py 源码，执行证据包有：</p>
+<ol>
+<li><strong>内循环 agent 当前的源代码：inner_agent.py</strong>。</li>
+<li><strong>预算账本</strong>：每个配置花了多少算力、拿到了多少公开分等。</li>
+<li><strong>失败日志</strong>：崩溃、显存溢出、损失发散、超时各出现了多少次，以及原始报错信息等。</li>
+<li><strong>搜索轨迹</strong>：试过哪些配置、每个是从哪个配置改来的、公开分的走势，并附上派生统计量，例如从第几次开始就不涨了、试过的配置彼此有多相似（是不是在原地打转）。</li>
+<li><strong>语言模型开销</strong>：提示词平均多长、调用了多少次。</li>
+</ol>
+<p>外循环 agent 根据这些信息，来决定改进的方向。</p>
+<hr>
+<h2>四、初步实验设计</h2>
+<h4>四组实验设置</h4>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">设置</th>
+<th scope="col">私有分来自哪</th>
+<th scope="col">用来回答什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>同机构（A）</td>
+<td>同一家医院隐藏的患者数据</td>
+<td>通用领域的标准做法，作为参照</td>
+</tr>
+<tr>
+<td>跨机构（B）</td>
+<td>另一家医院的患者数据</td>
+<td>本文提出的方案</td>
+</tr>
+<tr>
+<td>消融一：不改代码</td>
+<td>同 B，另一家医院</td>
+<td>用来证明改代码本身有用</td>
+</tr>
+<tr>
+<td>消融二：盲改</td>
+<td>同 B，另一家医院</td>
+<td>用来证明改得有依据才有用</td>
+</tr>
+</tbody>
+</table></div>
+<p>同机构和跨机构两组各跑相同步数的外循环，把两组各自得出的最佳方案，同时拿到<strong>第三家医院的数据</strong>上各考一次。</p>
+<h4>两个消融实验</h4>
+<p><strong>消融一（不改代码）</strong>：初始版本的内循环 agent，源码一字不改，用和前两组<strong>等量的算力</strong>跑相同次数的内循环，然后按私有分挑出最好的那个模型。它排除的解释是"<strong>提升来自试的次数多，而不是代码改动</strong>"。<br>
+<strong>消融二（盲改）</strong>：外循环 agent 照常重写内循环 agent 的代码，用相同的接受拒绝门槛和算力，唯一的区别是拿不到执行证据包，只能看着当前代码盲改。它排除的解释是"<strong>提升来自提案数量多，而不是依据起了作用</strong>"。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-6'></script>
+
+</html>
