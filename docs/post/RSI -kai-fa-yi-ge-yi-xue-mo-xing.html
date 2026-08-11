@@ -16,15 +16,15 @@
 <title>RSI 开发一个医学模型</title>
 <meta name="theme-color" content="#262624">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="RSI 开发一个医学模型 摘要 本文是参考通用领域 AIDE² 的工作，在医学领域提出一项新任务：给定一份 EHR 数据和一个固定的算力预算，让一个 agent 从零做出一个 EHR 基础模型。">
+<meta name="description" content="RSI 开发一个医学模型 摘要 我们想把“AI 自动开发 AI”变成一个医学里的标准任务：让 agent 在固定算力下从零开发 EHR 基础模型，并研究跨医院泛化反馈能否驱动它真正改进“开发模型的方法”，而不是只学会刷 benchmark。">
 <meta property="og:title" content="RSI 开发一个医学模型">
-<meta property="og:description" content="RSI 开发一个医学模型 摘要 本文是参考通用领域 AIDE² 的工作，在医学领域提出一项新任务：给定一份 EHR 数据和一个固定的算力预算，让一个 agent 从零做出一个 EHR 基础模型。">
+<meta property="og:description" content="RSI 开发一个医学模型 摘要 我们想把“AI 自动开发 AI”变成一个医学里的标准任务：让 agent 在固定算力下从零开发 EHR 基础模型，并研究跨医院泛化反馈能否驱动它真正改进“开发模型的方法”，而不是只学会刷 benchmark。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://powehi12.github.io/post/RSI%20-kai-fa-yi-ge-yi-xue-mo-xing.html">
 <meta property="og:image" content="https://github.com/powehi12.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RSI 开发一个医学模型">
-<meta name="twitter:description" content="RSI 开发一个医学模型 摘要 本文是参考通用领域 AIDE² 的工作，在医学领域提出一项新任务：给定一份 EHR 数据和一个固定的算力预算，让一个 agent 从零做出一个 EHR 基础模型。">
+<meta name="twitter:description" content="RSI 开发一个医学模型 摘要 我们想把“AI 自动开发 AI”变成一个医学里的标准任务：让 agent 在固定算力下从零开发 EHR 基础模型，并研究跨医院泛化反馈能否驱动它真正改进“开发模型的方法”，而不是只学会刷 benchmark。">
 <meta name="twitter:image" content="https://github.com/powehi12.png">
 <link rel="canonical" href="https://powehi12.github.io/post/RSI%20-kai-fa-yi-ge-yi-xue-mo-xing.html">
 <link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
@@ -82,24 +82,23 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <div id="content" role="main" tabindex="-1">
 <div class="markdown-body" id="postBody"><h1>RSI 开发一个医学模型</h1>
 <h2>摘要</h2>
-<p>本文是参考通用领域 AIDE² 的工作，在医学领域提出一项新任务：给定一份 EHR 数据和一个固定的算力预算，让一个 agent 从零做出一个 EHR 基础模型。</p>
-<p>这件事不是做一次就结束。我们把它放进一个双层循环里：内循环 agent 在固定预算内做出一个模型；外循环 agent 去改写内循环 agent 的代码，让它下一次做得更好。这样一轮一轮下去，改进的是"做模型的方法"。</p>
+<p>我们想把“AI 自动开发 AI”变成一个医学里的标准任务：让 agent 在固定算力下从零开发 EHR 基础模型，并研究<strong>跨医院泛化反馈</strong>能否驱动它真正改进“开发模型的方法”，而不是只学会刷 benchmark。</p>
+<p>具体来说，本文是参考通用领域 AIDE² 的工作，在医学领域提出一项新任务：给定一份 EHR 数据和一个固定的算力预算，让一个 agent 从零做出一个 EHR 基础模型。</p>
+<p>这件事不是做一次就结束。我们把它放进一个双层循环里：内循环 agent 在固定预算内做出一个模型；外循环 agent 依据其他医院的反馈来改写内循环 agent 的代码，让它下一次做得更好。这样一轮一轮下去，改进的是"做模型的方法"。</p>
 <hr>
 <h2>一、通用领域与医学领域</h2>
 <h3>通用领域的 RSI 工作</h3>
 <p>我要模仿的是 AIDE²（Weco AI，2026 年 7 月）。它有两层循环：内循环有一个agent，负责针对某个评测把分数往上做；外循环 agent 不断重写内循环 agent 的代码，让它下一次做得更好。</p>
-<p>这套系统在没人干预的情况下跑八天，产出了七个一代比一代强的版本。</p>
 <h3>通用领域存在的问题</h3>
 <p>在很多通用领域的评测里，分数决定一切，但当循环的分数往上涨时，我们不知道系统是真的变强了，还是只学会了应付这套评测。</p>
 <p>AIDE² 设两套分数：公开分、私有分。</p>
 <p><strong>公开分</strong>：只给内循环 agent 看，据此去当优化目标，目的是训出更好的模型。</p>
 <p><strong>私有分</strong>：由<strong>同一个数据集</strong>隐藏的部分数据来计算。</p>
-<p>不过，私有分的分值不会直接给外循环 agent，这样是为了防止外循环 agent 拿到多个私有分值后进行拟合。私有分只向外循环agent 透露“接受”或者“拒绝”，如果接受，就迭代版本，否则不迭代。AIDE² 的私有分只能防“背测试集”，泛化能力难说。</p>
+<p>不过，私有分的分值不会直接给外循环 agent，这样是为了防止外循环 agent 拿到多个私有分值后进行拟合。私有分只向外循环agent 透露“接受”或者“拒绝”，如果接受，就迭代版本，否则不迭代。<strong>AIDE² 的私有分只能防“背测试集”，泛化能力难说。</strong></p>
 <h3>医学领域的特点</h3>
 <p>对于通用领域评测的这个问题，医学领域天然可以比较好的解决。</p>
 <p>具体来说，在医学领域内，我们将<strong>私有分定义为“换一家医院的表现”</strong>。这样可以一举两得，从 RSI 的角度来看，这样可以防止循环靠适应评测协议（取巧）来虚假涨分，从医学的角度来看，跨机构泛化本来就是一个非常核心的实用要求。</p>
-<p>此外，<strong>医学领域里的任务算力消耗比较小</strong>。</p>
-<p>通用领域，让 AI 端到端开发一个20亿参数量级的模型，以 Qwen2.5-1.5B 为例，它在 18 万亿 token 上预训练，学校里是做不了的。而在医学领域，结构化 EHR 数据有约束：能拿到的患者数量有限，一个人一辈子的临床事件也就几百到几千条。比如，CLMBR-T-base 的预训练语料是 257 万名患者，按文献估计的平均每人约 706 个临床事件推算，总量约 18 亿个事件，每个事件有上千 token 才有可能达到通用的级别，而且257万名患者太多了，事实上我们很难采用这么多。</p>
+<p>此外，与通用领域的语言模型相比，<strong>医学领域里的任务算力消耗比较小</strong>，结构化 EHR 的数据规模和模型规模都小得多。</p>
 <hr>
 <h2>二、定义任务</h2>
 <p>最终要交付是一个任务环境和一套规则。</p>
@@ -134,7 +133,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <tr>
 <td>终裁评测</td>
 <td>第三家医院，同样这15 项任务</td>
-<td>只在最后 A、B 两臂比较时用，任何 agent 都读不到</td>
+<td>只在最后比较时用，任何 agent 都读不到</td>
 <td>全程只查一次</td>
 </tr>
 </tbody>
@@ -196,23 +195,23 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </thead>
 <tbody>
 <tr>
-<td>同机构（A）</td>
+<td>同机构</td>
 <td>同一家医院隐藏的患者数据</td>
 <td>通用领域的标准做法，作为参照</td>
 </tr>
 <tr>
-<td>跨机构（B）</td>
+<td>跨机构</td>
 <td>另一家医院的患者数据</td>
 <td>本文提出的方案</td>
 </tr>
 <tr>
 <td>消融一：不改代码</td>
-<td>同 B，另一家医院</td>
+<td>另一家医院的患者数据</td>
 <td>用来证明改代码本身有用</td>
 </tr>
 <tr>
 <td>消融二：盲改</td>
-<td>同 B，另一家医院</td>
+<td>另一家医院的患者数据</td>
 <td>用来证明改得有依据才有用</td>
 </tr>
 </tbody>
