@@ -25,7 +25,11 @@ from urllib.parse import quote
 SITE_ORIGIN = "https://powehi12.github.io"
 SITE_NAME = "qbyang 的个人博客"
 SITE_DESCRIPTION = "记录 Agent、LLM、强化学习与论文阅读"
-ASSET_VERSION = "20260727-6"
+ASSET_VERSION = "20261010-1"
+
+THEME_SCRIPT = (
+    f'<script id="site-theme" src="{SITE_ORIGIN}/theme.js?v={ASSET_VERSION}"></script>'
+)
 
 RSS_LINK = (
     f'<link rel="alternate" type="application/rss+xml" '
@@ -338,7 +342,7 @@ def normalize_theme(html: str) -> str:
         for name, value in (
             ("data-color-mode", "dark"),
             ("data-dark-theme", "dark"),
-            ("data-light-theme", "dark"),
+            ("data-light-theme", "light"),
         ):
             attribute_pattern = re.compile(
                 rf"\b{re.escape(name)}\s*=\s*([\"'])(.*?)\1",
@@ -860,6 +864,12 @@ def inject_seo(html: str, relative: Path) -> str:
         html = remove_meta(html, attribute, key)
     html = remove_link_rel(html, "canonical")
     html = remove_link_rel(html, "alternate")
+    html = re.sub(
+        r"""<script\b[^>]*\bid=["']site-theme["'][^>]*>.*?</script>\s*""",
+        "",
+        html,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
 
     values = {
         "description": description,
@@ -888,6 +898,7 @@ def inject_seo(html: str, relative: Path) -> str:
         f'<meta name="twitter:image" content="{html_module.escape(values["twitter:image"], quote=True)}">',
         f'<link rel="canonical" href="{html_module.escape(canonical, quote=True)}">',
         RSS_LINK,
+        THEME_SCRIPT,
     ]
     html = re.sub(r"[ \t\r\n]+</head>", "\n</head>", html, count=1)
     html = html.replace("</head>", "\n".join(metadata) + "\n</head>", 1)
@@ -924,7 +935,7 @@ def transform_html(source: str, relative: Path, total_pages: int = 1) -> str:
 
 def build_404() -> str:
     return f"""<!DOCTYPE html>
-<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -947,6 +958,7 @@ def build_404() -> str:
   <link rel="canonical" href="{SITE_ORIGIN}/404.html">
   {RSS_LINK}
   <title>页面未找到 - {SITE_NAME}</title>
+  {THEME_SCRIPT}
 </head>
 <body class="error-page">
   <a class="skip-link" href="#content">跳到主要内容</a>
@@ -1063,11 +1075,11 @@ def validate_html(html: str, relative: Path, total_pages: int = 1) -> list[str]:
     if not re.search(
         r'<html\b(?=[^>]*\bdata-color-mode="dark")'
         r'(?=[^>]*\bdata-dark-theme="dark")'
-        r'(?=[^>]*\bdata-light-theme="dark")',
+        r'(?=[^>]*\bdata-light-theme="light")',
         html,
         re.IGNORECASE,
     ):
-        errors.append("html root is not fixed to the dark theme")
+        errors.append("html root must default to dark and support the light theme")
     if extract_meta(html, "name", "theme-color") != "#262624":
         errors.append("theme-color does not match the dark background")
     if extract_meta(html, "name", "color-scheme") != "dark":
@@ -1086,6 +1098,8 @@ def validate_html(html: str, relative: Path, total_pages: int = 1) -> list[str]:
         errors.append("missing main landmark")
     if len(re.findall(r'\brel=["\']canonical["\']', html, re.IGNORECASE)) != 1:
         errors.append("canonical link count is not one")
+    if html.count(THEME_SCRIPT) != 1:
+        errors.append("expected one current theme script")
     if RSS_LINK not in html:
         errors.append("missing RSS autodiscovery")
     for attribute, key in (
