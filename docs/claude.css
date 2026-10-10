@@ -1678,3 +1678,12 @@ body.home-page #content > div:first-child {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Wrap the extra theme control within the existing article header column. */
+@media screen {
+  body.post-page #header .title-right {
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
