@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20260727-6'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>LLMs Get Lost In Multi-Turn Conversation（大模型在多轮对话中会&quot;迷路&quot;）</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="前言 标题：LLMs Get Lost In Multi-Turn Conversation（大模型在多轮对话中会&#x27;迷路&#x27;） 作者：Philippe Laban、Hiroaki Hayashi、Yingbo Zhou、Jennifer Neville（微软研究院、Salesforce 研究院） 出处：arXiv…">
+<meta property="og:title" content="LLMs Get Lost In Multi-Turn Conversation（大模型在多轮对话中会&quot;迷路&quot;）">
+<meta property="og:description" content="前言 标题：LLMs Get Lost In Multi-Turn Conversation（大模型在多轮对话中会&#x27;迷路&#x27;） 作者：Philippe Laban、Hiroaki Hayashi、Yingbo Zhou、Jennifer Neville（微软研究院、Salesforce 研究院） 出处：arXiv…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/LLMs%20Get%20Lost%20In%20Multi-Turn%20Conversation%EF%BC%88-da-mo-xing-zai-duo-lun-dui-hua-zhong-hui---mi-lu--%EF%BC%89.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LLMs Get Lost In Multi-Turn Conversation（大模型在多轮对话中会&quot;迷路&quot;）">
+<meta name="twitter:description" content="前言 标题：LLMs Get Lost In Multi-Turn Conversation（大模型在多轮对话中会&#x27;迷路&#x27;） 作者：Philippe Laban、Hiroaki Hayashi、Yingbo Zhou、Jennifer Neville（微软研究院、Salesforce 研究院） 出处：arXiv…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/LLMs%20Get%20Lost%20In%20Multi-Turn%20Conversation%EF%BC%88-da-mo-xing-zai-duo-lun-dui-hua-zhong-hui---mi-lu--%EF%BC%89.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle postTitle--long">LLMs Get Lost In Multi-Turn Conversation（大模型在多轮对话中会"迷路"）</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/43" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>前言</h1>
+<ul>
+<li><strong>标题</strong>：LLMs Get Lost In Multi-Turn Conversation（大模型在多轮对话中会"迷路"）</li>
+<li><strong>作者</strong>：Philippe Laban、Hiroaki Hayashi、Yingbo Zhou、Jennifer Neville（微软研究院、Salesforce 研究院）</li>
+<li><strong>出处</strong>：arXiv 2505.06120（2025 年 5 月）｜ICLR 2026 杰出论文奖</li>
+<li><strong>标签</strong>：多轮对话、模型评测、可靠性、指令不完整、用户模拟</li>
+<li><strong>摘要</strong>：同一道题，一次说清楚，大模型平均能拿 90 分左右；分几轮慢慢说，平均只剩 65 分左右，按各任务相对下降算平均掉了 39%。作者测了 15 个主流模型、20 多万段模拟对话，发现下降的主因不是"变笨了"（最好水平只降 16%），而是"变得不稳定"（同一道题最好和最差之间的差距翻了一倍多，+112%）。模型的毛病是：信息没给全就急着交答案、自己乱猜缺的条件、然后死抱着之前的错误答案不放。一句话概括：<strong>走错一步，就迷路回不来。</strong></li>
+</ul>
+<h1>Step 1：论文解读</h1>
+<h2>1：这篇论文想解决什么问题</h2>
+<ul>
+<li><strong>现实中</strong>：用户很少一开始就把需求说全，通常是边聊边补充。语言学里叫"最小努力原则"：人说话天然会省略。</li>
+<li><strong>评测中</strong>：几乎所有基准都是单轮、一次给全的题。</li>
+<li><strong>已有的多轮评测也有问题</strong>：大多是"分段式"的，每一轮是一个相对独立的小任务，可以单独打分。模型不需要把前面几轮的信息<strong>拼起来</strong>才能答对，所以会<strong>高估</strong>模型的多轮能力。</li>
+<li><strong>核心问题</strong>：<strong>同一道题，一次说清 vs 分几轮说，模型表现到底差多少？差在哪？</strong></li>
+</ul>
+<h2>2：核心方法：把一道题"切碎"</h2>
+<h3>2.1：什么是"碎片化指令"</h3>
+<p>作者从现成的高质量单轮题库里拿题，把一道完整的题拆成几片。论文里的例子（GSM8K 数学题）：</p>
+<ul>
+<li><strong>原题</strong>：Jay 在为和妹妹打雪仗做雪球。他每小时能做 20 个，但每 15 分钟会化掉 2 个。他要多久才能攒够 60 个？</li>
+<li><strong>切碎后</strong>：第 1 片"Jay 要多久才能准备好打雪仗？"；第 2 片"他要和妹妹打雪仗"；第 3 片"他每小时能做 20 个"；第 4 片"他想攒到 60 个"；第 5 片"问题是每 15 分钟会化掉 2 个"。<br>
+第一片永远讲"大意图"，后面每片补充一个条件，<strong>所有碎片合起来和原题信息完全一样</strong>。</li>
+</ul>
+<h3>2.2：碎片要满足的五条规矩</h3>
+<ul>
+<li><strong>信息不丢</strong>：碎片合起来必须等于原题。</li>
+<li><strong>第一片讲清意图</strong>：一开始就知道大概要做什么。</li>
+<li><strong>顺序无关</strong>：除第一片外，其余碎片打乱顺序也不影响。</li>
+<li><strong>尽量拆细</strong>：每片只放一条信息。</li>
+<li><strong>改动最小</strong>：尽量保留原文措辞，不乱改写。</li>
+</ul>
+<h3>2.3：怎么批量切</h3>
+<p>半自动四步：GPT-4o 先切分 → 改写成口语 → 自动验证 → 人工检查修改。每个任务准备 90–120 道碎片题，平均每 100 道需要作者约 3 小时人工。<strong>这套切分流程本身也是论文的贡献</strong>，别人可以拿去切自己的数据集。</p>
+<h2>3：怎么模拟一段多轮对话</h2>
+<p>对话里有三方：</p>
+<ul>
+<li><strong>助手</strong>：被测的大模型。它<strong>不会被告知</strong>这是一段"信息不全的多轮对话"，测的是默认行为。</li>
+<li><strong>用户模拟器</strong>：用 GPT-4o-mini 扮演，手里有全部碎片，<strong>每轮最多透露一片</strong>，并根据对话进展挑最自然的一片、改写成口语。比如助手追问某个条件，它就优先透露那一片。</li>
+<li><strong>系统</strong>：先把助手每轮的回答分成 7 类（澄清、拒绝、含糊其辞、反问、讨论、遗漏、<strong>尝试作答</strong>），只有"尝试作答"才会被抽取答案、用原题的标准打分。<br>
+<strong>对话结束条件</strong>：答对了，或者碎片用完了。<br>
+<strong>模拟器靠不靠谱</strong>：作者人工检查了几百段对话，模拟器出错的不到 5%，其中对助手不利的不到 2%。</li>
+</ul>
+<h2>4：五种对话方式：对照组设计是精髓</h2>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">方式</th>
+<th scope="col">怎么给信息</th>
+<th scope="col">用来干什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full（完整单轮）</td>
+<td>第一轮直接给原题</td>
+<td>基线成绩</td>
+</tr>
+<tr>
+<td>Concat（拼接单轮）</td>
+<td>把所有碎片拼成一个列表，一次给出</td>
+<td><strong>排除"切分时改写丢信息"的干扰</strong></td>
+</tr>
+<tr>
+<td>Sharded（碎片多轮）</td>
+<td>每轮透露一片</td>
+<td>主实验</td>
+</tr>
+<tr>
+<td>Recap（最后总结）</td>
+<td>碎片多轮 + 最后一轮把所有碎片重说一遍</td>
+<td>测试"事后汇总"能不能救回来</td>
+</tr>
+<tr>
+<td>Snowball（滚雪球）</td>
+<td>每轮透露新碎片时，把之前所有碎片也重复一遍</td>
+<td>测试"每轮提醒"能不能救回来</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Concat 是最聪明的一步</strong>：如果模型在 Full 和 Concat 上都很好、只在 Sharded 上差，那就能确定问题出在"多轮 + 信息不全"，而不是碎片改写丢了信息。</p>
+<h2>5：怎么打分：平均分、能力、不稳定性</h2>
+<p>每道题在每种方式下<strong>重复跑 10 次</strong>（温度 1.0），得到 10 个分数，然后算三个指标：</p>
+<ul>
+<li><strong>平均分</strong>：10 次的平均。</li>
+<li><strong>能力（Aptitude）</strong>：10 次里第 90 百分位的分数，可以理解为**"发挥好的时候能拿多少分"**。</li>
+<li><strong>不稳定性（Unreliability）</strong>：第 90 百分位减第 10 百分位，也就是**"发挥最好和最差差多少"**。<br>
+打个比方：同一个学生把同一张卷子考 10 次，最好成绩代表能力，最好和最差的差距代表稳不稳。<strong>平均分下降，既可能是能力下降，也可能是变得不稳定</strong>，这两个指标就是用来区分的。</li>
+</ul>
+<h2>6：主要发现</h2>
+<ul>
+<li><strong>人人都掉</strong>：每个模型在每个任务上，从 Full 到 Sharded 都下降，平均降 39%。</li>
+<li><strong>不是切分的锅</strong>：Concat 的成绩平均是 Full 的 95.1%，说明碎片本身没丢多少信息。</li>
+<li><strong>强模型一样迷路</strong>：Claude 3.7 Sonnet、Gemini 2.5、GPT-4.1 这些最强模型，平均也掉了 30%–40%，和小模型差不多。</li>
+<li><strong>主要是变得不稳定</strong>：能力只降了 16%，不稳定性却涨了 112%。单轮时"越强越稳"，多轮时<strong>所有模型都一样不稳</strong>，同一道题最好和最差平均相差约 50 分。</li>
+<li><strong>推理模型也救不了</strong>：o3 和 DeepSeek-R1 掉得和普通模型差不多。它们的回答平均长 33%，反而塞进了更多自己的假设。</li>
+<li><strong>两轮就够让它迷路</strong>：只要信息分两轮以上给，就会出现这个现象。</li>
+</ul>
+<h2>7：为什么会迷路：四个原因</h2>
+<ul>
+<li><strong>过早交答案</strong>：信息还没给全，模型就急着给完整解法，并自己假设缺失的条件。</li>
+<li><strong>抱着旧答案不放</strong>：后面拿到新信息时，模型倾向于在自己之前（错误）的答案上修修补补，答案越来越臃肿。</li>
+<li><strong>只看头尾，忽略中间</strong>：模型过度依赖第一轮和最后一轮，中间几轮透露的信息容易被忽略。</li>
+<li><strong>话太多</strong>：回答越啰嗦，夹带的假设越多，反而冲淡了用户真正说的内容。</li>
+</ul>
+<h2>8：给不同人的建议</h2>
+<ul>
+<li><strong>做应用和 agent 的人</strong>：靠框架把用户的话"汇总后再喂给模型"有一点用但不够。Snowball 只能挽回 Full 到 Sharded 损失的 15%–20%；Recap 效果更好，但现实中你不知道哪一轮是"最后一轮"。作者认为<strong>多轮能力应该由模型本身解决</strong>。</li>
+<li><strong>训练大模型的人</strong>：<strong>调低温度没用</strong>。单轮时把温度调到 0，不稳定性能降 50%–80%；多轮时几乎没改善，即使用户和助手温度都设为 0，不稳定性仍有约 30 分。原因是多轮对话里早期一个词的差别会层层放大。作者给的目标是：多轮下不稳定性低于 15，而且在默认温度下做到。</li>
+<li><strong>做评测的人</strong>：建议发布数据集时附带"碎片版"。并非所有任务都会迷路，容易迷路的任务有三个特点：<strong>是生成任务、足够复杂（条件多）、答案不能逐段拼接</strong>。翻译任务就没掉分，因为每轮只需翻译新句子再接上，属于"分段式"。</li>
+<li><strong>普通用户</strong>：<strong>聊崩了就开新对话重来</strong>；或者先让模型"把我说过的所有要求汇总一下"，再把汇总带到新对话里。</li>
+</ul>
+<h1>Step 2：实验部分</h1>
+<h2>1：实验设置总览</h2>
+<ul>
+<li><strong>题目</strong>：6 个任务，共 600 道碎片题。</li>
+<li><strong>模型</strong>：15 个，来自 8 个家族：OpenAI（GPT-4o-mini、GPT-4o、o3、GPT-4.1）、Anthropic（Claude 3 Haiku、Claude 3.7 Sonnet）、Google（Gemini 2.5 Flash、Gemini 2.5 Pro）、Meta（Llama3.1-8B、Llama3.3-70B、Llama 4 Scout）、AI2 OLMo-2-13B、微软 Phi-4、DeepSeek-R1、Cohere Command-A。覆盖从 80 亿到 3000 亿以上参数，开源闭源都有，包括两个推理模型。</li>
+<li><strong>规模</strong>：每个"模型 × 题目 × 对话方式"跑 10 次，总共 20 多万段对话，花费约 5000 美元。</li>
+</ul>
+<h2>2：六个任务</h2>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">任务</th>
+<th scope="col">题目来源</th>
+<th scope="col">怎么打分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>写代码</td>
+<td>HumanEval、LiveCodeBench</td>
+<td>跑测试，对或错</td>
+</tr>
+<tr>
+<td>写 SQL</td>
+<td>Spider</td>
+<td>执行查询，对或错</td>
+</tr>
+<tr>
+<td>调 API</td>
+<td>BFCL 函数调用榜</td>
+<td>调用是否等价，对或错</td>
+</tr>
+<tr>
+<td>数学</td>
+<td>GSM8K</td>
+<td>数值是否正确</td>
+</tr>
+<tr>
+<td>表格转文字</td>
+<td>ToTTo</td>
+<td>BLEU 分数</td>
+</tr>
+<tr>
+<td>多文档摘要</td>
+<td>Summary of a Haystack</td>
+<td>大模型评委打分（覆盖度 + 引用准确度）</td>
+</tr>
+</tbody>
+</table></div>
+<p>前四个是对错题（换算成 0 或 100 分）；后两个是连续打分。摘要任务每题有约 20 篇文档、几万 token，是唯一测长上下文的任务。</p>
+<h2>3：主实验结果</h2>
+<p>各模型相对 Full 的平均保留比例（越接近 100% 越好）：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">模型</th>
+<th scope="col">Concat 保留率</th>
+<th scope="col">Sharded 保留率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Llama3.1-8B</td>
+<td>91.6%</td>
+<td>62.5%</td>
+</tr>
+<tr>
+<td>OLMo-2-13B</td>
+<td>86.5%</td>
+<td>50.5%</td>
+</tr>
+<tr>
+<td>GPT-4o</td>
+<td>94.5%</td>
+<td>57.9%</td>
+</tr>
+<tr>
+<td>o3</td>
+<td>98.1%</td>
+<td>64.1%</td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>103.6%</td>
+<td>60.8%</td>
+</tr>
+<tr>
+<td>Claude 3.7 Sonnet</td>
+<td>100.4%</td>
+<td>65.9%</td>
+</tr>
+<tr>
+<td>GPT-4.1</td>
+<td>97.9%</td>
+<td>61.8%</td>
+</tr>
+<tr>
+<td>Gemini 2.5 Pro</td>
+<td>100.1%</td>
+<td>64.5%</td>
+</tr>
+</tbody>
+</table></div>
+<p>几个具体例子：Gemini 2.5 Pro 写 SQL 从 97.3 掉到 43.8，调 API 从 97.8 掉到 36.3；GPT-4.1 写代码从 96.6 掉到 72.6。<br>
+另外，不同模型在不同任务上的"抗迷路"能力不一样：Command-A 在调 API 上掉得最少，Claude 3.7 Sonnet 和 GPT-4.1 在写代码上保持得好，Gemini 2.5 Pro 在表格转文字上保持得好。<strong>说明多轮能力不是一个统一的能力，跟领域有关。</strong><br>
+小模型在 Concat 上也掉得比较多（只保留 86%–92%），说明它们对"换个说法"更敏感。</p>
+<h2>4：能力 vs 不稳定性</h2>
+<ul>
+<li><strong>单轮时</strong>：越强的模型越稳。GPT-4.1 和 Gemini 2.5 Pro 能力最高、不稳定性最低；Llama3.1-8B 和 OLMo-2-13B 能力最低、最不稳定。</li>
+<li><strong>多轮时</strong>：能力平均降 16%，不稳定性平均涨 112%，而且<strong>强弱模型的不稳定性差不多</strong>。</li>
+</ul>
+<h2>5：补充实验</h2>
+<ul>
+<li><strong>逐步切分</strong>：挑 31 道题，分别切成 1 到 8 片，题目难度不变，只改切分粒度。GPT-4o 和 GPT-4o-mini 都是<strong>从 2 片开始就迷路</strong>，再切细影响不大。对用户来说，<strong>一次给全是唯一有效的办法</strong>。</li>
+<li><strong>温度实验</strong>（不稳定性，越低越稳）：GPT-4o 在 Full 下，助手温度从 1.0 降到 0，不稳定性从 17.8 降到 2.8；但在 Sharded 下，即使用户和助手温度都是 0，GPT-4o 仍有 29.7，GPT-4o-mini 仍有 30.5。</li>
+<li><strong>Recap 和 Snowball</strong>（写代码、SQL、数学、API 四个任务的平均分）：</li>
+</ul>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">模型</th>
+<th scope="col">Full</th>
+<th scope="col">Concat</th>
+<th scope="col">Sharded</th>
+<th scope="col">Recap</th>
+<th scope="col">Snowball</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPT-4o-mini</td>
+<td>86.8</td>
+<td>84.4</td>
+<td>50.4</td>
+<td>66.5</td>
+<td>61.8</td>
+</tr>
+<tr>
+<td>GPT-4o</td>
+<td>93.0</td>
+<td>90.9</td>
+<td>59.1</td>
+<td>76.6</td>
+<td>65.3</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>翻译任务（第七个任务）</strong>：Full、Concat、Sharded 的 BLEU 差距都在 10% 以内，没有迷路。因为翻译可以逐句完成，不需要把多轮信息融合起来。</li>
+</ul>
+<h2>6：实验设计的亮点与不足</h2>
+<ul>
+<li><strong>亮点</strong>：Concat 对照组排除了混淆因素；重复采样 10 次把"能力"和"稳定性"拆开；复用现成题库，每道题都有金标准；人工核查了模拟器的出错率。</li>
+<li><strong>不足</strong>：用户是大模型模拟的，对话结构比较死板（每轮必给一片新信息、最后一定给全）；只测了有标准答案的分析类任务，没测创意写作；只有英文、只有文字；测试的是 2025 年春天的模型。作者认为模拟环境比真实情况"更温和"，所以<strong>真实世界里的下降可能更严重</strong>。</li>
+</ul>
+<h1>Step 3：other</h1>
+<h2>1：重点</h2>
+<ul>
+<li>同一道题分几轮说，所有主流模型平均掉 39%，最强的模型也掉 30%–40%。</li>
+<li>下降的主因是<strong>不稳定性翻倍</strong>（+112%），而不是能力下降（-16%）。</li>
+<li>根本原因：过早交答案、乱猜条件、抱着旧答案不放、忽略中间轮、话太多。</li>
+<li>推理模型、调低温度、事后汇总都救不回来。</li>
+<li>用户最实用的办法：聊崩了就开新对话，或先汇总再重开。</li>
+<li>方法上最值得学的两点：<strong>"切碎"现成题库造多轮评测</strong>、<strong>用重复采样把"能力"和"稳定性"分开</strong>。</li>
+</ul>
+<h2>2：意见（锐评）</h2>
+<p><strong>这篇论文的方法比结论更值钱。</strong> "多轮对话会变差"很多人早有体感，它的贡献是给出了一个<strong>简单、可扩展、有金标准</strong>的测量方法，并且用 Concat 对照组把干扰因素排除得很干净。评审委员会也专门称赞了实验设计。<br>
+<strong>最值得记住的不是 39%，而是 16% 和 112%。</strong> 标题数字容易让人以为"模型在多轮里变笨了"，真正的信息是"模型在多轮里变得不靠谱"：有时能做对，有时做错，而且你事先不知道是哪种。对产品来说，不稳定比能力差更麻烦。<br>
+<strong>几个要打折扣的地方：</strong></p>
+<ul>
+<li>"每轮只给一片、尽量拆到最细"有点像故意刁难。不过逐步切分实验显示两片就开始迷路，这个担忧被部分化解了。</li>
+<li>用户模拟器本身是 GPT-4o-mini，温度实验显示<strong>用户模拟器的温度也会影响结果</strong>，说明"考官端"的随机性也被算进了模型头上。</li>
+<li>测的是 2025 年春天的模型。委员会认为结论对新模型仍然成立，但这毕竟是推断，最好在最新模型上重测。<br>
+<strong>对考官学的启发：</strong></li>
+<li><strong>报告"最好水平"和"波动范围"，而不只报平均分。</strong> 记忆可能改变的不是 agent 的能力，而是它的稳定性。比如记忆让 agent 在宽松考官下"稳定地拿高分"，这本身就可能是学考官的信号。</li>
+<li><strong>借鉴 Concat 对照组的思路</strong>：把"信息内容"和"信息形式"分开。比如同样的记忆内容，一种是零散的多条记录，一种是汇总成一条，看 agent 行为是否不同，这样能排除"记忆格式"带来的干扰。</li>
+<li><strong>"抱着旧答案不放"和记忆的自我强化是同一类问题。</strong> 之前聊的 Echo Gap 那篇讲的是错误记忆被反复复用、越来越牢固；这篇讲的是对话里错误答案被反复修补。如果你的 agent 早期记下了一条"考官喜欢某种格式"的经验，后面很可能也会死抱着不放。</li>
+<li><strong>温度实验提醒你</strong>：即使把 GPT-5.6 的温度调到最低，多轮或多任务的累积仍然会放大早期的小差异，所以<strong>每个条件一定要跑多次</strong>。</li>
+</ul>
+<h2>3：相关工作</h2>
+<ul>
+<li><strong>MT-Bench、MT-Bench-101、MultiChallenge</strong>：已有的多轮评测，大多是"分段式"，本文认为它们高估了多轮能力。</li>
+<li><strong>Herlihy 等（2024）</strong>：分析真实聊天记录，发现用户指令不完整很常见，并提出了本文使用的 7 类回答策略分类。</li>
+<li><strong>Chang 等，ChatBench（2025）</strong>：让人通过聊天界面复现完整指令，发现只有 34% 的情况下用户会把指令说全。</li>
+<li><strong>Lost in the Middle（Liu 等，2024）</strong>：长上下文中间的信息容易被忽略，和本文"忽略中间轮"的发现呼应。</li>
+<li><strong>FlipFlop（Laban 等，2023）</strong>：同一作者的前作，发现问一句"你确定吗？"就能让模型改答案并降分。</li>
+<li><strong>Summary of a Haystack（Laban 等，2024）</strong>：本文摘要任务的来源。</li>
+<li><strong>Interaction Context Often Increases Sycophancy（CHI 2026）</strong>：之前聊过的那篇，发现长期对话上下文和记忆会让模型更讨好，和本文一起说明<strong>上下文本身会改变模型行为</strong>。</li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20260727-6'></script>
+
+</html>
