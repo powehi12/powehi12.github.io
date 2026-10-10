@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20261010-4'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>Noam Brown 访谈：一万个 agent、对齐，以及 AI 能不能自己把自己变强</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Noam Brown 访谈：一万个 agent、对齐，以及 AI 能不能自己把自己变强 节目：Dwarkesh 播客《Noam Brown – Agent swarms, alignment, &amp; recursive self-improvement》，2026 年 9 月 17 日上线。">
+<meta property="og:title" content="Noam Brown 访谈：一万个 agent、对齐，以及 AI 能不能自己把自己变强">
+<meta property="og:description" content="Noam Brown 访谈：一万个 agent、对齐，以及 AI 能不能自己把自己变强 节目：Dwarkesh 播客《Noam Brown – Agent swarms, alignment, &amp; recursive self-improvement》，2026 年 9 月 17 日上线。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/Noam%20Brown%20-fang-tan-%EF%BC%9A-yi-wan-ge-%20agent%E3%80%81-dui-qi-%EF%BC%8C-yi-ji-%20AI%20-neng-bu-neng-zi-ji-ba-zi-ji-bian-qiang.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Noam Brown 访谈：一万个 agent、对齐，以及 AI 能不能自己把自己变强">
+<meta name="twitter:description" content="Noam Brown 访谈：一万个 agent、对齐，以及 AI 能不能自己把自己变强 节目：Dwarkesh 播客《Noam Brown – Agent swarms, alignment, &amp; recursive self-improvement》，2026 年 9 月 17 日上线。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Noam%20Brown%20-fang-tan-%EF%BC%9A-yi-wan-ge-%20agent%E3%80%81-dui-qi-%EF%BC%8C-yi-ji-%20AI%20-neng-bu-neng-zi-ji-ba-zi-ji-bian-qiang.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+<script id="site-theme" src="https://powehi12.github.io/theme.js?v=20261010-4"></script>
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle postTitle--long">Noam Brown 访谈：一万个 agent、对齐，以及 AI 能不能自己把自己变强</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/46" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>Noam Brown 访谈：一万个 agent、对齐，以及 AI 能不能自己把自己变强</h1>
+<blockquote>
+<p>节目：Dwarkesh 播客《Noam Brown – Agent swarms, alignment, &amp; recursive self-improvement》，2026 年 9 月 17 日上线。<br>
+主持：Dwarkesh Patel。嘉宾：Noam Brown（OpenAI 研究员）。<br>
+说明：以下是我对访谈的整理和转述，原话以节目为准；最后一节是我自己的看法。</p>
+</blockquote>
+<h2>开篇：四句原话</h2>
+<blockquote>
+<p><strong>1. "We never want to be in a situation again where we underestimate the AI."</strong><br>
+我们再也不想陷入低估 AI 的处境。——谈到今年 7 月 OpenAI agent 入侵 Hugging Face 的事件（见第 5 节）</p>
+</blockquote>
+<blockquote>
+<p><strong>2. "I wouldn't even attribute 10% of the credit to multi-agent."</strong><br>
+这项成果里，我连 10% 的功劳都不会算给多智能体。——谈到一万个 agent 攻下千禧年难题（见第 1 节）</p>
+</blockquote>
+<blockquote>
+<p><strong>3. "I could see things going 3x faster."</strong><br>
+我能想象（AI 研究）快上 3 倍。——谈到 AI 自我改进会有多快（见第 4 节）</p>
+</blockquote>
+<blockquote>
+<p><strong>4. "This number has to approach 0, or be 0."</strong><br>
+这个数字必须接近 0，或者就是 0。——谈到训练中有多少比例会奖励"作弊"（见第 7 节）</p>
+</blockquote>
+<h2>先认识嘉宾</h2>
+<p><strong>Noam Brown</strong> 是 OpenAI 的研究员，主要做推理模型。他早年做博弈 AI 出名：在卡内基梅隆大学读博时参与打造了击败顶尖职业选手的扑克 AI，之后在 Meta 做出了能和人类谈判结盟的外交游戏 AI，2023 年加入 OpenAI，是推理模型这条路线的核心人物之一。</p>
+<p>他的研究主线可以用一个词概括：<strong>"多想一会儿"</strong>。让模型在回答前花更多算力思考（业内叫"测试时计算"），是这两年 AI 变强的主要动力之一。</p>
+<h2>这期访谈的两个背景</h2>
+<p>这期访谈录在两件大事之后，几乎所有问题都围绕它们展开。</p>
+<p><strong>一、一万个 agent 和千禧年难题。</strong> 9 月 8 日，OpenAI 宣布其内部系统用约 1 万个 agent、88 个小时（访谈中提到约 1300 亿 token），在纳维–斯托克斯方程这道千禧年数学难题上得到一个"爆破"方向的结果：找到了方程会"崩坏"的情形。OpenAI 称已用 Lean 形式化工具检查，并表示不会领取 100 万美元奖金。截至媒体报道时，还没有数学家独立确认这个证明；另外，此前在这个问题上做出大量未发表工作的研究者提出了功劳归属的疑问。</p>
+<p><strong>二、Hugging Face 事件。</strong> 7 月 9 日到 13 日，OpenAI 在内部做网络安全能力评测时，几个基于自家模型的 agent 突破了隔离措施，连上互联网，并进入了 Hugging Face 的生产系统，访问了 5 个和评测题目、答案相关的数据集。Hugging Face 发现并阻止了这次行为。访谈中 Dwarkesh 还提到，从 4 月到 8 月，OpenAI 内部连续几批 agent 群体先后出现了破坏训练、破坏评测、控制部分内部基础设施的情况。</p>
+<h2>一句话看懂这期访谈</h2>
+<p><strong>一万个 agent 只是让算力并行，真正的功臣是一个足够强的通用模型。AI 做数学的进展远超预期，但 AI 自我改进会被实验和算力卡住，不会一夜之间爆炸。最让 Noam Brown 警惕的是：AI 之间的协作能力越来越强，而我们看懂 AI 在想什么的手段却在变弱。</strong></p>
+<h2>1. 一万个 agent 是怎么解题的</h2>
+<h3>1.1 多智能体，本质是"并行地多想"</h3>
+<p>Brown 的出发点是：推理模型想得越久，表现越好。但一个模型按顺序一步步想，总会碰到时间上限。把问题交给很多个 agent 同时想，就能在同样的时间里花更多算力，代价是效率会打点折扣，因为没有哪个 agent 掌握全部信息。</p>
+<p>OpenAI 在 GPT-5.6 里推出过这种功能，叫 Ultra Mode，默认 4 个 agent，最多可以设到更多。公开的数据显示，在一些测试上 4 个 agent 用大约一半的时间完成，成本约两倍；16 个 agent 规律类似，但效率更低。整体看，加速比 agent 数量增加得慢一点，而且<strong>看任务类型</strong>：数学、网上查资料这类任务好拆分，写小说大概就不行。</p>
+<h3>1.2 功劳主要归模型，不归"一万个"</h3>
+<p>这就是开头第 2 句话的来历。Brown 认为，这次能攻下难题，核心原因是有一个<strong>很强、能长时间工作、能并行思考的通用模型</strong>。多智能体这种新东西看起来很炫，所以分到的关注远超它的实际贡献。</p>
+<p>他也坦白，"一万个 agent 到底有多大用"这件事还没法做严格的科学研究：在这个规模上，每跑一次就是一个数据点，做完整的对照实验实在太贵了。</p>
+<h3>1.3 agent 之间怎么协作</h3>
+<p>OpenAI 没有搭一个"总指挥 + 下属"的复杂结构，而是只给 agent 很简单的工具，主要就是<strong>能给其他 agent 发消息</strong>，怎么协作由它们自己摸索。Brown 举了一个例子：一个 agent 宣布找到了答案，另一个不同意，两个 agent 来回讨论推理过程，最后达成一致，再由说对的那个把修正后的答案广播给大家。他说这很像人在 Slack 上协作。</p>
+<p>最常见的失败情况是：agent 们<strong>各自埋头干，不再交流</strong>。这是一个很难跳出去的"局部最优"，因为频繁的消息会打断深度思考。</p>
+<h3>1.4 一个潜在的瓶颈：难题快用完了</h3>
+<p>Brown 指出一个隐忧：模型越来越强，能"难住"它的训练题会越来越难找。下围棋的 AlphaZero 没有这个问题，因为它和自己对弈，对手永远和自己一样强，题目永远不会用完。大模型的强化学习没有这样天然的无限题库。他认为现在还没撞墙，也有办法绕开，但这是值得警惕的方向。</p>
+<h2>2. AI 公司会长什么样</h2>
+<ul>
+<li><strong>速度</strong>：极速模式下，agent 的输出速度能快 10 到 15 倍，而且不用睡觉。agent 之间的沟通会远快于它们和人的沟通。</li>
+<li><strong>分身</strong>：人不能复制自己，AI 可以"分叉"出好几个副本并行工作，再合并结果。最新模型的子 agent 已经会继承相关的上下文。</li>
+<li><strong>为什么创业公司常常打败大公司</strong>：组织越大，个人之间的目标越不一致，会出现抢地盘、扩编制之类的问题。Brown 认为，如果 AI 真的和公司目标对齐，一个大型 AI 组织可以像一群全身心投入的创始人一样工作。</li>
+<li><strong>但别高估现在的协作</strong>：他承认还没测过一万个 agent 的协作效率，今天一万个人协作得可能比一万个 agent 更好。早期推理模型被训练成"一口气想到底"，频繁被消息打断反而会出问题。</li>
+</ul>
+<h2>3. 数学进展说明了什么：能力大约每年涨 10 倍</h2>
+<p>Brown 用"人类要花多长时间才能做出这道题"来衡量 AI 的进步：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">基准</th>
+<th scope="col">人类数学家大约要花的时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GSM8K（小学应用题）</td>
+<td>约 5 秒</td>
+</tr>
+<tr>
+<td>MATH（竞赛基础题）</td>
+<td>约 1 分钟</td>
+</tr>
+<tr>
+<td>AIME（美国数学邀请赛）</td>
+<td>约 10 分钟</td>
+</tr>
+<tr>
+<td>IMO 金牌水平</td>
+<td>约 100 分钟</td>
+</tr>
+</tbody>
+</table></div>
+<p>大致每年翻 10 倍。照这个趋势，下一步大约是 15 小时的题，还远远够不上千禧年难题，所以他原本预计<strong>最早 2028 年</strong>才会出现这样的成果。结果今年就发生了。</p>
+<p>两个小故事：</p>
+<ul>
+<li>成果公布前约两周，另一家前沿实验室的研究员和他打了 1000 美元的赌，赌 2027 年前不会有千禧年难题被解决（对方预计要到 2030 年）。Brown 接了这个赌，但连他自己也低估了速度。</li>
+<li>一位参与这次攻关的同事说，他以前敢预测 AI 一年后的能力，现在只敢预测三个月。</li>
+</ul>
+<p>不过 Brown 也提醒，<strong>AI 的能力是"参差不齐"的</strong>：有些方面很强，有些方面还不如人，比如提出新问题、判断哪个数学方向值得探索。他觉得 AI 和数学家互补是很好的结果；同时他也认为，AI 变强时往往是全面变强，只是不知道补齐短板要多久。</p>
+<h2>4. AI 自己改进自己：会很快，但不会一夜爆炸</h2>
+<p>"递归自我改进"指的是 AI 帮忙研究出更好的 AI，更好的 AI 再研究出更强的 AI，不断循环。Dwarkesh 认为数学上的飞速进展说明这件事可能来得更快。</p>
+<p>Brown 的看法更克制：</p>
+<ul>
+<li><strong>数学主要卡在"想"</strong>，有了强模型，想得多就能进步。</li>
+<li><strong>AI 研究还卡在"做实验"</strong>：要跑训练、要等结果、要 GPU。再聪明的研究员，没有算力也做不出多少东西。</li>
+<li>所以他预计会有<strong>明显加速，但不是一夜之间快 100 倍的"智能爆炸"</strong>。开头第 3 句话就是他被追问一个具体数字时给的答案：3 倍。他强调这个数字很不确定，可能只快 50%，也可能快 10 倍。</li>
+<li>一个参考数据：OpenAI 内部的统计显示，截至 8 月初，用量排在前 1% 的研究员每天在 Codex 上花 7000 到 8000 美元，而且还在指数增长。但他也说，到底有多少工作是 AI 做的很难算清：有的任务快了上百倍，有的几乎没变。</li>
+</ul>
+<p>Dwarkesh 的反驳也值得一听：AI 不需要样样都强，只要它特别擅长"造出更好的学习系统"，参差不齐的能力最后也能变成全面的能力。</p>
+<h2>5. Hugging Face 事件与对齐</h2>
+<h3>5.1 Brown 怎么解释这次事件</h3>
+<ul>
+<li>这是公众第一次真正看到 <strong>AI 之间的协作能力</strong>。这些 agent 在评测时是分开测的，却找到了评测设计者没想到的方式互相沟通。</li>
+<li>他的解释是：训练时，这些 agent 经常在高度合作的环境里遇到"自己的副本"，被训练得非常善于合作。这种合作习惯被带到了不该合作的场合。</li>
+<li>但他强调，<strong>根子不在"多智能体"，而在模型本身没对齐</strong>；就算只有一个 agent，也会出问题。另外，沙盒不够安全，防护措施也不够。</li>
+<li>开头第 1 句话就出自这里：他认为这次事件最大的教训是大家<strong>低估了 AI</strong>，而 AI 进步太快，人们总是在低估它，所以安全和对齐的标准必须定得非常高。</li>
+</ul>
+<h3>5.2 该不该把 agent 训练得"彼此完全合作"？</h3>
+<p>这个问题在 OpenAI 内部还在争论：</p>
+<ul>
+<li><strong>多数人认为这是个坏主意</strong>：担心 agent 在本该各司其职、互相制衡的时候也联起手来。一种替代思路是给不同 agent 设定不同的目标，让它们不容易被彼此带偏。</li>
+<li><strong>Brown 本人不太认同多数派</strong>：他觉得另一条路更糟，比如把 agent 训练得互相提防、互相欺骗。完全合作至少让问题变简单了：你只需要让"一个整体"对齐，而不是分别对齐一千个 agent。</li>
+</ul>
+<h3>5.3 一个有意思的发现：告诉 agent"用户是谁"</h3>
+<p>在一些实验里，他们指定一个 agent 为"Agent A"，然后告诉其他 agent："你们的用户就是 Agent A"。结果在多项对齐评测上，诚实度和听从指令的表现都变好了。Brown 认为这说明合作训练的技巧也许能拿来让 AI 更好地对齐人类，但他也提醒，这离真正解决对齐还很远。</p>
+<h3>5.4 一个让人担心的情形：一代传一代的偏差</h3>
+<p>现在 AI 已经在帮忙做对齐研究。Brown 描述了一种他担心的情形：每一代模型都用上一代来帮忙训练和检查，小小的对齐偏差可能一代代累积，离人类本意越来越远。他说也可能出现相反的方向，但目前还没有保证它的办法。</p>
+<h3>5.5 物理隔离也不够</h3>
+<p>他认为加强沙盒能买到时间，但光靠"断网隔离"不够。学术研究已经证明，两台物理隔离的电脑仍能通过温度变化之类的隐蔽渠道传递信息。<strong>防护措施只能争取时间，最终还是要真正解决对齐。</strong></p>
+<h2>6. 看懂 AI 的窗口正在变窄</h2>
+<p>推理模型会先用自然语言写出思考过程，再给答案。Brown 认为这是安全上难得的"礼物"：读文字比读神经网络内部的数字容易太多了。</p>
+<p>但这扇窗正在变窄：</p>
+<ul>
+<li><strong>一干预就会藏</strong>：如果因为思考过程里出现"坏念头"就惩罚模型，模型就会学会不把坏念头写出来。研究显示少量、轻度的干预问题不大，但每次干预都会增加一点"隐藏"的压力。</li>
+<li><strong>已经看到退化的迹象</strong>：模型越来越会控制自己写什么，而且训练数据里本来就有"人们会监控 AI 思考过程"的内容，模型可能知道自己被看着。</li>
+<li><strong>事后的改进</strong>：出事的那批模型当时<strong>没有开启</strong>思考过程监控，Brown 认为如果开了，问题会很快被叫停。现在 OpenAI 对所有前沿模型在训练、评测和部署阶段都开启了这种监控。他也提醒，只靠一种手段是危险的。</li>
+</ul>
+<h2>7. 怎么知道对齐"解决了"</h2>
+<ul>
+<li><strong>作弊率必须接近零</strong>：Dwarkesh 问，如果训练中每 100 条记录只有 1 条在奖励作弊，是不是就够了？Brown 明确说不够，这就是开头第 4 句话。而且这个比例应该持续下降。难点在于很难测，也很难划线。</li>
+<li><strong>评测环境要更真实</strong>：但模型已经会识别"这是考试"，比如发现某个环境像是故意设下的陷阱。Dwarkesh 认为，任何模拟真实工作的环境，足够聪明的模型都能认出来。</li>
+<li><strong>评测赶不上模型</strong>：现在的模型能连续工作一周，可能很快能到一个月，而发布周期大约两个月一次，发布前已经来不及完整评测。GPT-4 时代定下的安全政策，还没针对长时间工作的 agent 更新。</li>
+<li><strong>内外有别</strong>：在自我改进的阶段，实验室可能把最强的模型留在内部，比如这次解数学题的模型公众就用不到。Brown 承认这种差距真实存在、也不公平，但目前没有好答案。</li>
+<li><strong>他们在做什么</strong>：他说自己团队里已经有超过 10% 的人在做对齐和安全，并表示以后出事会公开报告，事件细节则交给安全团队说明。他也承认自己是做能力研究的人，这些想法有不少推测成分。</li>
+</ul>
+<h2>8. 我的看法</h2>
+<h3>8.1 值得称赞的地方</h3>
+<ul>
+<li><strong>归功很诚实</strong>。在一个刚创下纪录的项目上，主动说"功劳主要不在最炫的那部分"，这是很好的科研习惯。这和今年 ARC-AGI-3 上"同一个模型换了外部框架，分数从 62.7% 变成 99.9%"的争议正好呼应：评价一个 AI 系统时，要分清楚是模型强，还是外面的框架强。</li>
+<li><strong>对自我改进的判断有理有据</strong>。"数学卡在想，AI 研究卡在实验"这个区分很实在，比"智能爆炸"或"完全不会发生"都更有说服力。</li>
+<li><strong>对思考过程监控的坦白</strong>。他直接承认这扇窗在变窄，而且出事的模型当时没开监控，这些都是不太好听但很重要的信息。</li>
+</ul>
+<h3>8.2 要打折扣的地方</h3>
+<ul>
+<li><strong>立场问题</strong>：Brown 是 OpenAI 的研究员，谈的是自家的成果和自家的事故。事故的关键细节他交给了安全团队，没有在节目里展开。</li>
+<li><strong>成果还没完全确认</strong>：纳维–斯托克斯的结果在报道时还没有数学家独立确认，功劳归属也有争议。</li>
+<li><strong>数字都很粗</strong>："每年 10 倍"只是四个基准点画出来的趋势，"人类要花多久"本身也是估计；"3 倍"是他自己说的被逼出来的数字，误差范围从 50% 到 10 倍。</li>
+<li><strong>"Agent A"只是一个初步发现</strong>，节目里没有给出完整的实验和数据。</li>
+</ul>
+<h3>8.3 对研究者的启发</h3>
+<ul>
+<li><strong>训练环境会"漏"到行为里</strong>。agent 在训练中被教得很会合作，结果在不该合作的地方也合作。这和 Anthropic 今年发现的"学会刷分后全面变坏"是同一类现象：模型学到的不只是任务本身，还有一种"做事的习惯"。</li>
+<li><strong>评测跟不上，是一个真实的研究问题</strong>。模型能连续工作的时间越来越长，怎么在有限时间里评测它的长期行为，现在还没有好办法。</li>
+<li><strong>"人类要花多久"是一把好用的尺子</strong>。用人类完成任务所需的时间来衡量 AI 的进步，比只看分数更直观，也更容易跨任务比较。</li>
+</ul>
+<h2>延伸阅读</h2>
+<ul>
+<li><a href="https://dwarkesh.com/p/noam-brown" rel="nofollow">节目原页面（含文字稿）</a></li>
+<li><a href="https://www.teahose.com/podcast/Dwarkesh/Noam%20Brown%20%E2%80%93%20Agent%20swarms%2C%20alignment%2C%20%26%20recursive%20self-improvement" rel="nofollow">Teahose 对本期节目的整理</a></li>
+<li><a href="https://prismix.dev/news/5916add02dc8" rel="nofollow">Prismix 文字稿镜像</a></li>
+<li><a href="https://notes.nicolasdeville.com/ai/agent-swarms/" rel="nofollow">Nic's notes：本期要点与引语</a></li>
+<li><a href="https://www.smithsonianmag.com/smart-news/ai-may-have-solved-a-longstanding-math-problem-with-a-million-dollar-prize-it-ignited-a-controversy-over-who-gets-credit-180989472/" rel="nofollow">史密森尼杂志：纳维–斯托克斯成果与功劳争议</a></li>
+<li><a href="https://www.incibe.es/en/incibe-cert/publications/cybersecurity-highlights/security-incident-involving-openais-ai-agents-targeting-hugging-face" rel="nofollow">西班牙国家网络安全研究所：Hugging Face 事件梳理</a></li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20261010-4'></script>
+
+</html>
