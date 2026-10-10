@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20261010-4'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>Rich Sutton 访谈：AI 为什么学完就不再学习，又该怎么重新学起来</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Rich Sutton 访谈：AI 为什么学完就不再学习，又该怎么重新学起来 节目：红杉资本 Training Data 播客第 98 期《Why AI Models Stop Learning, and How to Start It Again》，2026 年 8 月 18 日上线。">
+<meta property="og:title" content="Rich Sutton 访谈：AI 为什么学完就不再学习，又该怎么重新学起来">
+<meta property="og:description" content="Rich Sutton 访谈：AI 为什么学完就不再学习，又该怎么重新学起来 节目：红杉资本 Training Data 播客第 98 期《Why AI Models Stop Learning, and How to Start It Again》，2026 年 8 月 18 日上线。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/Rich%20Sutton%20-fang-tan-%EF%BC%9AAI%20-wei-shen-me-xue-wan-jiu-bu-zai-xue-xi-%EF%BC%8C-you-gai-zen-me-zhong-xin-xue-qi-lai.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rich Sutton 访谈：AI 为什么学完就不再学习，又该怎么重新学起来">
+<meta name="twitter:description" content="Rich Sutton 访谈：AI 为什么学完就不再学习，又该怎么重新学起来 节目：红杉资本 Training Data 播客第 98 期《Why AI Models Stop Learning, and How to Start It Again》，2026 年 8 月 18 日上线。">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Rich%20Sutton%20-fang-tan-%EF%BC%9AAI%20-wei-shen-me-xue-wan-jiu-bu-zai-xue-xi-%EF%BC%8C-you-gai-zen-me-zhong-xin-xue-qi-lai.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+<script id="site-theme" src="https://powehi12.github.io/theme.js?v=20261010-4"></script>
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle postTitle--long">Rich Sutton 访谈：AI 为什么学完就不再学习，又该怎么重新学起来</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/45" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>Rich Sutton 访谈：AI 为什么学完就不再学习，又该怎么重新学起来</h1>
+<blockquote>
+<p>节目：红杉资本 Training Data 播客第 98 期《Why AI Models Stop Learning, and How to Start It Again》，2026 年 8 月 18 日上线。<br>
+主持：Sonya Huang、Alfred Lin（红杉资本）。嘉宾：Rich Sutton、Khurram Javed（Oak Lab 联合创始人）。<br>
+说明：以下是我对访谈的整理和转述，原话以节目为准；最后一节是我自己的看法。</p>
+</blockquote>
+<h2>先认识两位嘉宾</h2>
+<ul>
+<li><strong>Rich Sutton</strong>：强化学习的奠基人之一，2024 年和 Andrew Barto 一起获得图灵奖。他 2019 年写的短文《苦涩的教训》（The Bitter Lesson）几乎是 AI 圈人人读过的文章。访谈里他提到，2003 年自己在癌症缓解期仍坚持做强化学习，之后加入加拿大阿尔伯塔大学。</li>
+<li><strong>Khurram Javed</strong>：Sutton 的学生，提出了"大世界假设"（后文会讲）。两人的合作从一个具体项目开始，后来变成他的博士开题，他才正式申请读博。</li>
+<li><strong>Oak Lab</strong>：两人 2026 年 7 月在加拿大创办的研究公司。目标一句话：<strong>做出能从自身经验中持续学习的 AI</strong>，而不是靠人类整理好的数据来学。</li>
+</ul>
+<h2>一句话看懂这期访谈</h2>
+<p><strong>今天的大模型很强，但"学完就冻住了"；真正的智能应该一边干活一边学习。要做到这一点，缺的不是更多数据或合成数据，而是新的学习算法。</strong></p>
+<h2>1. 不是 Sutton 奇怪，是这个领域奇怪</h2>
+<p>Sutton 的观点常被看作"另类"，他在访谈里的说法是：不是他奇怪，是这个领域奇怪。</p>
+<p>他举的例子是"持续学习"（continual learning）这个词。在他看来，<strong>学习本来就应该是持续的</strong>，人和动物从来不会"学完了就停下"。现在大家要专门造一个词来强调"持续"，恰恰说明主流做法本身不正常：模型在训练阶段学习，一旦上线，参数就基本不再变化。</p>
+<h2>2. 重读《苦涩的教训》：大模型既是正面例子，也是反面例子</h2>
+<p>Sutton 把《苦涩的教训》浓缩成一句话：<strong>别依赖人类知识，要依赖能随着计算量一起扩展的方法，比如搜索和学习。</strong> 他特别强调，这不是说算法不重要，算法可以很巧妙，但它的进步要靠多花算力，而不是靠人多写规则。</p>
+<p>用这个标准看大模型，Sutton 认为它<strong>一半是正面例子，一半是反面例子</strong>：</p>
+<ul>
+<li><strong>正面</strong>：大模型靠海量互联网数据和算力一路变强，符合"能扩展的方法会赢"。</li>
+<li><strong>反面</strong>：它学的全是人类已经写下来的东西。互联网是有限的，而真实世界比互联网大得多。依赖人类产出的数据，本质上还是在依赖人类知识。</li>
+</ul>
+<h2>3. 为什么合成数据救不了：大世界假设</h2>
+<p>现在不少实验室在用合成数据来突破"互联网数据快用完了"的瓶颈。Sutton 直言这是一个大错误。理由有两条：</p>
+<ul>
+<li><strong>合成数据背后还是人</strong>。Javed 指出，生成什么数据、什么数据算好、怎么打分，仍然要人来决定，所以它的上限还是人类的专业知识。</li>
+<li><strong>再大的模拟也只是现实的一小块</strong>。这就是 Javed 提出的"大世界假设"：真实世界里要学的东西几乎无穷无尽，任何智能体或模拟器都不可能事先装下。Sutton 的说法是：世界无限复杂，任何模拟和它相比都微不足道。</li>
+</ul>
+<p>Javed 用自动驾驶举例：从模拟到真实世界的流程里，模拟器出了问题，最后还是要工程师手动修。他认为更好的做法是让 agent 自己建立对世界的模型，再在真实经验中不断修正。</p>
+<h2>4. 大模型算不算在"持续学习"？</h2>
+<p>主持人 Sonya Huang 提出了一个很多人都会有的疑问：现在的 AI 助手有"记忆"功能，也能在对话里现学现用（上下文学习），这不算持续学习吗？</p>
+<p>两位嘉宾的回答很明确：<strong>不算，因为模型的参数（权重）从来没有变过。</strong></p>
+<ul>
+<li>Javed 说，大家对大模型的大部分做法其实没意见，唯一的大分歧是：<strong>训练结束后就不再让它学了</strong>。对话内容会改变模型当下的"状态"，但不会改变它的权重。</li>
+<li>他提到编程工具 Cursor 的补全模型：它会收集大量用户数据，攒成一大批再统一训练一次。这对公共模型可行，但如果想让模型适应<strong>某一个具体用户</strong>，这种方式效率太低。</li>
+<li>为了说明人脑的可塑性，Javed 举了一个例子：有些病人失去了本体感觉（感知自己身体位置的能力），却能在两三年里靠视觉反馈重新学会走路。大脑一直在学，学习从不"关机"。</li>
+</ul>
+<h2>5. 向动物学习：智能不是靠"上课"得来的</h2>
+<p>Sutton 认为，动物学会动作并不是靠监督学习，没有人告诉它每一块肌肉该怎么收缩。对人来说，上学只是学习中很小的一部分。</p>
+<p>主持人不同意：学数学这类技能，上课很重要啊。Sutton 承认通过语言传授知识很重要，但他认为那不是智能的本质。Javed 补充了一个有意思的角度：比如学发音，只有你自己知道自己的身体是怎么发出声音的，老师给的示范对你来说不一定对，最终还得靠自己摸索。</p>
+<h2>6. 现在的 AI 最缺什么：自己学会世界的规律，再拿来做规划</h2>
+<p>Sutton 认为当前 AI 最大的缺口是：<strong>自己学出一个"世界模型"，然后用它来规划。</strong></p>
+<ul>
+<li>下围棋、做数学时，规则是人提前告诉 AI 的，模型是现成的。</li>
+<li>真实世界没有现成的规则书，智能体必须自己学出来。</li>
+</ul>
+<p>Javed 进一步说，光有世界模型还不够，模型要建立在合适的"抽象概念"上。他举的例子是顶尖运动员：他们会发展出一套外行听不懂的专门术语，这些术语就是从大量经验里提炼出来的新概念。科学上的范式转变也是一样：人从经验中造出新的抽象概念，再用这些概念去计划和推理。主持人 Alfred Lin 也同意，规划和想象能力是现有系统缺少的东西。</p>
+<h2>7. "灾难性遗忘完全可以治"：他们的算法思路</h2>
+<h3>7.1 难点：学了新的，忘了旧的</h3>
+<p>如果让模型每看到一条新经验就马上更新一次参数，常见的结果是<strong>灾难性遗忘</strong>：新东西学会了，旧本事却被冲掉了。这也是为什么现在的产品宁可把新信息塞进上下文或记忆库，也不轻易改模型参数。</p>
+<p>Javed 强调，这不只是工程或基础设施的问题，而是<strong>算法本身还没解决</strong>。Sutton 的态度很乐观：这个问题完全可以治好，关键是找到对的算法。</p>
+<h3>7.2 路线图：阿尔伯塔计划</h3>
+<p>Sutton 2022 年提出过一份 12 步的研究路线图，叫"阿尔伯塔计划"。他认为其中第二步"持续的深度学习"最重要，因为后面的一切都建立在它上面；路线图的后半部分讲的是如何形成抽象概念。</p>
+<h3>7.3 三个关键办法</h3>
+<ul>
+<li><strong>每个参数有自己的"学习速度"</strong>：普通训练里，所有参数用差不多的步长更新。他们的思路是让每个参数都有自己的步长，而且这个步长本身也是学出来的。大多数参数的步长很小，新经验不会把它们冲掉；需要改的参数才大步更新。打个比方：一个人对"猫"的认识已经很牢固，看到一只奇怪的猫也不会推翻整个概念，但对刚接触的新东西会改得很快。（Sutton 早在 1992 年就发表过为每个参数自动调整步长的方法，Oak Lab 2024 年也有相关论文。）</li>
+<li><strong>持续补充"新零件"</strong>：神经网络训练久了会逐渐失去可塑性，越来越难学新东西。他们提出的"持续反向传播"（continual backprop）会在训练过程中不断加入随机初始化的新单元，让网络始终保留一些"新鲜血液"，再由反向传播来检验哪些新单元有用。Sutton 提到这项工作几年前发表在 Nature 上。</li>
+<li><strong>学会"怎么学"</strong>：这些方法本质上是让模型同时学两件事：学知识本身，以及以后该怎么学知识。正因如此，Javed 认为它们<strong>不能简单地套在现有大模型上</strong>，需要从头训练。他还提到，2016–2018 年前后的相关研究，多是在"一组任务"上学习，而他们要的是从<strong>一条连续不断的经验流</strong>里学习。</li>
+</ul>
+<h2>8. Oak Lab 想造什么：20 瓦的万亿参数"心智"</h2>
+<h3>8.1 目标</h3>
+<p>Sutton 描述的目标是一个<strong>自洽的心智</strong>：它的知识覆盖从很细的感知细节，到"坐飞机出行"这样的大概念；它能一直训练自己，又不会越学越跑偏。他认为这个目标"已经触手可及"，因为今天的计算机已经非常快。</p>
+<h3>8.2 20 瓦从哪来</h3>
+<p>节目介绍里提到的目标是：一个万亿参数、只用约 20 瓦功率（大约是人脑的功耗）的系统。</p>
+<ul>
+<li>Javed 承认，用今天的内存存一万亿个参数，功耗很可能超过 20 瓦。</li>
+<li>Sutton 算了一笔账：按摩尔定律大约每 18 个月翻一番，十年能提升约两个数量级。所以如果十年后 20 瓦可行，那么<strong>今天用约 2000 瓦做出来</strong>就算达标。</li>
+<li>Javed 认为更好的算法本身就能大幅提高效率。他还指出，大实验室被现有产品绑住，不太会去尝试那些"短期会变差、长期才会变好"的路线，而这正是小团队的机会。</li>
+</ul>
+<h3>8.3 未来的样子</h3>
+<ul>
+<li><strong>不是一个全知的大模型，而是很多个心智</strong>：同一套设计，产生许多个体，每个个体因为经历不同，学到的东西也不同。没有哪一个系统能学会所有东西。</li>
+<li><strong>对大模型的评价</strong>：Sutton 认为大模型是语言方面的重大突破，但语言大概只占智能的五分之一到四分之一。</li>
+<li><strong>人类会变得无关紧要吗？</strong> Alfred Lin 问到这个问题，Sutton 的回答是不会，世界只会变得更有趣。</li>
+<li><strong>团队</strong>：Javed 说初始团队基本已经确定，公司会从很小的规模起步，招的每个人都要真正认同他们的思路。</li>
+</ul>
+<h2>9. 我的看法</h2>
+<h3>9.1 说得对的地方</h3>
+<ul>
+<li><strong>"上线就冻住"确实是今天 AI 的硬伤。</strong> 这一点连大模型阵营也越来越认同，今年"持续学习"是最热的讨论话题之一。但到目前为止，主流产品里的"记忆"基本都是检索和把内容塞进上下文，模型参数并没有因为和你聊天而改变。Sutton 和 Javed 把这个区别讲得非常清楚。</li>
+<li><strong>"学一个世界模型再规划"抓住了要害。</strong> 围棋、数学能突飞猛进，很大原因是规则和对错都是现成的；真实世界没有这样的条件。</li>
+<li><strong>小团队的定位很清醒。</strong> 他们承认这条路短期可能不如现有产品，正因为大公司不愿走，才值得一个专门的团队去赌。</li>
+</ul>
+<h3>9.2 要打折扣的地方</h3>
+<ul>
+<li><strong>目前还是"押注"，不是"结果"。</strong> Oak Lab 还没有公开的基准、产品或可对比的成绩。持续强化学习也不是新想法，Sutton 自己已经研究了几十年。最终价值，要看他们能不能拿出让人信服的评测。</li>
+<li><strong>"合成数据是大错误"说得太绝对。</strong> 有一个反例恰好来自 Sutton 自己最爱引用的案例：AlphaGo 的自我对弈本质上也是机器自己生成的数据。更准确的说法可能是：在规则清楚、对错可以自动判定的领域，合成数据很有用；在规则需要自己从真实世界里学出来的领域，它的作用有限。</li>
+<li><strong>"语言只占智能的四分之一"是直觉，不是测量。</strong> 可以当作一种观点，但没法当作结论引用。</li>
+<li><strong>20 瓦是远景目标。</strong> 访谈里的推算更多是在说明"方向可行"，而不是一个有时间表的承诺。</li>
+</ul>
+<h3>9.3 对普通研究者的启发</h3>
+<ul>
+<li><strong>分清"状态在变"和"参数在变"。</strong> 讨论 AI 会不会学习时，先问清楚：变的是上下文和记忆，还是模型本身？很多宣传里的"会学习"，其实是前一种。</li>
+<li><strong>持续学习缺好的评测。</strong> 怎么衡量一个系统"边学边不忘"，现在还没有被广泛接受的标准，这本身就是一个值得做的研究方向。</li>
+<li><strong>"短期变差、长期变好"的路线，往往是学术界和小团队的机会。</strong></li>
+</ul>
+<h2>延伸阅读</h2>
+<ul>
+<li>[<a href="https://sequoiacap.com/podcast/rich-sutton-and-khurram-javed-why-ai-models-stop-learning-and-how-to-start-it-again" rel="nofollow">节目原页面（含文字稿）</a>](<a href="https://sequoiacap.com/podcast/rich-sutton-and-khurram-javed-why-ai-models-stop-learning-and-how-to-start-it-again" rel="nofollow">https://sequoiacap.com/podcast/rich-sutton-and-khurram-javed-why-ai-models-stop-learning-and-how-to-start-it-again</a>)</li>
+<li>[<a href="https://oaklab.ai/" rel="nofollow">Oak Lab 官网（研究文章列表）</a>](<a href="https://oaklab.ai/" rel="nofollow">https://oaklab.ai/</a>)</li>
+<li>[<a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" rel="nofollow">《苦涩的教训》原文</a>](<a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" rel="nofollow">http://www.incompleteideas.net/IncIdeas/BitterLesson.html</a>)</li>
+<li>[<a href="https://arxiv.org/abs/2208.11173" rel="nofollow">阿尔伯塔计划（arXiv 2208.11173）</a>](<a href="https://arxiv.org/abs/2208.11173" rel="nofollow">https://arxiv.org/abs/2208.11173</a>)</li>
+<li>[<a href="https://arxiv.org/abs/2306.13812" rel="nofollow">持续反向传播：Loss of Plasticity in Deep Continual Learning（arXiv 2306.13812，后发表于 Nature）</a>](<a href="https://arxiv.org/abs/2306.13812" rel="nofollow">https://arxiv.org/abs/2306.13812</a>)</li>
+<li>[<a href="https://www.woshipm.com/operate/6455804.html" rel="nofollow">中文整理：人人都是产品经理</a>](<a href="https://www.woshipm.com/operate/6455804.html" rel="nofollow">https://www.woshipm.com/operate/6455804.html</a>)</li>
+<li>[<a href="https://www.kucoin.com/news/flash/richard-sutton-discusses-ai-alignment-oak-lab-and-learning-at-waic-2026" rel="nofollow">同期 WAIC 群访报道</a>](<a href="https://www.kucoin.com/news/flash/richard-sutton-discusses-ai-alignment-oak-lab-and-learning-at-waic-2026" rel="nofollow">https://www.kucoin.com/news/flash/richard-sutton-discusses-ai-alignment-oak-lab-and-learning-at-waic-2026</a>)</li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20261010-4'></script>
+
+</html>
