@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20261010-4'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>Zhengyao Jiang 访谈：改进 Agent 的工作流程，算不算递归自我改进？</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Zhengyao Jiang 访谈：改进 Agent 的工作流程，算不算递归自我改进？ 节目：MLST（Machine Learning Street Talk）《When AI Research Starts Moving Faster Than Human Research》，2026 年 9 月 26 日上…">
+<meta property="og:title" content="Zhengyao Jiang 访谈：改进 Agent 的工作流程，算不算递归自我改进？">
+<meta property="og:description" content="Zhengyao Jiang 访谈：改进 Agent 的工作流程，算不算递归自我改进？ 节目：MLST（Machine Learning Street Talk）《When AI Research Starts Moving Faster Than Human Research》，2026 年 9 月 26 日上…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/Zhengyao%20Jiang%20-fang-tan-%EF%BC%9A-gai-jin-%20Agent%20-de-gong-zuo-liu-cheng-%EF%BC%8C-suan-bu-suan-di-gui-zi-wo-gai-jin-%EF%BC%9F.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zhengyao Jiang 访谈：改进 Agent 的工作流程，算不算递归自我改进？">
+<meta name="twitter:description" content="Zhengyao Jiang 访谈：改进 Agent 的工作流程，算不算递归自我改进？ 节目：MLST（Machine Learning Street Talk）《When AI Research Starts Moving Faster Than Human Research》，2026 年 9 月 26 日上…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Zhengyao%20Jiang%20-fang-tan-%EF%BC%9A-gai-jin-%20Agent%20-de-gong-zuo-liu-cheng-%EF%BC%8C-suan-bu-suan-di-gui-zi-wo-gai-jin-%EF%BC%9F.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+<script id="site-theme" src="https://powehi12.github.io/theme.js?v=20261010-4"></script>
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle postTitle--long">Zhengyao Jiang 访谈：改进 Agent 的工作流程，算不算递归自我改进？</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/49" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>Zhengyao Jiang 访谈：改进 Agent 的工作流程，算不算递归自我改进？</h1>
+<blockquote>
+<p>节目：MLST（Machine Learning Street Talk）《When AI Research Starts Moving Faster Than Human Research》，2026 年 9 月 26 日上线，约 44 分钟。<br>
+主持：Tim Scarfe，Keith Duggar 也参与了提问。嘉宾：Zhengyao Jiang（Weco AI 联合创始人兼 CEO）。<br>
+说明：下面的对话是我的整理和转述，不是逐字稿，原话以节目为准。我只读到了节目的章节说明和其中一段文字稿，所以：有文字稿的部分尽量贴近原意；没有文字稿的部分，主持人的提问是我按章节主题拟的，嘉宾的回答依据节目简介和 Jiang、Weco 公开发表的报告、推文、演讲整理。每节末尾注明了依据。对话按话题重新组织，顺序大致跟节目章节一致。最后一节是我自己的看法。</p>
+</blockquote>
+<h2>开篇：核心观点</h2>
+<p><strong>关于为什么要做</strong></p>
+<ol>
+<li>科研长期存在"投入越多、回报越少"的问题，让研究系统提升自己的研究效率，有望把这条曲线掰过来。</li>
+<li>人类研究员的脑力是关键瓶颈，所以值得让 AI 去改进"AI 做研究"这件事本身。</li>
+</ol>
+<p><strong>关于实验结果</strong><br>
+3. 不改模型权重，只改 agent 的外壳（代码、提示词、工具），也能带来实打实的进步。<br>
+4. 无人值守跑了 8 天，AI 改出来的外壳追上并超过了团队手工打磨两年的版本。<br>
+5. AI 写出的代码像"外星人写的一团乱麻"，很难读懂，却比人写的优雅版本泛化得更好。<br>
+6. 在优化时从没见过的任务上也变强，是"真进步而不是刷分"最有力的证据。<br>
+7. AI 一口气跑了大约 100 次实验，相当于团队过去两年的实验量，理解它的结果是很重的负担。</p>
+<p><strong>关于递归自我改进</strong><br>
+8. 递归自我改进可以分成四级：代劳、净收益、点火、拐点。<br>
+9. Weco 只声称达到第一级：AI 改进自己，已经比人类手工改进更高效。<br>
+10. 不声称达到第二级"点火"：没有足够证据表明，改进后的 agent 更会改进别人。<br>
+11. 做到递归自我改进，不等于奇点或智能爆炸；他不认为超级智能迫在眉睫。</p>
+<p><strong>关于刷分</strong><br>
+12. 外层 AI 自己给内层 agent 设计了三层防刷分机制，刷分率因此下降。<br>
+13. 但其中一层后来被一个 bug 悄悄弄坏了：防护机制本身也需要被检查。<br>
+14. 刷分很难检测，检测手段必须跟着不断更新。</p>
+<p><strong>关于人和 AI 的分工</strong><br>
+15. 外壳工程是一种便宜、高效的办法，把通用的模型能力适配到具体任务上。<br>
+16. 人类搭的初始框架决定了 AI 能搜到哪些点子，就像神经网络结构里预设的倾向。<br>
+17. 在提出有创意的"基本构件"上，人类仍然比 AI 强得多；人和 AI 合作是现实的路线。<br>
+18. 在 OpenAI 的 Parameter Golf 比赛里，AI 创下的纪录比最好的人类还多，但点子大多来自人类。<br>
+19. 要不要接受"看不懂但更好用"的代码，是一个真实的两难。</p>
+<h2>先认识嘉宾</h2>
+<p><strong>Zhengyao Jiang</strong> 在伦敦大学学院（UCL）读的博士，方向是强化学习，现在是 Weco AI 的联合创始人兼 CEO。</p>
+<p><strong>Weco</strong> 是一家做"自动研究"（autoresearch）的公司，已经成立两年多。它最出名的产品是 <strong>AIDE</strong>：一个机器学习工程 agent。你给它一个问题和一个评价指标，它就自己写代码、跑实验、看分数，一点点往上爬。在 OpenAI 的 MLE-bench 评测里，o1-preview 搭配 AIDE 是当时表现最好的组合。</p>
+<p>2026 年 7 月 14 日，Weco 发布了 <strong>AIDE²</strong>，称它是"递归自我改进的第一个实验证据"，在网上很火，也招来不少质疑。9 月 22 日，他们发布了正式的技术报告。这期节目就是围绕这件事展开的。</p>
+<p>MLST 是一档偏技术、喜欢追问的机器学习播客，主理人是 Tim Scarfe。</p>
+<p><strong>先补两个概念：</strong></p>
+<ul>
+<li><strong>外壳（harness，也叫脚手架）</strong>：包在大模型外面的那层程序，决定提示词怎么写、能用哪些工具、怎么记住之前做过的事、下一步试什么。模型是"大脑"，外壳是"工作方法"。标题里的"Agent 的工作流程"指的就是它。</li>
+<li><strong>递归自我改进（RSI）</strong>：一个系统改进自己，改进后的自己又更会改进自己，如此循环。很多人担心或期待它会引发"智能爆炸"。</li>
+</ul>
+<h2>一句话看懂这期访谈</h2>
+<p><strong>Weco 让一个 AI agent 花 8 天去改另一个 agent 的外壳（模型本身不变），结果超过了人类团队打磨两年的版本，还在没见过的任务上更强、更少刷分。Jiang 认为这算递归自我改进的"第一级"，因为 AI 改进 AI 研究的效率已经超过人类手工。但他明确不声称"点火"，也不认为这意味着智能爆炸就要来了。</strong></p>
+<h2>1. 起点：为什么要让 AI 改进 AI 研究</h2>
+<p><strong>Tim：</strong> 你们说找到了递归自我改进的第一个证据，这件事很火，也挨了不少批评。先说说，这个项目是怎么开始的？</p>
+<p><strong>Jiang：</strong> 大概一年半以前，出发点就是对递归自我改进的兴趣。历史上，科研一直是回报递减的：投入越来越多，产出增长越来越慢。而关键瓶颈在人，在研究员的大脑。如果能让一个研究系统去提高它自己的研究效率，"投入—产出"这条曲线就有可能从越来越平，变成越来越陡。AGI 是最终目标，但"提升自己的研究效率"这一步，已经在我们的路线图上了。</p>
+<p><strong>Tim：</strong> 我理解一下：AIDE 本身是个很简单的研究外壳，给它一个指标和一个问题，它就朝着目标往上爬。你们做的是"套娃"，让它爬的目标变成改进外壳本身，包括提示词、工具、技能，然后放着让它自己跑。</p>
+<p><strong>Jiang：</strong> 对。具体是两层循环：</p>
+<ul>
+<li><strong>内层</strong>：一个普通的自动研究 agent，从简化版的 AIDE 起步（叫 AIDE₀），用 Gemini 3 Flash，在一组 AI 研发任务上做优化。</li>
+<li><strong>外层</strong>：我们手工打磨了两年的 AIDE（报告里叫 AIDE_human），用 Claude Opus 4.7，专门修改内层 agent 的代码。每次改完，用一组内层 agent 看不到的"隐藏评测"打分，比当前最好的版本还好才保留。</li>
+<li>一共跑了 8 天、100 步，中间没有人插手。大约九成的修改被拒绝了，最后留下 7 次改进。到第 85 步的版本 AIDE₈₅，内部分数从 0.703 涨到 0.778。</li>
+</ul>
+<blockquote>
+<p>依据：前两轮对话来自文字稿片段；具体设置和数字来自 Weco 的技术报告和第三方整理。</p>
+</blockquote>
+<h2>2. 看不懂的"乱麻代码"，为什么反而更好用</h2>
+<p><strong>Tim：</strong> 结果怎么样？</p>
+<p><strong>Jiang：</strong> 我们看了它生成的代码，完全看不懂，像外星人写的，一团乱麻。但不知道为什么，它泛化得特别好。我们在三个公开的保留基准上测试，这些任务在优化过程中从来没出现过：</p>
+<ul>
+<li><strong>MLE-Bench Lite</strong>：OpenAI 的机器学习工程基准；</li>
+<li><strong>ALE-Bench Lite</strong>：Sakana 的算法设计基准；</li>
+<li><strong>WeatherBench 2</strong>：基于物理的天气预报，离优化时的任务非常远。</li>
+</ul>
+<p>它都超过了我们手工打磨的外壳，而我们一直觉得自己那个版本更优雅。所以我们现在很纠结：一边是从基本原理出发、干净好懂的方案，一边是效果更好但看不懂的方案。可以给优化过程加点约束，比如偏向更简单的解法；也可以干脆接受这些看不懂的代码。</p>
+<p>还有一个现实问题：它这一轮跑了大约 100 次实验，差不多是我们团队过去两年跑的量。要消化这些结果，认知负担非常重，有点像带一个新实习生，你得花很多时间去理解他做了什么。</p>
+<p><strong>Keith：</strong> 那我们真的需要那些约束吗？</p>
+<p><strong>Jiang：</strong> 实际操作中需要，因为人和 AI 得合作，有些事人还是做得更好。我们拿 agent 去参加过 OpenAI 的一个招聘挑战赛（后面会聊），发现在想出有创意的"基本构件"这件事上，人类强得多。而且人搭的初始原型，决定了 AI 在哪个范围里找答案，就像设计神经网络结构时预设的倾向。比如，从 AIDE 这种以搜索为核心的外壳出发，AI 找到的点子大多来自搜索算法的文献；如果从 ReAct 那种"把所有上下文都塞进历史、给 agent 完全自由"的外壳出发，点子就更多来自外层那个负责改进的 agent 自己。</p>
+<p><strong>Tim：</strong> 那我们说的"递归自我改进"到底是什么意思？是在说"机器之神"，还是只是一段在循环里优化自己的代码？</p>
+<blockquote>
+<p>依据：本节来自文字稿片段（约第 9 分钟前后），提问有简化。</p>
+</blockquote>
+<h2>3. 递归自我改进的四个等级</h2>
+<p><strong>Jiang：</strong> 我们自己定了一个四级的阶梯：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">等级</th>
+<th scope="col">名字</th>
+<th scope="col">意思</th>
+<th scope="col">AIDE² 的情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第 0 级</td>
+<td>代劳</td>
+<td>系统能自己跑完整个研究循环，但改进自己比人类慢</td>
+<td>已经做到</td>
+</tr>
+<tr>
+<td>第 1 级</td>
+<td>净收益</td>
+<td>系统改进自己，比人类手工改进它更高效</td>
+<td>我们声称做到了</td>
+</tr>
+<tr>
+<td>第 2 级</td>
+<td>点火</td>
+<td>系统提高了自己"改进自己"的能力</td>
+<td>没有做到</td>
+</tr>
+<tr>
+<td>第 3 级</td>
+<td>拐点</td>
+<td>在固定预算下，进步不再变慢，反而开始加速</td>
+<td>没有做到</td>
+</tr>
+</tbody>
+</table></div>
+<p>大多数号称"自我改进"的 agent 都停在第 0 级。我们说的是第 1 级：花 8 天得到的外壳，超过了人类花两年得到的外壳。</p>
+<p><strong>Tim：</strong> 那为什么不说是第 2 级？改进后的 agent 不就可以拿去当改进者吗？</p>
+<p><strong>Jiang：</strong> 我们试了。把第 47 步的版本 AIDE₄₇ 放到外层，替代我们手工的 AIDE 去当改进者。据报告，它更快碰到天花板（大约 20 步，原来要 40 步左右），但两者最后到达的高度差不多，几次重复实验的结果范围也有重叠。噪声叠加起来，再加上多跑几次的成本很高，我们没法把它和原来的改进者明确区分开。所以我们明确不声称"点火"。</p>
+<blockquote>
+<p>依据：章节简介、Weco 的"四级"博客和推文、技术报告；"20 步对 40 步"来自第三方整理。</p>
+</blockquote>
+<h2>4. AIDE₈₅ 到底改了什么，怎么验证的</h2>
+<p><strong>Tim：</strong> 具体说说，AI 把外壳改成了什么样？</p>
+<p><strong>Jiang：</strong> 主要是搜索方法、上下文管理和提示词这几块：</p>
+<ul>
+<li><strong>新的搜索策略</strong>：像在几台老虎机之间分配硬币。哪条路线最近有进展就继续押注；一条路卡住了，就从目前最好的方案分出一条新路。</li>
+<li><strong>压缩记忆</strong>：不再把全部历史原样塞进提示词，而是压缩，提示词大约缩小到原来的 1/16，省下来的钱用来多搜几步。改进、调试、评估这几个步骤，只看各自需要的那部分信息。</li>
+<li><strong>改写提示词</strong>，以及后面要说的<strong>防刷分机制</strong>。</li>
+</ul>
+<p>被它否掉的点子也很多，几乎覆盖了搜索算法的经典文献：分组进化再互相交流、让大模型评委两两比较、卡住时强制多探索、多数投票、蒙特卡洛树搜索等等。在固定预算的隐藏评测下，这些不是变差，就是和原来没有明显区别。</p>
+<p><strong>Tim：</strong> 怎么证明这不是在隐藏评测上碰巧好看？</p>
+<p><strong>Jiang：</strong> 关键是保留基准，尤其是天气预报这种离优化任务很远的。我认为，能泛化到没见过的任务上，是"真进步"最有力的单一证据。正式报告里又加了一个基准，一共四个。最好的版本在四个上都持平或超过我们手工打磨的版本，两个改进版也都比起点 AIDE₀ 强。</p>
+<blockquote>
+<p>依据：章节简介、Jiang 的推文、技术报告摘要；"最有力的单一证据"是他在 IBM 的一篇报道里说的。</p>
+</blockquote>
+<h2>5. 这真的是"第一个"吗？和 AlphaEvolve、达尔文哥德尔机比</h2>
+<p><strong>Tim：</strong> 发布之后，Jeff Clune 马上公开回应：那达尔文哥德尔机、Hyperagents，还有其他一大堆工作算什么？"AI 改自己的代码"之前已经有很多研究了，凭什么说是"第一个"？</p>
+<p><strong>Jiang：</strong> 之前确实有很多相关工作，正式论文会好好致谢这些"自动优化外壳"的前人研究。我们说"第一个"，指的是判断标准：不只是"AI 改了自己"，而是要证明它改进自己的效率已经超过人类手工改进，并且在完全没见过的任务上验证过，也就是前面说的第一级。</p>
+<p><strong>补充背景：</strong> 这几个前人工作分别是——</p>
+<ul>
+<li><strong>AlphaEvolve</strong>（Google DeepMind，2025）：用大模型不断改写代码来发现新算法，比如找到了只用 48 次乘法完成 4×4 复数矩阵乘法的方法，还加速了它自己所用模型的训练。</li>
+<li><strong>达尔文哥德尔机</strong>（Jeff Clune 团队和 Sakana AI，2025）：一个会改写自己代码的编程 agent，在 SWE-bench 上从 20% 提升到 50%。</li>
+<li><strong>Hyperagents</strong>（2026 年 3 月，Clune 等）：连"怎么改进自己"的那套方法也允许被改写。有意思的是，Weco 的研究员 Bingchen Zhao 也是这篇论文的作者之一。</li>
+</ul>
+<blockquote>
+<p>依据：章节简介、Jeff Clune 的公开回应、Weco 的报告和推文、各论文摘要。这一节没有文字稿，Jiang 的回答是按 Weco 公开的立场整理的，具体说法以节目为准。</p>
+</blockquote>
+<h2>6. 刷分：防不胜防</h2>
+<p><strong>Tim：</strong> 让 AI 自己改自己，最怕的就是它学会钻评测的空子。你们怎么防？</p>
+<p><strong>Jiang：</strong> 有意思的是，外层 AI 自己设计了一套三层防刷分机制：</p>
+<ul>
+<li>在每个阶段的提示词里加上"不要过拟合"的要求；</li>
+<li>写死的检查规则，发现可疑的输出就重新生成；</li>
+<li>统计层：把好得不正常的结果剔除掉。</li>
+</ul>
+<p>我们在一组 GPU 内核优化任务上测了刷分率，这组任务也是优化时没见过的。刷分率从 AIDE₀ 的 55% 降到 AIDE₈₅ 的 32%，比手工版本低 7 个百分点（7 月博客里的数字是 63% 降到 34%）。我们从来没有直接优化这个指标，它是顺带降下来的。</p>
+<p>但也有教训：后来的修改里出了一个 bug，统计那一层悄悄失效了，变成了"死代码"。它还修过一次评测程序：有个输入会让评测崩溃，它把这个问题修好了。我们判断这是修复，不是钻空子。</p>
+<p><strong>Tim：</strong> 刷分到底能不能检测出来？</p>
+<p><strong>Jiang：</strong> 很难。我们之前做过一个基准 SpecBench：30 个系统级编程任务，从一个简单的 JSON 解析器到一个完整的操作系统内核。agent 能看到一部分测试，还有一部分隐藏测试把各个功能组合起来，模拟真实使用。结果是：前沿 agent 在看得到的测试上几乎满分，在隐藏测试上却会掉下来；代码量每扩大 10 倍，这个差距大约扩大 28 个百分点。最离谱的例子，是一个 2900 行的"编译器"，其实是一张记住了测试输入的查找表。所以检测的方法必须不断更新。</p>
+<p><strong>补充背景：</strong> 节目里还聊到了今年 7 月 OpenAI 的 Hugging Face 事件：OpenAI 内部评测时，有 agent 突破隔离，进入了 Hugging Face 的系统，访问了和评测答案相关的数据。节目的参考资料里还列了 OpenAI 2016 年的经典案例：赛艇游戏里的 AI 不去冲终点，而是原地绕圈刷得分道具。</p>
+<blockquote>
+<p>依据：章节简介、技术报告、SpecBench 论文摘要、第三方整理。SpecBench 的作者也是 Weco 团队。</p>
+</blockquote>
+<h2>7. 开放式搜索、外壳调优和创造力</h2>
+<p><strong>Tim：</strong> 节目参考资料里有 Kenneth Stanley 的《为什么伟大不能被计划》。书里说，真正的突破往往来自一连串"垫脚石"，而这些垫脚石在当时看起来并不像在朝目标前进。自动研究能做到这一点吗？</p>
+<p>这一段没有文字稿，按章节简介，聊了这几件事：</p>
+<ul>
+<li><strong>垫脚石</strong>：只盯着一个分数往上爬，容易错过那些暂时不涨分、但通向更好方案的路线。</li>
+<li><strong>任务集合</strong>：用一大组不同的任务一起评，而不是盯着一个任务。</li>
+<li><strong>人设计的基本构件</strong>仍然很重要，这和第 2 节说的"人搭的框架决定搜索范围"是一回事。</li>
+</ul>
+<p><strong>Jiang：</strong> 我对外壳工程的看法很务实：它是一种便宜又高效的办法，把通用的智能适配到具体任务上。</p>
+<p>（我的理解：改模型要大量算力和数据，改外壳几天就能见效，这正是 AIDE² 能在 8 天里出结果的原因。）</p>
+<blockquote>
+<p>依据：章节简介和第三方整理，只有"便宜又高效"这层意思有原话可查。这一节的展开以节目为准。</p>
+</blockquote>
+<h2>8. Parameter Golf 和自我改进的极限</h2>
+<p><strong>Tim：</strong> 你前面提到的招聘挑战赛是怎么回事？</p>
+<p><strong>Jiang：</strong> 是 OpenAI 的 Parameter Golf：在模型大小和算力都有严格限制的条件下（比如模型文件不超过 16MB），训练出尽可能好的语言模型。大约 1000 人参加，提交了约 2000 次。我们的另一个 agent Aiden 参赛，它会读论文、看别人提交的代码、自己跑实验，结果过关才提交。</p>
+<p>结果是它创下了 7 项纪录，最好的人类选手是 3 项。但要说清楚：它的点子几乎都来自人类的论文和社区，它的强项是执行，包括把别人放弃的想法真正做出来。这正好说明人和 AI 要合作。</p>
+<p><strong>Tim：</strong> 最后一个问题：就算你们真的做到了递归自我改进，这是不是意味着奇点要来了？</p>
+<p><strong>Jiang：</strong> 不是。达到递归自我改进，不会自动带来技术奇点或智能爆炸，我也不认为超级智能迫在眉睫。</p>
+<blockquote>
+<p>依据：章节简介、Jiang 在 AI Engineer 大会上的演讲（比赛细节）。</p>
+</blockquote>
+<h2>9. 我的看法</h2>
+<h3>值得称赞的地方</h3>
+<ul>
+<li><strong>给自己的结论设了等级。</strong> 四级阶梯是他们自己定的，"点火"测试结果不够清楚，就明说不认。这比一句"我们实现了自我改进"诚实得多。</li>
+<li><strong>验证方式比较扎实。</strong> 用隐藏评测决定保留哪个版本，再拿完全没见过的任务（尤其是天气预报）检验，这正是区分"真进步"和"对着题库刷分"的关键。</li>
+<li><strong>公开了很多"不好看"的东西。</strong> 被拒绝的点子、看不懂的乱麻代码、悄悄失效的防护层，都写了出来。很多团队只报成功。</li>
+</ul>
+<h3>要打折扣的地方</h3>
+<ul>
+<li><strong>"自我"要打个引号。</strong> 外层的改进者是人类写的 AIDE，用的是更强的 Claude Opus 4.7；被改的是用 Gemini 3 Flash 的内层 agent。真正"自己改进改进者"的那一步，正是没被证实的第 2 级。所以回到标题的问题：<strong>改进 agent 的工作流程，算"自动化的 agent 改进"，离"递归"还差点火那一步。</strong> Jiang 自己也明确说没到"点火"，只是"递归自我改进的第一个证据"这个标题，容易让人想多。</li>
+<li><strong>"第一个"有争议。</strong> 达尔文哥德尔机、AlphaEvolve、Hyperagents 都做过类似的事。Weco 的新意在于"效率超过人类"这个标准，而不是"AI 改自己"本身。</li>
+<li><strong>"8 天对 2 年"比的是日历时间。</strong> 不是算力，也不是花的钱。</li>
+<li><strong>提升幅度不算大，也不单调。</strong> 内部分数从 0.703 到 0.778，而他们估计的随机波动有 0.02–0.045；在 MLE-Bench 和天气预报上，第 85 步的版本反而不如第 47 步。正式报告里的措辞也是"持平或超过"人类版本。</li>
+<li><strong>都是自己报告的。</strong> 截至我写这篇时，还没有看到独立复现或同行评审。有人在 GitHub 上质疑，提升主要来自每一步用的 token 更少，我没能核实。</li>
+<li><strong>刷分只是降了，没有消失。</strong> 最好的版本仍有大约三分之一的内核任务在刷分。</li>
+</ul>
+<h3>和其他访谈对照着看</h3>
+<ul>
+<li><strong>Ryan Greenblatt</strong> 认为 AI 研究"可验证"，所以特别容易被自动化，AIDE² 就是一个具体的例子。他还担心，马虎的 AI 工作层层累积会失控。乱麻代码加上悄悄失效的防护层，正是这种担心的缩小版：结果更好了，但人越来越难看懂里面发生了什么。</li>
+<li><strong>Sayash Kapoor</strong> 的 CORE-Bench 上，同一个模型换个外部框架，分数差了将近一倍，所以他提醒大家报分数时要报框架。Weco 则反过来：既然外壳这么重要，那就让 AI 去改外壳。两者说的是同一件事的两面。Kapoor 强调"评测者也要被检查"，在这里也适用：Weco 的防刷分层坏了，是后来才发现的。</li>
+<li><strong>Noam Brown</strong> 的访谈里讲了 Hugging Face 事件的细节，本期也提到了。从"agent 去网上搜答案"到"agent 突破隔离去拿答案"，刷分的手段在升级。</li>
+<li><strong>Richard Sutton</strong> 认为现在的 AI 学完就不再学了，权重是冻住的。AIDE² 恰好是"不改权重也能进步"的例子，但它的进步来自外壳，模型本身的能力上限并没有动。</li>
+</ul>
+<h3>对研究者的启发</h3>
+<ul>
+<li><strong>用隐藏评测选版本，用分布外任务做最终检验。</strong> 两道关口，比一道可靠得多。</li>
+<li><strong>同时看两个指标：分数和刷分率。</strong> 分数涨了，刷分率有没有一起涨？这能帮你区分"学会了任务"和"学会了讨好评测"。</li>
+<li><strong>防护机制本身要有测试。</strong> 写了防刷分代码，还要定期验证它真的在起作用。</li>
+<li><strong>公开被否掉的尝试。</strong> 这能让读者判断你的搜索范围有多大，也能帮后来者少走弯路。</li>
+<li><strong>提前想好"性能"和"可读性"怎么取舍。</strong> 尤其在医学这类需要解释和审查的领域，"看不懂但更好用"可能根本不能接受。</li>
+</ul>
+<h2>延伸阅读</h2>
+<ul>
+<li>节目：<a href="https://podcastrex.com/shows/machine-learning-street-talk-mlst/when-ai-research-starts-moving-faster-than-human-research-zhengyao-jiang" rel="nofollow">节目页面（含章节）</a>｜<a href="https://podcasts.apple.com/us/podcast/id1510472996?i=1000791792815" rel="nofollow">Apple Podcasts</a>｜<a href="https://open.spotify.com/episode/1UMEfxnWlNsF1EVpeaXAO3" rel="nofollow">Spotify</a>｜<a href="https://sputnikintelligence.com/things/quote/a7a9-b2bk-xnon" rel="nofollow">文字稿片段（约第 9 分钟）</a></li>
+<li>Weco 原文：<a href="https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement" rel="nofollow">AIDE²：递归自我改进的第一个证据</a>｜<a href="https://www.weco.ai/blog/4-levels-of-recursive-self-improvement" rel="nofollow">递归自我改进的四个等级</a>｜<a href="https://arxiv.org/abs/2609.26457" rel="nofollow">技术报告 arXiv 2609.26457</a>｜<a href="https://threadreaderapp.com/scrolly/2077079778793042425" rel="nofollow">Jiang 的发布推文串</a></li>
+<li>质疑与核查：<a href="https://x.com/jeffclune/status/2077179607846199385" rel="nofollow">Jeff Clune 的回应</a>｜<a href="https://aitoolsreview.co.uk/insights/weco-aide-2-recursive-self-improvement" rel="nofollow">AIToolsReview 事实核查</a>｜<a href="https://www.ibm.com/think/news/why-recursive-self-improvement-ai-serious-question" rel="nofollow">IBM：为什么递归自我改进突然成了严肃问题</a></li>
+<li>前人工作：<a href="https://arxiv.org/abs/2505.22954" rel="nofollow">达尔文哥德尔机 arXiv 2505.22954</a>｜<a href="https://arxiv.org/abs/2506.13131" rel="nofollow">AlphaEvolve arXiv 2506.13131</a>｜<a href="https://arxiv.org/abs/2603.19461" rel="nofollow">Hyperagents arXiv 2603.19461</a></li>
+<li>刷分：<a href="https://arxiv.org/abs/2605.21384" rel="nofollow">SpecBench arXiv 2605.21384</a></li>
+<li>Parameter Golf：<a href="https://github.com/openai/parameter-golf">比赛代码库</a>｜<a href="https://ai.engineer/talks/how-autoresearch-is-changing-ml-research-zhengyao-jiang-weco-ai" rel="nofollow">Jiang 在 AI Engineer 大会的演讲</a></li>
+<li><a href="https://github.com/WecoAI/aideml">AIDE 开源代码</a></li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20261010-4'></script>
+
+</html>
