@@ -3,6 +3,29 @@
  * Warm charcoal surfaces, high-contrast type, and restrained terracotta accents.
  */
 
+/* Latin-only web fonts; CJK glyphs intentionally use system sans fallbacks. */
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/SourceSerif4-Regular.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./fonts/SourceSerif4-Semibold.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+    U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   color-scheme: dark;
 
@@ -30,7 +53,8 @@
   --font-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei",
     "Noto Sans CJK SC", "Source Han Sans SC", Arial, sans-serif;
-  --font-reading: var(--font-ui);
+  --font-reading: "Source Serif 4", Georgia, "PingFang SC", "Microsoft YaHei",
+    "Noto Sans CJK SC", serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
   --radius-xs: 4px;
@@ -577,34 +601,42 @@ body.home-page #content > div:first-child {
 }
 
 #postBody {
-  max-width: 760px;
+  max-width: 768px;
   padding-bottom: 24px !important;
   margin-right: auto;
   margin-left: auto;
   border-bottom: 1px solid var(--claude-border) !important;
 }
 
+/* Reading metrics adapted from muyexi's Claude Markdown Viewer theme:
+ * https://gist.github.com/muyexi/44d374e738cd89307dc3f0e911132107
+ * The reference leaves body size implicit; use a 16px baseline here.
+ */
 .markdown-body {
   color: var(--claude-text-secondary) !important;
   background: transparent !important;
   font-family: var(--font-reading) !important;
-  font-size: 15px !important;
+  font-size: 16px !important;
   font-weight: 400;
-  line-height: 1.5 !important;
+  line-height: 1.7 !important;
   letter-spacing: 0;
   font-kerning: normal;
   font-synthesis: none;
   word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .markdown-body p,
 .markdown-body li {
-  line-height: 1.5;
+  line-height: 1.7;
 }
 
 .markdown-body p {
-  margin-top: 0;
-  margin-bottom: 8px;
+  margin: 0;
+}
+
+.markdown-body p + p {
+  margin-top: 14px;
 }
 
 .markdown-body h1,
@@ -613,53 +645,50 @@ body.home-page #content > div:first-child {
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  margin: 12px 0 6px !important;
+  margin: 24px 0 4px !important;
+  padding: 0 !important;
+  border: 0 !important;
   color: var(--claude-text) !important;
   font-family: var(--font-reading) !important;
   font-weight: 600 !important;
+  line-height: 1.7;
   letter-spacing: 0;
   scroll-margin-top: 26px;
   text-wrap: balance;
 }
 
 .markdown-body h1 {
-  margin: 24px 0 8px !important;
-  padding: 0 0 4px !important;
-  border: 0 !important;
-  border-bottom: 1px solid var(--claude-border) !important;
+  margin-top: 12px !important;
   font-size: 22px !important;
-  line-height: 1.25;
-}
-
-.markdown-body h1:first-child {
-  margin-top: 0 !important;
 }
 
 .markdown-body h2 {
-  margin: 20px 0 8px !important;
-  padding: 0 !important;
-  border: 0 !important;
-  font-size: 20px !important;
-  line-height: 1.3;
+  margin-top: 12px !important;
+  font-size: 18px !important;
 }
 
 .markdown-body h3 {
-  margin: 16px 0 6px !important;
-  color: var(--claude-text) !important;
-  font-size: 18px !important;
-  line-height: 1.38;
-}
-
-.markdown-body h4 {
-  margin: 12px 0 6px !important;
+  margin-top: 8px !important;
   font-size: 16px !important;
-  line-height: 1.42;
 }
 
+.markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  margin: 12px 0 6px !important;
-  font-size: 15px !important;
+  font-size: 14px !important;
+}
+
+/* Match the reference's spacing between top-level Markdown blocks. */
+.markdown-body > * + * {
+  margin-top: 14px !important;
+}
+
+.markdown-body > :first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body > hr + :is(h1, h2, h3, h4) {
+  margin-top: 0 !important;
 }
 
 .markdown-body a {
@@ -693,7 +722,7 @@ body.home-page #content > div:first-child {
 
 .markdown-body blockquote {
   margin: 12px 0 !important;
-  padding: 8px 12px !important;
+  padding: 4px 16px !important;
   color: var(--claude-text) !important;
   border: 0 !important;
   border-left: 3px solid var(--claude-accent) !important;
@@ -707,7 +736,7 @@ body.home-page #content > div:first-child {
 
 .markdown-body hr {
   height: 1px !important;
-  margin: 20px 0 !important;
+  margin: 12px 6px !important;
   border: 0 !important;
   background: var(--claude-border) !important;
 }
@@ -723,7 +752,8 @@ body.home-page #content > div:first-child {
   border: 1px solid rgba(238, 155, 125, 0.24) !important;
   border-radius: var(--radius-xs) !important;
   background: #392a24 !important;
-  font-size: 0.88em;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .markdown-body pre,
@@ -769,14 +799,16 @@ body.home-page #content > div:first-child {
   max-width: 100%;
   overflow-x: auto !important;
   overflow-y: hidden;
-  padding: 12px !important;
+  padding: 16px !important;
   color: var(--claude-code-text) !important;
-  font-size: 14px !important;
+  font-size: 13px !important;
   line-height: 1.5 !important;
   -webkit-overflow-scrolling: touch;
 }
 
 .markdown-body pre code {
+  font-size: inherit;
+  line-height: inherit;
   color: var(--claude-code-text) !important;
   background: transparent !important;
 }
@@ -860,14 +892,20 @@ body.home-page #content > div:first-child {
 
 .markdown-body ul,
 .markdown-body ol {
-  margin: 0 0 8px;
-  padding-left: 1.6em !important;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 0 12px;
+  padding-left: 32px !important;
 }
 
 /* Avoid doubled gaps from the base Markdown styles, especially in nested lists. */
 .markdown-body li > p {
-  margin-top: 0;
-  margin-bottom: 4px;
+  margin: 0;
+}
+
+.markdown-body li > p + p {
+  margin-top: 14px;
 }
 
 .markdown-body li > :last-child {
@@ -895,8 +933,12 @@ body.home-page #content > div:first-child {
   margin-bottom: 0;
 }
 
+.markdown-body li {
+  padding-left: 8px;
+}
+
 .markdown-body li + li {
-  margin-top: 2px;
+  margin-top: 0;
 }
 
 .markdown-body li::marker {
@@ -1158,7 +1200,7 @@ body.home-page #content > div:first-child {
 
   body.post-page.has-collapsible-toc #content.has-collapsible-toc {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 760px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 768px minmax(0, 1fr);
     column-gap: 24px;
     align-items: start;
   }
@@ -1280,32 +1322,6 @@ body.home-page #content > div:first-child {
     display: inline-flex !important;
     width: 100%;
     padding: 0 !important;
-  }
-
-  .markdown-body {
-    font-size: 15px !important;
-    line-height: 1.5 !important;
-  }
-
-  .markdown-body p,
-  .markdown-body li {
-    line-height: 1.5;
-  }
-
-  .markdown-body h1 {
-    font-size: 22px !important;
-  }
-
-  .markdown-body h2 {
-    font-size: 19px !important;
-  }
-
-  .markdown-body h3 {
-    font-size: 17px !important;
-  }
-
-  .markdown-body h4 {
-    font-size: 16px !important;
   }
 
   .markdown-body markdown-accessiblity-table > table,
