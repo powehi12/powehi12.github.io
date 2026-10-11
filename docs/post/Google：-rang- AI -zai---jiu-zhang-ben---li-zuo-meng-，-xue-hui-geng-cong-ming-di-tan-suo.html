@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20261011-1'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>Google：让 AI 在&quot;旧账本&quot;里做梦，学会更聪明地探索</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="让 AI 在&#x27;旧账本&#x27;里做梦，学会更聪明地探索 论文：Dream-RSI: Recursive Self-Improvement through Evolving Worlds 作者：Tong Zheng、Xidong Wu、Zheng Zhang 等 17 人（Google、Google DeepMind、马里…">
+<meta property="og:title" content="Google：让 AI 在&quot;旧账本&quot;里做梦，学会更聪明地探索">
+<meta property="og:description" content="让 AI 在&#x27;旧账本&#x27;里做梦，学会更聪明地探索 论文：Dream-RSI: Recursive Self-Improvement through Evolving Worlds 作者：Tong Zheng、Xidong Wu、Zheng Zhang 等 17 人（Google、Google DeepMind、马里…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/Google%EF%BC%9A-rang-%20AI%20-zai---jiu-zhang-ben---li-zuo-meng-%EF%BC%8C-xue-hui-geng-cong-ming-di-tan-suo.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Google：让 AI 在&quot;旧账本&quot;里做梦，学会更聪明地探索">
+<meta name="twitter:description" content="让 AI 在&#x27;旧账本&#x27;里做梦，学会更聪明地探索 论文：Dream-RSI: Recursive Self-Improvement through Evolving Worlds 作者：Tong Zheng、Xidong Wu、Zheng Zhang 等 17 人（Google、Google DeepMind、马里…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Google%EF%BC%9A-rang-%20AI%20-zai---jiu-zhang-ben---li-zuo-meng-%EF%BC%8C-xue-hui-geng-cong-ming-di-tan-suo.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+<script id="site-theme" src="https://powehi12.github.io/theme.js?v=20261011-1"></script>
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">Google：让 AI 在&#34;旧账本&#34;里做梦，学会更聪明地探索</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/51" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>让 AI 在"旧账本"里做梦，学会更聪明地探索</h1>
+<blockquote>
+<p>论文：<em>Dream-RSI: Recursive Self-Improvement through Evolving Worlds</em><br>
+作者：Tong Zheng、Xidong Wu、Zheng Zhang 等 17 人（Google、Google DeepMind、马里兰大学、弗吉尼亚大学）<br>
+时间：2026 年 9 月 14 日｜<a href="https://arxiv.org/abs/2609.14858" rel="nofollow">arXiv 2609.14858</a>｜<a href="https://github.com/zhengkid/Dream-RSI">GitHub</a>（截至我读时，仓库里只有论文 PDF 和项目页，完整代码和复现脚本还在准备中）</p>
+</blockquote>
+<p><strong>一句话版本：</strong> 不改模型一个参数，只让 AI 反复"复盘"自己过去的探索记录、在里面练指挥。结果在一个算法任务上，它用少 42% 的尝试次数，做出了快 1.22 倍的程序；和另一个系统比，调用次数少了 160 多倍。</p>
+<h2>开场：一支寻宝队和它的队长</h2>
+<p>想象一个巨大的迷宫，里面埋着宝藏，比如一个更快的算法、一个更好的数学构造。</p>
+<p>你派出一支寻宝队：10 个队员（AI 编程助手），每人一次挖一段路，挖完有人打分。队长要做三个决定：</p>
+<ul>
+<li><strong>接着挖哪条路？</strong></li>
+<li><strong>一次派几个人、分头挖哪几条？</strong></li>
+<li><strong>什么时候收工？</strong></li>
+</ul>
+<p>队员的本事是固定的。整支队伍找得好不好，很大程度看<strong>队长会不会指挥</strong>。</p>
+<p>问题来了：怎么让队长变聪明？最直接的办法是换一种指挥方式，再派队伍实地跑一趟看结果。但跑一趟要花很多钱、很多时间，而且要跑完才知道好坏。想试 20 种指挥方式，就得跑 20 趟。</p>
+<p>这篇论文的想法很妙：<strong>过去每一趟寻宝，其实都留下了一本完整的账本，记着去过哪、挖到什么、得了几分。为什么不让队长拿着这些旧账本"做梦"，在梦里练指挥？</strong></p>
+<blockquote>
+<p>这篇论文问的是：<strong>能不能几乎不花新钱，只靠反复复盘旧记录，让 AI 的探索策略一轮比一轮聪明？</strong></p>
+</blockquote>
+<h2>第一幕：AI 做研究，"指挥"是个大问题</h2>
+<p>先看清楚这套系统里有谁：</p>
+<ul>
+<li><strong>干活的</strong>：一个 AI 编程助手（Gemini 3.1 Pro 或 Gemini 3.7 Flash，通过 Gemini 命令行工具运行）。它负责写代码、改代码。</li>
+<li><strong>打分的</strong>：一个评测程序，比如测代码跑多快、数学结果多好。</li>
+<li><strong>指挥的</strong>：一段"探索策略"程序，决定扩展哪个节点、几个一起并行、什么时候停。</li>
+</ul>
+<p>注意：这篇论文<strong>完全不碰干活的那个模型</strong>，一次梯度更新都没有，改的只是指挥。</p>
+<p>指挥难改，原因有两个：</p>
+<ul>
+<li><strong>写死的指挥跟不上</strong>：搜索空间越来越大，一套固定规则很快就不够用。</li>
+<li><strong>边跑边改太贵</strong>：指挥得好不好，要等一整轮探索跑完才知道，每试一种指挥方式都要花一整轮的钱。</li>
+</ul>
+<h2>第二幕：把旧账本变成"梦境"</h2>
+<p>每一轮实战，都会留下一棵<strong>发现树</strong>：</p>
+<ul>
+<li>树根是最初的代码；</li>
+<li>每个节点是一次尝试，记着当时的文件、产出、评测结果和分数；</li>
+<li>每个节点都知道自己是从哪个节点"接着改"出来的。</li>
+</ul>
+<p>"做梦"就是在这棵旧树上<strong>重放</strong>：</p>
+<ul>
+<li>新的指挥策略只能看到已经"揭开"的那部分树，然后决定下一批揭开哪些节点。</li>
+<li>揭开时<strong>不调用 AI、不重新评测</strong>，直接把当年记录下的结果翻出来。</li>
+<li>如果新策略想走一条当年没人走过的路，那里什么都没有，揭不出东西。</li>
+</ul>
+<p>你可以把它想成<strong>看比赛录像练指挥</strong>：你可以决定先看哪段、同时盯哪几个人、什么时候喊停，但录像里没拍到的镜头，你永远看不到。</p>
+<p>在梦里，一个策略的得分大致是：</p>
+<blockquote>
+<p><strong>找到的最好成绩 − 花掉的尝试次数（罚分）+ 并行做得好（加分）</strong></p>
+</blockquote>
+<p>每个策略要在<strong>所有</strong>旧树上都梦一遍，取平均分。</p>
+<h2>第三幕：在梦里变强，醒来再实战</h2>
+<p>策略本身是一段 <strong>Python 代码</strong>，不是一堆参数。改策略的是另一个固定的 AI，论文叫它"策略开发 agent"。</p>
+<p>一轮循环分三步：</p>
+<ol>
+<li><strong>实战</strong>：用当前的策略跑一轮真实探索，留下一棵新树。</li>
+<li><strong>存档</strong>：把这棵树加进"梦境池"。</li>
+<li><strong>做梦</strong>：策略开发 agent 读一读过去的重放记录和分数，写出几个修改版的策略；每个版本都在所有旧树上重放打分，挑平均分最高的那个，下一轮上场。</li>
+</ol>
+<p>然后循环往复。每跑一轮，梦境池就多一个世界，这就是标题里 <strong>"不断演化的世界"</strong> 的意思：<strong>策略越好 → 探索出的新树越有价值 → 梦境越丰富 → 策略越好。</strong> 作者认为，这就是"递归自我改进"。</p>
+<h2>第四幕：考了哪些题</h2>
+<p>三个领域，一共 8 个任务：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">领域</th>
+<th scope="col">任务</th>
+<th scope="col">通俗说法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>算法工程</td>
+<td>Lasso 求解器</td>
+<td>一个经典统计工具，要让它算得又快又准。在 17 个合成数据上练，在 6 个真实数据集上考</td>
+</tr>
+<tr>
+<td>数学优化</td>
+<td>和差问题、圆填充、自相关不等式</td>
+<td>找更好的数学构造，比如在正方形里塞圆，让半径加起来尽量大</td>
+</tr>
+<tr>
+<td>GPU 内核</td>
+<td>VGG16、LayerNorm 等 4 个</td>
+<td>把神经网络里的一些计算写得更快</td>
+</tr>
+</tbody>
+</table></div>
+<p>对照组主要有两类：</p>
+<ul>
+<li><strong>固定指挥</strong>（论文叫 Recursive Fixed Exploration）：干活的 AI、打分、起点、预算全都一样，只是队长<strong>永远不学习</strong>。这是最公平的对照。</li>
+<li><strong>其他系统</strong>：比如 SimpleTES（用 GPT-OSS-120B，每个任务允许 51,200 次生成），以及数学任务上的 AlphaEvolve、OpenEvolve 等一长串。</li>
+</ul>
+<p>预算方面，用 Gemini 3.1 Pro 时，每轮是 10 个队员、每人最多 11 步，也就是最多 110 次调用。</p>
+<h2>第五幕：结果</h2>
+<p><strong>Lasso 求解器</strong>（6 个真实数据集上的平均运行时间，越低越好）：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">方法</th>
+<th scope="col">模型</th>
+<th scope="col">探索时调用 AI 的次数</th>
+<th scope="col">平均运行时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>固定指挥</td>
+<td>Gemini 3.1 Pro</td>
+<td>550</td>
+<td>3587 毫秒</td>
+</tr>
+<tr>
+<td><strong>Dream-RSI</strong></td>
+<td>Gemini 3.1 Pro</td>
+<td><strong>317</strong></td>
+<td><strong>2931 毫秒</strong></td>
+</tr>
+<tr>
+<td>固定指挥</td>
+<td>Gemini 3.7 Flash</td>
+<td>3200</td>
+<td>2517 毫秒</td>
+</tr>
+<tr>
+<td><strong>Dream-RSI</strong></td>
+<td>Gemini 3.7 Flash</td>
+<td><strong>1879</strong></td>
+<td><strong>2351 毫秒</strong></td>
+</tr>
+<tr>
+<td>SimpleTES</td>
+<td>GPT-OSS-120B</td>
+<td>51,200</td>
+<td>3805 毫秒</td>
+</tr>
+<tr>
+<td>sklearn（常用工具库）</td>
+<td>—</td>
+<td>—</td>
+<td>44,180 毫秒</td>
+</tr>
+</tbody>
+</table></div>
+<p>两种模型下，调用次数都少了约 <strong>40%</strong>，程序还更快。用 Pro 时，317 次调用就超过了 SimpleTES 用 51,200 次的结果，这就是"少 160 多倍"的来历。</p>
+<p><strong>数学优化</strong>：3 类问题里，2 类持平或更好。和差问题略胜固定指挥和 SimpleTES；圆填充追平了已知最好结果；自相关不等式稍差，不如固定指挥，也不如 SimpleTES。但它用的生成次数不到 1000 次，SimpleTES 用了 51,200 次。</p>
+<p><strong>GPU 内核</strong>（数字是从图上读的）：</p>
+<ul>
+<li>VGG16 和 LayerNorm：效果持平，生成次数分别少了 2.43 倍和 1.79 倍；</li>
+<li>ConvDiv 和 ConvMax：预算差不多，性能分别高了 2.09 倍和 1.44 倍。</li>
+</ul>
+<blockquote>
+<p>总结一下：<strong>它最大的本事是省钱。</strong> 质量大多持平或略好，花的探索次数明显更少。</p>
+</blockquote>
+<h2>看一个例子：梦出来的队长，会怎么指挥？</h2>
+<p>论文没有把最终的策略代码贴出来，但描述了它的样子：</p>
+<ul>
+<li><strong>失败要分类，别一棒子打死。</strong> 失败的分支分成四种：彻底没救的、能修的、还没试够的、反复没希望的。能修的不会因为报一次错就被放弃。</li>
+<li><strong>每一批要搭配着派。</strong> 一批里既有"在最好的方案上继续打磨"，也有"开一条新路"，最多再加一个"抢救失败分支"。父节点和它的子节点不放在同一批。</li>
+<li><strong>一个旋钮控制性格。</strong> 旋钮调高，队长更舍得铺开、更有耐心；调低，就少试几次、早点收工。</li>
+</ul>
+<p>最有画面感的是 ConvDiv 这个内核任务：随着成绩变好，每轮的尝试次数从 110 次<strong>降到 50 次</strong>，队长学会了省着花；等成绩卡住不涨了，它又<strong>主动加大投入</strong>，结果又涨了一截。</p>
+<blockquote>
+<p>注意这里有个小心思：失败分四类、每批怎么搭配，这些规则有不少写在作者给策略开发 agent 的提示词里。所以哪些是 AI 在梦里自己悟出来的、哪些是人提前定好的框架，没法完全分清。</p>
+</blockquote>
+<h2>几个有意思的小发现</h2>
+<ul>
+<li><strong>便宜模型多试几次，反而赢了贵模型。</strong> Lasso 上，Flash 用固定指挥（3200 次调用）跑出的程序，比 Pro 用 Dream-RSI 的还快。当然，Flash 多用了好几倍的调用次数，而且只跑了一次。</li>
+<li><strong>给太多"历史经验"反而坏事。</strong> 在 ConvDiv 上，把从历史里总结出的明确指导塞给 AI，结果不如不塞。作者的解释是：方向感太强，会把搜索框死。</li>
+<li><strong>自动找到的求解器，比常用工具库快一个数量级。</strong> 2351 毫秒对 44,180 毫秒。不过这是"专门为这类问题定制"对"通用工具"，比较本身就不对等。</li>
+<li><strong>干活的 AI 一点没变。</strong> 所有进步都来自指挥。这和 Weco 的 AIDE² 是同一类：改的是工作流程，不是模型本身。</li>
+</ul>
+<h2>冷静一下：这篇论文没证明什么</h2>
+<ul>
+<li><strong>都是单次运行。</strong> 没有重复实验，没有误差范围；内核的数字还是从图上读的。差距小的结论（比如数学题上那点领先），很可能在随机波动之内。</li>
+<li><strong>没有直接证明"做梦"本身有用。</strong> 对照组是"队长永远不学"，但没有和"不做梦、直接在实战里改策略"或"随便改改策略"比。论文也没报告梦里的分数和实战成绩有多一致。</li>
+<li><strong>梦里只能重放走过的路。</strong> 策略能学到的是"先走哪条、几条并行、何时收工"，学不到当年没走过的路。而且旧地图是旧队长画的，天然偏向旧队长的选择。</li>
+<li><strong>"递归"打了折扣。</strong> 干活的 AI 不变，负责改策略的 AI 也是固定的。互相喂养的只是"策略"和"地图"，改进者本身没有变强。按 Weco 那套四级说法，这离"点火"（改进者越来越会改进）还有距离。</li>
+<li><strong>考题都有又快又准的考官。</strong> 运行时间、数学目标值、内核速度都能自动、准确地打分，这套方法在打分模糊的任务上能不能用，还不知道。</li>
+<li><strong>代码还没完全放出来。</strong> 现在没法自己复现。</li>
+</ul>
+<h2>讲完了，带走三句话</h2>
+<ol>
+<li><strong>旧的探索记录不是废纸，可以变成免费的练习场</strong>，用来改进"怎么探索"。</li>
+<li><strong>它的主要价值是省钱：</strong> 质量持平或略好，探索次数少一大截。</li>
+<li><strong>它改进的是指挥，不是大脑。</strong> 叫它"递归自我改进"，要打个问号。</li>
+</ol>
+<h2>和我的方向有什么联系</h2>
+<p>这篇论文几乎就是"冻结权重、靠历史记录自我改进"的一个标准案例，和我关心的问题直接相关：<strong>梦境是用考官过去的打分搭起来的。</strong></p>
+<ul>
+<li>如果考官打分准，在梦里练指挥，就是在学"怎么更快找到真正的好答案"。</li>
+<li>如果考官有偏差，梦境会把这些偏差原封不动地重放。策略越优化，就越擅长找"考官给高分"的分支，也就是在学考官，而不是学任务。</li>
+<li>论文选的任务恰好都有可靠的考官，所以这个问题被绕开了。但 GPU 内核任务是出了名容易刷分的（Weco 在同类基准上测到过 55% 的刷分率），而我读到的内容里，没有看到专门检查刷分的环节。</li>
+</ul>
+<p>所以一个自然的追问是：<strong>把 Dream-RSI 放到考官不完美的任务上，"做梦"会不会让策略更快地学会讨好考官？</strong></p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20261011-1'></script>
+
+</html>
