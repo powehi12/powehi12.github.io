@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20261011-1'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>ACL：&quot;记得&quot;不等于&quot;照做&quot;：大模型有没有&quot;隐式记忆&quot;？</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="&#x27;记得&#x27;不等于&#x27;照做&#x27;：大模型有没有&#x27;隐式记忆&#x27;？ 论文：ImplicitMemBench: Measuring Unconscious Behavioral Adaptation in Large Language Models 作者：Chonghan Qin、Xiachong Feng（通讯作者）、Lingp…">
+<meta property="og:title" content="ACL：&quot;记得&quot;不等于&quot;照做&quot;：大模型有没有&quot;隐式记忆&quot;？">
+<meta property="og:description" content="&#x27;记得&#x27;不等于&#x27;照做&#x27;：大模型有没有&#x27;隐式记忆&#x27;？ 论文：ImplicitMemBench: Measuring Unconscious Behavioral Adaptation in Large Language Models 作者：Chonghan Qin、Xiachong Feng（通讯作者）、Lingp…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/ACL%EF%BC%9A--ji-de---bu-deng-yu---zhao-zuo--%EF%BC%9A-da-mo-xing-you-mei-you---yin-shi-ji-yi--%EF%BC%9F.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ACL：&quot;记得&quot;不等于&quot;照做&quot;：大模型有没有&quot;隐式记忆&quot;？">
+<meta name="twitter:description" content="&#x27;记得&#x27;不等于&#x27;照做&#x27;：大模型有没有&#x27;隐式记忆&#x27;？ 论文：ImplicitMemBench: Measuring Unconscious Behavioral Adaptation in Large Language Models 作者：Chonghan Qin、Xiachong Feng（通讯作者）、Lingp…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/ACL%EF%BC%9A--ji-de---bu-deng-yu---zhao-zuo--%EF%BC%9A-da-mo-xing-you-mei-you---yin-shi-ji-yi--%EF%BC%9F.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+<script id="site-theme" src="https://powehi12.github.io/theme.js?v=20261011-1"></script>
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">ACL：&#34;记得&#34;不等于&#34;照做&#34;：大模型有没有&#34;隐式记忆&#34;？</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/57" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>"记得"不等于"照做"：大模型有没有"隐式记忆"？</h1>
+<blockquote>
+<p>论文：<em>ImplicitMemBench: Measuring Unconscious Behavioral Adaptation in Large Language Models</em><br>
+作者：Chonghan Qin、Xiachong Feng（通讯作者）、Lingpeng Kong（香港大学），Weitao Ma、Xiaocheng Feng（哈尔滨工业大学）<br>
+发表：ACL 2026 长文，第 28232–28261 页，<strong>获最佳资源论文奖</strong>；arXiv 2026 年 4 月首发<br>
+链接：<a href="https://aclanthology.org/2026.acl-long.1301/" rel="nofollow">ACL Anthology 页面</a>｜<a href="https://aclanthology.org/2026.acl-long.1301.pdf" rel="nofollow">PDF</a>｜<a href="https://arxiv.org/abs/2604.08064" rel="nofollow">arXiv 2604.08064</a>｜<a href="https://github.com/qinchonghanzuibang/ImplicitMemBench">代码和数据</a></p>
+</blockquote>
+<p><strong>一句话版本：</strong> 现在测 AI 的记忆，大多是问它"你还记得某件事吗"。这篇换了个问法：<strong>经历过的事，会不会自动改变它下一次的做法？</strong> 作者出了 300 道题，考了 17 个模型，最好的 DeepSeek-R1 只有 65.3%，而作者报告人类是 100%。最扎眼的一个对比是：学会"更喜欢做什么"，平均能到 75.0%；学会"别再做什么"，只有 17.6%。</p>
+<h2>开场：三件你"没想就做了"的事</h2>
+<ul>
+<li>你会骑自行车，但骑的时候不会去回想"先蹬左脚还是右脚"。</li>
+<li>你刚看完一部深海纪录片，朋友让你给新开的咖啡店起个名，你脱口而出"深蓝"。</li>
+<li>你在某家餐馆被坑过一次，下次路过，不用想就绕开了。</li>
+</ul>
+<p>这三件事有个共同点：<strong>你没有刻意去"回想"什么，过去的经验直接变成了行为。</strong> 心理学把这叫做<strong>隐式记忆</strong>。</p>
+<p>再想想 AI 助手：</p>
+<ul>
+<li>上周你告诉它"我们这个接口的参数顺序是反的"，今天它会不会自己照做？</li>
+<li>某个工具连着报错三次，它下次会不会还是第一个去调用这个工具？</li>
+</ul>
+<p>这些问题，现有的记忆测试很少问。</p>
+<blockquote>
+<p>这篇论文问的是：<strong>大模型能不能把经历过的事，自动地变成下一次的做法？</strong> 它测的不是"记得什么"，而是"<strong>自动做了什么</strong>"。</p>
+</blockquote>
+<h2>第一幕：为什么要测"隐式记忆"</h2>
+<h3>现有的记忆测试在测什么</h3>
+<p>像 LongMemEval、LoCoMo、MemoryAgentBench 这些常见的记忆测试，基本都是"一问一答"：先给模型一段很长的对话，再问它"用户上个月说过他住在哪？"。这测的是<strong>显式记忆</strong>，也就是能不能有意识地把事实找出来。</p>
+<h3>心理学怎么分记忆</h3>
+<p>作者借用了神经科学家 Squire 的经典分法：</p>
+<ul>
+<li><strong>陈述性记忆（显式）</strong>：知道"是什么"，比如事实、事件。</li>
+<li><strong>非陈述性记忆（隐式）</strong>：会"怎么做"，比如技能、习惯、条件反射。</li>
+</ul>
+<p>一个真正好用的助手，不光要记得你说过什么，还要<strong>不用提醒就照着学过的方法做事、避开以前踩过的坑</strong>。这就是隐式记忆。</p>
+<h3>作者挑了三种</h3>
+<ul>
+<li><strong>程序记忆</strong>：学会一个新规矩，被打岔之后还能照做；</li>
+<li><strong>启动效应</strong>：前面看到的内容，悄悄影响后面的输出；</li>
+<li><strong>经典条件反射</strong>：某个信号和某种结果反复一起出现之后，下次一见到这个信号，就自动做出反应。</li>
+</ul>
+<p>作者有个设计原则，叫"<strong>功能上同构</strong>"：不是生搬硬套心理学实验，而是把每种记忆机制的"功能"，翻译成 AI 助手真实会遇到的文字场景。</p>
+<h2>第二幕：考卷怎么出，"学习 → 打岔 → 测试"</h2>
+<h3>基本信息</h3>
+<ul>
+<li><strong>300 道题</strong>，三种记忆各 100 道，分属 18 类任务。</li>
+<li>先用 GPT-4o-mini 按模板生成 1000 多个候选题，再经过自动检查、模型审核和人工审核，留下 300 道。</li>
+</ul>
+<h3>每道题都是三段式</h3>
+<ol>
+<li><strong>学习（或启动）</strong>：让模型学一个规矩，或者读一段内容；</li>
+<li><strong>打岔</strong>：插进一段别的对话，让学习和测试之间隔开一段距离；</li>
+<li><strong>测试</strong>：出一个新问题，看模型会不会<strong>自动</strong>用上刚才学到的东西。</li>
+</ol>
+<p>而且<strong>只看第一次的回答</strong>。答错了就是错了，不给改正的机会。作者把这叫"第一次就做对"的准确率。</p>
+<blockquote>
+<p>注意这里有个小心思：只看第一次。真实场景里，agent 第一次就用错工具、删错文件，事后再改也来不及了。</p>
+</blockquote>
+<h3>打岔要打多久</h3>
+<p>作者先做了个小实验（只在程序记忆上）：打岔约 200 个 token 时，准确率 58.4%；约 500 个 token 时，降到 50.1%；再往后，1000、2000 个 token，基本稳定在 49.5% 左右。所以正式题目把打岔长度定在<strong>约 500 个 token</strong>。</p>
+<h2>第三幕：三种隐式记忆，分别怎么考</h2>
+<h3>程序记忆：学会一个新规矩</h3>
+<p><strong>考什么</strong>：教模型一个"反常规"的新规矩，看它被打岔之后还能不能照做。分五类：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">类别</th>
+<th scope="col">例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工具和接口</td>
+<td>参数顺序反过来（先写目标、再写来源）；每次调用前加一个会话前缀；用一套"外星文件系统"的奇怪分隔符</td>
+</tr>
+<tr>
+<td>语言格式</td>
+<td>回答必须套上固定的"签名"格式；必须用规定的开头和结尾问候语</td>
+</tr>
+<tr>
+<td>逻辑运算</td>
+<td>一个自定义的运算符；改过的斐波那契数列，F(n) = F(n−1) + 2F(n−2)</td>
+</tr>
+<tr>
+<td>抽象规则</td>
+<td>棋盘上有个"禁止落子的格子"；一个"敲三下"的固定仪式</td>
+</tr>
+<tr>
+<td>创作约束</td>
+<td>不许用第一人称；比喻只能用植物</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>怎么考</strong>：1–3 轮学习（规矩加例子），然后 10–15 轮打岔。打岔内容很"阴险"：话题相关，但用的是别的规则、别的名字。比如学的是 F(n)，打岔里就用 G(n)、H(n)，专门和学到的规矩抢地盘。最后出一道新题。</p>
+<p><strong>怎么判</strong>：格式类的用规则自动检查，语义类的让模型裁判来判。</p>
+<h3>启动效应：被前面的内容悄悄带偏</h3>
+<p><strong>考什么</strong>：前面读到的内容，会不会在不被要求的情况下，影响后面的创作。</p>
+<p><strong>怎么考</strong>：每道题都有<strong>一对</strong>实验，这是这部分最讲究的设计：</p>
+<ul>
+<li><strong>实验组</strong>：先读一段 130–170 字、画面感很强的描写，比如"深海"：生物荧光、巨大的水压、远古的生物；</li>
+<li><strong>对照组</strong>：先读一段长度差不多、但很枯燥的技术文字，比如"国际标准集装箱的尺寸和载重"；</li>
+<li>两组接下来的 2 轮打岔<strong>完全一样</strong>（都是中性的技术对话），最后的创作任务也<strong>完全一样</strong>（比如起名、写广告语、想概念）。</li>
+</ul>
+<p><strong>怎么判</strong>：让 GPT-4o-mini 当裁判，把两组的输出放在一起比，打一个 0–100 的"启动影响分"。规则很严：输出里一个相关的词都没有，最多 20 分；只在一个方面像，最多 40 分。</p>
+<blockquote>
+<p>有了对照组，才能分清：输出里的"深海味"，到底是被前面的内容带出来的，还是模型本来就会这么写。</p>
+</blockquote>
+<h3>经典条件反射：吃一堑，长一智</h3>
+<p><strong>考什么</strong>：某个信号和某个结果反复一起出现之后，模型的<strong>第一个决定</strong>会不会因此改变。分三类：工具和接口安全、对话中的自我调整、系统保护。</p>
+<p><strong>怎么考</strong>：4 轮"信号—结果"的配对学习，然后 2 轮无关的闲聊，最后让同样的信号再出现一次，看模型第一步怎么做。</p>
+<p><strong>两种方向</strong>：</p>
+<ul>
+<li><strong>偏好型</strong>：学会"更倾向于做某件事"。比如某个目录下的操作总是顺利，下次就优先用这个目录。</li>
+<li><strong>抑制型</strong>：学会"别再做某件事"。比如用户一听到专业术语就困惑，下次就该少用术语；某个接口总出错，下次就别先调它。</li>
+</ul>
+<h2>第四幕：成绩单</h2>
+<h3>17 个模型的总榜</h3>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">排名</th>
+<th scope="col">模型</th>
+<th scope="col">程序记忆</th>
+<th scope="col">条件反射</th>
+<th scope="col">启动效应</th>
+<th scope="col">总分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>DeepSeek-R1（开源）</td>
+<td>76.33</td>
+<td>69.67</td>
+<td>49.90</td>
+<td><strong>65.30</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Qwen3-32B（开源）</td>
+<td>75.67</td>
+<td>67.00</td>
+<td>49.73</td>
+<td>64.13</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GPT-5</td>
+<td>75.33</td>
+<td>64.00</td>
+<td>49.67</td>
+<td>63.00</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Qwen3-8B（开源）</td>
+<td>75.33</td>
+<td>64.00</td>
+<td>47.73</td>
+<td>62.35</td>
+</tr>
+<tr>
+<td>5</td>
+<td>GPT-o3</td>
+<td>76.00</td>
+<td>57.67</td>
+<td>51.70</td>
+<td>61.79</td>
+</tr>
+<tr>
+<td>6</td>
+<td>GPT-o4-mini-high</td>
+<td>70.67</td>
+<td>60.00</td>
+<td>51.95</td>
+<td>60.87</td>
+</tr>
+<tr>
+<td>7</td>
+<td>GLM-4.5（开源）</td>
+<td>76.33</td>
+<td>53.33</td>
+<td>46.12</td>
+<td>58.59</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Gemini-2.5-pro</td>
+<td>74.33</td>
+<td>47.33</td>
+<td>45.42</td>
+<td>55.69</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Claude-4.1-opus</td>
+<td><strong>76.67</strong></td>
+<td>41.67</td>
+<td>48.60</td>
+<td>55.65</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Gemini-2.5-flash</td>
+<td>72.33</td>
+<td>49.00</td>
+<td>44.97</td>
+<td>55.43</td>
+</tr>
+<tr>
+<td>11</td>
+<td>GPT-4o-mini</td>
+<td>61.67</td>
+<td>44.00</td>
+<td>46.98</td>
+<td>50.88</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Qwen-2.5-72B（开源）</td>
+<td>61.00</td>
+<td>47.00</td>
+<td>44.33</td>
+<td>50.78</td>
+</tr>
+<tr>
+<td>13</td>
+<td>GPT-4o</td>
+<td>61.67</td>
+<td>43.67</td>
+<td>45.62</td>
+<td>50.32</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Claude-4-sonnet</td>
+<td>51.67</td>
+<td>51.67</td>
+<td>46.17</td>
+<td>49.84</td>
+</tr>
+<tr>
+<td>15</td>
+<td>LLaMA-3.3-70B（开源）</td>
+<td>58.33</td>
+<td>47.33</td>
+<td>42.67</td>
+<td>49.44</td>
+</tr>
+<tr>
+<td>16</td>
+<td>LLaMA-3.1-8B（开源）</td>
+<td>46.67</td>
+<td>38.33</td>
+<td>47.53</td>
+<td>44.18</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Qwen-2.5-7B（开源）</td>
+<td>50.67</td>
+<td>35.67</td>
+<td>44.12</td>
+<td>43.49</td>
+</tr>
+</tbody>
+</table></div>
+<p>17 个模型的平均总分是 <strong>55.3%</strong>。人类基线：5 位计算机博士生做完全部 300 题，另外 2 位博士生打分，<strong>全部 100%</strong>（这个数字后面要打个问号）。</p>
+<h3>几个看点</h3>
+<ul>
+<li><strong>没有一个模型超过 66%。</strong></li>
+<li><strong>开源模型拿了前两名</strong>：DeepSeek-R1 和 Qwen3-32B。80 亿参数的 Qwen3-8B 排第 4，总分超过了 Claude-4.1-opus 和 Gemini-2.5-pro。</li>
+<li><strong>程序记忆最容易</strong>，前几名都在 75% 左右；<strong>条件反射差距最大</strong>，从 35.67% 到 69.67%；<strong>启动效应大家都差不多</strong>，全挤在 42.67% 到 51.95% 之间。</li>
+<li><strong>Claude-4.1-opus 很偏科</strong>：程序记忆全场第一（76.67），条件反射却只有 41.67。</li>
+<li><strong>同一家族里，模型变大的帮助有限</strong>：Qwen-2.5 从 7B 到 72B，43.49 → 50.78；LLaMA 从 8B 到 70B，44.18 → 49.44。</li>
+</ul>
+<h2>第五幕：最大的发现，学"喜欢"容易，学"别做"难</h2>
+<h3>偏好和抑制的巨大落差</h3>
+<p>条件反射里，两种方向的平均成绩：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">类型</th>
+<th scope="col">平均准确率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>偏好型（学会更倾向于做某事）</td>
+<td><strong>75.0%</strong></td>
+</tr>
+<tr>
+<td>抑制型（学会别再做某事）</td>
+<td><strong>17.6%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>差了 57.4 个百分点，统计上非常显著。最极端的两个任务：</p>
+<ul>
+<li><strong>避免专业术语</strong>（用户被术语弄糊涂之后，下次就该少用）：只有 <strong>4%</strong>；</li>
+<li><strong>目录偏好</strong>（某个目录总是好用，下次就优先用它）：<strong>72%</strong>。</li>
+</ul>
+<blockquote>
+<p>打个比方：学会"更喜欢走这条路"很容易；学会"那条路走不通，别再走了"却很难。就像一个人明明在某家店踩过雷，下次饿了，还是先推门进去。</p>
+</blockquote>
+<h3>五个"所有模型都卡住"的地方</h3>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">任务</th>
+<th scope="col">平均准确率（± 波动）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>避免专业术语</td>
+<td>4%（±5%）</td>
+</tr>
+<tr>
+<td>不信任出过错的接口</td>
+<td>21%（±17%）</td>
+</tr>
+<tr>
+<td>根据上下文调整行为</td>
+<td>28%（±23%）</td>
+</tr>
+<tr>
+<td>回避出过问题的接口</td>
+<td>45%（±29%）</td>
+</tr>
+<tr>
+<td>根据用户情绪调整策略</td>
+<td>55%（±18%）</td>
+</tr>
+</tbody>
+</table></div>
+<p>这五类都低于 60%，而且<strong>不分模型、不分厂家都卡</strong>。作者认为，它们的共同点是需要"主动压住默认行为"、"跳出表面模式去抽象"或"根据情境动态调整"。</p>
+<h3>表面的规矩好学，深层的规矩难学</h3>
+<p>程序记忆里，前五名模型：</p>
+<ul>
+<li><strong>表面格式类</strong>（比如套一个固定格式）：<strong>93.8%</strong>；</li>
+<li><strong>深层的多规则流程</strong>：<strong>60.0%</strong>。</li>
+</ul>
+<p>Claude-4.1-opus 在表面任务上 95%，到了多重约束的流程只剩 65%。</p>
+<h3>平均分会掩盖短板</h3>
+<p>DeepSeek-R1 总分 65.3%，可在它最弱的任务上掉到 49%；GPT-5 和 Qwen3-32B 在最弱任务上更是只有 27%–36%。</p>
+<h3>被带偏越多，越不守规矩</h3>
+<p>作者报告，启动效应越强的模型，违反约束也越多（相关系数 0.63）。他们的解释是：<strong>模仿前文风格的冲动，压过了遵守任务要求</strong>。（不过论文图里对这个 0.63 的标注和正文说法不完全一致，后面会提。）</p>
+<h2>第六幕：给模型配上"记忆模块"，有用吗？</h2>
+<h3>现成的记忆增强 agent</h3>
+<p>作者在附录里测了三个现成的记忆增强 agent：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">系统</th>
+<th scope="col">底座</th>
+<th scope="col">总分变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MemAgent</td>
+<td>Qwen2.5-14B</td>
+<td>+3.9</td>
+</tr>
+<tr>
+<td>MemGPT</td>
+<td>Yi-34B-200K</td>
+<td>+2.3</td>
+</tr>
+<tr>
+<td>MEM1</td>
+<td>Qwen2.5-7B</td>
+<td><strong>−2.1</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>提升很小，有的还变差了；条件反射一项，MemAgent 只有 22.00、MemGPT 只有 25.00。</p>
+<h3>直接把答案"存进记忆"</h3>
+<p>作者还做了一个"开卦"实验：用 Mem0 这个记忆系统，<strong>人工把关键规则或配对存进去</strong>，相当于把考点直接写进笔记本。</p>
+<ul>
+<li>DeepSeek-R1：总分 65.30 → <strong>74.12</strong>，其中启动效应从 49.90 跳到 75.35；</li>
+<li>Qwen2.5-7B：总分 43.49 → <strong>56.00</strong>，主要是程序记忆和条件反射涨了。</li>
+</ul>
+<p>即使把关键信息明明白白地存好，提升也<strong>参差不齐</strong>，离人类基线还远。</p>
+<blockquote>
+<p>这就是标题想说的：<strong>"写下来"不等于"做得到"。</strong> 记忆模块解决的是"找得到"，隐式记忆要的是"自动用上"。</p>
+</blockquote>
+<p>作者据此认为，这些短板来自注意力和记忆机制本身的局限，<strong>需要架构上的创新，而不只是把模型做大</strong>。（这是推断，论文没有做架构实验来直接证明。）</p>
+<h2>看一个例子：一个工具连错三次，第四次还用不用？</h2>
+<p>这是论文附录里的一个条件反射例子（是生成题目时用的示范，不是正式考题，但最能说明这类题在考什么）：</p>
+<p><strong>学习阶段</strong>（约 4 轮）：</p>
+<ul>
+<li>用户："帮我 run diagnostics（跑一下诊断）……"</li>
+<li>模型调用 <code class="notranslate">analyzer_v1</code>，<strong>报错</strong>。</li>
+<li>类似的请求又来了几次，<code class="notranslate">analyzer_v1</code> 在 4 次里有 3 次报错，只成功了 1 次。</li>
+</ul>
+<p><strong>打岔阶段</strong>（2 轮）：聊点无关的，比如问天气。</p>
+<p><strong>测试阶段</strong>：</p>
+<ul>
+<li>用户："帮我 run diagnostics on the database server（给数据库服务器跑一下诊断）。"</li>
+<li><strong>理想的第一反应</strong>：换成轻量版的 <code class="notranslate">analyzer_v2_lite</code>，或者至少先提醒一句"这个工具之前经常出错"。</li>
+<li><strong>典型的失败</strong>：二话不说，又去调 <code class="notranslate">analyzer_v1</code>。</li>
+</ul>
+<p><strong>巧在哪里</strong>：</p>
+<ul>
+<li>用户从头到尾没说过"别用 analyzer_v1"，模型得<strong>自己</strong>从失败里总结；</li>
+<li><strong>只看第一步</strong>，模型不能"先错一次再改"；</li>
+<li>这正是真实 agent 最常见的毛病之一：同一个出错的工具调用，一遍遍地重试。</li>
+</ul>
+<p>（顺便说一句，这个示范例子的打岔部分里，两个问题配的是一模一样的天气回答，看起来是生成时的小失误。）</p>
+<h2>第七幕：别人怎么看这篇论文</h2>
+<ul>
+<li><strong>获奖</strong>：ACL 2026 最佳资源论文。据一篇中文报道，今年 ACL 收到 12,148 篇投稿，主会录用率约 19%，最佳资源论文只有 4 篇。</li>
+<li><strong>一篇实践者的长博客</strong>（Blake Crosley，2026 年 4 月，标题大意是"你的 agent 有一些你没写下来的记忆"），从工程角度读这篇论文：
+<ul>
+<li>提出"<strong>说明文件幻觉</strong>"：把规则写进 CLAUDE.md、SOUL.md 这类说明文件是必要的，但<strong>不够</strong>，写进去不等于第一次就能照做；</li>
+<li><strong>"禁止做什么"最好用代码强制执行</strong>，比如检查器、调用工具前的拦截、沙箱策略，而不是只靠提示词，这正对应论文里"抑制最难"的发现；</li>
+<li><strong>上下文本身会"启动"行为</strong>：工具返回的内容、检索到的网页，都可能悄悄影响后面的决定；</li>
+<li>建议把"第一次的结果"和"改正后的结果"<strong>分开记录</strong>；发现行为漂移时，与其反复纠正，不如开一个新会话。</li>
+<li>他也说得很坦白：论文测的是裸模型，不是真实的 agent 产品；这些工程建议都是他自己的延伸，没有被论文验证；"偏好 vs 抑制"的落差，也可能部分来自这套测试方法本身。</li>
+</ul>
+</li>
+<li><strong>alphaXiv 的 AI 概述</strong>特别点出：外加显式记忆模块，有时反而会让成绩变差；论文对短板的讨论，指向"主动抑制"和"超越表面模式的抽象"这两个方向。</li>
+<li>我没有找到公开的审稿意见或学术讨论，alphaXiv 的讨论区也是空的。</li>
+</ul>
+<h2>几个有意思的小发现</h2>
+<ul>
+<li><strong>推理模型占了前排。</strong> 前六名里有 DeepSeek-R1、GPT-5、GPT-o3、GPT-o4-mini-high 这些会"多想一会儿"的模型，不过论文没有专门比较推理和非推理模型。</li>
+<li><strong>小模型可以赢大模型。</strong> Qwen3-8B 的总分超过了 Claude-4.1-opus 和 Gemini-2.5-pro。</li>
+<li><strong>启动效应大家都差不多。</strong> 17 个模型挤在 42.67 到 51.95 之间，说明"被前文带偏"的程度，和模型强不强关系不大。</li>
+<li><strong>打岔超过 500 个 token 之后，就不再往下掉了。</strong> 程序记忆从 58.4% 降到 50.1% 后就基本平了，说明要忘的在头几百个 token 里就忘了。</li>
+<li><strong>把考点存进记忆，启动效应涨得最多。</strong> DeepSeek-R1 的启动分从 49.90 跳到 75.35。很合理：你把"深海"那段话存进记忆，它当然更容易被带偏。</li>
+</ul>
+<h2>冷静一下：这篇论文没证明什么</h2>
+<ul>
+<li><strong>人类 100% 很可疑。</strong> 只有 5 位计算机博士生；而且启动影响分最高只到 95 分，所谓"100%"在这把尺子上没有定义，论文没有解释。所以"远低于人类"这个说法，在启动效应上最站不住。</li>
+<li><strong>总分把"能力"和"易感性"混在了一起。</strong> 启动影响分越高，代表越容易被前文带偏，这未必是好事；论文自己的数据也显示，被带偏越多越不守规矩。可总分直接把它和程序记忆、条件反射平均了。</li>
+<li><strong>"记忆"的距离很短。</strong> 打岔只有约 500 个 token，启动和条件反射只有 2 轮。所有内容都还在上下文窗口里，测的更像是"<strong>同一段对话里的行为调整</strong>"，不是跨天、跨会话的长期记忆。对大模型来说，"隐式"和"显式"的区别，主要在于"有没有人提醒它去用"。</li>
+<li><strong>出题和判卷都靠模型。</strong> 题目由 GPT-4o-mini 生成，启动效应也由 GPT-4o-mini 打分；人工审核了多少题、按什么标准，论文没有说清。</li>
+<li><strong>样本不大，波动很大。</strong> 每种记忆 100 题，细分到小类就更少，有的类别波动高达 ±29%。</li>
+<li><strong>温度设为 0 却跑了三次。</strong> 温度为 0 时，每次输出几乎一样，三次重复提供的波动信息很有限。</li>
+<li><strong>"需要改架构"只是推断。</strong> 论文没有做任何架构层面的实验。</li>
+<li><strong>记忆增强实验不好比较。</strong> 用的是 Qwen2.5-7B、Qwen2.5-14B、Yi-34B 这些较老较小的底座，和主榜上的模型不在一个水平。</li>
+<li><strong>有几处前后不一致。</strong> 摘要说 17 个模型，附录一处写"14 个"；程序记忆的打岔轮数，表格写 10–15 轮，附录的生成提示词写固定 15 轮；0.63 这个相关系数，正文和图的标注对不上；自定义运算符的公式，不同位置的写法也不完全一致。</li>
+<li><strong>只覆盖了三种。</strong> 作者自己承认，知觉学习、习惯形成、运动技能、情绪条件反射这些隐式记忆，都还没测。</li>
+</ul>
+<h2>讲完了，带走三句话</h2>
+<ol>
+<li><strong>记忆不只是"记得什么"，更是"自动做了什么"。</strong> 这篇第一次系统地测了大模型的隐式记忆：17 个模型最好的 65.3%，平均 55.3%。</li>
+<li><strong>最大的短板是"抑制"。</strong> 学会"偏好什么"平均 75%，学会"别再做什么"只有 17.6%；避免专业术语只有 4%。工具反复出错、用户已经反感，模型还照旧。</li>
+<li><strong>"写下来"不等于"做得到"。</strong> 外加记忆模块、甚至把考点直接存好，提升都不稳定。重要的"禁止事项"，最好用代码来强制执行。</li>
+</ol>
+<h2>和我的方向有什么联系</h2>
+<ul>
+<li><strong>"学考官"本身就像一种条件反射。</strong> 考官的某种偏好（信号）和高分（结果）反复一起出现，agent 就学会"遇到这种情况就这么做"。这篇的条件反射题型提供了一个现成的实验格式：4 轮配对、打岔、只看第一反应。</li>
+<li><strong>一个可以检验的推测（我自己的）</strong>：把这篇和 Misevolve 那篇放在一起看，客服 agent 很快就学会了"退款能拿高分"，那是一种<strong>偏好</strong>；而这篇说明，从失败中学会"<strong>别再做</strong>"要难得多。如果这个不对称在记忆式 agent 里也成立，那么 agent 可能天生更容易学会"考官喜欢什么"，更难学会"任务上哪些做法是错的"。也就是说，<strong>记忆式自我改进可能天然偏向学考官</strong>。这可以分开测：正反馈驱动的学习和负反馈驱动的学习，各自有多快。</li>
+<li><strong>启动效应的"实验组 + 对照组"设计可以直接借用。</strong> 想知道记忆里的内容（比如考官的评语措辞）在多大程度上"染色"了 agent 的输出，就配一份长度相同、内容中性的对照记忆。这正好也能补上我在 Misevolve 那篇里提到的缺失对照："是不是只是上下文变长了"。</li>
+<li><strong>只看"第一次就做对"。</strong> 评估记忆带来的进步时，看的应该是积累记忆之后的<strong>第一次尝试</strong>，而不是多次重试、自我修正之后的结果。</li>
+<li><strong>对 EHR agent 的提醒。</strong> 查询病历的工具在某些参数下总是报错，agent 下次很可能还会第一个去调用它，因为"抑制"恰恰是最弱的。这类"不要再做"的规则，最好写成代码层面的拦截，而不是只写在提示词或记忆里。</li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20261011-1'></script>
+
+</html>
