@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html data-color-mode="dark" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://powehi12.github.io/claude.css?v=20261011-1'>
+    <link rel="icon" href="https://github.com/powehi12.png">
+
+
+
+
+
+
+<title>Google：算个&quot;1000 天后是哪天&quot;，AI 真的要想十几遍吗？</title>
+<meta name="theme-color" content="#262624">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="算个&#x27;1000 天后是哪天&#x27;，AI 真的要想十几遍吗？ 论文：Do LLMs Really Need 10+ Thoughts for &#x27;Find the Time 1000 Days Later&#x27;? Towards Structural Understanding of LLM Overthinking 作者…">
+<meta property="og:title" content="Google：算个&quot;1000 天后是哪天&quot;，AI 真的要想十几遍吗？">
+<meta property="og:description" content="算个&#x27;1000 天后是哪天&#x27;，AI 真的要想十几遍吗？ 论文：Do LLMs Really Need 10+ Thoughts for &#x27;Find the Time 1000 Days Later&#x27;? Towards Structural Understanding of LLM Overthinking 作者…">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://powehi12.github.io/post/Google%EF%BC%9A-suan-ge--1000%20-tian-hou-shi-na-tian--%EF%BC%8CAI%20-zhen-de-yao-xiang-shi-ji-bian-ma-%EF%BC%9F.html">
+<meta property="og:image" content="https://github.com/powehi12.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Google：算个&quot;1000 天后是哪天&quot;，AI 真的要想十几遍吗？">
+<meta name="twitter:description" content="算个&#x27;1000 天后是哪天&#x27;，AI 真的要想十几遍吗？ 论文：Do LLMs Really Need 10+ Thoughts for &#x27;Find the Time 1000 Days Later&#x27;? Towards Structural Understanding of LLM Overthinking 作者…">
+<meta name="twitter:image" content="https://github.com/powehi12.png">
+<link rel="canonical" href="https://powehi12.github.io/post/Google%EF%BC%9A-suan-ge--1000%20-tian-hou-shi-na-tian--%EF%BC%8CAI%20-zhen-de-yao-xiang-shi-ji-bian-ma-%EF%BC%9F.html">
+<link rel="alternate" type="application/rss+xml" title="qbyang 的个人博客 RSS" href="https://powehi12.github.io/rss.xml">
+<script id="site-theme" src="https://powehi12.github.io/theme.js?v=20261011-1"></script>
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body class="post-page">
+<a class="skip-link" href="#content">跳到主要内容</a>
+    <div id="header" role="banner">
+<h1 class="postTitle">Google：算个&#34;1000 天后是哪天&#34;，AI 真的要想十几遍吗？</h1>
+<div class="title-right">
+    <a href="https://powehi12.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页" aria-label="首页">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/powehi12/powehi12.github.io/issues/54" target="_blank" class="btn btn-invisible circle" title="Issue" aria-label="Issue" rel="noopener noreferrer">
+        <svg class="octicon" width="16" height="16" aria-hidden="true">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;" aria-label="切换主题">
+        <svg class="octicon" width="16" height="16"  aria-hidden="true">
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content" role="main" tabindex="-1">
+<div class="markdown-body" id="postBody"><h1>算个"1000 天后是哪天"，AI 真的要想十几遍吗？</h1>
+<blockquote>
+<p>论文：<em>Do LLMs Really Need 10+ Thoughts for "Find the Time 1000 Days Later"? Towards Structural Understanding of LLM Overthinking</em><br>
+作者：Xinliang Frederick Zhang（密歇根大学，在 Google DeepMind 实习期间完成）、Lu Wang（密歇根大学），以及 Google DeepMind 的 Shyam Upadhyay 等 6 人<br>
+发表：ACL 2026 长文，第 17005–17030 页，2026 年 7 月，圣地亚哥<br>
+链接：<a href="https://aclanthology.org/2026.acl-long.773/" rel="nofollow">ACL Anthology 页面</a>｜<a href="https://aclanthology.org/2026.acl-long.773.pdf" rel="nofollow">PDF</a>｜页面上没有列出代码和数据</p>
+</blockquote>
+<p><strong>一句话版本：</strong> 会"深度思考"的模型，在简单题上要多花 5 到 20 倍的时间，准确率却几乎不涨。作者把思考过程切成一段段"小想法"、画成地图，发现了两种典型的"想太多"：一种到处乱逛，一种反复验算。照着这个规律及时喊停，最大的那个模型在一类日期题上，准确率反而从 53% 涨到 62%，思考长度砍掉一半以上。</p>
+<h2>开场：一个停不下来的朋友</h2>
+<p>你问一个朋友："今天往后 1000 天是哪天？"</p>
+<p>他掏出日历算了一下，给了你一个日期。然后他说："等等，我再算一遍。"算完一样。"或者换个方法，按每年 365 天来算……"又算出一个稍微不同的日期。"等等，闰年考虑了吗？"……来回折腾了十几轮，最后告诉你的，还是第一次算出来的那个日期。</p>
+<p>这就是现在"会思考"的大模型常犯的毛病：<strong>想太多</strong>。</p>
+<p>前人已经发现了这个现象，也想了不少办法压缩思考长度。但大多数研究只是在外面看："它想了多长""砍掉多少还能答对"，很少有人拆开来看：<strong>想太多的时候，模型到底在干什么？</strong></p>
+<blockquote>
+<p>这篇论文问的是：<strong>模型为什么会想太多？想太多时它在重复什么动作？能不能在不知道标准答案的情况下，及时喊停？</strong></p>
+</blockquote>
+<h2>第一幕：先量一量，"想太多"有多严重</h2>
+<h3>怎么量</h3>
+<ul>
+<li><strong>14 个模型</strong>：Qwen3 全家（从 6 亿到 2350 亿参数），每个都分别开、关"思考模式"跑一遍；再加上 DeepSeek-R1 蒸馏出来的几个模型（15 亿到 700 亿参数）。</li>
+<li><strong>6 类简单任务</strong>，分成两组：
+<ul>
+<li><strong>回忆知识</strong>：阅读理解（SQuAD 2.0）、在超长文本里找一句话（大海捞针，NIAH）、冷门事实问答（SimpleQA）；</li>
+<li><strong>简单推理</strong>：小学数学（ASDiv）、简单日期计算、简单的逻辑谜题（Zebra）。</li>
+</ul>
+</li>
+<li>解码方式固定（每次都取概率最高的词），思考长度上限 8k token（日期题放宽到 16k）。</li>
+</ul>
+<h3>结果：多花好几倍，几乎没提升</h3>
+<p>看最大的 Qwen3-235B 的几组数字（长度单位是"词"）：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">任务</th>
+<th scope="col">不思考：准确率 / 长度</th>
+<th scope="col">思考：准确率 / 长度</th>
+<th scope="col">长度翻了几倍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>小学数学（一年级难度）</td>
+<td>97.44 / 47</td>
+<td>100.00 / 320</td>
+<td>约 7 倍</td>
+</tr>
+<tr>
+<td>小学应用题（GSM8K）</td>
+<td>74.75 / 118</td>
+<td>91.50 / 1022</td>
+<td>约 9 倍</td>
+</tr>
+<tr>
+<td>简单日期题</td>
+<td>95.87 / 71</td>
+<td>99.41 / 261</td>
+<td>约 4 倍</td>
+</tr>
+<tr>
+<td>冷门事实问答</td>
+<td>12.75 / 39</td>
+<td>15.00 / 1090</td>
+<td>约 28 倍</td>
+</tr>
+</tbody>
+</table></div>
+<p>作者的说法是：思考模型的耗时是不思考版本的 <strong>5 到 20 倍</strong>，准确率却只涨一点，甚至不涨。在 GSM8K 上，作者估计多花的计算里大约 <strong>八成</strong>没有换来可测量的提升（论文没给出推算过程）。</p>
+<p>还有一个更扎眼的：<strong>大海捞针</strong>任务上，开了思考，准确率反而从 99.72 掉到 97.73。</p>
+<h3>两个规律</h3>
+<ul>
+<li><strong>回忆知识，想了也白想。</strong> 你要么记得，要么不记得，多想一会儿也想不起来。冷门问答多写了 28 倍，只多对了 2 个百分点。</li>
+<li><strong>模型越大，思考越没必要。</strong> 对简单推理题，思考主要帮的是 40 亿到 80 亿参数以下的小模型；再往上，开不开思考差别几乎为零。比如 GSM8K 上，6 亿参数的 Qwen3 开思考从 50.75 涨到 74.75；40 亿参数的从 76.00 涨到 91.75，已经和 2350 亿参数的 91.50 差不多了。</li>
+</ul>
+<h2>第二幕：题目变难，思考才开始值钱</h2>
+<p>作者又换了个方向：同一类题，难度一级级往上加，看思考什么时候开始"值钱"。最有意思的是日期题，一共 5 级：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">难度</th>
+<th scope="col">例题（大意）</th>
+<th scope="col">答案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td>1068 年 2 月往后 10 年零 1 个月，是什么时候？</td>
+<td>1078 年 3 月</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>1068 年 2 月 26 日往后 10 年 0 个月零 21 天，是哪天？</td>
+<td>1078 年 3 月 19 日</td>
+</tr>
+<tr>
+<td>L3</td>
+<td>1068 年 2 月 26 日往后 <strong>3674 天</strong>，是哪天？</td>
+<td>1078 年 3 月 19 日</td>
+</tr>
+<tr>
+<td>L4</td>
+<td>同一天往后 7348 天</td>
+<td>1088 年 4 月 9 日</td>
+</tr>
+<tr>
+<td>L5</td>
+<td>同一天往后 11022 天</td>
+<td>1098 年 5 月 1 日</td>
+</tr>
+</tbody>
+</table></div>
+<p>注意 L2 和 L3：<strong>答案完全一样</strong>，只是把"10 年零 21 天"换成了"3674 天"。可这一换，难度天差地别：要一天天地数几千天，要处理好闰年，而且年份在一千年前，模型还可能纠结该用哪套历法。</p>
+<p>Qwen3-235B 的成绩：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">难度</th>
+<th scope="col">不思考</th>
+<th scope="col">思考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td>95.87</td>
+<td>99.41</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>95.52</td>
+<td>97.61</td>
+</tr>
+<tr>
+<td>L3</td>
+<td>32.24</td>
+<td>52.54</td>
+</tr>
+<tr>
+<td>L4</td>
+<td>14.63</td>
+<td>47.76</td>
+</tr>
+<tr>
+<td>L5</td>
+<td>8.66</td>
+<td>45.37</td>
+</tr>
+</tbody>
+</table></div>
+<p>小模型在 L3 上更夸张：40 亿参数的 Qwen3 从 2.69 涨到 59.70，80 亿参数的从 8.96 涨到 81.79。而 15 亿参数的 R1 蒸馏模型，从 L3 到 L5 全是 <strong>0 分</strong>，怎么想都没用。</p>
+<p>作者把这总结成一句话：<strong>思考只在一个很窄的中间地带才值钱。</strong> 题太简单，思考是浪费；题超出了模型的能力，思考也救不回来。</p>
+<blockquote>
+<p>可以把它想成：简单的口算题不用打草稿，超纲的题打多少草稿也做不出来，只有"踮踮脚够得着"的题，草稿才真正有用。</p>
+</blockquote>
+<h2>第三幕：TRACE，把思考过程画成一张地图</h2>
+<p>知道了"想太多"很普遍，下一步是拆开看。作者做了一个分析工具，叫 <strong>TRACE</strong>，分四步。</p>
+<h3>第一步：切成小段</h3>
+<p>把一整段思考过程，切成一个个"<strong>最小完整的小想法</strong>"。每一段都要能独立看懂、意思完整，而且<strong>带着一个答案</strong>。切分点往往就是模型那些口头禅，比如"Wait（等等）""Alternatively（或者换个方法）"。这一步由 gemini-2.5-pro 来做。</p>
+<h3>第二步：给每段贴标签</h3>
+<p>每段小想法和前面的关系，分成 7 种：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">标签</th>
+<th scope="col">意思</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开头</td>
+<td>第一次给出答案</td>
+</tr>
+<tr>
+<td>验证</td>
+<td>把刚才的答案再核对一遍</td>
+</tr>
+<tr>
+<td>纠正</td>
+<td>发现错了，改成新答案</td>
+</tr>
+<tr>
+<td>回头</td>
+<td>放弃当前思路，退回到之前的某一步</td>
+</tr>
+<tr>
+<td>另辟蹊径</td>
+<td>换个方法或角度重新解题</td>
+</tr>
+<tr>
+<td>跑题</td>
+<td>考虑一些和主线无关的补充信息</td>
+</tr>
+<tr>
+<td>结尾</td>
+<td>给出最终答案</td>
+</tr>
+</tbody>
+</table></div>
+<p>"另辟蹊径"在画图时会被归进"验证"或"纠正"：换方法算出来和原来一样，就算验证；不一样，就算纠正。</p>
+<p>人工抽查了 200 段，标签合理的比例是 <strong>93%</strong>。</p>
+<h3>第三步：画地图</h3>
+<ul>
+<li>每个<strong>不同的答案</strong>画成一个圆圈；</li>
+<li>小想法之间的关系画成箭头；</li>
+<li>出现新答案，就往右画一个新圈；</li>
+<li>"验证"画成一个<strong>绕回自己的箭头</strong>，验证次数越多，这个圈就越粗。</li>
+</ul>
+<p>这样一来，模型的整个思考过程就变成了一张"答案之间来回跳"的地图。</p>
+<h3>第四步：叠在一起找共性</h3>
+<p>把同类题目、同样难度、给出答案个数也差不多的地图<strong>叠在一起</strong>，经常走的路线就变粗，偶尔走的路线（权重低于 0.3 这个门槛）就删掉。最后再标出：正确答案通常落在地图的哪个位置。</p>
+<h3>一个小例子：医生还剩几小时</h3>
+<p>论文里举了一道 GSM8K 题：一个医生要查房 9 个病人（每人 20 分钟），看 10 个门诊（每个 30 分钟），一天 9 小时，还剩几小时写病历？答案是 1。</p>
+<p>Qwen3-235B 的思考被切成了 4 段：</p>
+<ol>
+<li><strong>开头</strong>：180 + 300 = 480 分钟，就是 8 小时，9 − 8 = 1。</li>
+<li><strong>验证</strong>：再算一遍，还是 1。</li>
+<li><strong>跑题</strong>：会不会有休息时间或者隐藏条件？想了一圈，还是 1。</li>
+<li><strong>结尾</strong>：确认分钟换算成小时没错，答案 1。</li>
+</ol>
+<p>地图上只有一个圆圈，加一个验证的自环。<strong>第一步就对了，后面三步都是在确认。</strong> 这就是一个缩小版的"想太多"。</p>
+<h2>第四幕：两种"想太多"的性格</h2>
+<p>地图叠起来之后，作者发现，开源思考模型主要有两种性格。这些规律在模型给出<strong>至少 3 个</strong>不同答案时才明显；只给出一两个答案的思考过程，基本是一条直线。</p>
+<h3>探险家（Explorer）</h3>
+<ul>
+<li><strong>代表</strong>：Qwen3-235B。</li>
+<li><strong>样子</strong>：正确答案可能<strong>很早就出现了</strong>，但模型不罢休，继续换方法、换思路，给出一个又一个新答案，还经常"回头"。地图上，答对的可能性<strong>分散在几乎所有答案上</strong>。</li>
+<li><strong>打个比方</strong>：考试时第一种方法就算对了，又换了三种方法各算一遍，得出三个不同的答案，然后开始纠结该交哪个。</li>
+</ul>
+<h3>迟迟落地（Late Landing）</h3>
+<ul>
+<li><strong>代表</strong>：R1 蒸馏的 Llama-70B、Qwen3-30B-A3B、Qwen3-32B。</li>
+<li><strong>样子</strong>：前面几个答案基本都是错的，<strong>正确答案集中在最后那个</strong>。到达之后，模型还要反复验算，地图上最后那个圈有一个<strong>很粗的自环</strong>。</li>
+<li><strong>打个比方</strong>：飞机好不容易对准了跑道，却在空中又盘旋了好几圈才落地。</li>
+</ul>
+<p>作者的结论是：<strong>想太多的两大来源，一个是"探索过度"，一个是"验证过度"。</strong></p>
+<h2>第五幕：重新定义"想太多"，看每一步还值不值</h2>
+<p>以前判断想太多，主要看<strong>长度</strong>：多写的字没带来提升，就算想太多。</p>
+<p>作者提出换个角度，看<strong>每多想一段的收益</strong>：</p>
+<ul>
+<li>在思考的第 1 段、第 2 段、第 3 段……分别"掐断"；</li>
+<li>把掐断之前的内容当作思考过程塞回去，让模型直接给最终答案；</li>
+<li>看在每个位置掐断时，准确率是多少。</li>
+</ul>
+<p>这样就得到一条"<strong>多想一段，能多对多少</strong>"的曲线。当多想一段带来的提升低于某个门槛时，就说明到了"<strong>收敛点</strong>"，再往后想就是浪费。</p>
+<p>在 L3 日期题上画出曲线，两种性格的区别一目了然：</p>
+<ul>
+<li><strong>探险家</strong>的曲线<strong>忽高忽低</strong>，常常<strong>很早就达到最高</strong>，后面反而往下掉；</li>
+<li><strong>迟迟落地</strong>的曲线<strong>稳步上升</strong>，然后变平。</li>
+</ul>
+<p>两个模型的收敛点都在<strong>第 8 段想法结束</strong>的地方。在这里掐断：</p>
+<ul>
+<li>Qwen3-235B 能对 <strong>63.25%</strong>，比完整想完的 <strong>52.87%</strong> 高了 10 个百分点；再多想一段，反而掉到 62.05%。</li>
+<li>Qwen3-32B 能对 <strong>84.76%</strong>，略高于完整想完的 83.84%；再多想一段，只到 85.06%。</li>
+</ul>
+<blockquote>
+<p>也就是说：<strong>对探险家来说，想多了会把对的想成错的。</strong></p>
+</blockquote>
+<p>不过要注意：这个收敛点是<strong>事后看着标准答案</strong>找出来的，真正用的时候没有标准答案。所以还需要下一步。</p>
+<h2>第六幕：不知道答案时，怎么及时喊停</h2>
+<p>作者根据两种性格，设计了两条不需要标准答案的"喊停规则"：</p>
+<ul>
+<li><strong>连续自查 k 次就停</strong>：模型给出一个答案后，如果连着验证了 k 次都没变，就停下。</li>
+<li><strong>兜回老答案就停</strong>：如果模型"回头"之后，又走回了<strong>之前给过的某个答案</strong>，就停下。作者的理由是：绕了一圈又回到同一个答案，相当于两条独立的思路得出了同一个结论，可信度大大提高（不过论文没有给出数据来证明这一点）。</li>
+</ul>
+<p>在 L3 日期题上的效果：</p>
+<div class="table-scroll" role="region" aria-label="可横向滚动的数据表" tabindex="0"><table role="table">
+<thead>
+<tr>
+<th scope="col">做法</th>
+<th scope="col">Qwen3-235B（探险家）准确率 / 长度</th>
+<th scope="col">Qwen3-32B（迟迟落地）准确率 / 长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不思考</td>
+<td>32.33 / 263</td>
+<td>17.68 / 427</td>
+</tr>
+<tr>
+<td>完整想完</td>
+<td>52.87 / 2722</td>
+<td>83.84 / 4000</td>
+</tr>
+<tr>
+<td>连续自查 2 次就停</td>
+<td>62.24 / 1315</td>
+<td>68.90 / 1874</td>
+</tr>
+<tr>
+<td>连续自查 3 次就停</td>
+<td><strong>63.44</strong> / 1681</td>
+<td><strong>80.18</strong> / 2463</td>
+</tr>
+<tr>
+<td>自查 2 次 + 兜回老答案就停</td>
+<td>62.24 / <strong>1100</strong></td>
+<td>62.80 / 1709</td>
+</tr>
+</tbody>
+</table></div>
+<p>两种性格，结果截然不同：</p>
+<ul>
+<li><strong>探险家</strong>：每条规则都是<strong>又快又准</strong>。准确率从 53% 左右涨到 62%–63%，长度砍掉 38% 到 60%。</li>
+<li><strong>迟迟落地</strong>：每条规则都<strong>省了长度，但掉了分</strong>。最温和的"自查 3 次就停"，长度省了约 38%，准确率从 83.84 降到 80.18；规则越激进，掉得越多。</li>
+</ul>
+<p>所以作者的建议是<strong>因材施教</strong>：对探险家型的模型，加上"兜回老答案就停"；对迟迟落地型的模型，要更有耐心，用"自查 3 次才停"。</p>
+<h2>看一个例子：探险家为什么"兜回来就该停"</h2>
+<p>下面是我编的一个示意，帮助理解规则，不是论文原文。题目是"某天往后 3674 天是哪天"：</p>
+<ol>
+<li><strong>开头</strong>：按年份粗算，得到 3 月 19 日。</li>
+<li><strong>验证</strong>：再核对一遍，还是 3 月 19 日。</li>
+<li><strong>另辟蹊径</strong>：换成逐月累加天数的算法，得到 3 月 18 日。</li>
+<li><strong>纠正</strong>：怀疑闰年多算了一天，改成 3 月 20 日。</li>
+<li><strong>回头</strong>：觉得逐月累加太容易出错，退回最初的思路，重新检查，又得到 <strong>3 月 19 日</strong>。</li>
+</ol>
+<p>到第 5 步，"兜回老答案就停"规则就会触发：两条不同的路都指向 3 月 19 日，可以交卷了。如果放任探险家接着想，它很可能再换一个方法，又绕出一个新答案，把本来对的结果改错。这和前面看到的现象一致：235B 完整想完只有 52.87%，比在第 8 段掐断还低 10 个百分点。</p>
+<h2>几个有意思的小发现</h2>
+<ul>
+<li><strong>最大的模型，在中等日期题上反而输给了小模型。</strong> L3 上开思考，Qwen3-235B 只有 52.54，Qwen3-8B 是 81.79，Qwen3-32B 是 82.69。论文没有专门解释这一点，我的猜测是和它"爱探索"的性格有关。</li>
+<li><strong>4B 左右是个分水岭。</strong> 简单推理题上，思考对 40 亿参数以下的小模型帮助最大；再往上，开不开思考差不多。</li>
+<li><strong>想太多的口头禅很固定。</strong> "Wait"和"Alternatively"常常就是切分点，也是"又要开始折腾了"的信号。</li>
+<li><strong>验证和探索不是坏事，过度才是。</strong> 迟迟落地型的模型确实需要多走几步才能到达正确答案，过早喊停会掉分。浪费只出现在"到了还不停"的那部分。</li>
+<li><strong>"不思考"在难题上也不行。</strong> L3 上不思考，235B 只有 32%，32B 只有 18%。所以解决办法不是"别想了"，而是"想到点上就停"。</li>
+</ul>
+<h2>冷静一下：这篇论文没证明什么</h2>
+<ul>
+<li><strong>喊停规则只在一个场景里测过。</strong> 只在 L3 日期题、两个模型上做了实验，没有在数学、逻辑、其他模型上系统验证。</li>
+<li><strong>两种性格有多常见，没有统计。</strong> 论文给每个模型贴了一个性格标签，但没报告每种性格在多少比例的题目上出现。一个模型在不同题上，很可能两种性格都有。</li>
+<li><strong>切分和贴标签全靠另一个模型。</strong> gemini-2.5-pro 负责切段和贴标签；人工只抽查了 200 段标签，切分本身的质量没有单独检查；还有 144 个样本因为解析出错被排除。</li>
+<li><strong>收敛点是事后定的。</strong> 门槛 ϵ 对两个模型设得不一样（0 和 1），而且是看了曲线之后定的；"第 8 段掐断更准"这个结论需要标准答案才能找到，不能直接拿去用。</li>
+<li><strong>一些数字对不太上。</strong> 正文说 GSM8K 多了"10 倍以上"，表里算出来约 8.7 倍；"5 到 20 倍"的说法里，有的任务其实不到 5 倍，有的接近 30 倍；长度是按"词"算的，不是 token；"八成计算被浪费"没给推算过程。标题里的"10+ 个想法"也没有对应到具体的统计。</li>
+<li><strong>只看了开源模型和简单题。</strong> Qwen3 和 R1 蒸馏模型，题目都简单、表述清楚，固定解码方式。闭源前沿模型、复杂任务（比如竞赛编程）是否一样，作者自己也说还要再看。</li>
+<li><strong>"兜回老答案更可信"只是个说法。</strong> 这是整条规则的理论依据，论文却没有给出数据验证。</li>
+</ul>
+<h2>讲完了，带走三句话</h2>
+<ol>
+<li><strong>会思考的模型在简单题上普遍想太多</strong>：多花 5 到 20 倍的时间，准确率几乎不变。思考只在"踮踮脚够得着"的中间地带才值钱。</li>
+<li><strong>想太多有两种性格</strong>：到处乱逛的探险家，和反复验算的迟迟落地。看思考的<strong>结构</strong>，比只看<strong>长度</strong>更能看清浪费在哪里。</li>
+<li><strong>喊停要因材施教</strong>：对探险家，"兜回老答案就停"能又快又准；对迟迟落地，太早喊停会掉分，要更有耐心。</li>
+</ol>
+<h2>和我的方向有什么联系</h2>
+<ul>
+<li><strong>看结构，不只看结果。</strong> 之前从《大模型在多轮对话中迷路》学到"不只看平均分，也要看波动"。这篇再往前一步：<strong>看过程的结构</strong>。可以把 agent 的运行轨迹也切成小段、贴上"验证、纠正、回头、跑题"这类标签，比较有记忆和没记忆时，它的"思考地图"有什么变化。如果分数涨了，但多出来的只是"显得很认真"的验证环，答对的位置并没有提前，那就要怀疑它是不是在迎合考官的喜好。</li>
+<li><strong>"掐断再作答"的效用曲线可以直接借来用。</strong> 在 agent 轨迹的每一步掐断、强制给出答案，就能看到正确答案最早在哪一步出现、后面的步骤到底有没有用。这能帮助区分"真的会做了"和"只是多走了几步"。</li>
+<li><strong>对 EHR 场景很实际。</strong> 病历里大量操作是"查一个值、找一条记录"，这类回忆型任务开思考几乎没用，大海捞针甚至还掉了分。而算住院天数、用药间隔、两次就诊相隔多久，恰恰就是这篇里的"数几千天"那种题：不思考很容易错，思考才值钱。按任务类型决定开不开思考，能省下不少时间和成本。</li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+</div>
+    <div id="footer" role="contentinfo"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://powehi12.github.io">qbyang 的个人博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank" rel="noopener noreferrer">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+console.log("\n %c Gmeek v2.25 https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+
+
+
+</script>
+<script src='https://powehi12.github.io/collapsible-toc.js?v=20261011-1'></script>
+
+</html>
